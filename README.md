@@ -1,5 +1,7 @@
 # Lisio
 
+En ligne : https://lisio-psi.vercel.app
+
 Outil d’accessibilité pour l’équipe : matrice de contraste WCAG 2.0, 2.1 et 2.2 de toutes les paires de couleurs, essai typographique (Google Fonts, Adobe Fonts, police importée), nuances, lisibilité du texte.
 
 - `index.html` : le site, autonome, servi tel quel par Vercel (pas de build).
