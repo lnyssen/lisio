@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Lisio : contraste WCAG 2.0 à 2.2 de toutes vos paires de couleurs, essai typographique et lisibilité.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%2318181B%27/%3E%3Ccircle cx=%2716%27 cy=%279.6%27 r=%274.4%27 fill=%27none%27 stroke=%27white%27 stroke-width=%271.8%27/%3E%3Cpath d=%27M16 5.2a4.4 4.4 0 0 1 0 8.8z%27 fill=%27white%27/%3E%3Crect x=%2713.2%27 y=%2716.2%27 width=%275.6%27 height=%2710.6%27 rx=%272.8%27 fill=%27white%27/%3E%3C/svg%3E">
+<title>Lisio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout : l'écran entier est l'épreuve. Une grande toile peinte aux couleurs testées, une barre d'outils flottante en bas, le verdict épinglé en haut. Le reste vit sous la toile. */
+/* Switzer © Indian Type Foundry (Fontshare), intégrée pour l’interface */
+@font-face{font-family:"Switzer";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:500;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:600;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:700;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:800;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-800-normal.woff2) format("woff2")}
+
+:root{
+  --bg:#F4F4F5; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#18181B; --muted:#52525B; --hair:#E4E4E7; --field:#8E8E96;
+  --primary:#18181B; --primary-ink:#FFFFFF; --hover:#EDEDEF; --link:#18181B;
+  --aaa-bg:#14532D; --aaa-ink:#FFFFFF; --aa-bd:#DCFCE7; --aa-bg:#DCFCE7; --aa-ink:#166534; --lg-bg:#FEF3C7; --lg-ink:#92400E; --no-bg:#FEE2E2; --no-ink:#991B1B;
+  --ok:#166534; --ok-bg:#DCFCE7; --warn:#92400E; --warn-bg:#FEF3C7; --bad:#991B1B; --bad-bg:#FEE2E2;
+  --shadow:0 1px 2px rgba(0,0,0,.06), 0 10px 30px rgba(0,0,0,.12);
+  --sans:"Switzer", "Helvetica Neue", system-ui, sans-serif;
+  --mono:"Switzer", "Helvetica Neue", system-ui, sans-serif; --code:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#111113; --surface:#1A1A1D; --raised:#232327; --ink:#F4F4F5; --muted:#A1A1AA; --hair:#2E2E33; --field:#6E6E76;
+  --primary:#F4F4F5; --primary-ink:#111113; --hover:#2A2A2F; --link:#F4F4F5;
+  --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
+  --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#111113; --surface:#1A1A1D; --raised:#232327; --ink:#F4F4F5; --muted:#A1A1AA; --hair:#2E2E33; --field:#6E6E76;
+  --primary:#F4F4F5; --primary-ink:#111113; --hover:#2A2A2F; --link:#F4F4F5;
+  --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
+  --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+  color-scheme:dark }
+/* image et pipette */
+.imgpanel{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--hair);padding-top:14px}
+.imgwrap{position:relative;display:flex;justify-content:center;background:var(--bg);border-radius:12px;padding:8px}
+#imgCanvas{max-width:100%;max-height:340px;height:auto;cursor:crosshair;border-radius:6px;display:block}
+.loupe{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:12px;font-weight:700;padding:6px 10px;border-radius:8px;box-shadow:var(--shadow);pointer-events:none}
+.xswatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:8px}
+.xsw{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:6px;border-radius:12px;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);cursor:pointer;font:inherit;text-align:left}
+.xsw[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.xsw[aria-pressed="false"]{opacity:.55}
+.xchip{width:100%;height:40px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.drop{outline:3px dashed var(--primary);outline-offset:4px}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.filebtn:focus-within{outline:3px solid var(--primary);outline-offset:2px}
+/* matrice */
+.mhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px 40px;border-bottom:1px solid var(--hair);padding-bottom:22px;margin-bottom:24px}
+.mhead h1{font-size:clamp(28px,4.4vw,48px);font-weight:800;letter-spacing:-.025em;line-height:1}
+.eyebrow{font-size:14px;font-weight:600;color:var(--muted)}
+.lead{font-size:clamp(15px,1.6vw,18px);color:var(--muted);line-height:1.45;max-width:62ch;margin-top:10px}
+.counts{display:grid;grid-template-columns:repeat(4,minmax(72px,auto));gap:8px;user-select:none;-webkit-user-select:none}
+@media (max-width:760px){.counts{width:100%;grid-template-columns:repeat(4,minmax(0,1fr))}.count{min-width:0;padding:10px 4px}.count b{font-size:26px}.count span{font-size:11px;white-space:nowrap}.mhead{padding-bottom:16px;margin-bottom:18px}}
+.count{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 18px;border-radius:12px;min-width:84px;border:2px solid transparent}
+.count b{font-size:32px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.count span{font-size:13px;font-weight:700}
+.bd{display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:3px 8px;border-radius:999px;border:1.5px solid;white-space:nowrap}
+.b-aaa{background:var(--aaa-bg);color:var(--aaa-ink);border-color:var(--aaa-bg)}
+.b-aa{background:var(--aa-bg);color:var(--aa-ink);border-color:var(--aa-bd)}
+.b-lg{background:var(--lg-bg);color:var(--lg-ink);border-color:var(--lg-bg)}
+.b-no{background:var(--no-bg);color:var(--no-ink);border-color:var(--no-bg)}
+.mlayout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px 36px;align-items:start}
+.below-mx{margin-top:32px}
+.palbar{margin-bottom:22px}
+.palbar>summary{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px;cursor:pointer}
+.palbar>summary::-webkit-details-marker{display:none}
+.palchips{display:flex;flex-wrap:wrap;gap:6px;flex:1;min-width:0}
+.palchip{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--hair);border-radius:999px;padding:4px 11px 4px 4px;font-size:14px;font-weight:600}
+.palchip i{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(127,127,127,.4)}
+.palbar .when-open,.palbar[open] .when-closed{display:none}.palbar[open] .when-open{display:inline}
+.colors-edit{margin-top:12px}
+@media (max-width:1000px){.mlayout{grid-template-columns:minmax(0,1fr)}}
+.mtools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-bottom:16px}
+.mwrap{overflow-x:auto;padding-bottom:6px}
+.mgrid{display:grid;gap:8px;align-items:stretch}
+.mcorner{font-size:12px;font-weight:600;color:var(--muted);line-height:1.5;align-self:end}
+.mcol{display:flex;flex-direction:column;gap:4px;min-width:0}
+.mcol .bar{height:24px;border-radius:6px;box-shadow:inset 0 0 0 1px var(--hair)}
+.mcol b,.mrow b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mcol code,.mrow code{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.mrow{display:flex;align-items:center;gap:10px;min-width:0}
+@media (max-width:760px){.mrow .disc{display:none}.mrow b{font-size:14px}}
+.mrow .disc{width:32px;height:32px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px var(--hair)}
+.mrow div{display:flex;flex-direction:column;min-width:0}
+.mdiag{border:1.5px dashed var(--hair);border-radius:12px;display:grid;place-items:center;font-size:14px;color:var(--muted);min-height:112px;text-align:center;padding:8px}
+.mcell{border:0;padding:0;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);cursor:pointer;font:inherit;color:inherit;text-align:left;min-height:112px}
+.mcell:hover{box-shadow:0 0 0 2px var(--ink)}
+.mcell[aria-pressed="true"]{box-shadow:0 0 0 3px var(--primary)}
+.mcell .sample{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 8px 14px;overflow:hidden;white-space:nowrap}
+.mcell .sample .big{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.mcell .sample .sm{font-size:13px;font-weight:500;line-height:1.2;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.mcell .foot{display:flex;flex-direction:column;gap:6px;padding:10px 10px 12px;background:var(--surface);color:var(--ink);flex:1}
+.mcell .rr{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:2px}
+.mcell .rr .r{font-size:19px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}.mcell .rr .r small{font-size:12px;color:var(--muted);font-weight:500}
+.mcell .ck{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.mcell .ck .pill{font-size:12px;padding:2px 8px}.mcell .ck .pill.pass{background:none;color:var(--muted);padding-right:0;font-weight:600}
+.mcell .foot .bd{font-size:11px;padding:2px 6px}
+.maside{display:flex;flex-direction:column;gap:26px}
+.legendrow{display:flex;gap:12px;align-items:flex-start}
+.legendrow .bd{flex:none;min-width:74px;justify-content:center}
+.keep{background:var(--surface);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:10px}
+.keep p{font-size:15px;line-height:1.5}
+.pairdetail{margin-top:24px}
+.pd-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:800px){.pd-grid{grid-template-columns:minmax(0,1fr)}}
+.pd-prev{border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 0 0 1px var(--hair);overflow-wrap:anywhere}
+.editor-inline{display:flex;flex-wrap:wrap;gap:8px}
+*{box-sizing:border-box}
+section[role=tabpanel]{scroll-margin-top:90px}
+[hidden]{display:none!important}
+body{font-variant-numeric:tabular-nums;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;font-weight:500}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
+h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;letter-spacing:-.015em}
+h2{font-size:22px;font-weight:800}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+a{color:inherit;text-underline-offset:.18em}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.note{font-size:14px;color:var(--muted);max-width:78ch}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:8px}
+.dsk{}@media (max-width:760px){.dsk{display:none}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.between{justify-content:space-between}
+
+/* barre du haut */
+:root{--navh:0px}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;height:60px;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--hair);margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 28px calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:16;background:var(--bg)}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.03em;flex:none}
+.logo-mark{width:30px;height:30px;flex:none;display:block}
+.logo-word{font-weight:700;font-size:22px;letter-spacing:-.045em;line-height:1}
+nav.tabs{display:flex;justify-content:center;gap:2px;min-width:0}
+nav.tabs button{font:inherit;font-size:14px;font-weight:600;border:0;background:none;color:var(--muted);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;user-select:none}
+nav.tabs button svg{width:18px;height:18px;flex:none}
+@media (min-width:761px) and (max-width:1060px){nav.tabs button svg{display:none}nav.tabs button{padding:7px 11px}}
+nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
+@media (hover:hover){nav.tabs button[aria-selected="false"]:hover{color:var(--ink);background:var(--hover)}}
+.normchip{font:inherit;font-size:13px;font-weight:700;flex:none;justify-self:end;min-width:152px;justify-content:space-between;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 8px 6px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.normchip .lv{background:var(--bg);border-radius:999px;padding:1px 0;font-size:12px;min-width:38px;text-align:center}
+.normchip svg{width:14px;height:14px;color:var(--muted)}
+@media (hover:hover){.normchip:hover{border-color:var(--field)}}
+.pop .seg{display:flex;flex-wrap:nowrap;width:100%}.pop .seg button{flex:1;padding:8px 6px;text-align:center}
+@media (max-width:480px){.pop .sliders{grid-template-columns:minmax(0,1fr)!important}}
+.normopt{display:flex;flex-direction:column;gap:8px}
+.normopt .seg{display:flex;flex-wrap:nowrap}
+.normopt .seg button{flex:1;padding:9px 10px;font-size:14px}
+/* mobile : onglets en bas, comme une application */
+@media (max-width:760px){
+  :root{--navh:calc(62px + env(safe-area-inset-bottom,0px))}
+  .appbar{height:52px;margin-bottom:18px;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none} /* sinon le filtre devient le repère du menu fixé en bas */
+  .appbar{grid-template-columns:minmax(0,1fr) auto}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;height:var(--navh);padding:0 max(6px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(6px,env(safe-area-inset-left,0px));justify-content:space-around;align-items:stretch;gap:0;background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(16px);backdrop-filter:saturate(1.4) blur(16px);border-top:1px solid var(--hair)}
+  nav.tabs button{flex:1;flex-direction:column;justify-content:center;gap:3px;font-size:11px;font-weight:600;padding:6px 2px 4px;border-radius:0;min-width:0;background:none!important}
+  nav.tabs button svg{width:24px;height:24px}
+  nav.tabs button[aria-selected="true"]{color:var(--ink);background:none;font-weight:800}
+  nav.tabs button[aria-selected="true"] svg{background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:3px 14px;width:52px;height:30px;box-sizing:border-box}
+  nav.tabs button[aria-selected="false"] svg{padding:3px 0;height:30px;box-sizing:border-box}
+  .wrap{padding-bottom:calc(var(--navh) + 40px)!important}
+  .dock{bottom:calc(var(--navh) + 10px)!important}
+  .toast{bottom:calc(var(--navh) + 16px)!important}
+}
+
+/* contrôles génériques */
+input[type=text],input[type=number],input[type=search],select,textarea{font:inherit;font-weight:500;color:var(--ink);background:var(--surface);border:1.5px solid var(--field);border-radius:10px;padding:8px 10px;min-width:0}
+textarea{width:100%;resize:vertical;line-height:1.5}
+input[type=color]{width:44px;height:40px;border:1.5px solid var(--field);border-radius:10px;background:var(--surface);padding:3px;cursor:pointer;flex:none}
+input[type=range]{width:100%;accent-color:var(--primary)}
+input[type=checkbox]{accent-color:var(--primary);width:18px;height:18px}
+label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.btn{font:inherit;font-size:14px;font-weight:700;border-radius:999px;padding:8px 14px;cursor:pointer;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;gap:8px}
+@media (hover:hover){.btn:hover{background:var(--hover)}}
+.btn.primary{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+@media (hover:hover){.btn.primary:hover{opacity:.9;background:var(--primary)}}
+.btn.sm{font-size:13px;padding:5px 11px}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(127,127,127,.45);flex:none}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--field);border-radius:999px;padding:2px;flex-wrap:wrap}
+.seg button{font:inherit;font-size:13px;font-weight:700;border:0;background:none;color:var(--muted);padding:6px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--primary);color:var(--primary-ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.pass{background:var(--ok-bg);color:var(--ok)}
+.fail{background:var(--bad-bg);color:var(--bad)}
+.warnp{background:var(--warn-bg);color:var(--warn)}
+.card-surface{background:var(--surface);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+
+/* toile */
+.stage{position:relative}
+.canvas{border-radius:28px;min-height:min(62vh,620px);padding:clamp(22px,5vw,64px);padding-top:clamp(84px,9vw,104px);display:flex;flex-direction:column;justify-content:center;gap:.8em;overflow:hidden;overflow-wrap:anywhere;transition:background-color .25s,color .25s;box-shadow:inset 0 0 0 1px rgba(127,127,127,.18)}
+.canvas [contenteditable]{outline:none;border-radius:6px}
+.canvas [contenteditable]:focus-visible{box-shadow:0 0 0 2px currentColor}
+.canvas .c-h{font-weight:700;line-height:1.08;letter-spacing:-.01em;margin:0}
+.canvas .c-ui{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:.4em}
+.canvas .c-btn{border:2px solid currentColor;border-radius:10px;padding:.5em 1em;background:transparent;color:inherit;font:inherit;font-weight:700;cursor:default}
+.canvas p+p{margin-top:var(--pspace,0)}
+.verdict{position:absolute;top:16px;left:16px;right:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:var(--raised);color:var(--ink);border-radius:999px;padding:8px 8px 8px 16px;box-shadow:var(--shadow);z-index:2}
+.verdict .v-l{display:flex;align-items:center;gap:12px;min-width:0;flex-wrap:wrap}
+.verdict .badge{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:15px;padding:5px 12px;border-radius:999px}
+.verdict .num{font-weight:800;font-size:22px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.verdict .ctx{font-size:13px;color:var(--muted)}
+@media (max-width:600px){.verdict{border-radius:18px}}
+@media (max-width:760px){.verdict{position:relative;top:auto;left:auto;right:auto;margin:0 0 14px;align-self:stretch;box-shadow:none;border:1px solid var(--hair);font-family:var(--sans)}.canvas{padding-top:16px;justify-content:flex-start;min-height:0}}
+
+/* barre d'outils */
+.dock{position:sticky;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:10;margin-top:-34px;display:flex;justify-content:center;pointer-events:none}
+.dock-in{pointer-events:auto;position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--raised);border-radius:22px;padding:8px;box-shadow:var(--shadow);max-width:100%}
+.dk{font:inherit;font-size:14px;font-weight:700;border:0;background:none;color:var(--ink);border-radius:14px;padding:8px 12px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.dk[aria-expanded="true"]{background:var(--hover)}@media (hover:hover){.dk:hover{background:var(--hover)}}
+.dk .k{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15}
+.dk .k small{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.dk .k span{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dk .sw{width:24px;height:24px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.5)}
+.dk-sep{width:1px;align-self:stretch;background:var(--hair);margin:4px 2px}
+.stepper{display:inline-flex;align-items:center;gap:2px}
+.stepper button{width:34px;height:34px;border-radius:10px;border:0;background:var(--bg);color:var(--ink);font:inherit;font-size:18px;font-weight:700;cursor:pointer}
+@media (hover:hover){.stepper button:hover{background:var(--hover)}}
+.stepper .sv{min-width:62px;text-align:center;font-weight:800;font-variant-numeric:tabular-nums}
+.dk.toggle[aria-pressed="true"]{background:var(--primary);color:var(--primary-ink)}
+
+/* popovers */
+.pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);outline:100vmax solid rgba(0,0,0,.3);width:min(420px,calc(100vw - 32px));max-height:min(66vh,560px);overflow:auto;background:var(--raised);color:var(--ink);border-radius:20px;box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px;z-index:40}
+.pop h3{display:flex;justify-content:space-between;align-items:center}
+.pop .x{border:0;background:var(--bg);color:var(--ink);border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px}
+.fontlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.fontlist .grp{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 8px 4px}
+.fontlist button{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%;padding:9px 10px;border-radius:12px;cursor:pointer;font-size:20px;line-height:1.25;color:var(--ink)}
+.fontlist button:hover{background:var(--hover)}
+.fontlist button[aria-selected="true"]{background:var(--primary);color:var(--primary-ink)}
+.fontlist button[aria-selected="true"] .cat{color:var(--primary-ink)}
+.fontlist button:focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
+.fontlist .cat{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
+.chipgrid{display:flex;flex-direction:column;gap:5px}
+.chiprow{display:grid;grid-template-columns:62px repeat(12,1fr);gap:3px;align-items:center}
+.chiprow span{font-size:12px;font-weight:700;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip{height:26px;border-radius:7px;border:0;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35);cursor:pointer;padding:0;display:grid;place-items:center;font-size:12px;font-weight:800}
+.chip[aria-pressed="true"]{outline:3px solid var(--primary);outline-offset:1px}
+.chip.base{border-radius:50%}
+.chip .ok{opacity:0}
+.chip.passes .ok{opacity:.95}
+.sliders{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sl{display:flex;flex-direction:column;gap:4px}
+.sl .top{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--muted)}
+.sl .top b{color:var(--ink);font-family:var(--mono);font-weight:600}
+.status{font-size:14px;padding:8px 10px;border-radius:10px}
+
+/* sous la toile */
+.below{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px;margin-top:28px;align-items:start}
+@media (max-width:900px){.below{grid-template-columns:minmax(0,1fr)}}
+.checks{display:flex;flex-direction:column}
+.check{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--hair)}
+.check:first-child{border-top:0;padding-top:0}
+.check .sc{font-size:13px;color:var(--muted)}
+.check .fixes{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:var(--mono);font-size:11px;background:var(--bg);border-radius:6px;padding:1px 6px;margin-left:8px;color:var(--muted);white-space:nowrap}
+.metric{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);border-top:1px solid var(--hair);padding-top:12px}
+.metric b{color:var(--ink);font-family:var(--mono);font-weight:600}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.tile{border:0;border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;padding:0;font:inherit;color:inherit;text-align:left;box-shadow:inset 0 0 0 1px rgba(127,127,127,.25);background:var(--surface)}
+.tile:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.tile .smp{padding:14px 12px;min-height:64px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .meta{display:flex;justify-content:space-between;align-items:center;gap:4px;padding:6px 10px;font-family:var(--mono);font-size:11px;background:var(--surface);color:var(--ink)}
+@media (prefers-reduced-motion: reduce){.tile:hover{transform:none}.canvas{transition:none}}
+
+/* palette */
+.editor{display:flex;flex-wrap:wrap;gap:10px}
+.chipedit{display:flex;align-items:center;gap:6px;background:var(--bg);border-radius:14px;padding:6px}
+.chipedit input[type=text]{width:110px}
+.chipedit .hex{width:92px}
+@media (max-width:760px){.editor-inline{flex-direction:column}.chipedit{display:grid;grid-template-columns:40px minmax(0,1fr) 92px 36px;width:100%}.chipedit input[type=text]{width:100%}.chipedit input[type=color]{width:40px}.chipedit .btn.sm{width:36px;height:36px;padding:0;justify-content:center}
+  .dock-in{gap:2px;padding:6px;border-radius:18px;justify-content:center}.dk{padding:6px 8px;gap:6px}.dk .k small,.dk-sep{display:none}.dk .k span{max-width:92px}.stepper .sv{min-width:52px}.stepper button{width:32px;height:32px}
+  .eyebrow{font-size:11px;letter-spacing:.04em}}
+.scales{overflow-x:auto;padding-bottom:4px}
+.scale-table{display:grid;grid-template-columns:100px repeat(11,minmax(64px,1fr));gap:4px;min-width:840px}
+.scale-head{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center}
+.scale-name{font-weight:800;font-size:15px;display:flex;align-items:center;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.swt{height:76px;border-radius:12px;border:0;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:7px;font-family:var(--mono);font-size:11px;text-align:left;position:relative}
+.swt .r{display:flex;justify-content:space-between;gap:2px}
+.swt .base{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:currentColor}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
+.nu-intro{display:flex;flex-direction:column;gap:14px;border-bottom:1px solid var(--hair);padding-bottom:18px}
+.nu-lead{font-size:17px;line-height:1.5;max-width:70ch}
+.nu-steps{margin:0;padding:0;list-style:none;counter-reset:nu;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.nu-steps li{counter-increment:nu;background:var(--bg);border-radius:14px;padding:14px 16px 14px 52px;position:relative;font-size:15px;line-height:1.45}
+.nu-steps li::before{content:counter(nu);position:absolute;left:14px;top:13px;width:26px;height:26px;border-radius:50%;background:var(--primary);color:var(--primary-ink);display:grid;place-items:center;font-size:13px;font-weight:800}
+.nu-steps li b{display:block}
+.nu-demo-wrap{display:flex;flex-direction:column;gap:8px}
+.nu-demo{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.nu-card{border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:2px;box-shadow:inset 0 0 0 1px var(--hair)}
+.nu-card b{font-size:18px;font-weight:700;line-height:1.2}
+.nu-card span{font-size:13px}
+.nu-card .nr{margin-top:6px;font-family:var(--mono);font-size:13px;font-weight:700}
+.rule{border-radius:14px;padding:14px 16px;background:var(--bg);display:flex;flex-direction:column;gap:4px}
+.rule b{font-size:22px;font-weight:800;letter-spacing:-.02em}
+.matrix-wrap{overflow-x:auto}
+table.matrix{border-collapse:separate;border-spacing:3px;font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums}
+table.matrix th{color:var(--muted);font-weight:600;padding:4px 6px}
+table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50px}
+.l-aaa{background:var(--ok);color:var(--surface)}
+.l-aa{background:var(--ok-bg);color:var(--ok)}
+.l-large{background:var(--warn-bg);color:var(--warn)}
+.l-fail{background:transparent;color:var(--muted);opacity:.7}
+pre.code{background:var(--bg);border-radius:12px;padding:14px;overflow:auto;max-height:320px;font-family:var(--code);font-size:12.5px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{border-radius:14px;padding:12px 14px;background:var(--bg)}
+.stat .v{font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .k{font-size:13px;color:var(--muted)}
+ol.long{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+ol.long li{max-width:80ch}
+.src ul{padding-left:20px;margin:0;display:flex;flex-direction:column;gap:8px;max-width:90ch}
+.tablewrap{overflow-x:auto}
+table.ver{border-collapse:collapse;font-size:14px;min-width:560px}
+table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;text-align:left;vertical-align:top}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--primary);color:var(--primary-ink);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;z-index:30}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="appbar">
+    <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" fill="currentColor"/></svg><span>Matrice</span></button>
+      <button role="tab" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19 8.5 5h1L15 19M5 14.5h8"/><path d="M21 19v-6.2a3 3 0 0 0-5.6-1.5M21 15.6c-2.4-.6-5.3 0-5.3 2 0 1.8 2.6 2.3 5.3.2"/></svg><span>Essai<span class="dsk"> typo</span></span></button>
+      <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="4.5" rx="1.5"/><rect x="4" y="9.75" width="16" height="4.5" rx="1.5" fill="currentColor" fill-opacity=".35"/><rect x="4" y="16" width="16" height="4.5" rx="1.5" fill="currentColor"/></svg><span>Nuances</span></button>
+      <button role="tab" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 10.5h16M4 15h10M4 19.5h6"/><path d="m15.5 18 2 2 3.5-4" stroke-linejoin="round"/></svg><span>Lisibilité</span></button>
+      <button role="tab" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h10.5L19 8v11.5H5z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke-linecap="round"/></svg><span>Sources</span></button>
+    </nav>
+    <button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="Norme de référence : WCAG 2.2, niveau AA. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button>
+  </header>
+
+  <!-- MATRICE -->
+  <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice">
+    <header class="mhead">
+      <div>
+        <div class="eyebrow" id="mEyebrow"></div>
+        <h1>Matrice de contraste</h1>
+        <p class="lead" id="mLead"></p>
+      </div>
+      <div class="counts" id="counts"></div>
+    </header>
+    <details class="palbar" id="palBar">
+      <summary><span class="palchips" id="palChips"></span><span class="btn sm paledit"><span class="when-closed">Modifier les couleurs</span><span class="when-open">Fermer</span></span></summary>
+        <div class="card-surface colors-edit" id="colorsCard">
+          <div class="row between"><h2 class="sr">Modifier vos couleurs</h2><button class="btn sm" id="resetPalette" type="button">Revenir à l’exemple</button></div>
+          <p class="small muted">De 2 à 12 couleurs. Ajoutez‑les une à une, depuis une image (bouton, glisser‑déposer ou Ctrl+V), ou collez une liste.</p>
+          <div class="editor-inline" id="editor"></div>
+          <div class="row">
+            <button class="btn primary" id="addColor" type="button">+ Ajouter une couleur</button>
+            <span class="btn filebtn"><input type="file" id="imgFile" accept="image/*" aria-label="Extraire les couleurs d’une image">Depuis une image</span>
+            <button class="btn" id="eyedrop" type="button" hidden>Pipette d’écran</button>
+            <button class="btn" id="pasteToggle" type="button" aria-expanded="false" aria-controls="pasteBox">Coller une liste</button>
+          </div>
+          <div id="pasteBox" hidden style="display:flex;flex-direction:column;gap:8px">
+            <label for="pasteText">Une couleur par ligne, avec ou sans nom : « Brand #2447D1 »<textarea id="pasteText" rows="4" placeholder="Deep #0E1B4D&#10;Brand #2447D1&#10;#F5B800"></textarea></label>
+            <div class="row"><button class="btn primary" id="pasteApply" type="button">Remplacer mes couleurs</button></div>
+          </div>
+          <div class="imgpanel" id="imgPanel" hidden>
+            <div class="row between"><h3>Couleurs de l’image</h3><button class="btn sm" id="imgClose" type="button">Fermer</button></div>
+            <p class="small muted">Cliquez sur l’image pour prélever une couleur précise (pipette), ou choisissez parmi les couleurs dominantes ci‑dessous.</p>
+            <div class="imgwrap"><canvas id="imgCanvas" aria-label="Image importée : cliquez pour prélever une couleur"></canvas><span class="loupe" id="loupe" hidden></span></div>
+            <div class="row between">
+              <label for="imgK" class="row" style="flex-direction:row;gap:8px">Couleurs dominantes <b id="imgKv" class="mono" style="color:var(--ink)">6</b><input type="range" id="imgK" min="2" max="12" value="6" style="width:140px"></label>
+              <span class="small muted" id="imgCount"></span>
+            </div>
+            <div class="xswatches" id="imgSwatches"></div>
+            <div class="row"><button class="btn primary" id="imgReplace" type="button">Remplacer mes couleurs</button><button class="btn" id="imgAdd" type="button">Ajouter à mes couleurs</button></div>
+          </div>
+        </div>
+    </details>
+    <div>
+        <div class="mtools">
+          <button class="btn" type="button" data-pop="popFont" aria-expanded="false" aria-controls="popFont"><span id="mFontAa" style="font-weight:800">Aa</span> <span id="mFontName">Police</span></button>
+          <label for="mSample" class="row" style="flex-direction:row;gap:6px">Échantillon<input type="text" id="mSample" value="Aa" maxlength="16" style="width:96px"></label>
+          <div class="seg" role="group" aria-label="Paires affichées" id="mView"><button type="button" data-v="all">Toutes les paires</button><button type="button" data-v="ok">Lisibles en texte courant</button></div>
+          <label for="mVision" class="row" style="flex-direction:row;gap:6px">Vision<select id="mVision"><option value="normal">Typique</option><option value="protan">Protanopie</option><option value="deutan">Deutéranopie</option><option value="tritan">Tritanopie</option><option value="achro">Achromatopsie</option></select></label>
+        </div>
+        <div class="mwrap"><div class="mgrid" id="mgrid"></div></div>
+        <div class="card-surface pairdetail" id="pairDetail" hidden></div>
+    </div>
+    <div class="mlayout below-mx">
+      <div class="keep"><h2>À retenir</h2><div id="keep" style="display:flex;flex-direction:column;gap:10px"></div></div>
+      <aside class="maside">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h2>Seuils</h2>
+          <div class="legendrow"><span class="bd b-aaa">AAA</span><span class="small">≥ 7:1. Tout le texte, sans réserve (1.4.6).</span></div>
+          <div class="legendrow"><span class="bd b-aa">AA</span><span class="small">≥ 4,5:1. Texte courant au niveau AA (1.4.3).</span></div>
+          <div class="legendrow"><span class="bd b-lg">AA grand</span><span class="small" id="lgLegend"></span></div>
+          <div class="legendrow"><span class="bd b-no">✕ Échec</span><span class="small">&lt; 3:1. Décoratif uniquement.</span></div>
+        </div>
+        <p class="small muted">Ratios calculés sur les valeurs hexadécimales, selon la formule de luminance relative du W3C. Cliquez une case pour voir la paire en détail et la corriger. Source : W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- TESTER -->
+  <section id="tester" role="tabpanel" aria-labelledby="tab-tester" hidden>
+    <div class="stage">
+      <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
+      <div class="canvas" id="canvas">
+        <h1 class="c-h" id="cH" contenteditable="true" spellcheck="false" aria-label="Titre d’essai, modifiable">Votre attestation est prête</h1>
+        <p id="cP1" contenteditable="true" spellcheck="false" aria-label="Paragraphe d’essai, modifiable">Elle reste consultable douze mois dans votre espace personnel. Si une information vous semble erronée, contactez le service client avant la date limite. Cliquez ici pour écrire votre propre texte.</p>
+        <p id="cP2" contenteditable="true" spellcheck="false" aria-label="Deuxième paragraphe d’essai, modifiable">Frais d’envoi : 0,99 €, délai 3 à 5 jours. <a href="#tester" onclick="return false">Voir la notice</a></p>
+        <div class="c-ui"><button type="button" class="c-btn" tabindex="-1">Télécharger le PDF</button><span aria-hidden="true">✓ ✕ ★ → 1Il0O rn m</span></div>
+      </div>
+    </div>
+
+    <div class="dock">
+      <div class="dock-in" id="dockIn">
+        <button class="dk" id="dFont" type="button" data-pop="popFont" aria-expanded="false" aria-controls="popFont"><span style="font-size:22px;font-weight:700" id="dFontAa">Aa</span><span class="k"><small>Police</small><span id="dFontName">–</span></span></button>
+        <span class="dk-sep" aria-hidden="true"></span>
+        <div class="stepper" role="group" aria-label="Taille du texte">
+          <button type="button" id="sizeMinus" aria-label="Réduire la taille">−</button>
+          <span class="sv" id="sizeVal" aria-live="polite">16 px</span>
+          <button type="button" id="sizePlus" aria-label="Augmenter la taille">+</button>
+        </div>
+        <button class="dk toggle" id="dBold" type="button" aria-pressed="false" title="Gras"><b style="font-size:17px">G</b><span class="sr">Gras</span></button>
+        <span class="dk-sep" aria-hidden="true"></span>
+        <button class="dk" id="dFg" type="button" data-pop="popColor" data-mode="fg" aria-expanded="false" aria-controls="popColor"><span class="sw" id="dFgSw"></span><span class="k"><small>Texte</small><span class="mono" id="dFgHex"></span></span></button>
+        <button class="dk" id="swap" type="button" aria-label="Inverser texte et fond">⇄</button>
+        <button class="dk" id="dBg" type="button" data-pop="popColor" data-mode="bg" aria-expanded="false" aria-controls="popColor"><span class="sw" id="dBgSw"></span><span class="k"><small>Fond</small><span class="mono" id="dBgHex"></span></span></button>
+        <span class="dk-sep" aria-hidden="true"></span>
+        <button class="dk" id="dMore" type="button" data-pop="popMore" aria-expanded="false" aria-controls="popMore">Réglages</button>
+
+      </div>
+    </div>
+
+    <div class="below">
+      <div class="card-surface">
+        <div class="row between"><h2>Le détail</h2><span class="small muted" id="normLabel"></span></div>
+        <div class="checks" id="checks"></div>
+        <div class="metric" id="metrics"></div>
+      </div>
+      <div class="card-surface">
+        <div class="row between">
+          <h2 id="sheetTitle">Ce qui marche sur ce fond</h2>
+          <div class="seg" role="group" aria-label="Mode" id="sheetSeg"><button type="button" data-v="fg">Textes possibles</button><button type="button" data-v="bg">Fonds possibles</button></div>
+        </div>
+        <p class="note" id="sheetNote"></p>
+        <div class="sheet" id="sheet"></div>
+        <label class="row small" for="showFail" style="flex-direction:row;gap:8px;color:var(--ink)"><input type="checkbox" id="showFail"> Afficher aussi les combinaisons non conformes</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- PALETTE -->
+  <section id="palette" role="tabpanel" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
+    <div class="card-surface">
+      <div class="row between"><h2>Nuances de vos couleurs</h2>
+        <label for="vision" class="row" style="flex-direction:row;gap:8px">Vision
+          <select id="vision"><option value="normal">Typique</option><option value="protan">Protanopie</option><option value="deutan">Deutéranopie</option><option value="tritan">Tritanopie</option><option value="achro">Achromatopsie</option></select>
+        </label>
+      </div>
+      <div class="nu-intro">
+        <p class="nu-lead">Lisio décline chacune de vos couleurs en <b>11 nuances</b>, de la plus claire (50) à la plus foncée (950). Elles servent aux fonds, survols, bordures et textes secondaires.</p>
+        <ol class="nu-steps">
+          <li><b>Un numéro = une clarté.</b> Le 700 de chaque couleur a la même clarté, quelle que soit la teinte.</li>
+          <li><b>Donc les contrastes se retiennent par numéros.</b> Si un texte 700 passe sur un fond 100 pour une couleur, il passe pour toutes.</li>
+          <li><b>Plus besoin de tout tester.</b> Les règles plus bas vous disent quels numéros associer.</li>
+        </ol>
+        <div class="nu-demo-wrap"><p class="small muted" id="nuDemoLead"></p><div class="nu-demo" id="nuDemo"></div></div>
+      </div>
+      <span class="legend"><span>Sous chaque code : contraste sur blanc / sur noir</span><span>● nuance la plus proche de votre couleur</span><span>Cliquez une nuance pour copier son code</span></span>
+      <div class="scales"><div class="scale-table" id="scales"></div></div>
+      <h3>Règles à retenir</h3>
+      <div class="rules" id="rules"></div>
+      <details>
+        <summary class="small" style="cursor:pointer;font-weight:700">Contraste minimal entre deux pas</summary>
+        <div class="legend" style="margin:10px 0"><span><span class="pill l-aaa">≥ 7</span> AAA</span><span><span class="pill l-aa">≥ 4,5</span> AA</span><span><span class="pill l-large">≥ 3</span> grand texte, composants</span><span><span class="pill l-fail">&lt; 3</span> décoratif</span></div>
+        <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
+      </details>
+    </div>
+    <div class="card-surface">
+      <div class="row between"><h2>Exporter</h2><div class="row"><label for="exportFmt" class="sr">Format</label><select id="exportFmt"><option value="css">Variables CSS</option><option value="json">Design tokens (W3C DTCG)</option><option value="tw">Tailwind</option></select><button class="btn primary" id="copyExport" type="button">Copier</button></div></div>
+      <pre class="code" id="exportOut" tabindex="0"></pre>
+    </div>
+  </section>
+
+  <!-- TEXTE -->
+  <section id="lisibilite" role="tabpanel" aria-labelledby="tab-lisibilite" hidden>
+    <div class="card-surface">
+      <div class="row between">
+        <h2>Votre texte est‑il simple à lire ?</h2>
+        <div class="row">
+          <label for="rLang">Langue<select id="rLang"><option value="fr">Français</option><option value="en">Anglais</option></select></label>
+          <label for="rMax">Phrase longue après<input type="number" id="rMax" min="8" max="60" value="20" style="width:90px"></label>
+        </div>
+      </div>
+      <label for="rText">Collez votre texte (exemple pré‑rempli)<textarea id="rText" rows="7"></textarea></label>
+      <div class="stats" id="rStats"></div>
+      <div id="rLong"></div>
+      <p class="note">Score indicatif (Kandel et Moles pour le français, Flesch pour l’anglais) : le comptage des syllabes est approximatif. Le seuil de phrase longue est une convention d’équipe, pas une exigence WCAG. Critère lié : 3.1.5 Niveau de lecture (AAA).</p>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section id="sources" role="tabpanel" aria-labelledby="tab-sources" hidden>
+    <div class="card-surface src">
+      <h2>WCAG 2.0, 2.1, 2.2 : ce qui change</h2>
+      <p class="note">Les seuils de contraste du texte sont identiques dans les trois versions. 2.1 ajoute le contraste des composants et l’espacement du texte ; 2.2 ajoute l’apparence du focus.</p>
+      <div class="tablewrap"><table class="ver">
+        <thead><tr><th scope="col">Critère</th><th scope="col">Exigence</th><th scope="col">Niveau</th><th scope="col">Versions</th></tr></thead>
+        <tbody>
+          <tr><td>1.4.3 Contraste (minimum)</td><td>4,5:1 ; 3:1 pour le grand texte</td><td>AA</td><td>2.0, 2.1, 2.2</td></tr>
+          <tr><td>1.4.6 Contraste (amélioré)</td><td>7:1 ; 4,5:1 pour le grand texte</td><td>AAA</td><td>2.0, 2.1, 2.2</td></tr>
+          <tr><td>1.4.8 Présentation visuelle</td><td>80 caractères max., pas de justification, interligne ≥ 1,5</td><td>AAA</td><td>2.0, 2.1, 2.2</td></tr>
+          <tr><td>3.1.5 Niveau de lecture</td><td>Version simplifiée si le texte dépasse le niveau du premier cycle du secondaire</td><td>AAA</td><td>2.0, 2.1, 2.2</td></tr>
+          <tr><td>1.4.11 Contraste du contenu non textuel</td><td>3:1 pour composants et graphiques</td><td>AA</td><td>2.1, 2.2</td></tr>
+          <tr><td>1.4.12 Espacement du texte</td><td>Pas de perte avec interligne 1,5, paragraphes 2×, lettres 0,12 em, mots 0,16 em</td><td>AA</td><td>2.1, 2.2</td></tr>
+          <tr><td>2.4.13 Apparence du focus</td><td>Indicateur d’au moins 2 px de périmètre, contraste 3:1 entre états</td><td>AAA</td><td>2.2</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Grand texte : 18 pt (24 px) et plus, ou 14 pt (18,67 px) et plus en gras. Formule de luminance : WCAG 2.2 utilise le seuil 0,04045 au lieu de 0,03928 dans le texte d’origine de 2.0 ; aucune valeur sur 8 bits ne tombe entre les deux (10/255 ≈ 0,0392 ; 11/255 ≈ 0,0431), le résultat est donc identique pour les couleurs hexadécimales.</p>
+      <h2>Références</h2>
+      <ul>
+        <li>W3C, <a href="https://www.w3.org/TR/WCAG20/" target="_blank" rel="noopener">WCAG 2.0</a> (2008), <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">WCAG 2.1</a> (2018), <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a> (2023).</li>
+        <li>W3C, Comprendre les critères : <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" target="_blank" rel="noopener">1.4.3</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html" target="_blank" rel="noopener">1.4.6</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/visual-presentation.html" target="_blank" rel="noopener">1.4.8</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" target="_blank" rel="noopener">1.4.11</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html" target="_blank" rel="noopener">1.4.12</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html" target="_blank" rel="noopener">2.4.13</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/reading-level.html" target="_blank" rel="noopener">3.1.5</a>.</li>
+        <li>Björn Ottosson, « A perceptual color space for image processing », 2020 (OKLab). <a href="https://bottosson.github.io/posts/oklab/" target="_blank" rel="noopener">bottosson.github.io/posts/oklab</a></li>
+        <li>G. M. Machado, M. M. Oliveira, L. A. F. Fernandes, « A Physiologically-based Model for Simulation of Color Vision Deficiency », IEEE TVCG 15(6), 2009. <a href="https://doi.org/10.1109/TVCG.2009.113" target="_blank" rel="noopener">doi:10.1109/TVCG.2009.113</a></li>
+        <li>R. Flesch, « A new readability yardstick », Journal of Applied Psychology 32(3), 1948 ; adaptation française : L. Kandel et A. Moles, 1958.</li>
+        <li>Catalogue Google Fonts : 1 908 familles, d’après le paquet npm <span class="mono">google-font-metadata</span> 6.0.8 (Fontsource, janvier 2026).</li>
+        <li>L’interface utilise Switzer, police de l’Indian Type Foundry diffusée par Fontshare (licence ITF Free Font License, fontshare.com/terms).</li>
+        <li>Adobe Fonts et Fontshare servent leurs polices depuis leurs propres domaines, bloqués sur claude.ai. Ils fonctionneront une fois l’outil hébergé sur votre domaine.</li>
+      </ul>
+      <p class="note">Le ratio WCAG 2 ne tient pas compte du dessin de la police : une police fine à 4,5:1 peut rester difficile à lire, d’où l’aperçu réel. APCA (brouillon WCAG 3) n’est pas utilisé, faute de valeur normative. Inspiré du principe de <a href="https://accessiblepalette.uk/" target="_blank" rel="noopener">accessiblepalette.uk</a>, réécrit indépendamment.</p>
+    </div>
+  </section>
+</div>
+<div class="pop" id="popFont" hidden>
+          <h3>Police <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
+          <div class="seg" role="group" aria-label="Source">
+            <button type="button" data-src="google" aria-pressed="true">Google Fonts</button>
+            <button type="button" data-src="other" aria-pressed="false">Adobe et autres</button>
+          </div>
+          <div id="paneGoogle" style="display:flex;flex-direction:column;gap:8px">
+            <div class="row" style="flex-wrap:nowrap">
+              <label for="fontSearch" class="sr">Rechercher une police</label>
+              <input type="search" id="fontSearch" placeholder="Rechercher parmi 1 908 polices" style="flex:1" autocomplete="off">
+              <label for="fontCat" class="sr">Catégorie</label>
+              <select id="fontCat"><option value="">Toutes</option><option value="s">Sans</option><option value="r">Serif</option><option value="d">Titrage</option><option value="h">Manuscrite</option><option value="m">Chasse fixe</option></select>
+            </div>
+            <ul class="fontlist" id="fontList" role="listbox" aria-label="Polices"></ul>
+          </div>
+          <div id="paneOther" style="display:flex;flex-direction:column;gap:14px" hidden>
+            <div class="lbl"><span style="color:var(--ink)">Importer un fichier de police</span>
+              <input type="file" id="fontFile" accept=".otf,.ttf,.woff,.woff2,font/*"><span class="small">.otf, .ttf, .woff, .woff2. Le fichier reste dans votre navigateur.</span></div>
+            <div class="lbl"><span style="color:var(--ink)">Police installée sur cet ordinateur</span>
+              <div class="row" style="flex-wrap:nowrap"><label for="localName" class="sr">Nom</label><input type="text" id="localName" placeholder="ex. Helvetica Neue, Arial" style="flex:1"><button class="btn sm" id="localUse" type="button">Tester</button></div>
+              <div id="localStatus" class="status" hidden></div></div>
+            <div class="lbl"><span style="color:var(--ink)">Kit Adobe Fonts (projet web)</span>
+              <div class="row" style="flex-wrap:nowrap"><label for="kitId" class="sr">ID du kit</label><input type="text" id="kitId" placeholder="ID du kit" style="flex:1" class="mono"><button class="btn sm" id="kitLoad" type="button">Charger</button></div>
+              <div class="row" style="flex-wrap:nowrap"><label for="kitFamily" class="sr">Nom CSS</label><input type="text" id="kitFamily" placeholder="Nom CSS, ex. source-sans-pro" style="flex:1" class="mono"><button class="btn sm" id="kitUse" type="button">Utiliser</button></div>
+              <div id="kitStatus" class="status" hidden></div></div>
+          </div>
+        </div>
+
+        <div class="pop" id="popColor" hidden>
+          <h3><span id="popColorTitle">Couleur du texte</span> <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
+          <div class="row" style="flex-wrap:nowrap">
+            <input type="color" id="pcPicker" aria-label="Sélecteur de couleur">
+            <label for="pcHex" class="sr">Code hexadécimal</label><input type="text" id="pcHex" class="mono" style="flex:1">
+          </div>
+          <p class="small muted" id="popColorHint">✓ = conforme avec la couleur d’en face</p>
+          <div class="chipgrid" id="chipGrid"></div>
+        </div>
+
+        <div class="pop" id="popMore" hidden>
+          <h3>Réglages <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
+          <div class="sliders">
+            <div class="sl"><div class="top"><label for="sSize">Taille</label><b id="vSize"></b></div><input type="range" id="sSize" min="10" max="72" step="0.5"></div>
+            <div class="sl"><label for="sWeight">Graisse</label><select id="sWeight"></select></div>
+            <div class="sl"><div class="top"><label for="sLine">Interligne</label><b id="vLine"></b></div><input type="range" id="sLine" min="1" max="2.2" step="0.05"></div>
+            <div class="sl"><div class="top"><label for="sLetter">Approche</label><b id="vLetter"></b></div><input type="range" id="sLetter" min="-0.05" max="0.2" step="0.005"></div>
+            <div class="sl"><div class="top"><label for="sMeasure">Longueur de ligne</label><b id="vMeasure"></b></div><input type="range" id="sMeasure" min="30" max="120" step="1"></div>
+            <div class="sl"><span class="top">Alignement</span><div class="seg" role="group" aria-label="Alignement" id="alignSeg"><button type="button" data-v="left">Gauche</button><button type="button" data-v="justify">Justifié</button><button type="button" data-v="center">Centré</button></div></div>
+          </div>
+          <button class="btn" id="spacingTest" type="button" aria-pressed="false">Tester l’espacement imposé (1.4.12)</button>
+        </div>
+<div class="pop" id="popNorm" hidden role="dialog" aria-label="Norme de référence">
+  <h3>Norme de référence <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
+  <div class="normopt"><span class="lbl">Version des WCAG</span><div class="seg" role="group" aria-label="Version des WCAG" id="verSeg"><button type="button" data-v="2.0">2.0</button><button type="button" data-v="2.1">2.1</button><button type="button" data-v="2.2">2.2</button></div>
+  <p class="small muted">2.1 ajoute le contraste des composants (1.4.11) et l’espacement du texte (1.4.12). 2.2 ajoute l’apparence du focus (2.4.13, AAA).</p></div>
+  <div class="normopt"><span class="lbl">Niveau visé</span><div class="seg" role="group" aria-label="Niveau" id="lvlSeg"><button type="button" data-v="AA">AA</button><button type="button" data-v="AAA">AAA</button></div>
+  <p class="small muted">AA : 4,5:1 pour le texte courant, 3:1 pour les grands textes. AAA : 7:1 et 4,5:1.</p></div>
+  <button class="btn primary" type="button" data-close style="justify-content:center">Appliquer</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const GF_RAW = "ABeeZee|s|4i;ADLaM Display|d|4;AR One Sans|s|4567;Abel|s|4;Abhaya Libre|r|45678;Aboreto|d|4;Abril Fatface|d|4;Abyssinica SIL|r|4;Aclonica|s|4;Acme|s|4;Actor|s|4;Adamina|r|4;Advent Pro|s|123456789i;Afacad Flux|s|123456789;Afacad|s|4567i;Agbalumo|d|4;Agdasima|s|47;Agu Display|d|4;Aguafina Script|h|4;Akatab|s|456789;Akaya Kanadaka|d|4;Akaya Telivigala|d|4;Akronim|d|4;Akshar|s|34567;Aladin|d|4;Alan Sans|s|3456789;Alata|s|4;Alatsi|s|4;Albert Sans|s|123456789i;Aldrich|s|4;Alef|s|47;Alegreya SC|r|45789i;Alegreya Sans SC|s|1345789i;Alegreya Sans|s|1345789i;Alegreya|r|456789i;Aleo|r|123456789i;Alex Brush|h|4;Alexandria|s|123456789;Alfa Slab One|d|4;Alice|r|4;Alike Angular|r|4;Alike|r|4;Alkalami|r|4;Alkatra|d|4567;Allan|d|47;Allerta Stencil|s|4;Allerta|s|4;Allison|h|4;Allura|h|4;Almarai|s|3478;Almendra Display|d|4;Almendra SC|r|4;Almendra|r|47i;Alumni Sans Collegiate One|s|4i;Alumni Sans Inline One|d|4i;Alumni Sans Pinstripe|s|4i;Alumni Sans SC|s|123456789i;Alumni Sans|s|123456789i;Amarante|d|4;Amaranth|s|47i;Amarna|s|1234567i;Amatic SC|h|47;Amethysta|r|4;Amiko|s|467;Amiri Quran|r|4;Amiri|r|47i;Amita|h|47;Anaheim|s|45678;Ancizar Sans|s|123456789i;Ancizar Serif|r|3456789i;Andada Pro|r|45678i;Andika|s|47i;Anek Bangla|s|12345678;Anek Devanagari|s|12345678;Anek Gujarati|s|12345678;Anek Gurmukhi|s|12345678;Anek Kannada|s|12345678;Anek Latin|s|12345678;Anek Malayalam|s|12345678;Anek Odia|s|12345678;Anek Tamil|s|12345678;Anek Telugu|s|12345678;Angkor|d|4;Annapurna SIL|r|47;Annie Use Your Telescope|h|4;Anonymous Pro|m|47i;Anta|s|4;Antic Didone|r|4;Antic Slab|r|4;Antic|s|4;Anton SC|s|4;Antonio|s|1234567;Anton|s|4;Anuphan|s|1234567;Anybody|d|123456789i;Aoboshi One|r|4;Arapey|r|4i;Arbutus Slab|r|4;Arbutus|r|4;Architects Daughter|h|4;Archivo Black|s|4;Archivo Narrow|s|4567i;Archivo|s|123456789i;Are You Serious|h|4;Aref Ruqaa Ink|r|47;Aref Ruqaa|r|47;Arima|d|1234567;Arimo|s|4567i;Arizonia|h|4;Armata|s|4;Arsenal SC|s|47i;Arsenal|s|47i;Artifika|r|4;Arvo|r|47i;Arya|s|47;Asap Condensed|s|23456789i;Asap|s|123456789i;Asar|r|4;Asimovian|s|4;Asset|d|4;Assistant|s|2345678;Asta Sans|s|345678;Astloch|d|47;Asul|r|47;Athiti|s|234567;Atkinson Hyperlegible Mono|s|2345678i;Atkinson Hyperlegible Next|s|2345678i;Atkinson Hyperlegible|s|47i;Atma|d|34567;Atomic Age|d|4;Aubrey|d|4;Audiowide|d|4;Autour One|d|4;Average Sans|s|4;Average|r|4;Averia Gruesa Libre|d|4;Averia Libre|d|347i;Averia Sans Libre|d|347i;Averia Serif Libre|d|347i;Azeret Mono|m|123456789i;B612 Mono|m|47i;B612|s|47i;BBH Bartle|s|4;BBH Bogle|s|4;BBH Hegarty|s|4;BIZ UDGothic|s|47;BIZ UDMincho|r|47;BIZ UDPGothic|s|47;BIZ UDPMincho|r|47;Babylonica|h|4;Bacasime Antique|r|4;Bad Script|h|4;Badeen Display|d|4;Bagel Fat One|d|4;Bahiana|d|4;Bahianita|d|4;Bai Jamjuree|s|234567i;Bakbak One|d|4;Ballet|h|4;Baloo 2|d|45678;Baloo Bhai 2|d|45678;Baloo Bhaijaan 2|d|45678;Baloo Bhaina 2|d|45678;Baloo Chettan 2|d|45678;Baloo Da 2|d|45678;Baloo Paaji 2|d|45678;Baloo Tamma 2|d|45678;Baloo Tammudu 2|d|45678;Baloo Thambi 2|d|45678;Balsamiq Sans|d|47i;Balthazar|r|4;Bangers|d|4;Barlow Condensed|s|123456789i;Barlow Semi Condensed|s|123456789i;Barlow|s|123456789i;Barriecito|d|4;Barrio|d|4;Basic|s|4;Baskervville SC|r|4567;Baskervville|r|4567i;Battambang|d|13479;Baumans|d|4;Bayon|s|4;Be Vietnam Pro|s|123456789i;Beau Rivage|h|4;Bebas Neue|s|4;Beiruti|s|23456789;Belanosima|s|467;Belgrano|r|4;Bellefair|r|4;Belleza|s|4;Bellota Text|d|347i;Bellota|d|347i;BenchNine|s|347;Benne|r|4;Bentham|r|4;Berkshire Swash|h|4;Besley|r|456789i;Beth Ellen|h|4;Bevan|r|4i;BhuTuka Expanded One|r|4;Big Shoulders Inline|d|123456789;Big Shoulders Stencil|d|123456789;Big Shoulders|d|123456789;Bigelow Rules|d|4;Bigshot One|d|4;Bilbo Swash Caps|h|4;Bilbo|h|4;BioRhyme Expanded|r|23478;BioRhyme|r|2345678;Birthstone Bounce|h|45;Birthstone|h|4;Biryani|s|2346789;Bitcount Grid Double Ink|d|123456789;Bitcount Grid Double|d|123456789;Bitcount Grid Single Ink|d|123456789;Bitcount Grid Single|d|123456789;Bitcount Ink|d|123456789;Bitcount Prop Double Ink|d|123456789;Bitcount Prop Double|d|123456789;Bitcount Prop Single Ink|d|123456789;Bitcount Prop Single|d|123456789;Bitcount Single Ink|d|123456789;Bitcount Single|d|123456789;Bitcount|d|123456789;Bitter|r|123456789i;Black And White Picture|d|4;Black Han Sans|s|4;Black Ops One|d|4;Blaka Hollow|d|4;Blaka Ink|d|4;Blaka|d|4;Blinker|s|12346789;Bodoni Moda SC|r|456789i;Bodoni Moda|r|456789i;Bokor|d|4;Boldonse|d|4;Bona Nova SC|r|47i;Bona Nova|r|47i;Bonbon|h|4;Bonheur Royale|h|4;Boogaloo|d|4;Borel|h|4;Bowlby One SC|d|4;Bowlby One|d|4;Braah One|s|4;Brawler|r|47;Bree Serif|r|4;Bricolage Grotesque|s|2345678;Bruno Ace SC|d|4;Bruno Ace|d|4;Brygada 1918|r|4567i;Bubblegum Sans|d|4;Bubbler One|s|4;Buda|d|3;Buenard|r|4567;Bungee Hairline|d|4;Bungee Inline|d|4;Bungee Outline|d|4;Bungee Shade|d|4;Bungee Spice|d|4;Bungee Tint|d|4;Bungee|d|4;Butcherman|d|4;Butterfly Kids|h|4;Bytesized|s|4;Cabin Condensed|s|4567;Cabin Sketch|d|47;Cabin|s|4567i;Cactus Classical Serif|r|4;Caesar Dressing|d|4;Cagliostro|s|4;Cairo Play|s|23456789;Cairo|s|23456789;Cal Sans|s|4;Caladea|r|47i;Calistoga|d|4;Calligraffitti|h|4;Cambay|s|47i;Cambo|r|4;Candal|s|4;Cantarell|s|47i;Cantata One|r|4;Cantora One|s|4;Caprasimo|d|4;Capriola|s|4;Caramel|h|4;Carattere|h|4;Cardo|r|47i;Carlito|s|47i;Carme|s|4;Carrois Gothic SC|s|4;Carrois Gothic|s|4;Carter One|d|4;Cascadia Code|s|234567i;Cascadia Mono|s|234567i;Castoro Titling|d|4;Castoro|r|4i;Catamaran|s|123456789;Caudex|r|47i;Cause|h|123456789;Caveat Brush|h|4;Caveat|h|4567;Cedarville Cursive|h|4;Ceviche One|d|4;Chakra Petch|s|34567i;Changa One|d|4i;Changa|s|2345678;Chango|d|4;Charis SIL|r|47i;Charmonman|h|47;Charm|h|47;Chathura|s|13478;Chau Philomene One|s|4i;Chela One|d|4;Chelsea Market|d|4;Chenla|d|4;Cherish|h|4;Cherry Bomb One|d|4;Cherry Cream Soda|d|4;Cherry Swash|d|47;Chewy|d|4;Chicle|d|4;Chilanka|h|4;Chiron GoRound TC|s|23456789;Chiron Hei HK|s|23456789i;Chiron Sung HK|r|23456789i;Chivo Mono|m|123456789i;Chivo|s|123456789i;Chocolate Classical Sans|s|4;Chokokutai|d|4;Chonburi|d|4;Cinzel Decorative|d|479;Cinzel|r|456789;Clicker Script|h|4;Climate Crisis|d|4;Coda|d|48;Codystar|d|34;Coiny|d|4;Combo|d|4;Comfortaa|d|34567;Comforter Brush|h|4;Comforter|h|4;Comic Neue|h|347i;Comic Relief|d|47;Coming Soon|h|4;Comme|s|123456789;Commissioner|s|123456789;Concert One|d|4;Condiment|h|4;Content|d|47;Contrail One|d|4;Convergence|s|4;Cookie|h|4;Copse|r|4;Coral Pixels|d|4;Corben|d|47;Corinthia|h|47;Cormorant Garamond|r|34567i;Cormorant Infant|r|34567i;Cormorant SC|r|34567;Cormorant Unicase|r|34567;Cormorant Upright|r|34567;Cormorant|r|34567i;Cossette Texte|s|47;Cossette Titre|s|47;Courgette|h|4;Courier Prime|m|47i;Cousine|m|47i;Coustard|r|49;Covered By Your Grace|h|4;Crafty Girls|h|4;Creepster|d|4;Crete Round|r|4i;Crimson Pro|r|23456789i;Crimson Text|r|467i;Croissant One|d|4;Crushed|d|4;Cuprum|s|4567i;Cute Font|d|4;Cutive Mono|m|4;Cutive|r|4;DM Mono|m|345i;DM Sans|s|123456789i;DM Serif Display|r|4i;DM Serif Text|r|4i;Dai Banna SIL|r|34567i;Damion|h|4;Dancing Script|h|4567;Danfo|r|4;Dangrek|d|4;Darker Grotesque|s|3456789;Darumadrop One|d|4;David Libre|r|457;Dawning of a New Day|h|4;Days One|s|4;Dekko|h|4;Dela Gothic One|d|4;Delicious Handrawn|h|4;Delius Swash Caps|h|4;Delius Unicase|h|47;Delius|h|4;Della Respira|r|4;Denk One|s|4;Devonshire|h|4;Dhurjati|s|4;Didact Gothic|s|4;Diphylleia|r|4;Diplomata SC|d|4;Diplomata|d|4;Do Hyeon|s|4;Dokdo|d|4;Domine|r|4567;Donegal One|r|4;Dongle|s|347;Doppio One|s|4;Dorsa|s|4;Dosis|s|2345678;DotGothic16|s|4;Doto|s|123456789;Dr Sugiyama|h|4;Duru Sans|s|4;DynaPuff|d|4567;Dynalight|d|4;EB Garamond|r|45678i;Eagle Lake|h|4;East Sea Dokdo|h|4;Eater|d|4;Economica|s|47i;Eczar|r|45678;Edu AU VIC WA NT Arrows|h|4567;Edu AU VIC WA NT Dots|h|4567;Edu AU VIC WA NT Guides|h|4567;Edu AU VIC WA NT Hand|h|4567;Edu AU VIC WA NT Pre|h|4567;Edu NSW ACT Cursive|h|4567;Edu NSW ACT Foundation|h|4567;Edu NSW ACT Hand Pre|h|4567;Edu QLD Beginner|h|4567;Edu QLD Hand|h|4567;Edu SA Beginner|h|4567;Edu SA Hand|h|4567;Edu TAS Beginner|h|4567;Edu VIC WA NT Beginner|h|4567;Edu VIC WA NT Hand Pre|h|4567;Edu VIC WA NT Hand|h|4567;El Messiri|s|4567;Electrolize|s|4;Elms Sans|s|123456789i;Elsie Swash Caps|d|49;Elsie|d|49;Emblema One|d|4;Emilys Candy|d|4;Encode Sans Condensed|s|123456789;Encode Sans Expanded|s|123456789;Encode Sans SC|s|123456789;Encode Sans Semi Condensed|s|123456789;Encode Sans Semi Expanded|s|123456789;Encode Sans|s|123456789;Engagement|h|4;Englebert|s|4;Enriqueta|r|4567;Ephesis|h|4;Epilogue|s|123456789i;Epunda Sans|s|3456789i;Epunda Slab|r|3456789i;Erica One|d|4;Esteban|r|4;Estonia|h|4;Euphoria Script|h|4;Ewert|d|4;Exile|d|4;Exo 2|s|123456789i;Exo|s|123456789i;Expletus Sans|d|4567i;Explora|h|4;Faculty Glyphic|s|4;Fahkwang|s|234567i;Familjen Grotesk|s|4567i;Fanwood Text|r|4i;Farro|s|3457;Farsan|d|4;Fascinate Inline|d|4;Fascinate|d|4;Faster One|d|4;Fasthand|d|4;Fauna One|r|4;Faustina|r|345678i;Federant|d|4;Federo|s|4;Felipa|h|4;Fenix|r|4;Festive|h|4;Figtree|s|3456789i;Finger Paint|d|4;Finlandica|s|4567i;Fira Code|m|34567;Fira Mono|m|457;Fira Sans Condensed|s|123456789i;Fira Sans Extra Condensed|s|123456789i;Fira Sans|s|123456789i;Fjalla One|s|4;Fjord One|r|4;Flamenco|d|34;Flavors|d|4;Fleur De Leah|h|4;Flow Block|d|4;Flow Circular|d|4;Flow Rounded|d|4;Foldit|d|123456789;Fondamento|h|4i;Fontdiner Swanky|d|4;Forum|d|4;Fragment Mono|m|4i;Francois One|s|4;Frank Ruhl Libre|r|3456789;Fraunces|r|123456789i;Freckle Face|d|4;Fredericka the Great|d|4;Fredoka|s|34567;Freehand|d|4;Freeman|d|4;Fresca|s|4;Frijole|d|4;Fruktur|d|4i;Fugaz One|d|4;Fuggles|h|4;Funnel Display|d|345678;Funnel Sans|s|345678i;Fustat|s|2345678;Fuzzy Bubbles|h|47;GFS Didot|r|4;GFS Neohellenic|s|47i;Ga Maamli|d|4;Gabarito|d|456789;Gabriela|r|4;Gaegu|h|347;Gafata|s|4;Gajraj One|d|4;Galada|d|4;Galdeano|s|4;Galindo|d|4;Gamja Flower|h|4;Gantari|s|123456789i;Gasoek One|s|4;Gayathri|s|147;Geist Mono|m|123456789;Geist|s|123456789;Gelasio|r|4567i;Gemunu Libre|s|2345678;Genos|s|123456789i;Gentium Book Plus|r|47i;Gentium Plus|r|47i;Geologica|s|123456789;Geom|s|3456789i;Georama|s|123456789i;Geostar Fill|d|4;Geostar|d|4;Geo|s|4i;Germania One|d|4;Gideon Roman|d|4;Gidole|s|4;Gidugu|s|4;Gilda Display|r|4;Girassol|d|4;Give You Glory|h|4;Glass Antiqua|d|4;Glegoo|r|47;Gloock|r|4;Gloria Hallelujah|h|4;Glory|s|12345678i;Gluten|d|123456789;Goblin One|d|4;Gochi Hand|h|4;Goldman|d|47;Golos Text|s|456789;Google Sans Code|m|345678i;Google Sans Flex|s|123456789;Google Sans|s|4567i;Gorditas|d|47;Gothic A1|s|123456789;Gotu|s|4;Goudy Bookletter 1911|r|4;Gowun Batang|r|47;Gowun Dodum|s|4;Graduate|r|4;Grand Hotel|h|4;Grandiflora One|r|4;Grandstander|d|123456789i;Grape Nuts|h|4;Gravitas One|d|4;Great Vibes|h|4;Grechen Fuemen|h|4;Grenze Gotisch|d|123456789;Grenze|r|123456789i;Grey Qo|h|4;Griffy|d|4;Gruppo|s|4;Gudea|s|47i;Gugi|d|4;Gulzar|r|4;Gupter|r|457;Gurajada|s|4;Gwendolyn|h|47;Habibi|r|4;Hachi Maru Pop|h|4;Hahmlet|r|123456789;Halant|r|34567;Hammersmith One|s|4;Hanalei Fill|d|4;Hanalei|d|4;Handjet|d|123456789;Handlee|h|4;Hanken Grotesk|s|123456789i;Hanuman|r|123456789;Happy Monkey|d|4;Harmattan|s|4567;Headland One|r|4;Hedvig Letters Sans|s|4;Hedvig Letters Serif|r|4;Heebo|s|123456789;Henny Penny|d|4;Hepta Slab|r|123456789;Herr Von Muellerhoff|h|4;Hi Melody|h|4;Hina Mincho|r|4;Hind Guntur|s|34567;Hind Madurai|s|34567;Hind Mysuru|s|34567;Hind Siliguri|s|34567;Hind Vadodara|s|34567;Hind|s|34567;Holtwood One SC|r|4;Homemade Apple|h|4;Homenaje|s|4;Honk|d|4;Host Grotesk|s|345678i;Hubballi|s|4;Hubot Sans|s|23456789i;Huninn|s|4;Hurricane|h|4;IBM Plex Mono|m|1234567i;IBM Plex Sans Arabic|s|1234567;IBM Plex Sans Condensed|s|1234567i;IBM Plex Sans Devanagari|s|1234567;IBM Plex Sans Hebrew|s|1234567;IBM Plex Sans JP|s|1234567;IBM Plex Sans KR|s|1234567;IBM Plex Sans Thai Looped|s|1234567;IBM Plex Sans Thai|s|1234567;IBM Plex Sans|s|1234567i;IBM Plex Serif|r|1234567i;IM Fell DW Pica SC|r|4;IM Fell DW Pica|r|4i;IM Fell Double Pica SC|r|4;IM Fell Double Pica|r|4i;IM Fell English SC|r|4;IM Fell English|r|4i;IM Fell French Canon SC|r|4;IM Fell French Canon|r|4i;IM Fell Great Primer SC|r|4;IM Fell Great Primer|r|4i;Iansui|h|4;Ibarra Real Nova|r|4567i;Iceberg|d|4;Iceland|d|4;Imbue|r|123456789;Imperial Script|h|4;Imprima|s|4;Inclusive Sans|s|34567i;Inconsolata|m|23456789;Inder|s|4;Indie Flower|h|4;Ingrid Darling|h|4;Inika|r|47;Inknut Antiqua|r|3456789;Inria Sans|s|347i;Inria Serif|r|347i;Inspiration|h|4;Instrument Sans|s|4567i;Instrument Serif|r|4i;Intel One Mono|m|34567i;Inter Tight|s|123456789i;Inter|s|123456789i;Irish Grover|d|4;Island Moments|h|4;Istok Web|s|47i;Italiana|s|4;Italianno|h|4;Itim|h|4;Jacquard 12 Charted|d|4;Jacquard 12|d|4;Jacquard 24 Charted|d|4;Jacquard 24|d|4;Jacquarda Bastarda 9 Charted|d|4;Jacquarda Bastarda 9|d|4;Jacques Francois Shadow|d|4;Jacques Francois|r|4;Jaini Purva|d|4;Jaini|d|4;Jaldi|s|47;Jaro|s|4;Jersey 10 Charted|d|4;Jersey 10|d|4;Jersey 15 Charted|d|4;Jersey 15|d|4;Jersey 20 Charted|d|4;Jersey 20|d|4;Jersey 25 Charted|d|4;Jersey 25|d|4;JetBrains Mono|m|12345678i;Jim Nightshade|h|4;Joan|r|4;Jockey One|s|4;Jolly Lodger|d|4;Jomhuria|d|4;Jomolhari|r|4;Josefin Sans|s|1234567i;Josefin Slab|r|1234567i;Jost|s|123456789i;Joti One|d|4;Jua|s|4;Judson|r|47i;Julee|h|4;Julius Sans One|s|4;Junge|r|4;Jura|s|34567;Just Another Hand|h|4;Just Me Again Down Here|h|4;K2D|s|12345678i;Kablammo|d|4;Kadwa|r|47;Kaisei Decol|r|457;Kaisei HarunoUmi|r|457;Kaisei Opti|r|457;Kaisei Tokumin|r|4578;Kalam|h|347;Kalnia Glaze|d|1234567;Kalnia|r|1234567;Kameron|r|4567;Kanchenjunga|s|4567;Kanit|s|123456789i;Kantumruy Pro|s|1234567i;Kapakana|h|34;Karantina|d|347;Karla Tamil Inclined|s|47;Karla Tamil Upright|s|47;Karla|s|2345678i;Karma|r|34567;Katibeh|d|4;Kaushan Script|h|4;Kavivanar|h|4;Kavoon|d|4;Kay Pho Du|r|4567;Kdam Thmor Pro|s|4;Keania One|d|4;Kedebideri|s|456789;Kelly Slab|d|4;Kenia|d|4;Khand|s|34567;Khmer|s|4;Khula|s|34678;Kings|h|4;Kirang Haerang|d|4;Kite One|s|4;Kiwi Maru|r|345;Klee One|h|46;Knewave|d|4;KoHo|s|234567i;Kodchasan|s|234567i;Kode Mono|m|4567;Koh Santepheap|r|13479;Kolker Brush|h|4;Konkhmer Sleokchher|d|4;Kosugi Maru|s|4;Kosugi|s|4;Kotta One|r|4;Koulen|d|4;Kranky|d|4;Kreon|r|34567;Kristi|h|4;Krona One|s|4;Krub|s|234567i;Kufam|s|456789i;Kulim Park|s|23467i;Kumar One Outline|d|4;Kumar One|d|4;Kumbh Sans|s|123456789;Kurale|r|4;LXGW Marker Gothic|s|4;LXGW WenKai Mono TC|m|347;LXGW WenKai TC|h|347;La Belle Aurore|h|4;Labrada|r|123456789i;Lacquer|d|4;Laila|r|34567;Lakki Reddy|h|4;Lalezar|s|4;Lancelot|d|4;Langar|d|4;Lateef|r|2345678;Lato|s|13479i;Lavishly Yours|h|4;League Gothic|s|4;League Script|h|4;League Spartan|s|123456789;Leckerli One|h|4;Ledger|r|4;Lekton|m|47i;Lemonada|d|34567;Lemon|d|4;Lexend Deca|s|123456789;Lexend Exa|s|123456789;Lexend Giga|s|123456789;Lexend Mega|s|123456789;Lexend Peta|s|123456789;Lexend Tera|s|123456789;Lexend Zetta|s|123456789;Lexend|s|123456789;Libertinus Keyboard|d|4;Libertinus Math|d|4;Libertinus Mono|m|4;Libertinus Sans|s|47i;Libertinus Serif Display|d|4;Libertinus Serif|r|467i;Libre Barcode 128 Text|d|4;Libre Barcode 128|d|4;Libre Barcode 39 Extended Text|d|4;Libre Barcode 39 Extended|d|4;Libre Barcode 39 Text|d|4;Libre Barcode 39|d|4;Libre Barcode EAN13 Text|d|4;Libre Baskerville|r|4567i;Libre Bodoni|r|4567i;Libre Caslon Display|r|4;Libre Caslon Text|r|47i;Libre Franklin|s|123456789i;Licorice|h|4;Life Savers|d|478;Lilex|m|1234567i;Lilita One|d|4;Lily Script One|d|4;Limelight|d|4;Linden Hill|r|4i;Linefont|d|123456789;Lisu Bosa|r|23456789i;Literata|r|23456789i;Liter|s|4;Liu Jian Mao Cao|h|4;Livvic|s|12345679i;Lobster Two|d|47i;Lobster|d|4;Londrina Outline|d|4;Londrina Shadow|d|4;Londrina Sketch|d|4;Londrina Solid|d|1349;Long Cang|h|4;Lora|r|4567i;Love Light|h|4;Love Ya Like A Sister|d|4;Loved by the King|h|4;Lovers Quarrel|h|4;Luckiest Guy|d|4;Lugrasimo|h|4;Lumanosimo|h|4;Lunasima|s|47;Lusitana|r|47;Lustria|r|4;Luxurious Roman|d|4;Luxurious Script|h|4;M PLUS 1 Code|m|1234567;M PLUS 1p|s|1345789;M PLUS 1|s|123456789;M PLUS 2|s|123456789;M PLUS Code Latin|s|1234567;M PLUS Rounded 1c|s|1345789;Ma Shan Zheng|h|4;Macondo Swash Caps|d|4;Macondo|d|4;Mada|s|23456789;Madimi One|s|4;Magra|s|47;Maiden Orange|r|4;Maitree|r|234567;Major Mono Display|m|4;Mako|s|4;Mali|h|234567i;Mallanna|s|4;Maname|r|4;Mandali|s|4;Manjari|s|147;Manrope|s|2345678;Mansalva|h|4;Manuale|r|345678i;Manufacturing Consent|d|4;Marcellus SC|r|4;Marcellus|r|4;Marck Script|h|4;Margarine|d|4;Marhey|d|34567;Markazi Text|r|4567;Marko One|r|4;Marmelad|s|4;Martel Sans|s|2346789;Martel|r|2346789;Martian Mono|m|12345678;Marvel|s|47i;Matangi|s|3456789;Mate SC|r|4;Matemasie|s|4;Material Symbols|m|1234567;Mate|r|4i;Maven Pro|s|456789;McLaren|d|4;Mea Culpa|h|4;Meddon|h|4;MedievalSharp|d|4;Medula One|d|4;Meera Inimai|s|4;Megrim|d|4;Meie Script|h|4;Menbere|s|1234567;Meow Script|h|4;Merienda|h|3456789;Merriweather Sans|s|345678i;Merriweather|r|3456789i;Metal Mania|d|4;Metal|d|4;Metamorphous|d|4;Metrophobic|s|4;Michroma|s|4;Micro 5 Charted|d|4;Micro 5|d|4;Milonga|d|4;Miltonian Tattoo|d|4;Miltonian|d|4;Mina|s|47;Mingzat|s|4;Miniver|d|4;Miriam Libre|s|4567;Mirza|r|4567;Miss Fajardose|h|4;Mitr|s|234567;Mochiy Pop One|s|4;Mochiy Pop P One|s|4;Modak|d|4;Modern Antiqua|d|4;Moderustic|s|345678;Mogra|d|4;Mohave|s|34567i;Moirai One|d|4;Molengo|s|4;Molle|h|4i;Momo Signature|s|4;Momo Trust Display|s|4;Momo Trust Sans|s|2345678;Mona Sans|s|23456789i;Monda|s|4567;Monofett|m|4;Monomakh|d|4;Monomaniac One|s|4;Monoton|d|4;Monsieur La Doulaise|h|4;Montaga|r|4;Montagu Slab|r|1234567;MonteCarlo|h|4;Montez|h|4;Montserrat Alternates|s|123456789i;Montserrat Underline|s|123456789i;Montserrat|s|123456789i;Moo Lah Lah|d|4;Mooli|s|4;Moon Dance|h|4;Moulpali|s|4;Moul|d|4;Mountains of Christmas|d|47;Mouse Memoirs|s|4;Mozilla Headline|s|234567;Mozilla Text|s|234567;Mr Bedfort|h|4;Mr Dafoe|h|4;Mr De Haviland|h|4;Mrs Saint Delafield|h|4;Mrs Sheppards|h|4;Ms Madi|h|4;Mukta Mahee|s|2345678;Mukta Malar|s|2345678;Mukta Vaani|s|2345678;Mukta|s|2345678;Mulish|s|23456789i;Murecho|s|123456789;MuseoModerno|d|123456789i;My Soul|h|4;Mynerve|h|4;Mystery Quest|d|4;NTR|s|4;Nabla|d|4;Namdhinggo|r|45678;Nanum Brush Script|h|4;Nanum Gothic Coding|h|47;Nanum Gothic|s|478;Nanum Myeongjo|r|478;Nanum Pen Script|h|4;Narnoor|s|45678;Nata Sans|s|123456789;National Park|s|2345678;Neonderthaw|h|4;Nerko One|h|4;Neucha|h|4;Neuton|r|23478i;New Amsterdam|s|4;New Rocker|d|4;New Tegomin|r|4;News Cycle|s|47;Newsreader|r|2345678i;Niconne|h|4;Niramit|s|234567i;Nixie One|d|4;Nobile|s|457i;Nokora|s|123456789;Norican|h|4;Nosifer|d|4;Notable|s|4;Nothing You Could Do|h|4;Noticia Text|r|47i;Noto Color Emoji|s|4;Noto Emoji|s|34567;Noto Kufi Arabic|s|123456789;Noto Music|s|4;Noto Naskh Arabic|r|4567;Noto Nastaliq Urdu|r|4567;Noto Rashi Hebrew|r|123456789;Noto Sans Adlam Unjoined|s|4567;Noto Sans Adlam|s|4567;Noto Sans Anatolian Hieroglyphs|s|4;Noto Sans Arabic|s|123456789;Noto Sans Armenian|s|123456789;Noto Sans Avestan|s|4;Noto Sans Balinese|s|4567;Noto Sans Bamum|s|4567;Noto Sans Bassa Vah|s|4567;Noto Sans Batak|s|4;Noto Sans Bengali|s|123456789;Noto Sans Bhaiksuki|s|4;Noto Sans Brahmi|s|4;Noto Sans Buginese|s|4;Noto Sans Buhid|s|4;Noto Sans Canadian Aboriginal|s|123456789;Noto Sans Carian|s|4;Noto Sans Caucasian Albanian|s|4;Noto Sans Chakma|s|4;Noto Sans Cham|s|123456789;Noto Sans Cherokee|s|123456789;Noto Sans Chorasmian|s|4;Noto Sans Coptic|s|4;Noto Sans Cuneiform|s|4;Noto Sans Cypriot|s|4;Noto Sans Cypro Minoan|s|4;Noto Sans Deseret|s|4;Noto Sans Devanagari|s|123456789;Noto Sans Display|s|123456789i;Noto Sans Duployan|s|47;Noto Sans Egyptian Hieroglyphs|s|4;Noto Sans Elbasan|s|4;Noto Sans Elymaic|s|4;Noto Sans Ethiopic|s|123456789;Noto Sans Georgian|s|123456789;Noto Sans Glagolitic|s|4;Noto Sans Gothic|s|4;Noto Sans Grantha|s|4;Noto Sans Gujarati|s|123456789;Noto Sans Gunjala Gondi|s|4567;Noto Sans Gurmukhi|s|123456789;Noto Sans HK|s|123456789;Noto Sans Hanifi Rohingya|s|4567;Noto Sans Hanunoo|s|4;Noto Sans Hatran|s|4;Noto Sans Hebrew|s|123456789;Noto Sans Imperial Aramaic|s|4;Noto Sans Indic Siyaq Numbers|s|4;Noto Sans Inscriptional Pahlavi|s|4;Noto Sans Inscriptional Parthian|s|4;Noto Sans JP|s|123456789;Noto Sans Javanese|s|4567;Noto Sans KR|s|123456789;Noto Sans Kaithi|s|4;Noto Sans Kannada|s|123456789;Noto Sans Kawi|s|4567;Noto Sans Kayah Li|s|4567;Noto Sans Kharoshthi|s|4;Noto Sans Khmer|s|123456789;Noto Sans Khojki|s|4;Noto Sans Khudawadi|s|4;Noto Sans Lao Looped|s|123456789;Noto Sans Lao|s|123456789;Noto Sans Lepcha|s|4;Noto Sans Limbu|s|4;Noto Sans Linear A|s|4;Noto Sans Linear B|s|4;Noto Sans Lisu|s|4567;Noto Sans Lycian|s|4;Noto Sans Lydian|s|4;Noto Sans Mahajani|s|4;Noto Sans Malayalam|s|123456789;Noto Sans Mandaic|s|4;Noto Sans Manichaean|s|4;Noto Sans Marchen|s|4;Noto Sans Masaram Gondi|s|4;Noto Sans Math|s|4;Noto Sans Mayan Numerals|s|4;Noto Sans Medefaidrin|s|4567;Noto Sans Meetei Mayek|s|123456789;Noto Sans Mende Kikakui|s|4;Noto Sans Meroitic|s|4;Noto Sans Miao|s|4;Noto Sans Modi|s|4;Noto Sans Mongolian|s|4;Noto Sans Mono|s|123456789;Noto Sans Mro|s|4;Noto Sans Multani|s|4;Noto Sans Myanmar|s|123456789;Noto Sans NKo Unjoined|s|4567;Noto Sans NKo|s|4;Noto Sans Nabataean|s|4;Noto Sans Nag Mundari|s|4567;Noto Sans Nandinagari|s|4;Noto Sans New Tai Lue|s|4567;Noto Sans Newa|s|4;Noto Sans Nushu|s|4;Noto Sans Ogham|s|4;Noto Sans Ol Chiki|s|4567;Noto Sans Old Hungarian|s|4;Noto Sans Old Italic|s|4;Noto Sans Old North Arabian|s|4;Noto Sans Old Permic|s|4;Noto Sans Old Persian|s|4;Noto Sans Old Sogdian|s|4;Noto Sans Old South Arabian|s|4;Noto Sans Old Turkic|s|4;Noto Sans Oriya|s|123456789;Noto Sans Osage|s|4;Noto Sans Osmanya|s|4;Noto Sans Pahawh Hmong|s|4;Noto Sans Palmyrene|s|4;Noto Sans Pau Cin Hau|s|4;Noto Sans PhagsPa|s|4;Noto Sans Phoenician|s|4;Noto Sans Psalter Pahlavi|s|4;Noto Sans Rejang|s|4;Noto Sans Runic|s|4;Noto Sans SC|s|123456789;Noto Sans Samaritan|s|4;Noto Sans Saurashtra|s|4;Noto Sans Sharada|s|4;Noto Sans Shavian|s|4;Noto Sans Siddham|s|4;Noto Sans SignWriting|s|4;Noto Sans Sinhala|s|123456789;Noto Sans Sogdian|s|4;Noto Sans Sora Sompeng|s|4567;Noto Sans Soyombo|s|4;Noto Sans Sundanese|s|4567;Noto Sans Sunuwar|s|4;Noto Sans Syloti Nagri|s|4;Noto Sans Symbols 2|s|4;Noto Sans Symbols|s|123456789;Noto Sans Syriac Eastern|s|123456789;Noto Sans Syriac Western|s|123456789;Noto Sans Syriac|s|123456789;Noto Sans TC|s|123456789;Noto Sans Tagalog|s|4;Noto Sans Tagbanwa|s|4;Noto Sans Tai Le|s|4;Noto Sans Tai Tham|s|4567;Noto Sans Tai Viet|s|4;Noto Sans Takri|s|4;Noto Sans Tamil Supplement|s|4;Noto Sans Tamil|s|123456789;Noto Sans Tangsa|s|4567;Noto Sans Telugu|s|123456789;Noto Sans Thaana|s|123456789;Noto Sans Thai Looped|s|123456789;Noto Sans Thai|s|123456789;Noto Sans Tifinagh|s|4;Noto Sans Tirhuta|s|4;Noto Sans Ugaritic|s|4;Noto Sans Vai|s|4;Noto Sans Vithkuqi|s|4567;Noto Sans Wancho|s|4;Noto Sans Warang Citi|s|4;Noto Sans Yi|s|4;Noto Sans Zanabazar Square|s|4;Noto Sans|s|123456789i;Noto Serif Ahom|r|4;Noto Serif Armenian|r|123456789;Noto Serif Balinese|r|4;Noto Serif Bengali|r|123456789;Noto Serif Devanagari|r|123456789;Noto Serif Display|r|123456789i;Noto Serif Dives Akuru|r|4;Noto Serif Dogra|r|4;Noto Serif Ethiopic|r|123456789;Noto Serif Georgian|r|123456789;Noto Serif Grantha|r|4;Noto Serif Gujarati|r|123456789;Noto Serif Gurmukhi|r|123456789;Noto Serif HK|r|23456789;Noto Serif Hebrew|r|123456789;Noto Serif Hentaigana|r|23456789;Noto Serif JP|r|23456789;Noto Serif KR|r|23456789;Noto Serif Kannada|r|123456789;Noto Serif Khitan Small Script|r|4;Noto Serif Khmer|r|123456789;Noto Serif Khojki|r|4567;Noto Serif Lao|r|123456789;Noto Serif Makasar|r|4;Noto Serif Malayalam|r|123456789;Noto Serif Myanmar|r|123456789;Noto Serif NP Hmong|r|4567;Noto Serif Old Uyghur|r|4;Noto Serif Oriya|r|4567;Noto Serif Ottoman Siyaq|r|4;Noto Serif SC|r|23456789;Noto Serif Sinhala|r|123456789;Noto Serif TC|r|23456789;Noto Serif Tamil|r|123456789i;Noto Serif Tangut|r|4;Noto Serif Telugu|r|123456789;Noto Serif Thai|r|123456789;Noto Serif Tibetan|r|123456789;Noto Serif Todhri|r|4;Noto Serif Toto|r|4567;Noto Serif Vithkuqi|r|4567;Noto Serif Yezidi|r|4567;Noto Serif|r|123456789i;Noto Traditional Nushu|s|34567;Noto Znamenny Musical Notation|s|4;Nova Cut|d|4;Nova Flat|d|4;Nova Mono|m|4;Nova Oval|d|4;Nova Round|d|4;Nova Script|d|4;Nova Slim|d|4;Nova Square|d|4;Numans|s|4;Nunito Sans|s|23456789i;Nunito|s|23456789i;Nuosu SIL|s|4;Odibee Sans|d|4;Odor Mean Chey|r|4;Offside|d|4;Oi|d|4;Ojuju|s|2345678;Old Standard TT|r|47i;Oldenburg|d|4;Oleo Script Swash Caps|d|47;Oleo Script|d|47;Ole|h|4;Onest|s|123456789;Oooh Baby|h|4;Open Sans|s|345678i;Oranienbaum|r|4;Orbitron|s|456789;Orbit|s|4;Oregano|d|4i;Orelega One|d|4;Orienta|s|4;Original Surfer|d|4;Oswald|s|234567;Outfit|s|123456789;Over the Rainbow|h|4;Overlock SC|d|4;Overlock|d|479i;Overpass Mono|m|34567;Overpass|s|123456789i;Ovo|r|4;Oxanium|d|2345678;Oxygen Mono|m|4;Oxygen|s|347;PT Mono|m|4;PT Sans Caption|s|47;PT Sans Narrow|s|47;PT Sans|s|47i;PT Serif Caption|r|4i;PT Serif|r|47i;Pacifico|h|4;Padauk|s|47;Padyakke Expanded One|r|4;Palanquin Dark|s|4567;Palanquin|s|1234567;Palette Mosaic|d|4;Pangolin|h|4;Paprika|d|4;Parastoo|r|4567;Parisienne|h|4;Parkinsans|s|345678;Passero One|d|4;Passion One|d|479;Passions Conflict|h|4;Pathway Extreme|s|123456789i;Pathway Gothic One|s|4;Patrick Hand SC|h|4;Patrick Hand|h|4;Pattaya|s|4;Patua One|d|4;Pavanam|s|4;Paytone One|s|4;Peddana|r|4;Peralta|r|4;Permanent Marker|h|4;Petemoss|h|4;Petit Formal Script|h|4;Petrona|r|123456789i;Phetsarath|s|47;Philosopher|s|47i;Phudu|d|3456789;Piazzolla|r|123456789i;Piedra|d|4;Pinyon Script|h|4;Pirata One|d|4;Pixelify Sans|d|4567;Plaster|d|4;Platypi|r|345678i;Playball|d|4;Playfair Display SC|r|479i;Playfair Display|r|456789i;Playfair|r|3456789i;Playpen Sans Arabic|h|12345678;Playpen Sans Deva|h|12345678;Playpen Sans Hebrew|h|12345678;Playpen Sans Thai|h|12345678;Playpen Sans|h|12345678;Playwrite AR Guides|h|4;Playwrite AR|h|1234;Playwrite AT Guides|h|4i;Playwrite AT|h|1234i;Playwrite AU NSW Guides|h|4;Playwrite AU NSW|h|1234;Playwrite AU QLD Guides|h|4;Playwrite AU QLD|h|1234;Playwrite AU SA Guides|h|4;Playwrite AU SA|h|1234;Playwrite AU TAS Guides|h|4;Playwrite AU TAS|h|1234;Playwrite AU VIC Guides|h|4;Playwrite AU VIC|h|1234;Playwrite BE VLG Guides|h|4;Playwrite BE VLG|h|1234;Playwrite BE WAL Guides|h|4;Playwrite BE WAL|h|1234;Playwrite BR Guides|h|4;Playwrite BR|h|1234;Playwrite CA Guides|h|4;Playwrite CA|h|1234;Playwrite CL Guides|h|4;Playwrite CL|h|1234;Playwrite CO Guides|h|4;Playwrite CO|h|1234;Playwrite CU Guides|h|4;Playwrite CU|h|1234;Playwrite CZ Guides|h|4;Playwrite CZ|h|1234;Playwrite DE Grund Guides|h|4;Playwrite DE Grund|h|1234;Playwrite DE LA Guides|h|4;Playwrite DE LA|h|1234;Playwrite DE SAS Guides|h|4;Playwrite DE SAS|h|1234;Playwrite DE VA Guides|h|4;Playwrite DE VA|h|1234;Playwrite DK Loopet Guides|h|4;Playwrite DK Loopet|h|1234;Playwrite DK Uloopet Guides|h|4;Playwrite DK Uloopet|h|1234;Playwrite ES Deco Guides|h|4;Playwrite ES Deco|h|1234;Playwrite ES Guides|h|4;Playwrite ES|h|1234;Playwrite FR Moderne Guides|h|4;Playwrite FR Moderne|h|1234;Playwrite FR Trad Guides|h|4;Playwrite FR Trad|h|1234;Playwrite GB J Guides|h|4i;Playwrite GB J|h|1234i;Playwrite GB S Guides|h|4i;Playwrite GB S|h|1234i;Playwrite HR Guides|h|4;Playwrite HR Lijeva Guides|h|4;Playwrite HR Lijeva|h|1234;Playwrite HR|h|1234;Playwrite HU Guides|h|4;Playwrite HU|h|1234;Playwrite ID Guides|h|4;Playwrite ID|h|1234;Playwrite IE Guides|h|4;Playwrite IE|h|1234;Playwrite IN Guides|h|4;Playwrite IN|h|1234;Playwrite IS Guides|h|4;Playwrite IS|h|1234;Playwrite IT Moderna Guides|h|4;Playwrite IT Moderna|h|1234;Playwrite IT Trad Guides|h|4;Playwrite IT Trad|h|1234;Playwrite MX Guides|h|4;Playwrite MX|h|1234;Playwrite NG Modern Guides|h|4;Playwrite NG Modern|h|1234;Playwrite NL Guides|h|4;Playwrite NL|h|1234;Playwrite NO Guides|h|4;Playwrite NO|h|1234;Playwrite NZ Guides|h|4;Playwrite NZ|h|1234;Playwrite PE Guides|h|4;Playwrite PE|h|1234;Playwrite PL Guides|h|4;Playwrite PL|h|1234;Playwrite PT Guides|h|4;Playwrite PT|h|1234;Playwrite RO Guides|h|4;Playwrite RO|h|1234;Playwrite SK Guides|h|4;Playwrite SK|h|1234;Playwrite TZ Guides|h|4;Playwrite TZ|h|1234;Playwrite US Modern Guides|h|4;Playwrite US Modern|h|1234;Playwrite US Trad Guides|h|4;Playwrite US Trad|h|1234;Playwrite VN Guides|h|4;Playwrite VN|h|1234;Playwrite ZA Guides|h|4;Playwrite ZA|h|1234;Play|s|47;Plus Jakarta Sans|s|2345678i;Pochaevsk|d|4;Podkova|r|45678;Poetsen One|d|4;Poiret One|d|4;Poller One|d|4;Poltawski Nowy|r|4567i;Poly|r|4i;Pompiere|d|4;Ponnala|d|4;Ponomar|d|4;Pontano Sans|s|34567;Poor Story|d|4;Poppins|s|123456789i;Port Lligat Sans|s|4;Port Lligat Slab|r|4;Potta One|d|4;Pragati Narrow|s|47;Praise|h|4;Prata|r|4;Preahvihear|s|4;Press Start 2P|d|4;Pridi|r|234567;Princess Sofia|h|4;Prociono|r|4;Prompt|s|123456789i;Prosto One|d|4;Protest Guerrilla|d|4;Protest Revolution|d|4;Protest Riot|d|4;Protest Strike|d|4;Proza Libre|s|45678i;Public Sans|s|123456789i;Puppies Play|h|4;Puritan|s|47i;Purple Purse|d|4;Qahiri|s|4;Quando|r|4;Quantico|s|47i;Quattrocento Sans|s|47i;Quattrocento|r|47;Questrial|s|4;Quicksand|s|34567;Quintessential|h|4;Qwigley|h|4;Qwitcher Grypen|h|47;REM|s|123456789i;Racing Sans One|d|4;Radio Canada Big|s|4567i;Radio Canada|s|34567i;Radley|r|4i;Rajdhani|s|34567;Rakkas|d|4;Raleway Dots|d|4;Raleway|s|123456789i;Ramabhadra|s|4;Ramaraja|r|4;Rambla|s|47i;Rammetto One|d|4;Rampart One|d|4;Ranchers|d|4;Rancho|h|4;Ranga|d|47;Rasa|r|34567i;Rationale|s|4;Ravi Prakash|d|4;Readex Pro|s|234567;Recursive|s|3456789;Red Hat Display|s|3456789i;Red Hat Mono|m|34567i;Red Hat Text|s|34567i;Red Rose|d|34567;Redacted Script|d|347;Redacted|d|4;Reddit Mono|m|23456789;Reddit Sans Condensed|s|23456789;Reddit Sans|s|23456789i;Redressed|h|4;Reem Kufi Fun|s|4567;Reem Kufi Ink|s|4;Reem Kufi|s|4567;Reenie Beanie|h|4;Reggae One|d|4;Rethink Sans|s|45678i;Revalia|d|4;Rhodium Libre|r|4;Ribeye Marrow|d|4;Ribeye|d|4;Righteous|d|4;Risque|d|4;Road Rage|d|4;Roboto Condensed|s|123456789i;Roboto Flex|s|4;Roboto Mono|m|1234567i;Roboto Serif|r|123456789i;Roboto Slab|r|123456789;Roboto|s|123456789i;Rochester|h|4;Rock 3D|d|4;Rock Salt|h|4;RocknRoll One|s|4;Rokkitt|r|123456789i;Romanesco|h|4;Ropa Sans|s|4i;Rosario|s|34567i;Rosarivo|r|4i;Rouge Script|h|4;Rowdies|d|347;Rozha One|r|4;Rubik 80s Fade|d|4;Rubik Beastly|d|4;Rubik Broken Fax|d|4;Rubik Bubbles|d|4;Rubik Burned|d|4;Rubik Dirt|d|4;Rubik Distressed|d|4;Rubik Doodle Shadow|d|4;Rubik Doodle Triangles|d|4;Rubik Gemstones|d|4;Rubik Glitch Pop|d|4;Rubik Glitch|d|4;Rubik Iso|d|4;Rubik Lines|d|4;Rubik Maps|d|4;Rubik Marker Hatch|d|4;Rubik Maze|d|4;Rubik Microbe|d|4;Rubik Mono One|s|4;Rubik Moonrocks|d|4;Rubik Pixels|d|4;Rubik Puddles|d|4;Rubik Scribble|d|4;Rubik Spray Paint|d|4;Rubik Storm|d|4;Rubik Vinyl|d|4;Rubik Wet Paint|d|4;Rubik|s|3456789i;Ruda|s|456789;Rufina|r|47;Ruge Boogie|h|4;Ruluko|s|4;Rum Raisin|s|4;Ruslan Display|d|4;Russo One|s|4;Ruthie|h|4;Ruwudu|r|4567;Rye|d|4;STIX Two Text|r|4567i;SUSE Mono|s|12345678i;SUSE|s|123456789i;Sacramento|h|4;Sahitya|r|47;Sail|d|4;Saira Condensed|s|123456789;Saira Extra Condensed|s|123456789;Saira Semi Condensed|s|123456789;Saira Stencil One|d|4;Saira|s|123456789i;Salsa|d|4;Sanchez|r|4i;Sancreek|d|4;Sankofa Display|s|4;Sansation|s|347i;Sansita Swashed|d|3456789;Sansita|s|4789i;Sarabun|s|12345678i;Sarala|s|47;Sarina|d|4;Sarpanch|s|456789;Sassy Frass|h|4;Satisfy|h|4;Savate|s|23456789i;Sawarabi Gothic|s|4;Sawarabi Mincho|r|4;Scada|s|47i;Scheherazade New|r|4567;Schibsted Grotesk|s|456789i;Schoolbell|h|4;Science Gothic|s|123456789;Scope One|r|4;Seaweed Script|d|4;Secular One|s|4;Sedan SC|r|4;Sedan|r|4i;Sedgwick Ave Display|h|4;Sedgwick Ave|h|4;Sekuya|d|4;Send Flowers|h|4;Sen|s|45678;Sevillana|d|4;Seymour One|s|4;Shadows Into Light Two|h|4;Shadows Into Light|h|4;Shafarik|d|4;Shalimar|h|4;Shantell Sans|d|345678i;Shanti|s|4;Share Tech Mono|m|4;Share Tech|s|4;Share|s|47i;Shippori Antique B1|s|4;Shippori Antique|s|4;Shippori Mincho B1|r|45678;Shippori Mincho|r|45678;Shizuru|d|4;Shojumaru|d|4;Short Stack|h|4;Shrikhand|d|4;Siemreap|s|4;Sigmar One|d|4;Sigmar|d|4;Signika Negative|s|34567;Signika|s|34567;Silkscreen|d|47;Simonetta|d|49i;Single Day|d|4;Sintony|s|47;Sirin Stencil|d|4;Sirivennela|s|4;Six Caps|s|4;Sixtyfour Convergence|m|4;Sixtyfour|m|4;Skranji|d|47;Slabo 13px|r|4;Slabo 27px|r|4;Slackey|d|4;Slackside One|h|4;Smokum|d|4;Smooch Sans|s|123456789;Smooch|h|4;Smythe|d|4;Sniglet|d|48;Snippet|s|4;Snowburst One|d|4;Sofadi One|d|4;Sofia Sans Condensed|s|123456789i;Sofia Sans Extra Condensed|s|123456789i;Sofia Sans Semi Condensed|s|123456789i;Sofia Sans|s|123456789i;Sofia|h|4;Solitreo|h|4;Solway|r|34578;Sometype Mono|m|4567i;Song Myung|r|4;Sono|s|2345678;Sonsie One|d|4;Sora|s|12345678;Sorts Mill Goudy|r|4i;Sour Gummy|s|123456789i;Source Code Pro|m|23456789i;Source Sans 3|s|23456789i;Source Serif 4|r|23456789i;Space Grotesk|s|34567;Space Mono|m|47i;Special Elite|d|4;Special Gothic Condensed One|s|4;Special Gothic Expanded One|s|4;Special Gothic|s|4567;Spectral SC|r|2345678i;Spectral|r|2345678i;Spicy Rice|d|4;Spinnaker|s|4;Spirax|d|4;Splash|h|4;Spline Sans Mono|m|34567i;Spline Sans|s|34567;Squada One|d|4;Square Peg|h|4;Sree Krushnadevaraya|r|4;Sriracha|h|4;Srisakdi|d|47;Staatliches|d|4;Stack Sans Headline|s|234567;Stack Sans Notch|s|234567;Stack Sans Text|s|234567;Stalemate|h|4;Stalinist One|d|4;Stardos Stencil|d|47;Stick No Bills|s|2345678;Stick|s|4;Stint Ultra Condensed|r|4;Stint Ultra Expanded|r|4;Stoke|r|34;Story Script|s|4;Strait|s|4;Style Script|h|4;Stylish|s|4;Sue Ellen Francisco|h|4;Suez One|r|4;Sulphur Point|s|347;Sumana|r|47;Sunflower|s|357;Sunshiney|h|4;Supermercado One|d|4;Suranna|r|4;Suravaram|r|4;Sura|r|47;Suwannaphum|r|13479;Swanky and Moo Moo|h|4;Syncopate|s|47;Syne Mono|m|4;Syne Tactile|d|4;Syne|s|45678;TASA Explorer|s|45678;TASA Orbiter|s|45678;Tac One|s|4;Tagesschrift|d|4;Tai Heritage Pro|r|47;Tajawal|s|2345789;Tangerine|h|47;Tapestry|h|4;Taprom|d|4;Tauri|s|4;Taviraj|r|123456789i;Teachers|s|45678i;Teko|s|34567;Tektur|d|456789;Telex|s|4;Tenali Ramakrishna|s|4;Tenor Sans|s|4;Text Me One|s|4;Texturina|r|123456789i;Thasadith|s|47i;The Girl Next Door|h|4;The Nautigal|h|47;Tienne|r|479;TikTok Sans|s|3456789;Tillana|d|45678;Tilt Neon|d|4;Tilt Prism|d|4;Tilt Warp|d|4;Timmana|s|4;Tinos|r|47i;Tiny5|s|4;Tiro Bangla|r|4i;Tiro Devanagari Hindi|r|4i;Tiro Devanagari Marathi|r|4i;Tiro Devanagari Sanskrit|r|4i;Tiro Gurmukhi|r|4i;Tiro Kannada|r|4i;Tiro Tamil|r|4i;Tiro Telugu|r|4i;Tirra|s|456789;Titan One|d|4;Titillium Web|s|234679i;Tomorrow|s|123456789i;Tourney|d|123456789i;Trade Winds|d|4;Train One|d|4;Triodion|d|4;Trirong|r|123456789i;Trispace|s|12345678;Trocchi|r|4;Trochut|d|47i;Truculenta|s|123456789;Trykker|r|4;Tsukimi Rounded|s|34567;Tuffy|s|47i;Tulpen One|d|4;Turret Road|d|234578;Twinkle Star|h|4;Ubuntu Condensed|s|4;Ubuntu Mono|m|47i;Ubuntu Sans Mono|m|4567i;Ubuntu Sans|s|12345678i;Ubuntu|s|3457i;Uchen|r|4;Ultra|r|4;Unbounded|s|23456789;Uncial Antiqua|d|4;Underdog|d|4;Unica One|d|4;UnifrakturCook|d|7;UnifrakturMaguntia|d|4;Unkempt|d|47;Unlock|d|4;Unna|r|47i;UoqMunThenKhung|r|4;Updock|h|4;Urbanist|s|123456789i;VT323|m|4;Vampiro One|d|4;Varela Round|s|4;Varela|s|4;Varta|s|34567;Vast Shadow|r|4;Vazirmatn|s|123456789;Vend Sans|s|34567i;Vesper Libre|r|4579;Viaoda Libre|d|4;Vibes|d|4;Vibur|h|4;Victor Mono|m|1234567i;Vidaloka|r|4;Viga|s|4;Vina Sans|d|4;Voces|s|4;Volkhov|r|47i;Vollkorn SC|r|4679;Vollkorn|r|456789i;Voltaire|s|4;Vujahday Script|h|4;WDXL Lubrifont JP N|s|4;WDXL Lubrifont SC|s|4;WDXL Lubrifont TC|s|4;Waiting for the Sunrise|h|4;Wallpoet|d|4;Walter Turncoat|h|4;Warnes|d|4;Water Brush|h|4;Waterfall|h|4;Wavefont|d|123456789;Wellfleet|r|4;Wendy One|s|4;Whisper|h|4;WindSong|h|45;Winky Rough|s|3456789i;Winky Sans|s|3456789i;Wire One|s|4;Wittgenstein|r|456789i;Wix Madefor Display|s|45678;Wix Madefor Text|s|45678i;Work Sans|s|123456789i;Workbench|m|4;Xanh Mono|m|4i;Yaldevi|s|234567;Yanone Kaffeesatz|s|234567;Yantramanav|s|134579;Yarndings 12 Charted|d|4;Yarndings 12|d|4;Yarndings 20 Charted|d|4;Yarndings 20|d|4;Yatra One|d|4;Yellowtail|h|4;Yeon Sung|d|4;Yeseva One|d|4;Yesteryear|h|4;Yomogi|h|4;Young Serif|r|4;Yrsa|r|34567i;Ysabeau Infant|s|123456789i;Ysabeau Office|s|123456789i;Ysabeau SC|s|123456789;Ysabeau|s|123456789i;Yuji Boku|r|4;Yuji Hentaigana Akari|h|4;Yuji Hentaigana Akebono|h|4;Yuji Mai|r|4;Yuji Syuku|r|4;Yusei Magic|s|4;ZCOOL KuaiLe|s|4;ZCOOL QingKe HuangYou|s|4;ZCOOL XiaoWei|s|4;Zain|s|234789i;Zalando Sans Expanded|s|23456789i;Zalando Sans SemiExpanded|s|23456789i;Zalando Sans|s|23456789i;Zen Antique Soft|r|4;Zen Antique|r|4;Zen Dots|d|4;Zen Kaku Gothic Antique|s|34579;Zen Kaku Gothic New|s|34579;Zen Kurenaido|s|4;Zen Loop|d|4i;Zen Maru Gothic|s|34579;Zen Old Mincho|r|45679;Zen Tokyo Zoo|d|4;Zeyada|h|4;Zhi Mang Xing|h|4;Zilla Slab Highlight|r|47;Zilla Slab|r|34567i";
+</script>
+<script>
+(() => {
+"use strict";
+// ---------- Couleur ----------
+const clamp01 = v => Math.min(1, Math.max(0, v));
+const normHex = h => { h = String(h).trim().replace(/^#/, ""); if (/^[0-9a-f]{3}$/i.test(h)) h = h.split("").map(c => c + c).join(""); return /^[0-9a-f]{6}$/i.test(h) ? "#" + h.toUpperCase() : null; };
+const hex2rgb = h => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => v / 255); };
+const rgb2hex = rgb => "#" + rgb.map(v => Math.round(clamp01(v) * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
+const toLin = c => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+const toGam = c => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
+const Yof = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
+const lum = hex => Yof(hex2rgb(hex).map(toLin));
+const ratio = (a, b) => { const la = lum(a), lb = lum(b); return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05); };
+function linToOklab([r, g, b]) {
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b), m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b), s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+}
+function oklchToLin(L, C, h) {
+  const a = C * Math.cos(h), b = C * Math.sin(h);
+  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
+}
+const hexToOklch = hex => { const [L, a, b] = linToOklab(hex2rgb(hex).map(toLin)); return { L, C: Math.hypot(a, b), h: Math.atan2(b, a) }; };
+const inGamut = c => c.every(v => v >= -1e-5 && v <= 1 + 1e-5);
+function maxChroma(L, h, want) { if (inGamut(oklchToLin(L, want, h))) return want; let lo = 0, hi = want; for (let i = 0; i < 22; i++) { const mid = (lo + hi) / 2; if (inGamut(oklchToLin(L, mid, h))) lo = mid; else hi = mid; } return lo; }
+const linToHex = lin => rgb2hex(lin.map(v => toGam(clamp01(v))));
+const chromaShape = (L, L0) => Math.max(0.08, L < L0 ? 1 - 0.45 * ((L0 - L) / Math.max(L0, 0.05)) ** 2 : 1 - 0.85 * ((L - L0) / Math.max(1 - L0, 0.05)) ** 2);
+function colorForY(base, targetY) {
+  const { L: L0, C: C0, h } = base; let lo = 0, hi = 1, lin = [0, 0, 0];
+  for (let i = 0; i < 32; i++) { const mid = (lo + hi) / 2; lin = oklchToLin(mid, maxChroma(mid, h, C0 * chromaShape(mid, L0)), h).map(clamp01); if (Yof(lin) < targetY) lo = mid; else hi = mid; }
+  return linToHex(lin);
+}
+const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+const TARGET = [1.06, 1.15, 1.4, 1.9, 3.1, 4.65, 6.1, 8.1, 11, 14.6, 17.6];
+const targetY = r => 1.05 / r - 0.05;
+const CVD = {
+  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]],
+  tritan: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.303900]]
+};
+function simulate(hex, mode) { if (mode === "normal") return hex; const lin = hex2rgb(hex).map(toLin); if (mode === "achro") { const y = Yof(lin); return linToHex([y, y, y]); } return linToHex(CVD[mode].map(r => r[0] * lin[0] + r[1] * lin[1] + r[2] * lin[2])); }
+function suggestFix(moveHex, otherHex, target) {
+  const { L: L0, C, h } = hexToOklch(moveHex); let best = null, bestD = Infinity;
+  for (let k = 0; k <= 400; k++) { const L = k / 400, hex = linToHex(oklchToLin(L, maxChroma(L, h, C), h).map(clamp01)); if (ratio(hex, otherHex) >= target) { const d = Math.abs(L - L0); if (d < bestD) { bestD = d; best = hex; } } }
+  return best;
+}
+
+// ---------- Utilitaires ----------
+const $ = id => document.getElementById(id);
+const fmt = (n, d = 2) => n.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const floor2 = n => Math.floor(n * 100) / 100;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const slug = s => (s || "couleur").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "couleur";
+const textOn = hex => ratio(hex, "#FFFFFF") >= ratio(hex, "#000000") ? "#FFFFFF" : "#000000";
+const store = { get(k, d) { try { const v = localStorage.getItem("lisio:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem("lisio:" + k, JSON.stringify(v)); } catch (e) {} } };
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 1700); }
+function copy(text, label) {
+  const done = () => toast(label || "Copié");
+  const fallback = () => { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) { toast("Copie impossible : sélectionnez le texte"); } ta.remove(); };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+}
+function segInit(id, get, set) {
+  const el = $(id), paint = () => el.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === get()));
+  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { set(b.dataset.v); paint(); })); paint(); return paint;
+}
+
+// ---------- Google Fonts ----------
+const CATS = { s: "Sans", r: "Serif", d: "Titrage", h: "Manuscrite", m: "Chasse fixe" };
+const FALLBACK = { s: "sans-serif", r: "serif", d: "sans-serif", h: "cursive", m: "monospace" };
+const GF = GF_RAW.split(";").map(x => { const [name, cat, w] = x.split("|"); return { name, cat, weights: w.replace("i", "").split("").map(d => +d * 100), lc: name.toLowerCase() }; });
+const GFmap = new Map(GF.map(f => [f.name, f]));
+const LEGIBLE = ["Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Andika", "Lexend"];
+const POPULAR = ["Figtree", "Inter", "Source Sans 3", "Public Sans", "Noto Sans", "Roboto", "Open Sans", "Lato", "Manrope", "Plus Jakarta Sans", "Source Serif 4", "Merriweather"];
+const gfQuery = (f, ws) => encodeURIComponent(f.name).replace(/%20/g, "+") + (ws.length === 1 && ws[0] === 400 ? "" : ":wght@" + ws.join(";"));
+function loadGoogle(f, full) {
+  const ws = full ? f.weights : [f.weights.includes(400) ? 400 : f.weights[0]], id = "gf-" + slug(f.name) + (full ? "-all" : "-1");
+  if (document.getElementById(id)) return;
+  const l = document.createElement("link"); l.rel = "stylesheet"; l.id = id; l.href = "https://fonts.googleapis.com/css2?family=" + gfQuery(f, ws) + "&display=swap"; document.head.appendChild(l);
+}
+
+// ---------- État ----------
+const EXAMPLE = [{ name: "Deep", hex: "#0E1B4D" }, { name: "Brand", hex: "#2447D1" }, { name: "Node", hex: "#F5B800" }, { name: "Ink", hex: "#0D1535" }, { name: "Canvas", hex: "#F1F4FB" }, { name: "Surface", hex: "#FFFFFF" }];
+let palette = store.get("colors", null);
+let isExample = !Array.isArray(palette) || !palette.length;
+if (isExample) palette = EXAMPLE.map(c => ({ ...c }));
+const DEF = { font: { src: "google", family: "Figtree" }, size: 18, weight: 400, lh: 1.5, ls: 0, measure: 66, align: "left", fg: "#2447D1", bg: "#F1F4FB", version: "2.2", level: "AA", sheet: "fg", showFail: false, mView: "all", mSample: "Aa", mVision: "normal" };
+const S = Object.assign({}, DEF, store.get("state", {}));
+if (S.font.src === "upload" || (S.font.src === "google" && !GFmap.has(S.font.family))) S.font = { ...DEF.font };
+let spacingOn = false, vision = "normal", scales = [], uploadN = 0, colorMode = "fg";
+const save = () => store.set("state", S);
+const fontCss = font => font.src === "google" ? `"${font.family}", ${FALLBACK[(GFmap.get(font.family) || { cat: "s" }).cat]}` : `"${font.family}", system-ui, sans-serif`;
+const fontWeights = font => font.src === "google" ? (GFmap.get(font.family) || { weights: [400, 700] }).weights : [100, 200, 300, 400, 500, 600, 700, 800, 900];
+const fontLabel = font => ({ google: "Google Fonts", adobe: "Adobe Fonts", upload: "fichier importé", local: "installée" })[font.src] || "";
+const ensureFont = font => { if (font.src === "google") { const f = GFmap.get(font.family); if (f) loadGoogle(f, true); } };
+
+function buildScales() {
+  scales = palette.map(c => {
+    const base = hexToOklch(c.hex), sw = TARGET.map(r => colorForY(base, targetY(r))), by = lum(c.hex);
+    let nearest = 0, best = Infinity;
+    sw.forEach((h, i) => { const d = Math.abs(Math.log((lum(h) + 0.05) / (by + 0.05))); if (d < best) { best = d; nearest = i; } });
+    return { name: c.name, hex: c.hex, slug: slug(c.name), sw, nearest };
+  });
+}
+
+// ---------- Popovers ----------
+let openBtn = null;
+const POP_IDS = ["popFont", "popColor", "popMore", "popNorm"];
+function closePops() { POP_IDS.forEach(p => $(p).hidden = true); document.querySelectorAll("[data-pop]").forEach(b => b.setAttribute("aria-expanded", "false")); openBtn = null; }
+function openPop(btn) {
+  const same = openBtn === btn; closePops(); if (same) return;
+  const pid = btn.dataset.pop;
+  if (pid === "popColor") { colorMode = btn.dataset.mode; renderColorPop(); }
+  if (pid === "popFont") renderFontList();
+  $(pid).hidden = false; btn.setAttribute("aria-expanded", "true"); openBtn = btn;
+  if (pid === "popFont" && matchMedia("(pointer:fine)").matches) setTimeout(() => $("fontSearch").focus(), 0);
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-pop]");
+  if (b) { e.stopPropagation(); openPop(b); return; }
+  if (openBtn && !e.target.closest(".pop")) closePops();
+});
+document.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", closePops));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && openBtn) { const b = openBtn; closePops(); b.focus(); } });
+
+// ---------- Police ----------
+let fontSrcTab = S.font.src === "google" ? "google" : "other";
+function paintSrcTab() { document.querySelectorAll("[data-src]").forEach(b => b.setAttribute("aria-pressed", b.dataset.src === fontSrcTab)); $("paneGoogle").hidden = fontSrcTab !== "google"; $("paneOther").hidden = fontSrcTab === "google"; }
+document.querySelectorAll("[data-src]").forEach(b => b.addEventListener("click", () => { fontSrcTab = b.dataset.src; paintSrcTab(); }));
+function fontItem(f) {
+  loadGoogle(f, false);
+  const w = f.weights.includes(400) ? 400 : f.weights[0], sel = S.font.src === "google" && S.font.family === f.name;
+  return `<li><button type="button" role="option" aria-selected="${sel}" data-family="${esc(f.name)}" style="font-family:'${esc(f.name)}', ${FALLBACK[f.cat]};font-weight:${w}"><span>${esc(f.name)}</span><span class="cat">${CATS[f.cat]} · ${f.weights.length}</span></button></li>`;
+}
+function renderFontList() {
+  const q = $("fontSearch").value.trim().toLowerCase(), cat = $("fontCat").value; let html = "";
+  if (!q && !cat) {
+    html += `<li class="grp">Pensées pour la lisibilité</li>` + LEGIBLE.map(n => GFmap.get(n)).filter(Boolean).map(fontItem).join("");
+    html += `<li class="grp">Populaires en interface</li>` + POPULAR.map(n => GFmap.get(n)).filter(Boolean).map(fontItem).join("");
+  } else {
+    const res = GF.filter(f => (!cat || f.cat === cat) && (!q || f.lc.includes(q)));
+    res.sort((a, b) => (b.lc.startsWith(q) - a.lc.startsWith(q)) || a.lc.localeCompare(b.lc));
+    html += res.slice(0, 40).map(fontItem).join("") + (res.length > 40 ? `<li class="grp">+ ${res.length - 40} autres : affinez la recherche</li>` : res.length ? "" : `<li class="grp">Aucune police trouvée</li>`);
+  }
+  $("fontList").innerHTML = html;
+}
+$("fontList").addEventListener("click", e => { const b = e.target.closest("button[data-family]"); if (b) { setFont({ src: "google", family: b.dataset.family }); closePops(); } });
+$("fontSearch").addEventListener("input", renderFontList);
+$("fontCat").addEventListener("change", renderFontList);
+function setFont(font) {
+  S.font = font; ensureFont(font);
+  const ws = fontWeights(font);
+  if (!ws.includes(S.weight)) S.weight = ws.reduce((a, b) => Math.abs(b - S.weight) < Math.abs(a - S.weight) ? b : a, ws[0]);
+  save(); render();
+  document.fonts.load(`${S.weight} 40px ${fontCss(font)}`).then(renderMetrics, () => {});
+}
+let kitOk = false;
+$("kitLoad").addEventListener("click", () => {
+  const id = $("kitId").value.trim(), st = $("kitStatus"); st.hidden = false;
+  if (!/^[a-z0-9]{5,12}$/i.test(id)) { st.className = "status fail"; st.textContent = "L’ID du kit est une suite de lettres et de chiffres, visible dans Adobe Fonts, rubrique Projets web."; return; }
+  const old = $("adobe-kit"); if (old) old.remove();
+  const l = document.createElement("link"); l.rel = "stylesheet"; l.id = "adobe-kit"; l.href = `https://use.typekit.net/${id}.css`;
+  st.className = "status"; st.textContent = "Chargement du kit…";
+  l.onload = () => { kitOk = true; st.className = "status pass"; st.textContent = "Kit chargé. Saisissez le nom CSS d’une famille, puis Utiliser."; };
+  l.onerror = () => { kitOk = false; st.className = "status fail"; st.textContent = "Le kit n’a pas pu être chargé. Sur claude.ai, c’est normal : l’adresse d’Adobe Fonts y est bloquée. Importez le fichier, ou hébergez l’outil sur votre domaine."; };
+  document.head.appendChild(l);
+});
+$("kitUse").addEventListener("click", () => { const fam = $("kitFamily").value.trim().replace(/["';{}]/g, ""); if (!fam) { toast("Saisissez le nom CSS de la famille"); return; } if (!kitOk) toast("Kit non chargé : la police de secours s’affichera"); setFont({ src: "adobe", family: fam }); });
+$("fontFile").addEventListener("change", async e => {
+  const file = e.target.files[0]; if (!file) return;
+  try { const buf = await file.arrayBuffer(), name = "Import " + (++uploadN) + " " + file.name.replace(/\.[^.]+$/, "").replace(/["';{}]/g, ""); const ff = new FontFace(name, buf); await ff.load(); document.fonts.add(ff); setFont({ src: "upload", family: name }); toast("Police importée"); closePops(); }
+  catch (err) { toast("Ce fichier n’a pas pu être lu comme une police"); }
+});
+function localExists(name) { const c = document.createElement("canvas").getContext("2d"), t = "mmmmmmmmmwwwwwww iiiilll 0123456789"; return ["monospace", "serif", "sans-serif"].some(fb => { c.font = `40px ${fb}`; const a = c.measureText(t).width; c.font = `40px "${name}", ${fb}`; return c.measureText(t).width !== a; }); }
+$("localUse").addEventListener("click", () => {
+  const name = $("localName").value.trim().replace(/["';{}]/g, ""), st = $("localStatus"); if (!name) return; st.hidden = false;
+  if (localExists(name)) { st.className = "status pass"; st.textContent = `« ${name} » est installée : elle est appliquée.`; setFont({ src: "local", family: name }); }
+  else { st.className = "status fail"; st.textContent = `« ${name} » n’est pas trouvée sur cet ordinateur. Vérifiez le nom exact, ou importez le fichier.`; }
+});
+
+// ---------- Couleurs ----------
+function setPair(f, b) { if (f) S.fg = f; if (b) S.bg = b; save(); render(); if (openBtn && openBtn.dataset.pop === "popColor") renderColorPop(); }
+function renderColorPop() {
+  const cur = colorMode === "fg" ? S.fg : S.bg, other = colorMode === "fg" ? S.bg : S.fg;
+  $("popColorTitle").textContent = colorMode === "fg" ? "Couleur du texte" : "Couleur du fond";
+  $("pcPicker").value = cur; $("pcHex").value = cur;
+  const chip = (hex, label, base) => { const ok = ratio(hex, other) >= contrastNeed(); return `<button type="button" class="chip ${base ? "base" : ""} ${ok ? "passes" : ""}" data-hex="${hex}" style="background:${hex};color:${textOn(hex)}" aria-pressed="${hex === cur}" aria-label="${esc(label)} ${hex}${ok ? ", conforme" : ""}" title="${esc(label)} · ${hex}"><span class="ok" aria-hidden="true">✓</span></button>`; };
+  let h = `<div class="chiprow"><span>Neutres</span>${chip("#FFFFFF", "Blanc")}${chip("#000000", "Noir")}</div>`;
+  scales.forEach(s => { h += `<div class="chiprow"><span title="${esc(s.name)}">${esc(s.name)}</span>${chip(s.hex, s.name + " (saisie)", true)}${s.sw.map((x, i) => chip(x, s.name + " " + STEPS[i])).join("")}</div>`; });
+  $("chipGrid").innerHTML = h;
+}
+$("chipGrid").addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) colorMode === "fg" ? setPair(b.dataset.hex, null) : setPair(null, b.dataset.hex); });
+$("pcPicker").addEventListener("input", e => { const h = e.target.value.toUpperCase(); colorMode === "fg" ? setPair(h, null) : setPair(null, h); });
+$("pcHex").addEventListener("change", e => { const h = normHex(e.target.value); if (!h) { toast("Code hexadécimal invalide, ex. #1E293B"); return; } colorMode === "fg" ? setPair(h, null) : setPair(null, h); });
+$("swap").addEventListener("click", () => setPair(S.bg, S.fg));
+
+// ---------- Règles WCAG ----------
+const isLarge = () => S.size >= 24 || (S.size >= 18.66 && S.weight >= 700);
+const V = () => ({ "2.0": 20, "2.1": 21, "2.2": 22 })[S.version];
+const contrastNeed = () => { const L = isLarge(); return S.level === "AAA" ? (L ? 4.5 : 7) : (L ? 3 : 4.5); };
+function bestFix(need) {
+  const f = suggestFix(S.fg, S.bg, need), b = suggestFix(S.bg, S.fg, need), out = [];
+  if (f) out.push({ label: `Texte → ${f}`, dot: f, act: () => setPair(f, null) });
+  if (b) out.push({ label: `Fond → ${b}`, dot: b, act: () => setPair(null, b) });
+  const steps = []; scales.forEach(s => s.sw.forEach((h, i) => { if (ratio(h, S.bg) >= need) steps.push({ h, s, i, d: Math.abs(lum(h) - lum(S.fg)) }); }));
+  steps.sort((a, c) => a.d - c.d);
+  if (steps[0]) out.push({ label: `Palette : ${steps[0].s.name} ${STEPS[steps[0].i]}`, dot: steps[0].h, act: () => setPair(steps[0].h, null) });
+  return out;
+}
+function buildChecks() {
+  const r = ratio(S.fg, S.bg), large = isLarge(), v = V(), aaa = S.level === "AAA", list = [], needAA = large ? 3 : 4.5;
+  const extra = !large && r >= 3 ? [{ label: "Passer à 24 px (grand texte)", act: () => { S.size = 24; save(); render(); } }] : [];
+  list.push({ id: "1.4.3", lvl: "AA", title: `Contraste ${fmt(floor2(r))}:1 (minimum ${fmt(needAA, 1)}:1)`, sub: large ? "Grand texte : 24 px et plus, ou 18,67 px en gras" : "Texte courant : moins de 24 px, ou de 18,67 px en gras", ok: r >= needAA, fixes: r >= needAA ? [] : bestFix(needAA).concat(extra) });
+  if (aaa) { const n = large ? 4.5 : 7; list.push({ id: "1.4.6", lvl: "AAA", title: `Contraste renforcé (minimum ${fmt(n, 1)}:1)`, ok: r >= n, fixes: r >= n ? [] : bestFix(n) }); }
+  if (v >= 21) list.push({ id: "1.4.11", lvl: "AA", title: "Bouton et icônes (minimum 3:1)", sub: "Le contour du bouton reprend la couleur du texte", ok: r >= 3, fixes: r >= 3 ? [] : bestFix(3) });
+  if (v >= 21) list.push({ id: "1.4.12", lvl: "AA", title: "Espacement imposé par le lecteur", sub: spacingOn ? "Appliqué sur l’aperçu : rien ne doit être coupé" : "À tester dans Réglages", ok: null, fixes: [] });
+  if (aaa) {
+    list.push({ id: "1.4.8", lvl: "AAA", title: `Interligne ${fmt(S.lh)} (minimum 1,5)`, ok: S.lh >= 1.5, fixes: S.lh >= 1.5 ? [] : [{ label: "Interligne → 1,5", act: () => { S.lh = 1.5; save(); render(); } }] });
+    list.push({ id: "1.4.8", lvl: "AAA", title: `Ligne de ${S.measure} caractères (maximum 80)`, ok: S.measure <= 80, fixes: S.measure <= 80 ? [] : [{ label: "Ligne → 66 caractères", act: () => { S.measure = 66; save(); render(); } }] });
+    list.push({ id: "1.4.8", lvl: "AAA", title: "Texte non justifié", ok: S.align !== "justify", fixes: S.align !== "justify" ? [] : [{ label: "Aligner à gauche", act: () => { S.align = "left"; save(); paintAlign(); render(); } }] });
+  }
+  return list;
+}
+let acts = [];
+const actBtn = f => { acts.push(f.act); return `<button type="button" class="btn sm" data-act="${acts.length - 1}">${f.dot ? `<span class="dot" style="background:${f.dot}"></span>` : ""}${esc(f.label)}</button>`; };
+function renderVerdictAndChecks() {
+  acts = [];
+  const list = buildChecks(), fails = list.filter(c => c.ok === false), r = ratio(S.fg, S.bg);
+  const main = fails[0], fix = main && main.fixes[0];
+  $("verdict").innerHTML = `<div class="v-l"><span class="badge ${fails.length ? "fail" : "pass"}">${fails.length ? "✕ Pas conforme" : "✓ Conforme"}</span><span class="num">${fmt(floor2(r))} : 1</span><span class="ctx">WCAG ${S.version} ${S.level} · ${isLarge() ? "grand texte" : "texte courant"}${fails.length > 1 ? ` · ${fails.length} points` : ""}</span></div>${fix ? `<span class="row" style="gap:6px">${actBtn({ ...fix, label: "Corriger : " + fix.label })}</span>` : ""}`;
+  $("checks").innerHTML = list.map(c => {
+    const pill = c.ok === null ? `<span class="pill warnp">À tester</span>` : c.ok ? `<span class="pill pass">✓</span>` : `<span class="pill fail">✕</span>`;
+    const fx = (c.fixes || []).map(actBtn).join("");
+    return `<div class="check"><div><div>${esc(c.title)}<span class="tag">${c.id} ${c.lvl}</span></div>${c.sub ? `<div class="sc">${esc(c.sub)}</div>` : ""}</div>${pill}${fx ? `<div class="fixes">${fx}</div>` : ""}</div>`;
+  }).join("");
+  $("normLabel").textContent = `WCAG ${S.version} ${S.level}`;
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (b && acts[+b.dataset.act]) acts[+b.dataset.act](); });
+function renderMetrics() {
+  const c = document.createElement("canvas").getContext("2d"); c.font = `${S.weight} 100px ${fontCss(S.font)}`;
+  const x = c.measureText("x").actualBoundingBoxAscent, H = c.measureText("H").actualBoundingBoxAscent;
+  $("metrics").innerHTML = `<span>Police <b>${esc(S.font.family)}</b> (${fontLabel(S.font)})</span><span>Hauteur d’x <b>${H ? fmt(x / H) : "–"}</b> de la capitale</span><span><b>${fmt(S.size, 1)} px</b> = <b>${fmt(S.size * 0.75, 1)} pt</b></span>`;
+}
+
+// ---------- Rendu de la toile et de la barre ----------
+const paintAlign = segInit("alignSeg", () => S.align, v => { S.align = v; save(); render(); });
+function renderCanvas() {
+  const c = $("canvas"), ws = fontWeights(S.font);
+  c.style.background = S.bg; c.style.color = S.fg; c.style.fontFamily = fontCss(S.font);
+  c.style.fontSize = S.size + "px"; c.style.fontWeight = S.weight;
+  c.style.lineHeight = spacingOn ? Math.max(1.5, S.lh) : S.lh;
+  c.style.letterSpacing = spacingOn ? "0.12em" : S.ls + "em";
+  c.style.wordSpacing = spacingOn ? "0.16em" : "normal";
+  c.style.textAlign = S.align;
+  c.style.setProperty("--pspace", spacingOn ? (2 * S.size) + "px" : "0px");
+  ["cP1", "cP2"].forEach(id => $(id).style.maxWidth = S.measure + "ch");
+  $("cH").style.fontSize = Math.max(S.size * 2.2, 28) + "px"; $("cH").style.fontWeight = ws.includes(700) ? 700 : ws[ws.length - 1];
+}
+function renderDock() {
+  $("dFontName").textContent = S.font.family; $("dFontAa").style.fontFamily = fontCss(S.font);
+  $("sizeVal").textContent = fmt(S.size, S.size % 1 ? 1 : 0) + " px";
+  const ws = fontWeights(S.font);
+  $("dBold").setAttribute("aria-pressed", S.weight >= 700); $("dBold").disabled = !ws.some(w => w >= 700);
+  $("dFgSw").style.background = S.fg; $("dFgHex").textContent = S.fg; $("dBgSw").style.background = S.bg; $("dBgHex").textContent = S.bg;
+  $("sSize").value = S.size; $("vSize").textContent = fmt(S.size, S.size % 1 ? 1 : 0) + " px";
+  $("sWeight").innerHTML = ws.map(w => `<option value="${w}" ${w === S.weight ? "selected" : ""}>${w}${w === 400 ? " normal" : w === 700 ? " gras" : ""}</option>`).join("");
+  $("sLine").value = S.lh; $("vLine").textContent = fmt(S.lh);
+  $("sLetter").value = S.ls; $("vLetter").textContent = fmt(S.ls, 3) + " em";
+  $("sMeasure").value = S.measure; $("vMeasure").textContent = S.measure + " car.";
+}
+const setSize = v => { S.size = Math.min(72, Math.max(10, Math.round(v * 2) / 2)); save(); render(); };
+$("sizeMinus").addEventListener("click", () => setSize(S.size - 1));
+$("sizePlus").addEventListener("click", () => setSize(S.size + 1));
+$("dBold").addEventListener("click", () => {
+  const ws = fontWeights(S.font);
+  if (S.weight >= 700) S.weight = ws.includes(400) ? 400 : ws.filter(w => w < 700).pop() || ws[0];
+  else S.weight = ws.includes(700) ? 700 : ws.find(w => w > 700) || S.weight;
+  save(); render();
+});
+$("sSize").addEventListener("input", e => setSize(+e.target.value));
+$("sWeight").addEventListener("change", e => { S.weight = +e.target.value; save(); render(); });
+$("sLine").addEventListener("input", e => { S.lh = +e.target.value; save(); render(); });
+$("sLetter").addEventListener("input", e => { S.ls = +e.target.value; save(); render(); });
+$("sMeasure").addEventListener("input", e => { S.measure = +e.target.value; save(); render(); });
+function paintNorm() { $("normV").textContent = "WCAG " + S.version; $("normL").textContent = S.level; $("normChip").setAttribute("aria-label", `Norme de référence : WCAG ${S.version}, niveau ${S.level}. Modifier`); }
+segInit("verSeg", () => S.version, v => { S.version = v; save(); paintNorm(); render(); });
+segInit("lvlSeg", () => S.level, v => { S.level = v; save(); paintNorm(); render(); });
+paintNorm();
+$("spacingTest").addEventListener("click", e => { spacingOn = !spacingOn; e.currentTarget.setAttribute("aria-pressed", spacingOn); e.currentTarget.classList.toggle("primary", spacingOn); renderCanvas(); renderVerdictAndChecks(); });
+
+// Planche
+function renderSheet() {
+  const ff = fontCss(S.font), sz = Math.min(S.size, 34), need = contrastNeed();
+  $("sheetTitle").textContent = S.sheet === "fg" ? "Textes possibles sur ce fond" : "Fonds possibles pour ce texte";
+  $("sheetNote").textContent = S.sheet === "fg" ? `Couleurs de votre palette lisibles sur ${S.bg}, dans votre police et à votre taille. Un clic pour l’appliquer.` : `Fonds de votre palette sur lesquels ${S.fg} reste lisible. Un clic pour l’appliquer.`;
+  const items = [["Blanc", "#FFFFFF"], ["Noir", "#000000"]];
+  scales.forEach(s => { items.push([s.name, s.hex]); s.sw.forEach((h, i) => items.push([s.name + " " + STEPS[i], h])); });
+  let n = 0;
+  const html = items.map(([label, hex]) => {
+    const fg = S.sheet === "fg" ? hex : S.fg, bg = S.sheet === "fg" ? S.bg : hex;
+    if (fg === bg) return "";
+    const r = ratio(fg, bg), ok = r >= need; if (!ok && !S.showFail) return ""; n++;
+    return `<button type="button" class="tile" data-fg="${fg}" data-bg="${bg}" aria-label="${esc(label)} : ${fmt(floor2(r))} pour 1${ok ? "" : ", non conforme"}"><span class="smp" style="background:${bg};color:${fg};font-family:${esc(ff)};font-size:${sz}px;font-weight:${S.weight}">Aa Lisio</span><span class="meta"><span>${esc(label)}</span><span class="pill ${ok ? "pass" : "fail"}" style="font-size:11px;padding:1px 7px">${fmt(floor2(r), 1)}</span></span></button>`;
+  }).join("");
+  $("sheet").innerHTML = html || `<p class="note">Aucune couleur de la palette ne passe à cette taille. Essayez plus grand, plus gras, ou un autre fond.</p>`;
+}
+$("sheet").addEventListener("click", e => { const t = e.target.closest(".tile"); if (t) { setPair(t.dataset.fg, t.dataset.bg); window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); } });
+segInit("sheetSeg", () => S.sheet, v => { S.sheet = v; save(); renderSheet(); });
+$("showFail").addEventListener("change", e => { S.showFail = e.target.checked; save(); renderSheet(); });
+
+function render() { renderCanvas(); renderDock(); renderVerdictAndChecks(); renderMetrics(); renderSheet(); renderMx(); }
+
+// ---------- Palette ----------
+function renderEditor() {
+  const ed = $("editor"); ed.innerHTML = "";
+  palette.forEach((c, i) => {
+    const d = document.createElement("div"); d.className = "chipedit";
+    d.innerHTML = `<input type="color" id="pc${i}" value="${c.hex}" aria-label="Couleur ${esc(c.name)}"><input type="text" id="pn${i}" value="${esc(c.name)}" aria-label="Nom de la couleur ${i + 1}"><input type="text" id="ph${i}" class="hex mono" value="${c.hex}" aria-label="Hexadécimal de ${esc(c.name)}"><button class="btn sm" type="button" aria-label="Retirer ${esc(c.name)}" ${palette.length <= 2 ? "disabled" : ""}>✕</button>`;
+    const [col, nm, hx, rm] = d.querySelectorAll("input,button");
+    col.addEventListener("input", () => { c.hex = col.value.toUpperCase(); hx.value = c.hex; changed(); });
+    hx.addEventListener("change", () => { const h = normHex(hx.value); if (h) { c.hex = h; col.value = h; changed(); } else { hx.value = c.hex; toast("Code hexadécimal invalide, ex. #3F4FB8"); } });
+    nm.addEventListener("change", () => { c.name = nm.value.trim() || "Couleur"; changed(); });
+    rm.addEventListener("click", () => { palette.splice(i, 1); sel = null; changed(); renderEditor(); });
+    ed.appendChild(d);
+  });
+}
+let raf = 0;
+function changed() { isExample = false; store.set("colors", palette); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); }
+function renderScales() {
+  let h = `<div></div>` + STEPS.map(s => `<div class="scale-head">${s}</div>`).join("");
+  scales.forEach(sc => {
+    h += `<div class="scale-name" title="${esc(sc.name)}">${esc(sc.name)}</div>`;
+    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = floor2(ratio(hex, "#FFFFFF")), rb = floor2(ratio(hex, "#000000")); h += `<button type="button" class="swt" style="background:${shown};color:${textOn(shown)}" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]}, ${hex}, ${fmt(rw)} sur blanc, ${fmt(rb)} sur noir. Copier.">${i === sc.nearest ? '<span class="base" aria-hidden="true"></span>' : ""}<span>${hex}</span><span class="r"><span>${fmt(rw, 1)}</span><span>${fmt(rb, 1)}</span></span></button>`; });
+  });
+  $("scales").innerHTML = h;
+  const iT = STEPS.indexOf(700), iB = STEPS.indexOf(100), rs = scales.map(sc => floor2(ratio(sc.sw[iT], sc.sw[iB])));
+  $("nuDemoLead").textContent = scales.length ? `Exemple avec vos couleurs : texte 700 sur fond 100. Le contraste reste entre ${fmt(Math.min(...rs), 2)}:1 et ${fmt(Math.max(...rs), 2)}:1 pour toutes.` : "";
+  $("nuDemo").innerHTML = scales.map((sc, k) => `<div class="nu-card" style="background:${sc.sw[iB]};color:${sc.sw[iT]}"><b>${esc(sc.name)}</b><span>Texte 700 sur fond 100</span><span class="nr">${fmt(rs[k], 2)}:1 ${rs[k] >= 7 ? "AAA" : rs[k] >= 4.5 ? "AA" : rs[k] >= 3 ? "AA grand" : "Échec"}</span></div>`).join("");
+  $("scales").querySelectorAll(".swt").forEach(b => b.addEventListener("click", () => copy(b.dataset.hex, b.dataset.hex + " copié")));
+}
+const minPairRatio = (i, j) => Math.min(...scales.map(s => ratio(s.sw[i], s.sw[j])));
+const cls = r => r >= 7 ? "l-aaa" : r >= 4.5 ? "l-aa" : r >= 3 ? "l-large" : "l-fail";
+function renderMatrix() {
+  let h = `<thead><tr><th scope="col"><span class="sr">Pas</span></th>` + STEPS.map(s => `<th scope="col">${s}</th>`).join("") + "</tr></thead><tbody>";
+  STEPS.forEach((s, i) => { h += `<tr><th scope="row">${s}</th>` + STEPS.map((t, j) => i === j ? `<td>·</td>` : (r => `<td class="${cls(r)}">${fmt(r, 1)}</td>`)(floor2(minPairRatio(i, j)))).join("") + "</tr>"; });
+  $("matrix").innerHTML = h + "</tbody>";
+}
+function renderRules() {
+  const minW = STEPS.map((_, i) => Math.min(...scales.map(s => ratio(s.sw[i], "#FFFFFF")))), minB = STEPS.map((_, i) => Math.min(...scales.map(s => ratio(s.sw[i], "#000000"))));
+  const firstW = t => { const i = minW.findIndex(r => r >= t); return i < 0 ? null : STEPS[i]; };
+  const lastB = t => { let k = -1; minB.forEach((r, i) => { if (r >= t) k = i; }); return k < 0 ? null : STEPS[k]; };
+  const gapFor = t => { for (let g = 1; g < STEPS.length; g++) { let ok = true; for (let i = 0; i + g < STEPS.length; i++) if (minPairRatio(i, i + g) < t) { ok = false; break; } if (ok) return g; } return null; };
+  const g45 = gapFor(4.5), g3 = gapFor(3), rule = (t, v, x) => `<div class="rule"><span class="small muted">${t}</span><b>${v ?? "aucun"}</b><span class="small">${x}</span></div>`;
+  $("rules").innerHTML = rule("Texte sur fond blanc", firstW(4.5) ? `nuances ${firstW(4.5)} à 950` : null, `Passe en AA. En AAA : à partir de ${firstW(7) ?? "–"}.`) + rule("Texte sur fond noir", lastB(4.5) ? `nuances 50 à ${lastB(4.5)}` : null, `Passe en AA. En AAA : jusqu’à ${lastB(7) ?? "–"}.`) + rule("Texte sur une autre nuance", g45 ? `${g45} crans d’écart` : null, `Ex. texte ${STEPS[Math.min(STEPS.length - 1, 1 + g45)] ?? "–"} sur fond 100 : 4,5:1 garanti, quelles que soient les couleurs.`) + rule("Bordures, icônes", g3 ? `${g3} crans d’écart` : null, `Ex. ${STEPS[Math.min(STEPS.length - 1, 1 + g3)] ?? "–"} sur fond 100 : 3:1 garanti. Sur blanc : à partir de ${firstW(3) ?? "–"}.`);
+}
+function renderExport() {
+  const f = $("exportFmt").value; let out = "";
+  if (f === "css") out = ":root {\n" + scales.map(s => s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n}\n";
+  else if (f === "json") { const o = { color: {} }; scales.forEach(s => { o.color[s.slug] = {}; s.sw.forEach((h, i) => { o.color[s.slug][STEPS[i]] = { $type: "color", $value: h, $description: `Contraste ${fmt(floor2(ratio(h, "#FFFFFF")))}:1 sur blanc` }; }); }); out = JSON.stringify(o, null, 2); }
+  else out = "// tailwind.config.js\nmodule.exports = {\n  theme: { extend: { colors: {\n" + scales.map(s => `    "${s.slug}": {\n` + s.sw.map((h, i) => `      ${STEPS[i]}: "${h}",`).join("\n") + "\n    },").join("\n") + "\n  } } }\n};\n";
+  $("exportOut").textContent = out;
+}
+$("vision").addEventListener("change", e => { vision = e.target.value; renderScales(); });
+$("addColor").addEventListener("click", () => { if (palette.length >= 12) { toast("12 couleurs maximum"); return; } const h = "#7A4FD0"; palette.push({ name: nameFor(h), hex: h }); changed(); renderEditor(); const ins = document.querySelectorAll("#editor input[type=color]"); if (ins.length) ins[ins.length - 1].focus(); });
+$("resetPalette").addEventListener("click", () => { palette = EXAMPLE.map(c => ({ ...c })); store.set("colors", null); isExample = true; sel = null; renderEditor(); renderAll(); });
+$("exportFmt").addEventListener("change", renderExport);
+$("copyExport").addEventListener("click", () => copy($("exportOut").textContent, "Export copié"));
+
+// ---------- Matrice ----------
+let sel = null, dActs = [];
+const grade = r => r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AA", "b-aa"] : r >= 3 ? ["AA grand", "b-lg"] : ["✕ Échec", "b-no"];
+const f1 = r => fmt(Math.floor(r * 10) / 10, 1);
+const f2 = r => fmt(Math.floor(r * 100) / 100, 2);
+function renderMx() {
+  const C = palette, n = C.length, v21 = V() >= 21;
+  $("mEyebrow").textContent = `WCAG ${S.version} · critères 1.4.3, 1.4.6${v21 ? ", 1.4.11" : ""}`;
+  $("mLead").textContent = `${n} couleurs, ${n * (n - 1) / 2} paires. Ligne = couleur du texte, colonne = couleur du fond. Le ratio est le même dans les deux sens.`;
+  $("lgLegend").textContent = v21 ? "≥ 3:1. Grands textes (24 px, ou 18,67 px gras) et éléments d’interface (1.4.11)." : "≥ 3:1. Grands textes (24 px, ou 18,67 px gras).";
+  $("mFontName").textContent = S.font.family; $("mFontAa").style.fontFamily = fontCss(S.font);
+  if ($("mSample").value !== S.mSample) $("mSample").value = S.mSample;
+  const cnt = { AAA: 0, AA: 0, "AA grand": 0, "✕ Échec": 0 };
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) cnt[grade(ratio(C[i].hex, C[j].hex))[0]]++;
+  $("counts").innerHTML = [["AAA", "b-aaa", "AAA"], ["AA", "b-aa", "AA"], ["AA grand", "b-lg", "AA grand"], ["✕ Échec", "b-no", "Échecs"]]
+    .map(([k, c, l]) => `<div class="count ${c}"><b>${cnt[k]}</b><span>${l}</span></div>`).join("");
+  const ws = fontWeights(S.font), w = ws.includes(700) ? 700 : ws[ws.length - 1], ff = esc(fontCss(S.font)), sample = esc(S.mSample || "Aa");
+  $("palChips").innerHTML = palette.map(c => `<span class="palchip"><i style="background:${c.hex}"></i>${esc(c.name)}</span>`).join("");
+  const g = $("mgrid");
+  const det = S.mView !== "ok", cw = det ? (innerWidth < 760 ? 150 : 168) : 118, rh = innerWidth < 760 ? 80 : 130;
+  g.style.gridTemplateColumns = `${rh}px repeat(${n}, minmax(${cw}px, 1fr))`;
+  g.style.minWidth = (rh + n * (cw + 8)) + "px";
+  const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓ Passe" : "✕ Échec"}</span>`;
+  let h = `<div class="mcorner">Texte ↓<br>Fond →</div>` + C.map(c => `<div class="mcol"><div class="bar" style="background:${c.hex}"></div><b title="${esc(c.name)}">${esc(c.name)}</b><code>${c.hex}</code></div>`).join("");
+  C.forEach((t, i) => {
+    h += `<div class="mrow"><span class="disc" style="background:${t.hex}"></span><div><b title="${esc(t.name)}">${esc(t.name)}</b><code>${t.hex}</code></div></div>`;
+    C.forEach((b, j) => {
+      if (i === j) { h += `<div class="mdiag" aria-hidden="true">Même couleur</div>`; return; }
+      const r = ratio(t.hex, b.hex), [lab, cls] = grade(r);
+      if (S.mView === "ok" && r < 4.5) { h += `<div class="mdiag" title="${esc(t.name)} sur ${esc(b.name)} : ${f1(r)}:1">${f1(r)}</div>`; return; }
+      const on = sel && sel[0] === i && sel[1] === j;
+      h += `<button type="button" class="mcell" data-i="${i}" data-j="${j}" aria-pressed="${on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
+        <span class="sample" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span><span class="sm">Petit texte</span></span>
+        <span class="foot" aria-hidden="true"><span class="rr"><span class="r">${f2(r)}<small>:1</small></span><span class="bd ${cls}">${lab}</span></span>
+          <span class="ck">Normal${pass(r >= tN)}</span><span class="ck">Grand${pass(r >= tL)}</span>${v21 ? `<span class="ck">Interface${pass(r >= 3)}</span>` : ""}</span></button>`;
+    });
+  });
+  g.innerHTML = h;
+  renderKeep(); renderDetail();
+}
+$("mgrid").addEventListener("click", e => {
+  const c = e.target.closest(".mcell"); if (!c) return;
+  sel = [+c.dataset.i, +c.dataset.j]; renderMx();
+  $("pairDetail").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+});
+$("mSample").addEventListener("input", e => { S.mSample = e.target.value; save(); renderMx(); });
+segInit("mView", () => S.mView, v => { S.mView = v; save(); renderMx(); });
+$("mVision").value = S.mVision;
+$("mVision").addEventListener("change", e => { S.mVision = e.target.value; save(); renderMx(); });
+function renderKeep() {
+  const C = palette, P = [], out = [], v21 = V() >= 21, nm = c => `<b>${esc(c.name)}</b>`;
+  for (let i = 0; i < C.length; i++) for (let j = i + 1; j < C.length; j++) P.push({ a: C[i], b: C[j], r: ratio(C[i].hex, C[j].hex) });
+  P.filter(p => p.r < 1.5).sort((x, y) => x.r - y.r).slice(0, 2).forEach(p => out.push(`${nm(p.a)} et ${nm(p.b)} sont presque jumeaux (${f1(p.r)}:1) : on ne les distingue pas l’un de l’autre.`));
+  C.forEach(c => { if (!P.some(p => (p.a === c || p.b === c) && p.r >= 4.5)) out.push(`${nm(c)} ne passe en texte courant avec aucune autre couleur : gardez‑le pour le décor, les grands textes, ou ajustez‑le.`); });
+  P.filter(p => p.r >= 3 && p.r < 4.5).sort((x, y) => y.r - x.r).slice(0, 2).forEach(p => out.push(`${nm(p.a)} avec ${nm(p.b)} (${f1(p.r)}:1) : grands textes${v21 ? " et composants" : ""} seulement.`));
+  const okN = P.filter(p => p.r >= 4.5).length;
+  out.push(`${okN} paire${okN > 1 ? "s" : ""} sur ${P.length} conviennent au texte courant (AA).`);
+  if (P.length) { const best = P.reduce((x, y) => y.r > x.r ? y : x); out.push(`Meilleure paire : ${nm(best.a)} et ${nm(best.b)} (${f1(best.r)}:1).`); }
+  $("keep").innerHTML = out.slice(0, 6).map(s => `<p>${s}</p>`).join("");
+}
+function renderDetail() {
+  const d = $("pairDetail");
+  if (!sel || sel[0] >= palette.length || sel[1] >= palette.length) { sel = null; d.hidden = true; return; }
+  dActs = [];
+  const [i, j] = sel, fg = palette[i], bg = palette[j], r = ratio(fg.hex, bg.hex), [lab, cls] = grade(r), v21 = V() >= 21;
+  const rows = [["Texte courant, AA (1.4.3)", r >= 4.5], ["Texte courant, AAA (1.4.6)", r >= 7], ["Grand texte, AA (1.4.3)", r >= 3], ["Grand texte, AAA (1.4.6)", r >= 4.5]];
+  if (v21) rows.push(["Composants et graphiques (1.4.11)", r >= 3]);
+  const btn = (label, act, dot, primary) => { dActs.push(act); return `<button type="button" class="btn sm ${primary ? "primary" : ""}" data-dact="${dActs.length - 1}">${dot ? `<span class="dot" style="background:${dot}"></span>` : ""}${esc(label)}</button>`; };
+  const fixes = [];
+  [[4.5, "AA"], [7, "AAA"]].forEach(([t, l]) => {
+    if (r >= t) return;
+    const a = suggestFix(fg.hex, bg.hex, t), b = suggestFix(bg.hex, fg.hex, t);
+    if (a) fixes.push(btn(`${fg.name} → ${a} (${l})`, () => { palette[i].hex = a; changed(); renderEditor(); toast(`${fg.name} remplacé par ${a}`); }, a));
+    if (b) fixes.push(btn(`${bg.name} → ${b} (${l})`, () => { palette[j].hex = b; changed(); renderEditor(); toast(`${bg.name} remplacé par ${b}`); }, b));
+  });
+  const ff = esc(fontCss(S.font));
+  d.hidden = false;
+  d.innerHTML = `<div class="row between"><h2>${esc(fg.name)} sur ${esc(bg.name)}</h2><span class="row" style="gap:8px"><span class="mono" style="font-size:22px;font-weight:700">${f1(r)}:1</span><span class="bd ${cls}">${lab}</span></span></div>
+    <div class="pd-grid">
+      <div class="pd-prev" style="background:${bg.hex};color:${fg.hex};font-family:${ff}">
+        <div style="font-size:30px;font-weight:700;line-height:1.1">Titre de 30 px en ${esc(fg.name)}</div>
+        <div style="font-size:16px;line-height:1.5">Texte courant de 16 px : c’est la taille la plus exigeante, il lui faut 4,5:1 au niveau AA.</div>
+        <div style="font-size:13px">Mention de 13 px, souvent la première à devenir illisible.</div>
+        <div><span style="display:inline-block;border:2px solid currentColor;border-radius:8px;padding:6px 12px;font-weight:700">Bouton</span></div>
+      </div>
+      <div class="checks">${rows.map(([t, ok]) => `<div class="check"><div>${t}</div><span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓ Passe" : "✕ Non"}</span></div>`).join("")}</div>
+    </div>
+    ${fixes.length ? `<div style="display:flex;flex-direction:column;gap:8px"><h3>Corriger en gardant la teinte</h3><div class="row" style="gap:6px">${fixes.join("")}</div><p class="note">Le bouton remplace la couleur dans votre liste : toute la matrice est recalculée.</p></div>` : ""}
+    <div class="row">${btn("Ouvrir dans l’aperçu", () => { S.fg = fg.hex; S.bg = bg.hex; save(); location.hash = "tester"; show("tester"); render(); window.scrollTo(0, 0); }, null, true)}${btn("Inverser texte et fond", () => { sel = [j, i]; renderMx(); })}${btn("Fermer", () => { sel = null; renderMx(); })}</div>`;
+}
+$("pairDetail").addEventListener("click", e => { const b = e.target.closest("[data-dact]"); if (b && dActs[+b.dataset.dact]) dActs[+b.dataset.dact](); });
+// Coller une liste
+$("pasteToggle").addEventListener("click", e => { const box = $("pasteBox"); box.hidden = !box.hidden; e.currentTarget.setAttribute("aria-expanded", !box.hidden); });
+$("pasteApply").addEventListener("click", () => {
+  const list = [];
+  $("pasteText").value.split(/\n|;/).forEach((line, k) => {
+    const m = line.match(/#?\b([0-9a-f]{6}|[0-9a-f]{3})\b/i); if (!m) return;
+    const hex = normHex(m[1]); if (!hex) return;
+    const name = line.replace(m[0], "").replace(/[:=,–-]+\s*$/, "").trim() || "Couleur " + (list.length + 1);
+    list.push({ name: name.slice(0, 30), hex });
+  });
+  if (list.length < 2) { toast("Il faut au moins deux couleurs, ex. « Brand #2447D1 »"); return; }
+  palette = list.slice(0, 12); sel = null; changed(); renderEditor(); $("pasteBox").hidden = true; $("pasteToggle").setAttribute("aria-expanded", "false");
+  toast(`${palette.length} couleurs chargées`);
+});
+
+// ---------- Noms automatiques ----------
+function nameFor(hex) {
+  const { L, C, h } = hexToOklch(hex), deg = ((h * 180 / Math.PI) + 360) % 360;
+  let base;
+  if (C < 0.045) base = L > 0.96 ? "Blanc" : L < 0.16 ? "Noir" : "Gris";
+  else if (deg >= 40 && deg < 95 && L < 0.55) base = "Brun";
+  else base = deg < 40 ? "Rouge" : deg < 70 ? "Orange" : deg < 115 ? "Jaune" : deg < 165 ? "Vert" : deg < 220 ? "Turquoise" : deg < 285 ? "Bleu" : deg < 325 ? "Violet" : deg < 350 ? "Rose" : "Rouge";
+  if (base !== "Blanc" && base !== "Noir" && base !== "Brun") base += L > 0.82 ? " clair" : L < 0.42 ? " foncé" : "";
+  let name = base, k = 2;
+  while (palette.some(c => c.name === name)) name = base + " " + k++;
+  return name;
+}
+function addColor(hex, quiet) {
+  if (palette.some(c => c.hex === hex)) { if (!quiet) toast(`${hex} est déjà dans vos couleurs`); return false; }
+  if (palette.length >= 12) { toast("12 couleurs maximum : retirez‑en une d’abord"); return false; }
+  palette.push({ name: nameFor(hex), hex }); changed(); renderEditor();
+  if (!quiet) toast(`${hex} ajoutée`);
+  return true;
+}
+
+// ---------- Image : extraction et pipette ----------
+let imgCanvas = null, extracted = [], picked = new Set();
+function loadImageFile(file) {
+  if (!file || !/^image\//.test(file.type)) { toast("Choisissez une image : PNG, JPG, WebP ou GIF"); return; }
+  const url = URL.createObjectURL(file), im = new Image();
+  im.onload = () => {
+    const max = 1200, s = Math.min(1, max / Math.max(im.naturalWidth, im.naturalHeight));
+    const c = $("imgCanvas"); c.width = Math.round(im.naturalWidth * s); c.height = Math.round(im.naturalHeight * s);
+    c.getContext("2d", { willReadFrequently: true }).drawImage(im, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url); imgCanvas = c;
+    $("palBar").open = true; $("imgPanel").hidden = false; runExtract();
+    $("imgPanel").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+  };
+  im.onerror = () => { URL.revokeObjectURL(url); toast("Cette image n’a pas pu être ouverte"); };
+  im.src = url;
+}
+function extractColors(canvas, k) {
+  const sw = 140, sh = Math.max(1, Math.round(canvas.height * sw / canvas.width));
+  const t = document.createElement("canvas"); t.width = sw; t.height = sh;
+  const ctx = t.getContext("2d", { willReadFrequently: true }); ctx.drawImage(canvas, 0, 0, sw, sh);
+  const d = ctx.getImageData(0, 0, sw, sh).data, pts = [];
+  for (let i = 0; i < d.length; i += 4) { if (d[i + 3] < 128) continue; pts.push(linToOklab([d[i], d[i + 1], d[i + 2]].map(v => toLin(v / 255)))); }
+  if (!pts.length) return [];
+  // k-means++ déterministe : premier centre = point le plus fréquent approximé par la moyenne, puis le plus éloigné
+  const dist = (a, b) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+  const mean = pts.reduce((m, p) => [m[0] + p[0], m[1] + p[1], m[2] + p[2]], [0, 0, 0]).map(v => v / pts.length);
+  const cent = [pts.reduce((b, p) => dist(p, mean) < dist(b, mean) ? p : b)];
+  while (cent.length < k) { let far = pts[0], fd = -1; for (const p of pts) { const dd = Math.min(...cent.map(c => dist(p, c))); if (dd > fd) { fd = dd; far = p; } } if (fd <= 1e-6) break; cent.push(far); }
+  let assign = new Array(pts.length).fill(0);
+  for (let it = 0; it < 14; it++) {
+    for (let i = 0; i < pts.length; i++) { let bi = 0, bd = Infinity; for (let c = 0; c < cent.length; c++) { const dd = dist(pts[i], cent[c]); if (dd < bd) { bd = dd; bi = c; } } assign[i] = bi; }
+    const sum = cent.map(() => [0, 0, 0, 0]);
+    pts.forEach((p, i) => { const s = sum[assign[i]]; s[0] += p[0]; s[1] += p[1]; s[2] += p[2]; s[3]++; });
+    sum.forEach((s, c) => { if (s[3]) cent[c] = [s[0] / s[3], s[1] / s[3], s[2] / s[3]]; });
+  }
+  const count = cent.map(() => 0); assign.forEach(a => count[a]++);
+  return cent.map((c, i) => {
+    const L = c[0], a = c[1], b = c[2];
+    const l_ = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m_ = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s_ = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+    const lin = [4.0767416621 * l_ - 3.3077115913 * m_ + 0.2309699292 * s_, -1.2684380046 * l_ + 2.6097574011 * m_ - 0.3413193965 * s_, -0.0041960863 * l_ - 0.7034186147 * m_ + 1.7076147010 * s_];
+    return { hex: linToHex(lin), share: count[i] / pts.length };
+  }).filter(x => x.share > 0.004).sort((x, y) => y.share - x.share)
+    .filter((x, i, arr) => arr.findIndex(y => y.hex === x.hex) === i);
+}
+function runExtract() {
+  if (!imgCanvas) return;
+  extracted = extractColors(imgCanvas, +$("imgK").value);
+  picked = new Set(extracted.map(x => x.hex));
+  renderExtracted();
+}
+function renderExtracted() {
+  $("imgSwatches").innerHTML = extracted.map(x => `<button type="button" class="xsw" data-hex="${x.hex}" aria-pressed="${picked.has(x.hex)}" aria-label="${x.hex}, ${Math.round(x.share * 100)} % de l’image">
+    <span class="xchip" style="background:${x.hex}"></span><span class="mono">${x.hex}</span><span class="small muted">${Math.max(1, Math.round(x.share * 100))} %</span></button>`).join("");
+  $("imgCount").textContent = `${picked.size} sélectionnée${picked.size > 1 ? "s" : ""}`;
+}
+$("imgSwatches").addEventListener("click", e => { const b = e.target.closest(".xsw"); if (!b) return; const h = b.dataset.hex; picked.has(h) ? picked.delete(h) : picked.add(h); renderExtracted(); });
+$("imgK").addEventListener("input", () => { $("imgKv").textContent = $("imgK").value; runExtract(); });
+$("imgReplace").addEventListener("click", () => {
+  const list = extracted.filter(x => picked.has(x.hex)).slice(0, 12);
+  if (list.length < 2) { toast("Sélectionnez au moins deux couleurs"); return; }
+  palette = []; list.forEach(x => palette.push({ name: nameFor(x.hex), hex: x.hex })); sel = null; changed(); renderEditor();
+  toast(`${palette.length} couleurs chargées depuis l’image`);
+});
+$("imgAdd").addEventListener("click", () => { let n = 0; extracted.filter(x => picked.has(x.hex)).forEach(x => { if (addColor(x.hex, true)) n++; }); toast(n ? `${n} couleur${n > 1 ? "s" : ""} ajoutée${n > 1 ? "s" : ""}` : "Rien à ajouter : déjà présentes, ou 12 couleurs atteintes"); });
+$("imgClose").addEventListener("click", () => { $("imgPanel").hidden = true; });
+$("imgFile").addEventListener("change", e => { loadImageFile(e.target.files[0]); e.target.value = ""; });
+// Pipette sur l’image
+function pixelAt(ev) {
+  const c = $("imgCanvas"), r = c.getBoundingClientRect();
+  const x = Math.floor((ev.clientX - r.left) * c.width / r.width), y = Math.floor((ev.clientY - r.top) * c.height / r.height);
+  const d = c.getContext("2d", { willReadFrequently: true }).getImageData(Math.max(0, x - 1), Math.max(0, y - 1), 3, 3).data;
+  let s = [0, 0, 0], n = 0; for (let i = 0; i < d.length; i += 4) { if (d[i + 3] < 128) continue; s[0] += d[i]; s[1] += d[i + 1]; s[2] += d[i + 2]; n++; }
+  return n ? rgb2hex(s.map(v => v / n / 255)) : null;
+}
+$("imgCanvas").addEventListener("mousemove", e => { const h = pixelAt(e); if (!h) return; const lp = $("loupe"); lp.hidden = false; lp.style.background = h; lp.textContent = h; lp.style.color = textOn(h); });
+$("imgCanvas").addEventListener("mouseleave", () => { $("loupe").hidden = true; });
+$("imgCanvas").addEventListener("click", e => { const h = pixelAt(e); if (h) addColor(h); });
+// Glisser-déposer et coller
+const dz = $("colorsCard");
+["dragenter", "dragover"].forEach(t => dz.addEventListener(t, e => { if ([...(e.dataTransfer?.items || [])].some(i => i.kind === "file")) { e.preventDefault(); dz.classList.add("drop"); } }));
+["dragleave", "drop"].forEach(t => dz.addEventListener(t, () => dz.classList.remove("drop")));
+dz.addEventListener("drop", e => { const f = e.dataTransfer?.files?.[0]; if (f) { e.preventDefault(); loadImageFile(f); } });
+document.addEventListener("paste", e => {
+  if ($("matrice").hidden) return;
+  const item = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith("image/"));
+  if (item) { e.preventDefault(); loadImageFile(item.getAsFile()); }
+});
+// Pipette d’écran (navigateurs qui la proposent)
+if ("EyeDropper" in window) {
+  $("eyedrop").hidden = false;
+  $("eyedrop").addEventListener("click", async () => {
+    try { const r = await new window.EyeDropper().open(); const h = normHex(r.sRGBHex); if (h) addColor(h); }
+    catch (err) { if (err && err.name !== "AbortError") toast("La pipette d’écran est bloquée ici : importez une capture d’écran et cliquez dessus"); }
+  });
+}
+
+// ---------- Lisibilité ----------
+const SAMPLE_TEXT = "Conformément aux dispositions réglementaires en vigueur, et sous réserve de la transmission préalable de l’ensemble des pièces justificatives mentionnées dans le formulaire de demande, l’administration procédera à l’instruction de votre dossier dans un délai raisonnable. Vous recevrez une réponse par courrier. En cas de question, appelez-nous du lundi au vendredi.";
+function syllables(w, lang) { w = w.toLowerCase().replace(/[’'-]/g, ""); if (lang === "fr") { let n = (w.match(/[aeiouyàâäéèêëîïôöùûüÿœæ]+/g) || []).length; if (n > 1 && /[^aeiouyàâäéèêëîïôöùûüÿœæ](e|es)$/.test(w)) n--; return Math.max(1, n); } let n = (w.match(/[aeiouy]+/g) || []).length; if (n > 1 && /[^aeiouyl]e$/.test(w)) n--; return Math.max(1, n); }
+const band = s => s >= 90 ? "très facile" : s >= 80 ? "facile" : s >= 70 ? "assez facile" : s >= 60 ? "standard" : s >= 50 ? "assez difficile" : s >= 30 ? "difficile" : "très difficile";
+function renderRead() {
+  const text = $("rText").value, lang = $("rLang").value, max = parseInt($("rMax").value, 10) || 20;
+  const sentences = text.split(/(?<=[.!?…])\s+|\n+/).map(s => s.trim()).filter(s => /\p{L}/u.test(s));
+  const wordsOf = s => (s.match(/[\p{L}\p{N}][\p{L}\p{N}’'-]*/gu) || []).filter(w => /\p{L}/u.test(w));
+  const words = wordsOf(text), nS = sentences.length, nW = words.length, syl = words.reduce((a, w) => a + syllables(w, lang), 0);
+  const asl = nS ? nW / nS : 0, asw = nW ? syl / nW : 0, score = nW ? (lang === "fr" ? 207 - 1.015 * asl - 73.6 * asw : 206.835 - 1.015 * asl - 84.6 * asw) : null;
+  const longOnes = sentences.map(s => [s, wordsOf(s).length]).filter(([, n]) => n > max), stat = (v, k) => `<div class="stat"><div class="v">${v}</div><div class="k">${k}</div></div>`;
+  $("rStats").innerHTML = stat(score === null ? "–" : fmt(score, 0), score === null ? "score" : `score : ${band(score)}`) + stat(fmt(asl, 1), "mots par phrase") + stat(longOnes.length, `phrases de plus de ${max} mots`) + stat(nW, "mots") + stat(nS, "phrases");
+  $("rLong").innerHTML = longOnes.length ? `<h3 style="margin-bottom:8px">Phrases à raccourcir</h3><ol class="long">${longOnes.map(([s, n]) => `<li>${esc(s)} <span class="pill warnp">${n} mots</span></li>`).join("")}</ol>` : "";
+}
+$("rText").value = SAMPLE_TEXT;
+["rText", "rLang", "rMax"].forEach(id => $(id).addEventListener("input", renderRead));
+
+// ---------- Onglets ----------
+const VIEWS = ["matrice", "tester", "palette", "lisibilite", "sources"];
+function show(v) { if (!VIEWS.includes(v)) v = "matrice"; closePops(); VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v ? 0 : -1; }); }
+document.querySelectorAll("nav.tabs button").forEach(b => {
+  b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
+  b.addEventListener("keydown", e => { if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
+});
+window.addEventListener("hashchange", () => { show(location.hash.slice(1)); window.scrollTo(0, 0); });
+
+// ---------- Démarrage ----------
+function renderAll() { buildScales(); renderScales(); renderMatrix(); renderRules(); renderExport(); render(); }
+$("showFail").checked = S.showFail;
+paintSrcTab(); ensureFont(S.font); renderEditor(); renderAll(); renderRead();
+show(location.hash.slice(1));
+requestAnimationFrame(() => window.scrollTo(0, 0)); setTimeout(() => window.scrollTo(0, 0), 60);
+document.fonts.ready.then(renderMetrics);
+document.fonts.load(`${S.weight} 40px ${fontCss(S.font)}`).then(renderMetrics, () => {});
+})();
+</script>
+
+</body>
+</html>
