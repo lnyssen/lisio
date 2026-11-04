@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; font: 13px/1.45 Inter, system-ui, sans-serif; background: var(--figma-color-bg, #fff); color: var(--figma-color-text, #111); display: flex; flex-direction: column; gap: 12px; }
+  h1 { font-size: 15px; margin: 0; }
+  p { margin: 0; color: var(--figma-color-text-secondary, #555); }
+  .drop { border: 1.5px dashed var(--figma-color-border-strong, #999); border-radius: 10px; padding: 18px 12px; text-align: center; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .drop.on { border-color: var(--figma-color-border-brand-strong, #0d99ff); background: var(--figma-color-bg-brand-tertiary, #e5f4ff); }
+  textarea { width: 100%; height: 70px; resize: vertical; font: 11px/1.4 ui-monospace, monospace; border: 1px solid var(--figma-color-border, #ccc); border-radius: 8px; padding: 8px; background: var(--figma-color-bg-secondary, #f5f5f5); color: inherit; }
+  button { font: inherit; font-weight: 600; border-radius: 8px; padding: 8px 12px; cursor: pointer; border: 1px solid var(--figma-color-border, #ccc); background: var(--figma-color-bg, #fff); color: inherit; }
+  button.primary { background: var(--figma-color-bg-brand, #0d99ff); color: var(--figma-color-text-onbrand, #fff); border-color: transparent; width: 100%; padding: 10px; }
+  button:disabled { opacity: .45; cursor: default; }
+  label.chk { display: flex; gap: 8px; align-items: center; }
+  .sum { border-radius: 8px; padding: 10px 12px; background: var(--figma-color-bg-secondary, #f5f5f5); }
+  .sum b { font-weight: 700; }
+  .ok { color: var(--figma-color-text-success, #14ae5c); }
+  .err { color: var(--figma-color-text-danger, #f24822); }
+  ul { margin: 6px 0 0; padding-left: 18px; }
+</style>
+<h1>Importer un design system Lisio</h1>
+<p>Dans Lisio, cliquez sur <b>Exporter</b> : le fichier est téléchargé et copié. Collez-le ici (Ctrl ou Cmd + V), ou déposez le fichier.</p>
+<div class="drop" id="drop">
+  <span>Déposez <b>lisio-design-system.json</b> ici</span>
+  <button type="button" id="pick">Choisir le fichier</button>
+  <input type="file" id="file" accept=".json,application/json" hidden>
+</div>
+<textarea id="paste" placeholder="…ou collez le contenu ici" aria-label="Contenu JSON exporté par Lisio"></textarea>
+<div class="sum" id="sum" hidden></div>
+<label class="chk"><input type="checkbox" id="board" checked> Créer aussi une planche de présentation</label>
+<button class="primary" id="go" type="button" disabled>Importer dans ce fichier</button>
+<p>Relancer l’import met à jour les variables et styles existants, sans doublons.</p>
+<script>
+  const $ = id => document.getElementById(id); let data = null;
+  function count(o, t) { let n = 0; (function walk(x) { for (const k in x) { const v = x[k]; if (k[0] === "$" || !v || typeof v !== "object") continue; if ("$value" in v) { if (!t || v.$type === t) n++; } else walk(v); } })(o); return n; }
+  function load(text) {
+    const s = $("sum"); s.hidden = false;
+    try {
+      const d = JSON.parse(text); if (!d.color || !d.typography) throw new Error("ce contenu ne vient pas de Lisio");
+      data = d; const meta = (d.$extensions && d.$extensions["app.lisio"]) || {};
+      s.innerHTML = `<b class="ok">Prêt à importer</b><ul><li>${count(d.color, "color")} couleurs et nuances</li><li>${count(d.semantic || {}, "color")} rôles de couleur (texte, fond, bordure, focus…)</li><li>${count(d, "dimension") } dimensions (espacements, arrondis, cibles)</li><li>${Object.keys(d.typography).length} styles de texte</li></ul>${meta.wcag ? `<p style="margin-top:6px">Vérifié WCAG ${meta.wcag}, niveau ${meta.level}.</p>` : ""}`;
+      $("go").disabled = false;
+    } catch (e) { data = null; $("go").disabled = true; s.innerHTML = `<b class="err">Lecture impossible</b> : ${e.message}.`; }
+  }
+  $("pick").onclick = () => $("file").click();
+  $("file").onchange = e => { const f = e.target.files[0]; if (f) f.text().then(load); };
+  $("paste").addEventListener("input", e => e.target.value.trim() && load(e.target.value));
+  document.addEventListener("paste", e => { if (e.target === $("paste")) return; const t = e.clipboardData.getData("text"); if (t) { $("paste").value = t; load(t); } });
+  const dz = $("drop");
+  ["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("on"); }));
+  ["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove("on"); }));
+  dz.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) f.text().then(load); });
+  $("go").onclick = () => { if (!data) return; $("go").disabled = true; $("go").textContent = "Import en cours…"; parent.postMessage({ pluginMessage: { type: "import", data, board: $("board").checked } }, "*"); };
+  onmessage = e => {
+    const m = e.data.pluginMessage; if (!m) return; const s = $("sum"); $("go").disabled = false; $("go").textContent = "Importer dans ce fichier";
+    if (m.type === "done") { const r = m.report; s.innerHTML = `<b class="ok">Import terminé</b><ul><li>${r.variables} variables, dont ${r.created} créées et ${r.updated} mises à jour</li><li>${r.styles} styles de texte</li></ul>${r.warnings.length ? `<ul class="err">${r.warnings.map(w => `<li>${w}</li>`).join("")}</ul>` : ""}`; }
+    if (m.type === "error") s.innerHTML = `<b class="err">Échec</b> : ${m.message}`;
+  };
+</script>

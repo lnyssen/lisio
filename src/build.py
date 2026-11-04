@@ -16,3 +16,10 @@ v = v.replace('<meta name="claude:viewport-fit-sides" content="cover">', "")
 head = (root / "src/head.html").read_text()
 i = v.index("</style>") + len("</style>")
 (root / "index.html").write_text(head + v[:i] + "\n</head>\n<body>\n" + v[i:] + "\n</body>\n</html>\n")
+# Plugin Figma : code.js = cœur + interface, puis archive servie par Vercel
+import zipfile
+pl = root / "figma-plugin"
+(pl / "code.js").write_text((pl / "core.js").read_text() + (pl / "main.js").read_text())
+with zipfile.ZipFile(root / "lisio-figma-plugin.zip", "w", zipfile.ZIP_DEFLATED) as z:
+    for f in ("manifest.json", "code.js", "ui.html"):
+        z.write(pl / f, f"lisio-figma-plugin/{f}")
