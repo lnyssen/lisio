@@ -142,18 +142,31 @@ a{color:inherit;text-underline-offset:.18em}
 .ds-col{display:flex;flex-direction:column;gap:24px;min-width:0}
 .ds-sec{display:flex;flex-direction:column;gap:12px;min-width:0}.ds-sec h3{font-size:16px;margin:0}
 .ds-f{display:flex;flex-direction:column;gap:6px}.ds-l{font-size:13px;font-weight:600;color:var(--muted)}
-.ds-roles{display:flex;flex-direction:column;gap:2px}
-.ds-role{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,200px) auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--hair)}
-.ds-role:first-child{border-top:0}
-.ds-role b{font-size:14px;display:block}.ds-role small{font-size:12px;color:var(--muted);font-family:var(--code)}
-.ds-role select{width:100%;min-height:36px}
-.ds-role .bd{justify-self:end}
+.ds-roles{display:flex;flex-direction:column;gap:18px}
+.ds-grp h4{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--muted);margin:0 0 2px}
+.ds-role{display:grid;grid-template-columns:52px minmax(0,1fr) minmax(0,240px);gap:6px 14px;align-items:center;padding:10px 0;border-top:1px solid var(--hair)}
+.ds-role.is-bad{background:linear-gradient(90deg,var(--bad-bg),transparent 70%);border-radius:10px;padding-left:8px;margin-left:-8px}
+.ds-smp{width:52px;height:40px;border-radius:9px;display:grid;place-items:center;font-weight:650;font-size:17px;box-shadow:inset 0 0 0 1px var(--hair)}
+.ds-mbtn{font-size:11px;font-weight:700;padding:4px 8px;border-radius:5px}
+.ds-mfld{width:30px;height:18px;border-radius:4px;border:1.5px solid}
+.ds-mline{width:34px;height:2px;border-radius:1px}
+.ds-rtx>b{font-size:14px;display:block}
+.ds-own{font-size:11px;font-weight:500;color:var(--muted);border:1px solid var(--hair);border-radius:99px;padding:0 6px;margin-left:4px;vertical-align:1px}
+.ds-say{display:block;font-size:13px;line-height:1.45;color:var(--muted);margin-top:2px}
+.ds-say b{font-weight:600}.ds-say b.ok{color:var(--ok)}.ds-say b.no{color:var(--bad)}
+.ds-rct{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.ds-rct select{width:100%;min-height:36px}
+.ds-lvl{font-size:12px;font-weight:600;color:var(--ok);align-self:flex-end}.ds-lvl.no{color:var(--bad)}
+.ds-fixb{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid var(--bad);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.ds-fixb:hover{background:var(--bad-bg)}
+.ds-fixall{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:10px 0 14px;border-radius:12px;background:var(--bad-bg);color:var(--bad)}.ds-fixall p{margin:0;font-size:14px}.ds-fixall[hidden]{display:none}
+.ds-fixb .sw{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
 .ds-tw{overflow-x:auto}.ds-gt{border-collapse:collapse;width:100%;font-size:14px}
 .ds-gt th{font-weight:600;color:var(--muted);text-align:left;padding:4px 6px;white-space:nowrap}.ds-gt td{padding:3px 4px}
-@media (max-width:520px){.ds-gt td input{min-width:0!important;padding:4px 5px!important}.ds-gt th{padding:4px 3px!important;font-size:13px}}
+@media (max-width:520px){.ds-gt td{padding:3px 2px}.ds-gt td input{min-width:46px!important;padding:4px 2px!important;text-align:center}.ds-gt th{padding:4px 3px!important;font-size:13px}.ds-gt tbody th{white-space:normal}}
 .ds-gt td input{width:100%;min-width:52px;min-height:34px;padding:4px 8px}
 @media (max-width:900px){.ds-grid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:520px){.ds-role{grid-template-columns:28px minmax(0,1fr) auto}.ds-role select{grid-column:2/-1}.ds-role .bd{grid-row:1;grid-column:3}.ds-gt input{font-size:16px}}
+@media (max-width:620px){.ds-role{grid-template-columns:52px minmax(0,1fr)}.ds-rct{grid-column:1/-1}}@media (max-width:520px){.ds-gt input{font-size:16px}}
 .figchip{display:inline-flex;align-items:center;gap:5px;margin-left:8px;font-size:12px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--hair);border-radius:999px;padding:2px 9px;vertical-align:1px;white-space:nowrap}.figchip::before{content:"";width:8px;height:8px;border-radius:2px;background:linear-gradient(135deg,#F24E1E 0 33%,#A259FF 33% 66%,#1ABCFE 66%)}
 .mob{display:none}@media (max-width:760px){.mob{display:inline}}
 .ex-hero{flex-direction:row!important;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
@@ -192,6 +205,7 @@ nav.tabs{display:flex;justify-content:center;gap:2px;min-width:0}
 nav.tabs button{font:inherit;font-size:14px;font-weight:600;border:0;background:none;color:var(--muted);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;user-select:none}
 nav.tabs button svg{width:18px;height:18px;flex:none}
 @media (min-width:761px){nav.tabs button svg{display:none}nav.tabs button{padding:7px 9px}}
+@media (min-width:1101px) and (max-width:1260px){nav.tabs button{padding:7px 7px}}
 @media (min-width:761px) and (max-width:1000px){nav.tabs .dsk{display:none}nav.tabs .mob{display:inline}nav.tabs button{padding:6px 7px!important}.appbar{grid-template-columns:auto minmax(0,1fr) auto!important;gap:10px!important}nav.tabs{justify-content:center}#normV{display:none}}
 @media (min-width:761px) and (max-width:1100px){.expbtn span{display:none}.expbtn{padding:7px 9px;min-width:34px;min-height:34px;justify-content:center}.normchip{min-width:0}nav.tabs button{padding:7px 6px;font-size:13px}}
 nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
@@ -389,7 +403,7 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .ts-cs select{padding-left:40px}
 .ts-cr{display:flex;align-items:center;gap:8px;padding:0 2px;white-space:nowrap}.ts-cr .ratio{font-size:22px}.ts-cr small{font-size:13px;font-weight:700}.ts-cr.ok small{color:var(--ok)}.ts-cr.lg small{color:var(--warn)}.ts-cr.no small{color:var(--bad)}
 @media (max-width:900px){.ts-ctl{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:520px){.ts-ctl .ts-grp:nth-child(3) .ts-gr{grid-template-columns:repeat(2,minmax(0,1fr))}.ts-ctl .ts-grp:nth-child(3) .ts-f:last-child{grid-column:1/-1}}
+@media (max-width:520px){.ts-ctl .ts-grp:nth-child(3) .ts-gr{grid-template-columns:repeat(2,minmax(0,1fr))}.ts-ctl .ts-grp:nth-child(3) .ts-f:nth-child(3){grid-column:1/-1}}
 .ts-list{gap:0!important;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
 .ts-row{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--hair)}
 .ts-row:first-child{border-top:0}
@@ -443,6 +457,46 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--primary);color:var(--primary-ink);padding:9px 16px;border-radius:999px;font-size:14px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;z-index:30}
 .toast.show{opacity:1}
 @media (prefers-reduced-motion: reduce){.toast{transition:none}}
+/* Parcours, aides, à corriger */
+.journey{margin:20px 0 26px}
+.j-steps{list-style:none;margin:0;padding:0;display:flex;gap:4px}
+.j-steps li{flex:1 1 0;min-width:0}
+.j-steps a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 6px 6px 0;border-top:3px solid var(--hair);color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden}
+.j-steps a:hover{color:var(--ink)}
+.j-steps a.done{border-top-color:var(--muted);color:var(--ink)}
+.j-steps a[aria-current]{border-top-color:var(--ink);color:var(--ink)}
+.j-n{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid currentColor;font-size:12px;font-variant-numeric:tabular-nums}
+.j-steps a.done .j-n{background:var(--hair);border-color:transparent}
+.j-steps a[aria-current] .j-n{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.j-l{overflow:hidden;text-overflow:ellipsis}
+.j-i{flex:none;background:var(--bad);color:var(--surface);border-radius:99px;font-size:11px;font-weight:700;line-height:18px;min-width:18px;padding:0 5px;text-align:center}
+.j-now{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 24px;margin-top:8px}
+.j-now>p{margin:0;font-size:14px;color:var(--muted)}.j-now>p b{color:var(--ink)}
+.qline{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.mhead .qline{margin-top:12px}
+.qchip{font:inherit;font-size:13px;font-weight:600;min-height:32px;padding:4px 12px 4px 6px;border-radius:99px;border:1px dashed var(--field);background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:7px;align-items:center;text-align:left}
+.qchip::before{content:"?";flex:none;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-size:12px;font-weight:800}
+.qchip:hover,.qchip[aria-expanded="true"]{border-style:solid;background:var(--surface)}
+.qpop{position:fixed;z-index:80;background:var(--raised);color:var(--ink);border:1px solid var(--hair);border-radius:14px;padding:14px 16px 16px;box-shadow:0 14px 44px rgba(0,0,0,.22)}
+.qpop[hidden]{display:none}
+.qpop-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.qpop h3{font-size:15px;line-height:1.3;margin:4px 0 0}
+.qpop .x{flex:none;border:0;background:var(--bg);color:var(--ink);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:15px}
+.qpop p{margin:8px 0 0;font-size:14px;line-height:1.55}
+@media (prefers-reduced-motion: no-preference){.qpop:not([hidden]){animation:qin .16s ease-out}@keyframes qin{from{opacity:0;transform:translateY(-4px)}}}
+.ts-crfix{grid-column:1/-1}.ts-crfix[hidden]{display:none}
+.j-hello{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--hair)}.j-hello p{margin:0;font-size:14px;max-width:70ch}
+.jnext{margin-top:32px;padding-top:20px;border-top:1px solid var(--hair)}
+.jnext[hidden],.journey[hidden]{display:none}
+.jn-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.jn-warn{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:var(--bad-bg)}.jn-warn p{margin:0;color:var(--bad);font-size:14px;font-weight:600}
+a.btn{text-decoration:none}
+.exf{list-style:none;margin:10px 0 0;padding:0}
+.exf-it{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:10px 0;border-top:1px solid var(--hair)}
+.exf-it b{font-size:14px}
+.exf-ic{width:52px;height:40px;border-radius:9px;display:grid;place-items:center;background:var(--warn-bg);color:var(--warn);font-weight:800;font-size:18px}
+.exf-ok{display:flex;gap:16px;align-items:center}.exf-ok .pair{width:44px;height:44px}.exf-ok h2{margin:0}.exf-ok .note{margin:4px 0 0}
+@media (max-width:760px){.j-steps li{flex:0 0 auto}.j-steps li:has(a[aria-current]){flex:1 1 auto}.j-steps a{padding-right:4px}.j-steps a:not([aria-current]) .j-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.j-now>p{font-size:13px}.exf-it{grid-template-columns:52px minmax(0,1fr)}.exf-it>.btn,.exf-it>.ds-fixb{grid-column:2}.jn-row .btn{flex:1 1 auto;justify-content:center}}
 </style>
 
 <div class="wrap">
@@ -460,6 +514,8 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
     <div class="appr"><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button>
   <button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="Norme de référence : WCAG 2.2, niveau AA. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button></div>
   </header>
+
+  <nav class="journey" id="journey" aria-label="Parcours en 6 étapes" hidden></nav>
 
   <!-- MATRICE -->
   <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice">
@@ -591,7 +647,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
         <div class="ts-grp"><span class="ts-gh">Couleurs</span><div class="ts-gr">
           <div class="ts-f"><label class="ts-lab" for="tsFg">Texte</label><div class="ts-cs"><span class="dot" id="tsFgDot"></span><select id="tsFg"></select></div></div>
           <div class="ts-f"><label class="ts-lab" for="tsBg">Fond</label><div class="ts-cs"><span class="dot" id="tsBgDot"></span><select id="tsBg"></select></div></div>
-          <div class="ts-f"><span class="ts-lab">Contraste</span><span class="ts-cr" id="tsCr"></span></div>
+          <div class="ts-f"><span class="ts-lab">Contraste</span><span class="ts-cr" id="tsCr"></span></div><div class="ts-crfix" id="tsCrFix" hidden></div>
         </div></div>
       </div>
       <div class="row between" style="align-items:flex-end"><p class="ts-derived" id="tsDerived"></p><div class="row"><button class="btn sm" type="button" id="tsApply">Recalculer depuis le desktop</button><button class="btn sm" type="button" id="tsReset">Réinitialiser</button></div></div>
@@ -623,7 +679,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
     <div class="card-surface ds-panel">
       <div class="row between"><div><h2>Personnaliser</h2><p class="note" id="dsState"></p></div><button class="btn sm" type="button" id="dsReset">Revenir au système de base</button></div>
       <div class="ds-grid">
-        <section class="ds-sec" aria-labelledby="dsColH"><h3 id="dsColH">Couleurs des rôles</h3><p class="note">« Auto » laisse Lisio choisir la nuance qui passe. Chaque choix est vérifié avec la couleur qui va avec.</p><div class="ds-roles" id="dsRoles"></div></section>
+        <section class="ds-sec" aria-labelledby="dsColH"><h3 id="dsColH">Couleurs des rôles</h3><p class="note">Un rôle, c’est une couleur qui a un métier : le texte, le fond, le bouton. Chaque rôle est vérifié avec son partenaire (le texte avec son fond, le bouton avec son libellé). « Auto » laisse Lisio choisir une nuance qui passe. Dans Figma, ce sont les variables de la collection <b>Semantic</b>.</p><div id="dsFixAll" class="ds-fixall" hidden></div><div class="ds-roles" id="dsRoles"></div></section>
         <div class="ds-col">
           <section class="ds-sec" aria-labelledby="dsShH"><h3 id="dsShH">Formes et tailles</h3>
             <div class="ds-f"><span class="ds-l" id="dsShapeL">Arrondis</span><div class="seg" role="group" aria-labelledby="dsShapeL" id="dsShape"><button type="button" data-v="square">Droit</button><button type="button" data-v="soft">Doux</button><button type="button" data-v="round">Arrondi</button><button type="button" data-v="pill">Pilule</button></div></div>
@@ -678,7 +734,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 
   <!-- TEXTE -->
   <section id="lisibilite" role="tabpanel" aria-labelledby="tab-lisibilite" hidden>
-    <header class="mhead phead"><div><h1>Rédaction</h1><p class="lead">Longueur des phrases et score de lecture de votre texte, en français ou en anglais. Critère WCAG 3.1.5, niveau AAA.</p></div></header>
+    <header class="mhead phead"><div><h1>Rédaction</h1><p class="lead">Longueur des phrases et score de lecture de votre texte, en français ou en anglais. Critère WCAG 3.1.5, niveau AAA.</p><p class="qline"><button type="button" class="qchip" data-q="lecture" aria-expanded="false" aria-controls="qPop">À quoi sert le score de lecture ?</button></p></div></header>
     <div class="card-surface">
       <div class="row between">
         <h2>Votre texte</h2>
@@ -701,8 +757,9 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
     <div class="card-surface ex-hero">
       <div class="ex-file"><span class="ex-ico" aria-hidden="true">{ }</span><div><b>lisio-design-system.json</b><span class="muted" id="exSize"></span></div></div>
       <div class="row"><button class="btn primary" type="button" id="exDl">Télécharger le fichier</button><button class="btn" type="button" id="exCopy">Copier pour le plugin</button><a class="btn" href="https://lisio-psi.vercel.app/lisio-figma-plugin.zip" download>Plugin Figma (.zip)</a></div>
-      <p class="note" id="exCheck"></p>
-    </div>
+      <p class="note" id="exCheck"></p></div>
+    <div class="card-surface exfix" id="exFix"></div>
+    
     <div class="card-surface">
       <h2>Ce que contient le fichier, et où il arrive dans Figma</h2>
       <p class="note">Les valeurs ci-dessous sont celles de votre design system actuel. Tout est en anglais dans Figma, pour coller aux noms utilisés par les développeurs.</p>
@@ -732,13 +789,14 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
     <header class="mhead phead"><div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
     <div class="card-surface guide">
       <h2>Lisio en six étapes</h2>
+      <p>Le bandeau en haut de chaque page indique où vous en êtes, et le bouton du bas mène à l’étape suivante. Les pastilles « ? » expliquent chaque notion en deux phrases.</p>
       <ol class="g-steps">
-        <li><b>Vos couleurs.</b> Dans <a href="#matrice">Contrastes</a>, saisissez vos codes, collez une liste ou importez une image : Lisio en extrait les teintes.</li>
-        <li><b>Les bonnes associations.</b> La matrice dit quel texte est lisible sur quel fond.</li>
-        <li><b>Votre police.</b> Dans <a href="#tester">Polices</a>, testez une police sur un vrai texte, à la bonne taille, avec vos couleurs.</li>
-        <li><b>Vos styles.</b> Dans <a href="#styles">Styles de texte</a>, réglez une typo fluide, de Display au bouton, du mobile au grand écran.</li>
-        <li><b>Vos nuances.</b> Dans <a href="#palette">Couleurs</a>, chaque couleur devient une gamme de 50 à 950.</li>
-        <li><b>Tout exporter.</b> Le bouton <b>Exporter</b>, en haut à droite, ouvre une page qui détaille le fichier unique de votre design system et ce qu’il devient dans Figma.</li>
+        <li><b>Contrastes.</b> Saisissez vos codes, collez une liste ou importez une image : la matrice dit quel texte est lisible sur quel fond.</li>
+        <li><b>Couleurs.</b> Chaque couleur devient une gamme de 11 nuances, de 50 à 950.</li>
+        <li><b>Polices.</b> Testez une police sur un vrai texte, à la bonne taille, avec vos couleurs.</li>
+        <li><b>Styles de texte.</b> Réglez le desktop : Lisio calcule le mobile et vérifie chaque style, de Display au bouton.</li>
+        <li><b>Design system.</b> Donnez un rôle à chaque couleur (texte, fond, bouton, bordure, focus). Lisio vérifie chaque paire et propose une correction en un clic.</li>
+        <li><b>Exporter.</b> La page liste ce qui reste à corriger, puis détaille le fichier unique et ce qu’il devient dans Figma.</li>
       </ol>
     </div>
     <div class="card-surface guide">
@@ -815,7 +873,9 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
       <p class="note">Le ratio WCAG 2 ne tient pas compte du dessin de la police : une police fine à 4,5:1 peut rester difficile à lire, d’où l’aperçu réel. APCA (brouillon WCAG 3) n’est pas utilisé, faute de valeur normative. Inspiré du principe de <a href="https://accessiblepalette.uk/" target="_blank" rel="noopener">accessiblepalette.uk</a>, réécrit indépendamment.</p>
     </div>
   </section>
+  <div class="jnext" id="jNext" hidden></div>
 </div>
+<div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
 <div class="pop" id="popFont" hidden>
           <h3>Police <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
           <div class="seg" role="group" aria-label="Source">
@@ -882,6 +942,8 @@ const GF_RAW = "__GF__";
 <script>
 (() => {
 "use strict";
+const QHELP = {"ratio": ["C’est quoi, un ratio de contraste ?", "Il compare la clarté de deux couleurs, de 1:1 (aucune différence) à 21:1 (noir sur blanc). Plus le chiffre est haut, plus c’est lisible. Le calcul est celui des WCAG, à partir de la luminance relative."], "aa": ["AA ou AAA ?", "AA est le niveau visé par les lois, dont le RGAA en France et la norme européenne EN 301 549 : 4,5:1 pour le texte courant, 3:1 pour le grand texte (24 px, ou 18,66 px en gras) et les composants. AAA est plus exigeant : 7:1 pour le texte. Choisissez le niveau avec la pastille WCAG en haut à droite."], "pair": ["Que veut dire le petit disque ?", "C’est une paire : moitié couleur du texte, moitié couleur du fond. Le contraste se mesure toujours entre deux couleurs, jamais une seule. Une couleur n’est pas « accessible » en soi, une paire l’est."], "nuance": ["Pourquoi 11 nuances ?", "Chaque couleur est déclinée de 50 (très clair) à 950 (très foncé). Dans Lisio, les nuances de même numéro ont la même clarté d’une couleur à l’autre : si Gris 700 sur Gris 50 passe, Brand 700 sur Brand 50 passe aussi. On retient des numéros, pas des codes."], "taille": ["Quelle taille minimum ?", "Les WCAG ne fixent pas de taille minimum. 16 px est la taille par défaut des navigateurs et l’usage courant pour le texte courant. Sous 12 px, Lisio vous prévient."], "fluid": ["C’est quoi, une typo fluide ?", "La taille glisse en douceur entre le mobile (390 px) et le grand écran (1440 px), grâce à la fonction CSS clamp(). Vous réglez le desktop, Lisio calcule le mobile. Dans Figma, chaque style existe en 4 versions, une par écran."], "zoom": ["Pourquoi 2,5 fois maximum ?", "Le critère 1.4.4 demande que le texte reste lisible zoomé à 200 %. Avec une taille fluide, si le desktop dépasse 2,5 fois le mobile, le zoom peut ne plus atteindre 200 % (Barvian, Smashing Magazine, 7 novembre 2023). Lisio bloque donc les écarts trop grands."], "role": ["C’est quoi, un rôle ?", "Un rôle donne un métier à une nuance : text/default pour le texte, background/default pour le fond, action/default pour le bouton. Dans les maquettes et le code, on utilise le rôle, pas la nuance : pour changer de thème, on rebranche les rôles et tout suit."], "focus": ["Pourquoi un contour de focus ?", "Quand on navigue au clavier (touche Tab), ce contour montre où l’on est. Lisio l’exporte en 2 px avec au moins 3:1 de contraste, ce que demande le critère 2.4.13 (AAA) ; le critère 2.4.7 (AA) exige qu’il soit visible."], "cible": ["Pourquoi 44 px pour les boutons ?", "Une cible trop petite se rate au doigt ou avec une main qui tremble. Les WCAG demandent 24 px minimum (2.5.8, AA) et recommandent 44 px (2.5.5, AAA)."], "plugin": ["Comment marche le plugin ?", "Le plugin Lisio lit le fichier JSON exporté et crée dans Figma les collections de variables (Colors, Semantic, Typography, Layout, Dimensions) et les styles de texte. Il s’installe une fois, puis chaque import met à jour l’existant sans doublons."], "variable": ["Variable ou style, quelle différence ?", "Dans Figma, une variable stocke une valeur (une couleur, un nombre) et peut avoir plusieurs modes, ici un par écran. Un style de texte regroupe police, taille et interligne. Lisio crée les deux, reliés entre eux."], "lecture": ["À quoi sert le score de lecture ?", "Il estime la difficulté d’un texte à partir de la longueur des phrases et des mots. Le critère 3.1.5 (AAA) demande une version plus simple quand un texte dépasse le niveau de fin de collège."]};
+const JOURNEY = [["matrice", "Contrastes", "Saisissez vos couleurs : la matrice dit quel texte se lit sur quel fond.", ["ratio", "aa", "pair"]], ["palette", "Couleurs", "Chaque couleur devient une gamme de 11 nuances, de 50 à 950.", ["nuance", "ratio"]], ["tester", "Polices", "Choisissez votre police et testez-la sur un vrai texte, avec vos couleurs.", ["taille", "aa"]], ["styles", "Styles de texte", "Réglez le desktop, Lisio calcule le mobile et vérifie chaque style.", ["fluid", "zoom", "taille"]], ["systeme", "Design system", "Donnez un rôle à chaque couleur, puis réglez formes et grille.", ["role", "focus", "cible"]], ["exporter", "Exporter", "Un fichier, un plugin, et tout arrive dans Figma.", ["plugin", "variable"]]];
 // ---------- Couleur ----------
 const clamp01 = v => Math.min(1, Math.max(0, v));
 const normHex = h => { h = String(h).trim().replace(/^#/, ""); if (/^[0-9a-f]{3}$/i.test(h)) h = h.split("").map(c => c + c).join(""); return /^[0-9a-f]{6}$/i.test(h) ? "#" + h.toUpperCase() : null; };
@@ -1601,7 +1663,9 @@ function renderStyles() {
   $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
   $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
   $("tsFgDot").style.background = T.fg; $("tsBgDot").style.background = T.bg;
-  { const r = ratio(T.fg, T.bg), need = S.level === "AAA" ? 7 : 4.5, ok = r >= need, big = r >= (S.level === "AAA" ? 4.5 : 3); const el = $("tsCr"); el.className = "ts-cr " + (ok ? "ok" : big ? "lg" : "no"); el.innerHTML = `<span class="pair" style="--a:${T.fg};--b:${T.bg}" aria-hidden="true"></span><span class="ratio">${fmt(floor2(r))}:1</span><small>${ok ? "✓ " + S.level : big ? "◐ Titres seulement" : "✕ Échec"}</small>`; }
+  { const r = ratio(T.fg, T.bg), need = S.level === "AAA" ? 7 : 4.5, ok = r >= need, big = r >= (S.level === "AAA" ? 4.5 : 3); const el = $("tsCr"); el.className = "ts-cr " + (ok ? "ok" : big ? "lg" : "no"); el.innerHTML = `<span class="pair" style="--a:${T.fg};--b:${T.bg}" aria-hidden="true"></span><span class="ratio">${fmt(floor2(r))}:1</span><small>${ok ? "✓ " + S.level : big ? "◐ Titres seulement" : "✕ Échec"}</small>`;
+    const F = $("tsCrFix"), Rr = dsRoles(), fv = ok ? null : roleFix("text/default", Rr); F.hidden = !fv;
+    F.innerHTML = fv ? `<button type="button" class="ds-fixb" data-xfix="text/default" data-v="${fv}"><span class="sw" style="background:${fv}"></span>Texte : utiliser ${esc(hexName(fv))} (${fmt(floor2(ratio(fv, T.bg)))}:1)</button>` : ""; }
   tsVwPaint();
   $("tsSummary").textContent = `Texte sur fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, WCAG ${S.version} ${S.level}. Verdict calculé sur la taille mobile.`;
   $("tsList").innerHTML = T.styles.map(st => {
@@ -1610,6 +1674,7 @@ function renderStyles() {
       <div class="ts-in" id="tsi-${st.id}" hidden><label>Desktop<input type="number" data-k="max" min="8" max="200" step="1" value="${st.max}"></label><label>Mobile<input type="number" data-k="min" min="8" max="200" step="1" value="${st.min}"></label><label>Graisse<select data-k="weight">${ws.map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join("")}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
   }).join("");
   renderFluidTable(); renderTsExport(); sysTouch();
+  renderJourney(curView());
 }
 $("tsList").addEventListener("input", e => {
   const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || !row) return;
@@ -1879,33 +1944,82 @@ $("sysView").addEventListener("click", e => { const b = e.target.closest("button
 $("sysCss").addEventListener("click", () => copy(tsCss(), "CSS copié"));
 
 // ---------- Personnaliser ----------
+const ROLE_GRP = [["Textes", ["text/default", "text/muted", "text/on-action"]], ["Fonds", ["background/default", "background/subtle"]], ["Bouton", ["action/default", "action/hover"]], ["Bordures et focus", ["border/default", "focus/ring", "border/subtle"]]];
+const ROLE_JOB = { "text/default": "Titres et paragraphes.", "text/muted": "Légendes, aides, dates.", "text/on-action": "Libellé posé sur le bouton.", "background/default": "Le fond de toutes les pages.", "background/subtle": "Cartes, encadrés, zones calmes.", "action/default": "Fond du bouton principal.", "action/hover": "Le même bouton, au survol.", "border/default": "Contour des champs et cases à cocher.", "focus/ring": "Le contour qui suit la touche Tab.", "border/subtle": "Séparateurs, filets entre blocs." };
+const isFixedRole = k => k === "text/default" || k === "background/default";
+function hexName(h) {
+  const u = String(h || "").toUpperCase();
+  if (u === "#FFFFFF") return "Blanc"; if (u === "#000000") return "Noir";
+  for (const s of scales) { if (s.hex.toUpperCase() === u) return s.name; const i = s.sw.findIndex(x => x.toUpperCase() === u); if (i >= 0) return `${s.name} ${STEPS[i]}`; }
+  return "Couleur personnalisée";
+}
+function roleNeed(k) { const kind = ROLE_FR[k][2]; return kind === "deco" ? 0 : kind === "ui" ? 3 : (S.level === "AAA" ? 7 : 4.5); }
+function roleFix(k, R) {
+  R = R || dsRoles(); const pair = ROLE_FR[k][1]; if (!pair) return null;
+  const h = R[k], p = R[pair], req = roleNeed(k), L = lum(h);
+  const sc = scales.find(s => s.hex.toUpperCase() === h.toUpperCase() || s.sw.some(x => x.toUpperCase() === h.toUpperCase()));
+  const goal = k === "text/default" ? Math.max(req, 7) : req;
+  const near = (list, m) => list.filter(x => ratio(x, p) >= m).sort((a, b) => Math.abs(lum(a) - L) - Math.abs(lum(b) - L))[0];
+  const pick = list => near(list, goal) || near(list, req);
+  return pick([...(sc ? sc.sw : []), "#FFFFFF", "#000000"]) || pick(scales.flatMap(s => s.sw)) || null;
+}
+function roleApply(k, v) {
+  if (k === "text/default") S.ts.fg = v; else if (k === "background/default") S.ts.bg = v;
+  else { S.ds.roles = S.ds.roles || {}; if (v) S.ds.roles[k] = v; else delete S.ds.roles[k]; }
+}
+function roleIssues(R) {
+  R = R || dsRoles();
+  return Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && ratio(R[k], R[ROLE_FR[k][1]]) < roleNeed(k));
+}
+const crWord = (r, req) => r >= req ? (r >= 7 ? "très confortable" : "lisible") : r < 1.5 ? "invisible" : r < 3 ? "illisible" : "trop pâle";
 function dsRoleOptions(k, cur, auto) {
   const opts = tsColorOptions(cur);
-  return k === "text/default" || k === "background/default" ? opts : `<option value="">Auto · ${auto}</option>` + opts;
+  return isFixedRole(k) ? opts : `<option value="">Auto : ${esc(hexName(auto))}</option>` + opts;
+}
+function roleSample(k, R) {
+  const h = R[k], bg = R["background/default"], tx = R["text/default"];
+  if (k.startsWith("text")) return `<span class="ds-smp" style="background:${R[ROLE_FR[k][1]]};color:${h}">Aa</span>`;
+  if (k.startsWith("background")) return `<span class="ds-smp" style="background:${h};color:${tx}">Aa</span>`;
+  if (k.startsWith("action")) return `<span class="ds-smp" style="background:${bg}"><span class="ds-mbtn" style="background:${h};color:${R["text/on-action"]}">OK</span></span>`;
+  if (k === "focus/ring") return `<span class="ds-smp" style="background:${bg}"><span class="ds-mfld" style="outline:2px solid ${h};outline-offset:2px;border-color:${R["border/default"]}"></span></span>`;
+  if (k === "border/default") return `<span class="ds-smp" style="background:${bg}"><span class="ds-mfld" style="border-color:${h}"></span></span>`;
+  return `<span class="ds-smp" style="background:${bg}"><span class="ds-mline" style="background:${h}"></span></span>`;
+}
+function roleSay(k, R) {
+  const [, pair, kind] = ROLE_FR[k];
+  if (kind === "deco") return `<span class="ds-say">${ROLE_JOB[k]} Décoratif, aucun seuil : ne vous en servez pas pour délimiter un champ.</span>`;
+  const r = ratio(R[k], R[pair]), req = roleNeed(k), ok = r >= req, pn = ROLE_FR[pair][0].toLowerCase();
+  const rel = k.startsWith("text") ? `Lu sur le ${pn}` : k.startsWith("background") ? `Porte le ${pn}` : k.startsWith("action") ? `Porte le ${pn}` : `Visible sur le ${pn}`;
+  const seuil = kind === "ui" ? "3:1 pour un composant" : `${fmt(req, 1)}:1 pour du texte`;
+  return `<span class="ds-say">${ROLE_JOB[k]} ${rel} : <b class="${ok ? "ok" : "no"}">${fmt(floor2(r))}:1, ${crWord(r, req)}</b>${ok ? "" : `. Il faut au moins ${seuil}`}.</span>`;
 }
 function renderDsPanel() {
-  const ae = document.activeElement, keep = ae && ae.closest && ae.closest(".ds-panel") ? (ae.dataset.role ? `[data-role="${ae.dataset.role}"]` : ae.dataset.bp ? `[data-bp="${ae.dataset.bp}"][data-k="${ae.dataset.k}"]` : ae.id ? null : null) : null;
-  const A = dsAuto(), R = dsRoles(), need = S.level === "AAA" ? 7 : 4.5, fixed = k => k === "text/default" || k === "background/default";
-  $("dsRoles").innerHTML = Object.entries(ROLE_FR).map(([k, [fr, pair, kind]]) => {
-    const h = R[k], p = pair ? R[pair] : null, req = kind === "ui" ? 3 : need, r = p ? ratio(h, p) : 0, ok = !p || r >= req;
-    const own = !fixed(k) && (S.ds.roles || {})[k], val = fixed(k) ? h : (own || "");
-    const bd = kind === "deco" ? `<span class="bd b-lg">Décoratif</span>` : `<span class="bd ${ok ? (S.level === "AAA" && kind === "text" ? "b-aaa" : "b-aa") : "b-no"}" title="Contraste avec ${pair}">${ok ? "✓" : "✕"} ${fmt(floor2(r))}:1</span>`;
-    const other = p || R["background/default"], txt = kind === "text" && k.startsWith("text");
-    return `<div class="ds-role"><span class="pair" aria-hidden="true" style="--a:${txt ? h : other};--b:${txt ? other : h}"></span><div><b>${fr}</b><small>${k}</small></div><select data-role="${k}" aria-label="${fr}">${dsRoleOptions(k, val || h, A[k])}</select>${bd}</div>`;
-  }).join("");
+  const ae = document.activeElement, keep = ae && ae.closest && ae.closest(".ds-panel") ? (ae.dataset.role ? `[data-role="${ae.dataset.role}"]` : ae.dataset.fix ? `[data-role="${ae.dataset.fix}"]` : ae.dataset.bp ? `[data-bp="${ae.dataset.bp}"][data-k="${ae.dataset.k}"]` : null) : null;
+  const A = dsAuto(), R = dsRoles(), need = S.level === "AAA" ? 7 : 4.5;
+  $("dsRoles").innerHTML = ROLE_GRP.map(([g, ks]) => `<div class="ds-grp" role="group" aria-label="${g}"><h4>${g}</h4>` + ks.map(k => {
+    const [fr, pair, kind] = ROLE_FR[k], own = !isFixedRole(k) && (S.ds.roles || {})[k], h = R[k];
+    const bad = pair && ratio(h, R[pair]) < roleNeed(k), fix = bad ? roleFix(k, R) : null;
+    const lvl = kind === "deco" ? "" : bad ? "" : `<span class="ds-lvl">✓ ${kind === "ui" ? "3:1" : ratio(h, R[pair]) >= 7 ? "AAA" : "AA"}</span>`;
+    const act = bad ? (fix ? `<button type="button" class="ds-fixb" data-fix="${k}" data-v="${fix}"><span class="sw" style="background:${fix}"></span>Utiliser ${esc(hexName(fix))}</button>` : `<span class="ds-lvl no">Aucune nuance ne passe</span>`) : lvl;
+    return `<div class="ds-role${bad ? " is-bad" : ""}">${roleSample(k, R)}<div class="ds-rtx"><b>${fr}${own ? ` <span class="ds-own">choisi</span>` : ""}</b>${roleSay(k, R)}</div><div class="ds-rct"><select data-role="${k}" aria-label="${fr}, couleur">${dsRoleOptions(k, own || h, A[k])}</select>${act}</div></div>`;
+  }).join("") + `</div>`).join("");
   $("dsRoles").querySelectorAll("select").forEach(sel => { const k = sel.dataset.role, own = (S.ds.roles || {})[k]; sel.value = k === "text/default" ? S.ts.fg : k === "background/default" ? S.ts.bg : (own || ""); });
   [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
   const L = dsLay(), rows = [["margin", "Marge"], ["gutter", "Gouttière"], ["columns", "Colonnes"], ["section", "Entre sections"]];
   $("dsGrid").innerHTML = `<thead><tr><th scope="col"></th>${BP.map(b => `<th scope="col">${b.label === "Desktop XL" ? "XL" : b.label}</th>`).join("")}</tr></thead><tbody>` + rows.map(([k, l]) => `<tr><th scope="row">${l}${k === "columns" ? "" : " <span class=\"muted\">px</span>"}</th>${BP.map(b => `<td><input type="number" inputmode="numeric" data-bp="${b.id}" data-k="${k}" min="${k === "columns" ? 1 : 0}" max="${k === "columns" ? 16 : 240}" value="${L[b.id][k]}" aria-label="${l}, ${b.label}"></td>`).join("")}</tr>`).join("") + "</tbody>";
-  const fails = Object.entries(ROLE_FR).filter(([k, [, pair, kind]]) => pair && ratio(R[k], R[pair]) < (kind === "ui" ? 3 : need)).length;
+  const iss = roleIssues(R), fails = iss.length;
+  $("dsFixAll").hidden = !fails;
+  $("dsFixAll").innerHTML = fails ? `<p><b>${fails} rôle${fails > 1 ? "s" : ""} à corriger.</b> ${iss.map(k => ROLE_FR[k][0]).join(", ")}.</p><button type="button" class="btn" data-fixall>Tout corriger</button>` : "";
   $("dsState").textContent = (dsIsBase() ? "Système de base : tout est réglé par Lisio." : "Système personnalisé.") + (fails ? ` ${fails} rôle${fails > 1 ? "s" : ""} sous le seuil ${S.level}.` : ` Tous les rôles passent ${S.level}.`);
   $("dsReset").disabled = dsIsBase();
   if (keep) { const el = document.querySelector(".ds-panel " + keep); if (el) el.focus(); }
 }
-const dsChanged = () => { save(); renderStyles(); if ($("systeme").hidden) renderDsPanel(); };
-$("dsRoles").addEventListener("change", e => { const k = e.target.dataset.role; if (!k) return; const v = e.target.value;
-  if (k === "text/default") S.ts.fg = v; else if (k === "background/default") S.ts.bg = v; else { S.ds.roles = S.ds.roles || {}; if (v) S.ds.roles[k] = v; else delete S.ds.roles[k]; }
-  dsChanged(); });
+const curView = () => [...VIEWS, "exporter"].find(n => !$(n).hidden);
+const dsChanged = () => { save(); renderStyles(); if ($("systeme").hidden) renderDsPanel(); renderJourney(curView()); };
+$("dsRoles").addEventListener("change", e => { const k = e.target.dataset.role; if (!k) return; roleApply(k, e.target.value); dsChanged(); });
+function roleFixAll() { let n = 0; for (let i = 0; i < 4; i++) { const R = dsRoles(), k = roleIssues(R).find(k => roleFix(k, R)); if (!k) break; roleApply(k, roleFix(k, R)); n++; } return n; }
+$("dsFixAll").addEventListener("click", e => { if (!e.target.closest("[data-fixall]")) return; const n = roleFixAll(); dsChanged(); toast(n ? `${n} correction${n > 1 ? "s" : ""} appliquée${n > 1 ? "s" : ""}` : "Rien à corriger automatiquement"); });
+$("dsRoles").addEventListener("click", e => { const b = e.target.closest("[data-fix]"); if (!b) return; const k = b.dataset.fix; roleApply(k, b.dataset.v); dsChanged(); toast(`${ROLE_FR[k][0]} : ${hexName(b.dataset.v)}`); });
 [["dsShape", "shape", String], ["dsSpace", "space", Number], ["dsBtn", "btn", Number], ["dsLink", "link", String]].forEach(([id, k, cast]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ds[k] = cast(b.dataset.v); dsChanged(); }));
 $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset.bp) return; const k = i.dataset.k, v = Math.round(+i.value), lo = k === "columns" ? 1 : 0, hi = k === "columns" ? 16 : 240;
   if (!isFinite(v) || v < lo || v > hi) { i.value = dsLay()[i.dataset.bp][k]; return; }
@@ -1937,6 +2051,7 @@ function renderExport2() {
   const gl = [["Couleurs", "Colors", "brand/500", "--brand-500"], ["Rôles (Design system)", "Semantic", "text/default, action/hover…", "--text-default"], ["Styles de texte", "Text styles", "H1/Mobile, Body/Desktop…", ".t-h1, .t-body"], ["Tailles par écran", "Typography (modes)", "font-size/h1, line-height/h1", "--font-size-h1"], ["Polices", "Typography", "font-family/heading", "--font-heading"], ["Grille", "Layout (modes)", "margin, gutter, columns", "--layout-margin"], ["Espacements, arrondis", "Dimensions", "spacing/4, radius/control", "--spacing-4, --radius-control"]];
   $("exGloss").innerHTML = `<thead><tr><th scope="col">Dans Lisio</th><th scope="col">Collection Figma</th><th scope="col">Nom dans Figma</th><th scope="col">Dans le code</th></tr></thead><tbody>${gl.map(r => `<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td><code>${r[2]}</code></td><td><code>${r[3]}</code></td></tr>`).join("")}</tbody>`;
   $("exCssOut").textContent = tsCss();
+  renderExFix();
 }
 $("exDl").addEventListener("click", () => { const txt = tsJson(); saveFile("lisio-design-system.json", txt, "application/json", "lisio-design-system.json enregistré : ouvrez-le dans le plugin Lisio"); });
 $("exCopy").addEventListener("click", () => copy(tsJson(), "Copié : collez-le dans le plugin Lisio (Ctrl ou Cmd + V)"));
@@ -1944,7 +2059,64 @@ $("exCss").addEventListener("click", () => copy(tsCss(), "CSS copié"));
 
 // ---------- Onglets ----------
 const VIEWS = ["matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources"];
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } }
+
+const jStepIssues = id => {
+  if (id === "systeme") return roleIssues().length;
+  if (id === "styles") return S.ts.styles.some(st => !tsVerdict(st).ok) ? 1 : 0;
+  if (id === "exporter") return roleIssues().length;
+  return 0;
+};
+function renderJourney(v) {
+  const i = JOURNEY.findIndex(x => x[0] === v), J = $("journey"), X = $("jNext");
+  J.hidden = X.hidden = i < 0; if (i < 0) return;
+  const [, , say, qs] = JOURNEY[i];
+  let seen = true; try { seen = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
+  const hello = !seen && i === 0 ? `<div class="j-hello"><p><b>Nouveau sur Lisio ?</b> Suivez les six étapes ci-dessus, dans l’ordre ou non. Chaque page vérifie votre travail, signale ce qui ne passe pas et propose la correction. Les pastilles « ? » expliquent le jargon.</p><button type="button" class="btn sm" data-hello>Compris</button></div>` : "";
+  J.innerHTML = `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="${n < i ? "done" : ""}"><span class="j-n">${n + 1}</span><span class="j-l">${lab}</span>${iss ? `<span class="j-i" title="${iss} à corriger">${iss}<span class="sr"> à corriger</span></span>` : ""}</a></li>`; }).join("")}</ol>
+  <div class="j-now"><p><b>Étape ${i + 1} sur ${JOURNEY.length}.</b> ${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p></div>${hello}`;
+  const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
+  const R = dsRoles(), fk = ["text/default", "background/default", ...roleIssues(R)].find(k => roleIssues(R).includes(k)), fv = fk && roleFix(fk, R), nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
+  const why = v === "styles" ? `Texte trop pâle sur le fond : ${nT} style${nT > 1 ? "s" : ""} sous le seuil ${S.level}.` : `${iss} rôle${iss > 1 ? "s" : ""} sous le seuil ${S.level}.`;
+  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn" href="#${pv[0]}">← ${pv[1]}</a>` : "<span></span>"}${nx ? `<a class="btn primary" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
+}
+// ---------- Aide « ? » ----------
+let qBtn = null;
+function qClose(back) { $("qPop").hidden = true; if (qBtn) { qBtn.setAttribute("aria-expanded", "false"); if (back) qBtn.focus(); } qBtn = null; }
+function qOpen(b) {
+  const q = QHELP[b.dataset.q]; if (!q) return; if (qBtn === b) return qClose(true);
+  qClose(); qBtn = b; b.setAttribute("aria-expanded", "true");
+  $("qPopH").textContent = q[0]; $("qPopP").textContent = q[1];
+  const P = $("qPop"); P.hidden = false;
+  const r = b.getBoundingClientRect(), w = Math.min(360, innerWidth - 32), h = P.offsetHeight;
+  P.style.width = w + "px"; P.style.left = Math.max(16, Math.min(r.left, innerWidth - w - 16)) + "px";
+  P.style.top = (r.bottom + 8 + h > innerHeight && r.top - 8 - h > 0 ? r.top - 8 - P.offsetHeight : r.bottom + 8) + "px";
+  P.querySelector("[data-qclose]").focus();
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b) { e.preventDefault(); qOpen(b); return; } if (e.target.closest("[data-qclose]")) return qClose(true); if (qBtn && !e.target.closest("#qPop")) qClose(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && qBtn) qClose(true); });
+addEventListener("scroll", () => { if (qBtn) qClose(); }, { passive: true });
+// ---------- À corriger avant l’export ----------
+function renderExFix() {
+  const R = dsRoles(), iss = roleIssues(R), failT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
+  const warns = S.ts.styles.flatMap(st => tsVerdict(st).warn.map(w => [tsDef(st.id).en, w]));
+  const lvl = `WCAG ${S.version}, niveau ${S.level}`;
+  if (!iss.length && !warns.length) { $("exFix").innerHTML = `<div class="exf-ok"><span class="pair" aria-hidden="true" style="--a:${R["text/default"]};--b:${R["background/default"]}"></span><div><h2 tabindex="-1">Tout est prêt</h2><p class="note">Tous les rôles et tous les styles de texte passent ${lvl}. Vous pouvez exporter sereinement.</p></div></div>`; return; }
+  const rows = iss.map(k => { const [fr, pair] = ROLE_FR[k], f = roleFix(k, R), r = ratio(R[k], R[pair]);
+    return `<li class="exf-it bad">${roleSample(k, R)}<div><b>${fr}</b><span class="ds-say">Sur ${ROLE_FR[pair][0].toLowerCase()} : ${fmt(floor2(r))}:1, il faut ${fmt(roleNeed(k), 1)}:1.${k === "text/default" && failT ? ` Cela fait échouer ${failT} style${failT > 1 ? "s" : ""} de texte.` : ""}</span></div>${f ? `<button type="button" class="ds-fixb" data-xfix="${k}" data-v="${f}"><span class="sw" style="background:${f}"></span>Utiliser ${esc(hexName(f))}</button>` : `<a class="btn sm" href="#systeme">Choisir à la main</a>`}</li>`; }).join("");
+  const wr = warns.map(([n, w]) => `<li class="exf-it warn"><span class="exf-ic" aria-hidden="true">!</span><div><b>${esc(n)}</b><span class="ds-say">${esc(w)}.</span></div><a class="btn sm" href="#styles">Ouvrir</a></li>`).join("");
+  $("exFix").innerHTML = `<div class="row between"><h2 tabindex="-1">${iss.length ? `À corriger avant d’exporter` : `À vérifier`}</h2>${iss.length > 1 ? `<button type="button" class="btn primary sm" data-xfixall>Tout corriger</button>` : ""}</div><p class="note">${iss.length ? `${iss.length} rôle${iss.length > 1 ? "s" : ""} sous le seuil ${lvl}. Lisio propose la nuance la plus proche qui passe.` : "Rien de bloquant : des conseils de confort, pas des erreurs."}</p><ul class="exf">${rows}${wr}</ul>`;
+}
+function fixClick(e) {
+  const b = e.target.closest("[data-xfix]"), all = e.target.closest("[data-xfixall]"); if (!b && !all) return;
+  if (b) { roleApply(b.dataset.xfix, b.dataset.v); toast(`${ROLE_FR[b.dataset.xfix][0]} : ${hexName(b.dataset.v)}`); } else { const n = roleFixAll(); toast(`${n} correction${n > 1 ? "s" : ""} appliquée${n > 1 ? "s" : ""}`); }
+  const v = curView(); save(); renderStyles(); renderDsPanel(); sysDirty = true; if (v === "systeme") renderSystem(); if (v === "exporter") renderExport2(); renderJourney(v);
+  const h = v === "exporter" ? $("exFix").querySelector("h2") : null; if (h) h.focus(); else { const n = $("jNext").querySelector(".btn.primary"); if (n) n.focus(); }
+}
+$("exFix").addEventListener("click", fixClick);
+$("jNext").addEventListener("click", fixClick);
+$("tsCrFix").addEventListener("click", fixClick);
+$("journey").addEventListener("click", e => { if (!e.target.closest("[data-hello]")) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("journey").querySelector(".j-hello"); if (h) h.remove(); $("journey").querySelector("a[aria-current]").focus(); });
+function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); }
 document.querySelectorAll("nav.tabs button").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
   b.addEventListener("keydown", e => { if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
