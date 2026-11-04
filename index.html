@@ -20,8 +20,8 @@
 @font-face{font-family:"Switzer";font-style:normal;font-weight:800;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-800-normal.woff2) format("woff2")}
 
 :root{
-  --bg:#F4F4F5; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#18181B; --muted:#52525B; --hair:#E4E4E7; --field:#808089;
-  --primary:#18181B; --primary-ink:#FFFFFF; --hover:#EDEDEF; --link:#18181B;
+  --bg:#E9EAEC; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#000000; --muted:#55565C; --hair:#D6D7DB; --field:#7B7C82;
+  --primary:#000000; --primary-ink:#FFFFFF; --hover:#EEEFF1; --link:#000000;
   --aaa-bg:#14532D; --aaa-ink:#FFFFFF; --aa-bd:#DCFCE7; --aa-bg:#DCFCE7; --aa-ink:#166534; --lg-bg:#FEF3C7; --lg-ink:#92400E; --no-bg:#FEE2E2; --no-ink:#991B1B;
   --ok:#166534; --ok-bg:#DCFCE7; --warn:#92400E; --warn-bg:#FEF3C7; --bad:#991B1B; --bad-bg:#FEE2E2;
   --shadow:0 1px 2px rgba(0,0,0,.06), 0 10px 30px rgba(0,0,0,.12);
@@ -30,15 +30,15 @@
   --r:14px;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#111113; --surface:#1A1A1D; --raised:#232327; --ink:#F4F4F5; --muted:#A1A1AA; --hair:#2E2E33; --field:#6E6E76;
-  --primary:#F4F4F5; --primary-ink:#111113; --hover:#2A2A2F; --link:#F4F4F5;
+  --bg:#000000; --surface:#151517; --raised:#1F1F22; --ink:#FFFFFF; --muted:#A8A9B0; --hair:#2B2C30; --field:#75767D;
+  --primary:#FFFFFF; --primary-ink:#000000; --hover:#232327; --link:#FFFFFF;
   --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
   --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
   color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#111113; --surface:#1A1A1D; --raised:#232327; --ink:#F4F4F5; --muted:#A1A1AA; --hair:#2E2E33; --field:#6E6E76;
-  --primary:#F4F4F5; --primary-ink:#111113; --hover:#2A2A2F; --link:#F4F4F5;
+  --bg:#000000; --surface:#151517; --raised:#1F1F22; --ink:#FFFFFF; --muted:#A8A9B0; --hair:#2B2C30; --field:#75767D;
+  --primary:#FFFFFF; --primary-ink:#000000; --hover:#232327; --link:#FFFFFF;
   --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
   --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
@@ -59,7 +59,7 @@
 .filebtn:focus-within{outline:3px solid var(--primary);outline-offset:2px}
 /* matrice */
 .mhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px 40px;border-bottom:1px solid var(--hair);padding-bottom:22px;margin-bottom:24px}
-.mhead h1{font-size:clamp(28px,4.4vw,48px);font-weight:800;letter-spacing:-.025em;line-height:1}
+.mhead h1{font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-.035em;line-height:.95}
 .eyebrow{font-size:14px;font-weight:600;color:var(--muted)}
 .lead{font-size:clamp(15px,1.6vw,18px);color:var(--muted);line-height:1.45;max-width:62ch;margin-top:10px}
 .counts{display:grid;grid-template-columns:repeat(4,minmax(72px,auto));gap:8px;user-select:none;-webkit-user-select:none}
@@ -132,7 +132,7 @@ section[role=tabpanel]{scroll-margin-top:90px}
 body{font-variant-numeric:tabular-nums;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;font-weight:500}
 .wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
 h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;letter-spacing:-.015em}
-h2{font-size:22px;font-weight:800}
+h2{font-size:20px;font-weight:700;letter-spacing:-.02em}
 h3{font-size:16px;font-weight:700}
 p{margin:0}
 a{color:inherit;text-underline-offset:.18em}
@@ -152,7 +152,6 @@ a{color:inherit;text-underline-offset:.18em}
 .ds-roles{display:flex;flex-direction:column;gap:2px}
 .ds-role{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,200px) auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--hair)}
 .ds-role:first-child{border-top:0}
-.ds-role .dot{width:28px;height:28px;border-radius:8px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 18%,transparent)}
 .ds-role b{font-size:14px;display:block}.ds-role small{font-size:12px;color:var(--muted);font-family:var(--code)}
 .ds-role select{width:100%;min-height:36px}
 .ds-role .bd{justify-self:end}
@@ -179,6 +178,11 @@ a{color:inherit;text-underline-offset:.18em}
 .ex-viz .ty{font-weight:700;line-height:1;color:var(--ink)}
 .ex-tw{overflow-x:auto}.ex-gl td,.ex-gl th{text-align:left}.ex-gl code{font-family:var(--code);font-size:12px}
 .expbtn[aria-current="page"]{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--primary)}
+.figline{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px;font-weight:600;color:var(--muted)}
+.figmark{width:10px;height:15px;flex:none;border-radius:5px 5px 5px 5px;background:linear-gradient(#F24E1E 0 33%,#A259FF 33% 66%,#1ABCFE 66%)}
+.pair{--a:#000;--b:#fff;display:inline-block;flex:none;width:28px;height:28px;border-radius:50%;background:linear-gradient(90deg,var(--a) 0 50%,var(--b) 50% 100%);box-shadow:0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
+.pair.lg{width:44px;height:44px}
+.ratio{font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:-.03em;line-height:1}
 .dsk{}@media (max-width:760px){.dsk{display:none}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -373,7 +377,7 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .ts-ctl .ts-grp:nth-child(2) .ts-gr{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
 .ts-ctl .ts-grp:nth-child(3) .ts-gr{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}
 .ts-grp{display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:12px;border-top:2px solid var(--ink)}
-.ts-gh{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.ts-gh{font-size:15px;font-weight:700}
 .ts-gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
 .ts-f{display:flex;flex-direction:column;gap:6px;min-width:0}
 .ts-lab{font-size:13px;font-weight:600;color:var(--muted)}
@@ -390,18 +394,18 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .ts-step:focus-within{outline:2px solid var(--ink);outline-offset:2px}
 .ts-cs{position:relative}.ts-cs .dot{position:absolute;left:10px;top:50%;width:22px;height:22px;margin-top:-11px;border-radius:6px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 25%,transparent);pointer-events:none}
 .ts-cs select{padding-left:40px}
-.ts-cr{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;border:1.5px solid transparent}
+.ts-cr{display:flex;align-items:center;gap:8px;padding:0 2px;white-space:nowrap}.ts-cr .ratio{font-size:22px}.ts-cr small{font-size:13px;font-weight:700}.ts-cr.ok small{color:var(--ok)}.ts-cr.lg small{color:var(--warn)}.ts-cr.no small{color:var(--bad)}
 @media (max-width:900px){.ts-ctl{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:520px){.ts-ctl .ts-grp:nth-child(3) .ts-gr{grid-template-columns:repeat(2,minmax(0,1fr))}.ts-ctl .ts-grp:nth-child(3) .ts-f:last-child{grid-column:1/-1}}
 .ts-list{gap:0!important;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
-.ts-row{display:grid;grid-template-columns:230px minmax(0,1fr);border-top:1px solid var(--hair)}
+.ts-row{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--hair)}
 .ts-row:first-child{border-top:0}
-.ts-side{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:14px 16px;background:var(--surface);min-width:0}
+.ts-side{display:flex;flex-direction:row;gap:12px;align-items:center;padding:10px 16px;background:var(--surface);min-width:0}.ts-side .ts-meta{flex:1;min-width:0}.ts-ok{font-size:13px;font-weight:700;color:var(--ok)}
 .ts-spec{padding:20px 24px;min-width:0;overflow-wrap:break-word;hyphens:auto;display:flex;align-items:center;transition:font-size .25s ease}
 @media (prefers-reduced-motion:reduce){.ts-spec{transition:none}}
 .ts-meta{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
-.ts-px{font-size:20px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}.ts-meta b{width:auto}.ts-px small{font-size:13px;color:var(--muted);font-weight:600;margin-left:4px}
-.ts-adj{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--hair);background:none;color:var(--ink);border-radius:999px;padding:4px 12px;min-height:28px;cursor:pointer;margin-top:auto}
+.ts-px{font-size:17px;font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}.ts-meta b{width:auto}.ts-px small{font-size:13px;color:var(--muted);font-weight:600;margin-left:4px}
+.ts-adj{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--hair);background:none;color:var(--ink);border-radius:999px;padding:4px 12px;min-height:28px;cursor:pointer;flex:none}
 .ts-adj[aria-expanded="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .ts-row .ts-in{grid-column:1/-1;padding:14px 16px;background:var(--bg);border-top:1px solid var(--hair)}
 .ts-slide{display:flex;flex-direction:column;gap:6px;padding:14px 16px 4px;background:var(--bg);border-radius:14px;position:sticky;top:68px;z-index:3}
@@ -471,8 +475,8 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
   <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice">
     <header class="mhead">
       <div>
-        <div class="eyebrow">Paires texte et fond <span class="figchip">Figma : rôles Semantic</span></div><h1>Contrastes</h1>
-        <p class="lead" id="mLead"></p>
+        <h1>Contrastes</h1>
+        <p class="lead" id="mLead"></p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Semantic</p>
       </div>
       <div class="counts" id="counts"></div>
     </header>
@@ -582,7 +586,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 
   <!-- STYLES -->
   <section id="styles" role="tabpanel" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><div class="eyebrow">Typographie <span class="figchip">Figma : Text styles + collection Typography</span></div><h1>Styles de texte</h1><p class="lead">Vos styles web, de H1 à la légende, vérifiés sur vos couleurs. Exportez-les avec la palette pour Figma ou le CSS.</p></div></header>
+    <header class="mhead phead"><div><h1>Styles de texte</h1><p class="lead">Vos styles web, de H1 à la légende, vérifiés sur vos couleurs. Exportez-les avec la palette pour Figma ou le CSS.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : Text styles et collection Typography</p></div></header>
     <div class="card-surface">
       <h2>Réglages</h2><p class="note" style="margin-top:-6px">Deux polices, une taille de texte et une échelle pour le desktop. Lisio fait le reste.</p>
       <div class="ts-ctl">
@@ -625,7 +629,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 
   <!-- SYSTÈME -->
   <section id="systeme" role="tabpanel" aria-labelledby="tab-systeme" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><div class="eyebrow">Aperçu et personnalisation <span class="figchip">Figma : toutes les variables et styles</span></div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté : couleurs, rôles, typo fluide, grille et composants. Changez d’écran : les tailles et la grille suivent.</p></div></header>
+    <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté : couleurs, rôles, typo fluide, grille et composants. Changez d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
     <div class="card-surface ds-panel">
       <div class="row between"><div><h2>Personnaliser</h2><p class="note" id="dsState"></p></div><button class="btn sm" type="button" id="dsReset">Revenir au système de base</button></div>
       <div class="ds-grid">
@@ -650,7 +654,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 
   <!-- PALETTE -->
   <section id="palette" role="tabpanel" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><div class="eyebrow">Nuances de 50 à 950 <span class="figchip">Figma : collection Colors</span></div><h1>Couleurs</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p></div></header>
+    <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
     <div class="card-surface">
       <div class="row between"><h2>Comment ça marche</h2>
         <label for="vision" class="row" style="flex-direction:row;gap:8px">Vision
@@ -684,7 +688,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 
   <!-- TEXTE -->
   <section id="lisibilite" role="tabpanel" aria-labelledby="tab-lisibilite" hidden>
-    <header class="mhead phead"><div><div class="eyebrow">Lisibilité des textes · critère 3.1.5, AAA</div><h1>Rédaction</h1><p class="lead">Longueur des phrases et score de lecture de votre texte, en français ou en anglais.</p></div></header>
+    <header class="mhead phead"><div><h1>Rédaction</h1><p class="lead">Longueur des phrases et score de lecture de votre texte, en français ou en anglais. Critère WCAG 3.1.5, niveau AAA.</p></div></header>
     <div class="card-surface">
       <div class="row between">
         <h2>Votre texte</h2>
@@ -703,7 +707,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
   <!-- SOURCES -->
   <!-- EXPORTER -->
   <section id="exporter" role="region" aria-labelledby="exH" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><div class="eyebrow">Export <span class="figchip">Figma : plugin Lisio</span></div><h1 id="exH">Exporter le design system</h1><p class="lead">Un seul fichier, <code>lisio-design-system.json</code>, contient tout ce que vous avez réglé dans Lisio. Le plugin Lisio le transforme en variables et en styles Figma, avec les mêmes noms pour toute l’équipe.</p></div></header>
+    <header class="mhead phead"><div><h1 id="exH">Exporter le design system</h1><p class="lead">Un seul fichier, <code>lisio-design-system.json</code>, contient tout ce que vous avez réglé dans Lisio. Le plugin Lisio le transforme en variables et en styles Figma, avec les mêmes noms pour toute l’équipe.</p></div></header>
     <div class="card-surface ex-hero">
       <div class="ex-file"><span class="ex-ico" aria-hidden="true">{ }</span><div><b>lisio-design-system.json</b><span class="muted" id="exSize"></span></div></div>
       <div class="row"><button class="btn primary" type="button" id="exDl">Télécharger le fichier</button><button class="btn" type="button" id="exCopy">Copier pour le plugin</button><a class="btn" href="https://lisio-psi.vercel.app/lisio-figma-plugin.zip" download>Plugin Figma (.zip)</a></div>
@@ -735,7 +739,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
   </section>
 
   <section id="sources" role="tabpanel" aria-labelledby="tab-sources" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><div class="eyebrow">Mode d’emploi</div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
+    <header class="mhead phead"><div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
     <div class="card-surface guide">
       <h2>Lisio en six étapes</h2>
       <ol class="g-steps">
@@ -1548,7 +1552,7 @@ function tsDerivedHtml() {
   return `<span class="ts-dv"><span><small>Desktop 1440, votre choix</small><b>${d.base} px × ${lab(d.ratio)}</b></span><span class="arr" aria-hidden="true">→</span><span><small>Mobile 390, calculé par Lisio</small><b>${m.base} px × ${lab(m.ratio)}</b></span></span><span class="ts-why">Le texte courant reste à 16 px minimum, les titres rétrécissent plus que le texte, et aucun style ne dépasse 2,5 fois sa taille mobile (zoom 200 %, critère 1.4.4). Tablet et Desktop 1024 sont interpolés.</span>`;
 }
 function tsDefault(keep) {
-  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, T = { v: 2, vw: 1440, fonts: keep ? keep.fonts : { head: { ...font }, body: { ...font } }, m: { base: 16, ratio: "1.15" }, d: { base: 18, ratio: "1.25" }, view: "xl", fg: keep ? keep.fg : S.fg, bg: keep ? keep.bg : S.bg };
+  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, T = { v: 2, vw: 1440, fonts: keep ? keep.fonts : { head: { ...font }, body: { ...font } }, m: { base: 16, ratio: "1.15" }, d: { base: 18, ratio: "1.25" }, view: "xl", fg: keep ? keep.fg : ((palette || []).map(c => c.hex).sort((a, b) => ratio(b, S.bg) - ratio(a, S.bg))[0] || S.fg), bg: keep ? keep.bg : S.bg };
   T.m = tsMobileFrom(T.d);
   T.styles = TS_DEF.map(d => ({ id: d.id, min: Math.round(tsSize(d, T.m.base, +T.m.ratio)), max: Math.round(tsSize(d, T.d.base, +T.d.ratio)), weight: snapW(d.w, T.fonts[d.role]), lh: d.lh, ls: d.ls }));
   return T;
@@ -1589,10 +1593,10 @@ const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste cons
 const tsSample = d => d.id === "button" ? TS_SAMPLE.button : d.id === "label" ? TS_SAMPLE.label : TS_SAMPLE[d.role];
 function tsMetaHtml(st) {
   const d = tsDef(st.id), v = tsVerdict(st), w = tsVw(), sz = sizeAt(st, w);
-  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="ts-px">${Math.round(sz)}/${Math.round(Math.round(sz) * st.lh)}<small>px</small></span><span class="ts-range">${st.min} → ${st.max} px</span><span class="bd ${v.ok ? (S.level === "AAA" ? "b-aaa" : "b-aa") : "b-no"}">${v.ok ? "✓" : "✕"} ${S.level}${v.large ? " grand" : ""} · ${fmt(floor2(v.r))}:1${v.ok ? "" : `, ${fmt(v.need, 1)} requis`}</span>${v.warn.map(x => `<span class="ts-warn">⚠ ${x}</span>`).join("")}`;
+  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="ts-px">${Math.round(sz)}/${Math.round(Math.round(sz) * st.lh)}<small>px</small></span><span class="ts-range">${st.min} → ${st.max} px</span>${v.ok ? `<span class="ts-ok">✓ ${S.level}${v.large ? " grand texte" : ""}</span>` : `<span class="bd b-no">✕ ${fmt(floor2(v.r))}:1, ${fmt(v.need, 1)} requis</span>`}${v.warn.map(x => `<span class="ts-warn">⚠ ${x}</span>`).join("")}`;
 }
 function tsVwPaint() {
-  const w = tsVw(); $("tsVw").value = w; $("tsVwOut").textContent = `${w} px · ${bpName(w)}`;
+  const w = tsVw(); $("tsVw").value = w; $("tsVwOut").textContent = `${w} px, ${bpName(w)}`;
   $("tsView").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (BP.find(x => x.id === b.dataset.v) || {}).w === w));
 }
 function renderFluidTable() {
@@ -1607,7 +1611,7 @@ function renderStyles() {
   $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
   $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
   $("tsFgDot").style.background = T.fg; $("tsBgDot").style.background = T.bg;
-  { const r = ratio(T.fg, T.bg), need = S.level === "AAA" ? 7 : 4.5, ok = r >= need, big = r >= (S.level === "AAA" ? 4.5 : 3); const el = $("tsCr"); el.className = "ts-cr bd " + (ok ? (S.level === "AAA" ? "b-aaa" : "b-aa") : big ? "b-lg" : "b-no"); el.textContent = `${ok ? "✓" : big ? "◐" : "✕"} ${fmt(floor2(r))}:1 · ${ok ? S.level : big ? "titres seulement" : "échec"}`; }
+  { const r = ratio(T.fg, T.bg), need = S.level === "AAA" ? 7 : 4.5, ok = r >= need, big = r >= (S.level === "AAA" ? 4.5 : 3); const el = $("tsCr"); el.className = "ts-cr " + (ok ? "ok" : big ? "lg" : "no"); el.innerHTML = `<span class="pair" style="--a:${T.fg};--b:${T.bg}" aria-hidden="true"></span><span class="ratio">${fmt(floor2(r))}:1</span><small>${ok ? "✓ " + S.level : big ? "◐ Titres seulement" : "✕ Échec"}</small>`; }
   tsVwPaint();
   $("tsSummary").textContent = `Texte sur fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, WCAG ${S.version} ${S.level}. Verdict calculé sur la taille mobile.`;
   $("tsList").innerHTML = T.styles.map(st => {
@@ -1806,7 +1810,7 @@ function sysPage() {
   for (const [g, it] of Object.entries(sem)) for (const [k, v] of Object.entries(it)) flat[`${g}/${k}`] = v[0];
   const bp = sysBp();
   const fonts = [S.ts.fonts.head, S.ts.fonts.body].filter(f => f.src === "google" && GFmap.get(f.family)).map(f => `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${gfQuery(GFmap.get(f.family), GFmap.get(f.family).weights)}&display=swap">`).join("");
-  const badge = (a, b, kind) => { if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; const r = ratio(a, b), req = kind === "ui" ? 3 : need, ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "· 3:1 requis" : "· " + S.level) : `· ${fmt(req, 1)}:1 requis`}</span>`; };
+  const badge = (a, b, kind) => { if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; const r = ratio(a, b), req = kind === "ui" ? 3 : need, ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "(3:1 requis)" : S.level) : `(${fmt(req, 1)}:1 requis)`}</span>`; };
   const prim = scales.map(s => `<div class="scale"><p class="t-body-strong">${esc(s.name)}${s.slug !== s.name.toLowerCase() ? ` <code>${s.slug}</code>` : ""}</p><div class="sw">${s.sw.map((h, i) => `<div style="background:${h};color:${inkOn(h)}"><b>${STEPS[i]}</b><span>${h}</span></div>`).join("")}</div></div>`).join("");
   const roles = Object.entries(ROLE_FR).map(([k, [fr2, pair, kind]]) => { const h = flat[k], p = pair ? flat[pair] : null, isText = kind === "text" && k.startsWith("text");
     const demo = k.startsWith("text") ? `<div class="chip" style="background:${p};color:${h}">Aa</div>` : k.startsWith("border") || k.startsWith("focus") ? `<div class="chip" style="background:${flat["background/default"]};box-shadow:inset 0 0 0 ${k === "focus/ring" ? 2 : 1}px ${h}"></div>` : `<div class="chip" style="background:${h};color:${p}">Aa</div>`;
@@ -1826,8 +1830,8 @@ html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 .hr{border:0;border-top:var(--border-width-default) solid var(--border-subtle);margin:0}
 .scale{display:flex;flex-direction:column;gap:var(--spacing-2)}
 .sw{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));border-radius:var(--radius-md);overflow:hidden}
-.sw div{min-height:64px;padding:var(--spacing-2);display:flex;flex-direction:column;justify-content:flex-end;font-size:12px;line-height:1.3;min-width:0}
-.sw span{font-size:10px;overflow:hidden;text-overflow:ellipsis}
+.sw div{min-height:64px;padding:var(--spacing-2);display:flex;flex-direction:column;justify-content:flex-end;font-size:13px;line-height:1.3;min-width:0}
+.sw span{font-size:12px;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:767px){.sw{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--spacing-4)}
 .role{display:flex;gap:var(--spacing-3);align-items:flex-start}
@@ -1896,7 +1900,8 @@ function renderDsPanel() {
     const h = R[k], p = pair ? R[pair] : null, req = kind === "ui" ? 3 : need, r = p ? ratio(h, p) : 0, ok = !p || r >= req;
     const own = !fixed(k) && (S.ds.roles || {})[k], val = fixed(k) ? h : (own || "");
     const bd = kind === "deco" ? `<span class="bd b-lg">Décoratif</span>` : `<span class="bd ${ok ? (S.level === "AAA" && kind === "text" ? "b-aaa" : "b-aa") : "b-no"}" title="Contraste avec ${pair}">${ok ? "✓" : "✕"} ${fmt(floor2(r))}:1</span>`;
-    return `<div class="ds-role"><span class="dot" style="background:${h}"></span><div><b>${fr}</b><small>${k}</small></div><select data-role="${k}" aria-label="${fr}">${dsRoleOptions(k, val || h, A[k])}</select>${bd}</div>`;
+    const other = p || R["background/default"], txt = kind === "text" && k.startsWith("text");
+    return `<div class="ds-role"><span class="pair" aria-hidden="true" style="--a:${txt ? h : other};--b:${txt ? other : h}"></span><div><b>${fr}</b><small>${k}</small></div><select data-role="${k}" aria-label="${fr}">${dsRoleOptions(k, val || h, A[k])}</select>${bd}</div>`;
   }).join("");
   $("dsRoles").querySelectorAll("select").forEach(sel => { const k = sel.dataset.role, own = (S.ds.roles || {})[k]; sel.value = k === "text/default" ? S.ts.fg : k === "background/default" ? S.ts.bg : (own || ""); });
   [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
@@ -1922,7 +1927,7 @@ $("dsReset").addEventListener("click", () => { S.ds = JSON.parse(JSON.stringify(
 function renderExport2() {
   const txt = tsJson(), o = JSON.parse(txt), n = obj => { let c = 0; (function w(x) { for (const k in x) { const v = x[k]; if (k[0] === "$" || !v || typeof v !== "object") continue; if ("$value" in v) c++; else w(v); } })(obj); return c; };
   const nCol = n(o.color), nSem = n(o.semantic), nTy = Object.keys(o.typography).length, nLay = n(o.layout) - 1, nDim = n({ s: o.spacing, r: o.radius, z: o.size, b: o["border-width"] }) + 1;
-  $("exSize").textContent = `${fmt(txt.length / 1024, 1)} Ko · ${nCol + nSem + nTy * 2 + 2 + nLay + nDim} variables et ${nTy * BP.length} styles de texte dans Figma`;
+  $("exSize").textContent = `${fmt(txt.length / 1024, 1)} Ko, ${nCol + nSem + nTy * 2 + 2 + nLay + nDim} variables et ${nTy * BP.length} styles de texte dans Figma`;
   const R = dsRoles(), need = S.level === "AAA" ? 7 : 4.5, failR = Object.entries(ROLE_FR).filter(([k, [, p, kind]]) => p && ratio(R[k], R[p]) < (kind === "ui" ? 3 : need)).length, failT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
   $("exCheck").textContent = `Vérifié WCAG ${S.version}, niveau ${S.level} : ${failR ? `${failR} rôle${failR > 1 ? "s" : ""} sous le seuil` : "tous les rôles passent"}, ${failT ? `${failT} style${failT > 1 ? "s" : ""} de texte sous le seuil` : "tous les styles de texte passent"}. ${failR || failT ? "Corrigez-les avant d’exporter, ou exportez en connaissance de cause." : ""}`;
   const sw = scales.slice(0, 3).flatMap(s => [s.sw[1], s.sw[4], s.sw[7], s.sw[9]]).map(h => `<i style="background:${h}"></i>`).join("");
