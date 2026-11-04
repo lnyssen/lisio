@@ -1,7 +1,7 @@
 // Lisio for Figma: import core (shared by the plugin and tests)
 const LISIO_W = { 100: ["Thin", "Hairline"], 200: ["ExtraLight", "Extra Light", "UltraLight", "Ultra Light"], 300: ["Light"], 400: ["Regular", "Normal", "Book", "Roman"], 500: ["Medium"], 600: ["SemiBold", "Semi Bold", "DemiBold", "Demi Bold"], 700: ["Bold"], 800: ["ExtraBold", "Extra Bold", "UltraBold", "Ultra Bold"], 900: ["Black", "Heavy"] };
 const LISIO_COL = { color: "Colors", semantic: "Semantic", font: "Typography" };
-const LISIO_SCOPES = { color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], font: ["FONT_FAMILY"] };
+const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], font: ["FONT_FAMILY"] };
 const LISIO_BP = [{ id: "mobile", name: "Mobile", width: 390 }, { id: "tablet", name: "Tablet", width: 768 }, { id: "desktop", name: "Desktop", width: 1024 }, { id: "xl", name: "Desktop XL", width: 1440 }];
 function lisioHex(hex) { const h = hex.replace("#", ""); return { r: parseInt(h.slice(0, 2), 16) / 255, g: parseInt(h.slice(2, 4), 16) / 255, b: parseInt(h.slice(4, 6), 16) / 255 }; }
 function lisioWalk(obj, path, out) {
@@ -34,23 +34,30 @@ async function lisioImport(data, opts) {
     return v;
   };
   // Typography collection: one mode per breakpoint
-  const cTypo = getCol("Typography"), modes = {};
-  cTypo.renameMode(cTypo.modes[0].modeId, LISIO_BP[0].name);
-  for (const bp of LISIO_BP) {
-    let m = cTypo.modes.find(m => m.name === bp.name);
-    if (!m) { try { cTypo.addMode(bp.name); m = cTypo.modes.find(m => m.name === bp.name); } catch (e) { report.warnings.push(`Mode "${bp.name}" could not be added (${e.message}). Breakpoint values stay in the text styles.`); } }
-    if (m) modes[bp.id] = m.modeId;
-  }
+  const bpModes = (col, what) => {
+    const out = {}; col.renameMode(col.modes[0].modeId, LISIO_BP[0].name);
+    for (const bp of LISIO_BP) {
+      let m = col.modes.find(m => m.name === bp.name);
+      if (!m) { try { col.addMode(bp.name); m = col.modes.find(m => m.name === bp.name); } catch (e) { report.warnings.push(`${col.name}: mode "${bp.name}" could not be added (${e.message}). ${what}`); } }
+      if (m) out[bp.id] = m.modeId;
+    }
+    return out;
+  };
+  const cTypo = getCol("Typography"), modes = bpModes(cTypo, "Breakpoint values stay in the text styles.");
+  let cLay = null, layModes = {};
   const setAll = (v, col, val) => col.modes.forEach(m => v.setValueForMode(m.modeId, val));
   // 1. Variables: colors, semantic, dimensions, font families
   const tokens = lisioWalk(data, [], []).filter(t => t.path[0] !== "typography"), map = {}, famName = {};
   for (const t of tokens) {
     const top = t.path[0], type = t.type === "color" ? "COLOR" : t.type === "fontFamily" ? "STRING" : (t.type === "dimension" || t.type === "number") ? "FLOAT" : null;
     if (!type) continue;
-    const col = getCol(LISIO_COL[top] || "Dimensions"), name = (LISIO_COL[top] ? t.path.slice(1) : t.path).join("/");
+    const perBp = t.ext.breakpoints && typeof t.ext.breakpoints === "object";
+    if (perBp && !cLay) { cLay = getCol("Layout"); layModes = bpModes(cLay, "Only the first breakpoint value is kept."); }
+    const col = perBp ? cLay : getCol(LISIO_COL[top] || "Dimensions"), name = (perBp || LISIO_COL[top] ? t.path.slice(1) : t.path).join("/");
     const v = getVar(col, name, type); v.scopes = t.ext.scopes || LISIO_SCOPES[top] || ["ALL_SCOPES"];
     if (t.desc) v.description = t.desc;
     v.setVariableCodeSyntax("WEB", `var(--${t.path.join("-")})`);
+    if (perBp) { v.scopes = t.path[1] === "columns" ? [] : ["GAP", "WIDTH_HEIGHT"]; LISIO_BP.forEach(bp => { const mid = layModes[bp.id], val = t.ext.breakpoints[bp.id]; if (mid && typeof val === "number") v.setValueForMode(mid, val); }); report.variables++; continue; }
     map[`{${t.path.join(".")}}`] = { v, t, col }; report.variables++;
   }
   for (const { v, t, col } of Object.values(map)) {
