@@ -336,12 +336,18 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .ts-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
 .ts-meta b{font-size:14px}
 .ts-meta code{font-family:var(--code);font-size:12px;color:var(--muted)}
-.ts-in{display:grid;grid-template-columns:repeat(4,minmax(62px,82px));gap:8px}
+.ts-in{display:grid;grid-template-columns:repeat(5,minmax(58px,76px));gap:8px}
+.ts-range{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+table.flu{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.flu th,table.flu td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--hair);vertical-align:top}
+table.flu thead th{font-size:13px;color:var(--muted);font-weight:600}
+table.flu td.mono{font-family:var(--code);font-size:12.5px;word-break:break-word}
+@media (max-width:760px){table.flu thead{display:none}table.flu,table.flu tbody,table.flu tr,table.flu th,table.flu td{display:block}table.flu tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--hair)}table.flu th,table.flu td{border:0;padding:0}table.flu th{grid-column:1/-1;font-size:15px}table.flu td::before{content:attr(data-l);display:block;font-size:12px;color:var(--muted)}table.flu td.mono{grid-column:1/-1}}
 .ts-in label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:600;color:var(--muted)}
 .ts-in input,.ts-in select{width:100%;padding:6px 8px}
 #tsFmt{max-width:100%}
 .ts-warn{font-size:13px;color:var(--muted)}
-@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-in{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-in{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .guide p,.guide li{max-width:78ch;line-height:1.55}
 .guide ul,.guide ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 .guide h2{margin-top:6px}
@@ -500,20 +506,28 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
       <div class="ts-ctl">
         <button class="ts-font" type="button" data-pop="popFont" data-target="head" aria-expanded="false" aria-controls="popFont"><small>Police des titres</small><span id="tsHeadName">–</span></button>
         <button class="ts-font" type="button" data-pop="popFont" data-target="body" aria-expanded="false" aria-controls="popFont"><small>Police du texte</small><span id="tsBodyName">–</span></button>
-        <label class="ts-f">Taille de base<span class="ts-unit"><input type="number" id="tsBase" min="12" max="24" step="1" inputmode="numeric"> px</span></label>
-        <label class="ts-f">Échelle<select id="tsRatio"><option value="1.125">1,125 · seconde majeure</option><option value="1.2">1,2 · tierce mineure</option><option value="1.25">1,25 · tierce majeure</option><option value="1.333">1,333 · quarte</option><option value="1.5">1,5 · quinte</option></select></label>
+        <label class="ts-f">Base mobile 390<span class="ts-unit"><input type="number" id="tsBaseM" min="10" max="32" step="1" inputmode="numeric"> px</span></label>
+        <label class="ts-f">Échelle mobile<select id="tsRatioM"><option value="1.067">1,067 · seconde mineure</option><option value="1.125">1,125 · seconde majeure</option><option value="1.15">1,15</option><option value="1.2">1,2 · tierce mineure</option><option value="1.25">1,25 · tierce majeure</option><option value="1.333">1,333 · quarte</option><option value="1.414">1,414 · triton</option><option value="1.5">1,5 · quinte</option></select></label>
+        <label class="ts-f">Base desktop 1440<span class="ts-unit"><input type="number" id="tsBaseD" min="10" max="32" step="1" inputmode="numeric"> px</span></label>
+        <label class="ts-f">Échelle desktop<select id="tsRatioD"><option value="1.067">1,067 · seconde mineure</option><option value="1.125">1,125 · seconde majeure</option><option value="1.15">1,15</option><option value="1.2">1,2 · tierce mineure</option><option value="1.25">1,25 · tierce majeure</option><option value="1.333">1,333 · quarte</option><option value="1.414">1,414 · triton</option><option value="1.5">1,5 · quinte</option></select></label>
         <label class="ts-f">Texte<select id="tsFg"></select></label>
         <label class="ts-f">Fond<select id="tsBg"></select></label>
       </div>
       <div class="row between"><p class="note" id="tsSummary"></p><div class="row"><button class="btn sm" type="button" id="tsApply">Recalculer les tailles</button><button class="btn sm" type="button" id="tsReset">Réinitialiser</button></div></div>
     </div>
     <div class="card-surface">
-      <div class="row between"><h2>Vos styles</h2><span class="small muted">Taille en px, interligne en multiple, approche en % de la taille</span></div>
+      <div class="row between"><h2>Vos styles</h2><div class="seg" role="group" aria-label="Aperçu à la largeur" id="tsView"><button type="button" data-v="mobile">Mobile</button><button type="button" data-v="tablet">Tablet</button><button type="button" data-v="desktop">Desktop</button><button type="button" data-v="xl">XL</button></div></div>
+      <p class="note">Chaque style grandit en douceur entre 390 px (mobile) et 1440 px (desktop XL). Tailles en px, interligne en multiple, approche en % de la taille.</p>
       <div class="ts-list" id="tsList"></div>
     </div>
     <div class="card-surface">
+      <h2>Valeurs fluides · 390 → 1440 px</h2>
+      <p class="note">Pour chaque écran : taille / interligne en px, comme dans les styles Figma. Puis la formule clamp() à copier dans le CSS.</p>
+      <table class="flu" id="tsTable"></table>
+    </div>
+    <div class="card-surface">
       <div class="row between"><h2>Exporter pour Figma ou le code</h2><div class="row"><label for="tsFmt" class="sr">Format</label><select id="tsFmt"><option value="json">JSON pour Figma (W3C)</option><option value="css">CSS</option></select><button class="btn" id="tsCopy" type="button">Copier</button><button class="btn primary" id="tsDl" type="button">Télécharger</button></div></div>
-      <p class="note">Le fichier JSON contient vos couleurs, leurs 11 nuances et vos styles de texte, au format W3C Design Tokens. Déposez-le dans la conversation avec Claude : il crée le fichier Figma avec les variables et les styles de texte.</p>
+      <p class="note">Le même fichier que le bouton Exporter, au format W3C Design Tokens et en anglais : couleurs, rôles, typo fluide et dimensions. Ouvrez-le dans le <a href="#guide-export" onclick="location.hash='sources';setTimeout(()=>document.getElementById('guide-export').scrollIntoView(),50);return false">plugin Lisio pour Figma</a>. Le CSS contient les mêmes valeurs, avec les clamp().</p>
       <pre class="code" id="tsOut" tabindex="0"></pre>
     </div>
   </section>
@@ -579,7 +593,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
         <li><b>Vos couleurs.</b> Dans <a href="#matrice">Matrice</a>, saisissez vos codes, collez une liste ou importez une image : Lisio en extrait les teintes.</li>
         <li><b>Les bonnes associations.</b> La matrice dit quel texte est lisible sur quel fond.</li>
         <li><b>Votre police.</b> Dans <a href="#tester">Essai typo</a>, testez une police sur un vrai texte, à la bonne taille, avec vos couleurs.</li>
-        <li><b>Vos styles.</b> Dans <a href="#styles">Styles</a>, réglez H1 à H6, le corps, la légende et le bouton.</li>
+        <li><b>Vos styles.</b> Dans <a href="#styles">Styles</a>, réglez une typo fluide, de Display au bouton, du mobile au grand écran.</li>
         <li><b>Vos nuances.</b> Dans <a href="#palette">Nuances</a>, chaque couleur devient une gamme de 50 à 950.</li>
         <li><b>Tout exporter.</b> Le bouton <b>Exporter</b>, en haut à droite, produit un seul fichier avec tout votre design system.</li>
       </ol>
@@ -599,7 +613,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
       <h2>Essai typo</h2>
       <p>Le ratio ne voit pas le dessin des lettres : une police fine à 4,5:1 peut rester pénible à lire. Ici, vous voyez le vrai rendu. Choisissez la police (tout Google Fonts, un kit Adobe Fonts, un fichier ou une police installée), la taille, le gras et les couleurs. <b>Réglages</b> ajuste l’interligne, la longueur de ligne et simule l’espacement exigé par le critère 1.4.12. <b>Le détail</b> liste chaque critère, et <b>Ce qui marche sur ce fond</b> propose les associations conformes.</p>
       <h2>Styles</h2>
-      <p>Vos styles web, de H1 à la légende. Choisissez une police pour les titres et une pour le texte, une taille de base et une <b>échelle</b> : chaque niveau de titre est le précédent multiplié par ce rapport (1,25 donne 16, 20, 25, 31, 39, 49 px). Chaque style reste réglable à la main et reçoit son verdict : le statut « grand texte » est calculé tout seul, et une alerte s’affiche si l’interligne d’un paragraphe descend sous 1,5.</p>
+      <p>Vos styles web, de Display et H1 jusqu’au label et au bouton. La typo est <b>fluide</b> : chaque style a une taille mobile (390 px) et une taille desktop (1440 px), et grandit en douceur entre les deux grâce à la formule CSS <code>clamp()</code>. Choisissez une base et une <b>échelle</b> pour chaque bout : chaque niveau de titre est le précédent multiplié par ce rapport. Le tableau donne, pour Mobile 390, Tablet 768, Desktop 1024 et Desktop XL 1440, la taille et l’interligne en px (par exemple 40/44). Chaque style reçoit son verdict, calculé sur sa plus petite taille. Une alerte s’affiche si l’interligne d’un paragraphe descend sous 1,5, ou si la taille desktop dépasse 2,5 fois la taille mobile : au-delà, le zoom à 200 % risque de ne plus suffire (critère 1.4.4, d’après Maxwell Barvian, Smashing Magazine, 7 novembre 2023).</p>
       <h2>Nuances</h2>
       <p>Chaque couleur est déclinée en 11 nuances, de 50 (très clair) à 950 (très foncé). Toutes les nuances d’un même numéro ont la même clarté, quelle que soit la teinte. Les contrastes se retiennent donc par numéros : si un texte 700 passe sur un fond 100 pour une couleur, il passe pour toutes. Le menu <b>Vision</b> simule les principaux daltonismes.</p>
       <h2>Lisibilité</h2>
@@ -611,7 +625,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
       <ul>
         <li><b>Couleurs</b> : vos couleurs et leurs 11 nuances, avec leur contraste sur blanc et sur noir.</li>
         <li><b>Rôles</b> : texte principal et secondaire, texte sur bouton, fonds, bouton et survol, bordure (3:1, critère 1.4.11), séparateur décoratif, contour de focus. Chaque rôle pointe vers une nuance et indique son contraste.</li>
-        <li><b>Typographie</b> : les deux polices et les 11 styles de texte.</li>
+        <li><b>Typographie</b> : les deux polices et 14 styles fluides, avec leurs tailles et interlignes pour chaque écran.</li>
         <li><b>Dimensions</b> : espacements par 4 px, arrondis, épaisseurs de trait et de focus (2 px, critère 2.4.13), tailles de cible de 24 px (2.5.8) et 44 px (2.5.5).</li>
       </ul>
       <h3>Le plugin Lisio pour Figma</h3>
@@ -620,7 +634,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
         <li>Dans l’application Figma pour ordinateur, ouvrez un fichier, puis le menu Figma en haut à gauche, <b>Plugins › Development › Import new plugin from manifest…</b>, et choisissez <code>manifest.json</code>. À faire une seule fois.</li>
         <li>Lancez <b>Plugins › Development › Lisio</b>, collez avec Ctrl ou Cmd + V (ou déposez le fichier), puis <b>Importer</b>.</li>
       </ol>
-      <p>Le plugin crée quatre collections de variables (Couleurs, Rôles, Typo, Dimensions), les styles de texte liés à leurs variables, et une planche de présentation. Relancer l’import met à jour l’existant sans doublons.</p>
+      <p>Tout est en anglais dans Figma. Le plugin crée quatre collections de variables : <b>Colors</b>, <b>Semantic</b>, <b>Typography</b> (un mode par écran : Mobile, Tablet, Desktop, Desktop XL) et <b>Dimensions</b>. Il crée aussi un style de texte par écran, par exemple <b>H1/Mobile</b>, <b>H1/Tablet</b> et <b>H1/Desktop</b>, avec la taille et l’interligne en px. Enfin, il ajoute trois planches : Color palette, Semantic colors et Fluid typography, avec le tableau des clamp(). Relancer l’import met à jour l’existant sans doublons.</p>
     </div>
     <div class="card-surface src">
       <h2 style="font-size:22px">Sources et méthode</h2>
@@ -642,6 +656,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
       <p class="note">Grand texte : 18 pt (24 px) et plus, ou 14 pt (18,67 px) et plus en gras. Formule de luminance : WCAG 2.2 utilise le seuil 0,04045 au lieu de 0,03928 dans le texte d’origine de 2.0 ; aucune valeur sur 8 bits ne tombe entre les deux (10/255 ≈ 0,0392 ; 11/255 ≈ 0,0431), le résultat est donc identique pour les couleurs hexadécimales.</p>
       <h2>Références</h2>
       <ul>
+        <li>Maxwell Barvian, « Addressing Accessibility Concerns With Using Fluid Type », Smashing Magazine, 7 novembre 2023 : la taille maximale ne doit pas dépasser 2,5 fois la taille minimale. <a href="https://www.smashingmagazine.com/2023/11/addressing-accessibility-concerns-fluid-type/" target="_blank" rel="noopener">smashingmagazine.com</a></li>
         <li>W3C, <a href="https://www.w3.org/TR/WCAG20/" target="_blank" rel="noopener">WCAG 2.0</a> (2008), <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">WCAG 2.1</a> (2018), <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a> (2023).</li>
         <li>W3C, Comprendre les critères : <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html" target="_blank" rel="noopener">1.4.3</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html" target="_blank" rel="noopener">1.4.6</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/visual-presentation.html" target="_blank" rel="noopener">1.4.8</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" target="_blank" rel="noopener">1.4.11</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html" target="_blank" rel="noopener">1.4.12</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html" target="_blank" rel="noopener">2.4.13</a>, <a href="https://www.w3.org/WAI/WCAG22/Understanding/reading-level.html" target="_blank" rel="noopener">3.1.5</a>.</li>
         <li>Björn Ottosson, « A perceptual color space for image processing », 2020 (OKLab). <a href="https://bottosson.github.io/posts/oklab/" target="_blank" rel="noopener">bottosson.github.io/posts/oklab</a></li>
@@ -1345,31 +1360,45 @@ function renderRead() {
 $("rText").value = SAMPLE_TEXT;
 ["rText", "rLang", "rMax"].forEach(id => $(id).addEventListener("input", renderRead));
 
-// ---------- Styles de texte ----------
+// ---------- Styles de texte (fluides) ----------
+const BP = [{ id: "mobile", label: "Mobile", w: 390 }, { id: "tablet", label: "Tablet", w: 768 }, { id: "desktop", label: "Desktop", w: 1024 }, { id: "xl", label: "Desktop XL", w: 1440 }];
+const VMIN = 390, VMAX = 1440;
 const TS_DEF = [
-  { id: "h1", name: "Titre 1", tag: "H1", role: "head", w: 700, lh: 1.15, ls: -2 },
-  { id: "h2", name: "Titre 2", tag: "H2", role: "head", w: 700, lh: 1.2, ls: -1.5 },
-  { id: "h3", name: "Titre 3", tag: "H3", role: "head", w: 700, lh: 1.25, ls: -1 },
-  { id: "h4", name: "Titre 4", tag: "H4", role: "head", w: 700, lh: 1.3, ls: 0 },
-  { id: "h5", name: "Titre 5", tag: "H5", role: "head", w: 700, lh: 1.3, ls: 0 },
-  { id: "h6", name: "Titre 6", tag: "H6", role: "head", w: 700, lh: 1.3, ls: 0 },
-  { id: "body-l", name: "Corps grand", tag: "p.lead", role: "body", w: 400, lh: 1.5, ls: 0 },
-  { id: "body", name: "Corps", tag: "p", role: "body", w: 400, lh: 1.5, ls: 0 },
-  { id: "small", name: "Petit", tag: "small", role: "body", w: 400, lh: 1.5, ls: 0 },
-  { id: "caption", name: "Légende", tag: "figcaption", role: "body", w: 400, lh: 1.4, ls: 0 },
-  { id: "button", name: "Bouton", tag: "button", role: "body", w: 600, lh: 1.25, ls: 0 }
+  { id: "display", name: "Display", en: "Display", tag: ".display", role: "head", w: 700, lh: 1.1, ls: -2, k: 7 },
+  { id: "h1", name: "Titre 1", en: "H1", tag: "H1", role: "head", w: 700, lh: 1.1, ls: -1.5, k: 6 },
+  { id: "h2", name: "Titre 2", en: "H2", tag: "H2", role: "head", w: 700, lh: 1.15, ls: -1, k: 5 },
+  { id: "h3", name: "Titre 3", en: "H3", tag: "H3", role: "head", w: 700, lh: 1.2, ls: -0.5, k: 4 },
+  { id: "h4", name: "Titre 4", en: "H4", tag: "H4", role: "head", w: 700, lh: 1.25, ls: 0, k: 3 },
+  { id: "h5", name: "Titre 5", en: "H5", tag: "H5", role: "head", w: 700, lh: 1.3, ls: 0, k: 2 },
+  { id: "h6", name: "Titre 6", en: "H6", tag: "H6", role: "head", w: 700, lh: 1.3, ls: 0, k: 1 },
+  { id: "body", name: "Corps", en: "Body", tag: "p", role: "body", w: 400, lh: 1.5, ls: 0, k: 0 },
+  { id: "body-strong", name: "Corps fort", en: "Body Strong", tag: "strong", role: "body", w: 700, lh: 1.5, ls: 0, k: 0 },
+  { id: "body-italic", name: "Corps italique", en: "Body Italic", tag: "em", role: "body", w: 400, lh: 1.5, ls: 0, k: 0, italic: true },
+  { id: "small", name: "Petit", en: "Small", tag: "small", role: "body", w: 400, lh: 1.5, ls: 0, k: -1 },
+  { id: "caption", name: "Légende", en: "Caption", tag: "figcaption", role: "body", w: 400, lh: 1.5, ls: 0, k: -2 },
+  { id: "label", name: "Label", en: "Label", tag: ".label", role: "body", w: 600, lh: 1.5, ls: 8, k: -1, upper: true },
+  { id: "button", name: "Bouton", en: "Button", tag: "button", role: "body", w: 600, lh: 1.25, ls: 0, k: 0 }
 ];
-const TS_PARA = ["body-l", "body", "small"];
-const tsSizes = (b, r) => ({ h1: b * r ** 5, h2: b * r ** 4, h3: b * r ** 3, h4: b * r ** 2, h5: b * r, h6: b, "body-l": b * 1.125, body: b, small: Math.max(12, b * .875), caption: Math.max(12, b * .75), button: b });
+const TS_PARA = ["body", "body-strong", "body-italic", "small"];
+const tsSize = (d, b, r) => d.k > 0 ? b * r ** d.k : d.k === 0 ? b : Math.max(12, b * (d.k === -1 ? .875 : .8));
 const snapW = (w, font) => { const ws = fontWeights(font); return ws.includes(w) ? w : ws.reduce((a, c) => Math.abs(c - w) < Math.abs(a - w) ? c : a, ws[0]); };
-function tsDefault() {
-  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, sz = tsSizes(16, 1.25);
-  return { fonts: { head: { ...font }, body: { ...font } }, base: 16, ratio: "1.25", fg: S.fg, bg: S.bg, styles: TS_DEF.map(d => ({ id: d.id, size: Math.round(sz[d.id]), weight: snapW(d.w, font), lh: d.lh, ls: d.ls })) };
+function tsDefault(keep) {
+  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, T = { v: 2, fonts: keep ? keep.fonts : { head: { ...font }, body: { ...font } }, m: { base: 16, ratio: "1.15" }, d: { base: 18, ratio: "1.25" }, view: "xl", fg: keep ? keep.fg : S.fg, bg: keep ? keep.bg : S.bg };
+  T.styles = TS_DEF.map(d => ({ id: d.id, min: Math.round(tsSize(d, 16, 1.15)), max: Math.round(tsSize(d, 18, 1.25)), weight: snapW(d.w, T.fonts[d.role]), lh: d.lh, ls: d.ls }));
+  return T;
 }
-if (!S.ts || !Array.isArray(S.ts.styles)) S.ts = tsDefault();
+if (!S.ts || S.ts.v !== 2 || !Array.isArray(S.ts.styles)) S.ts = tsDefault(S.ts && S.ts.fonts ? S.ts : null);
 ["head", "body"].forEach(k => { const f = S.ts.fonts[k]; if (!f || f.src === "upload" || (f.src === "google" && !GFmap.has(f.family))) S.ts.fonts[k] = { ...DEF.font }; ensureFont(S.ts.fonts[k]); });
 const tsDef = id => TS_DEF.find(d => d.id === id);
 const tsFont = st => S.ts.fonts[tsDef(st.id).role];
+const r3 = n => Math.round(n * 1000) / 1000, r4 = n => Math.round(n * 10000) / 10000, r1 = n => Math.round(n * 10) / 10;
+const sizeAt = (st, w) => st.min === st.max ? st.min : Math.min(Math.max(st.min, st.min + (st.max - st.min) * (w - VMIN) / (VMAX - VMIN)), Math.max(st.min, st.max));
+const bpSize = (st, w) => Math.round(sizeAt(st, w)), bpLh = (st, w) => Math.round(bpSize(st, w) * st.lh);
+function tsClamp(st) {
+  if (st.min === st.max) return `${r4(st.min / 16)}rem`;
+  const slope = (st.max - st.min) / (VMAX - VMIN), icpt = st.min - slope * VMIN, lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max);
+  return `clamp(${r4(lo / 16)}rem, ${r3(icpt / 16)}rem + ${r3(slope * 100)}vw, ${r4(hi / 16)}rem)`;
+}
 function tsColorOptions(cur) {
   let h = `<optgroup label="Neutres"><option value="#FFFFFF">Blanc #FFFFFF</option><option value="#000000">Noir #000000</option></optgroup>`, found = ["#FFFFFF", "#000000"].includes(cur);
   scales.forEach(s => { h += `<optgroup label="${esc(s.name)}"><option value="${s.hex}">${esc(s.name)} ${s.hex}</option>` + s.sw.map((x, i) => `<option value="${x}">${esc(s.name)} ${STEPS[i]} ${x}</option>`).join("") + `</optgroup>`; if (s.hex === cur || s.sw.includes(cur)) found = true; });
@@ -1377,44 +1406,52 @@ function tsColorOptions(cur) {
   return h;
 }
 function tsVerdict(st) {
-  const r = ratio(S.ts.fg, S.ts.bg), large = st.size >= 24 || (st.size >= 18.66 && st.weight >= 700), need = S.level === "AAA" ? (large ? 4.5 : 7) : (large ? 3 : 4.5), ok = r >= need, warn = [];
+  const lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max), r = ratio(S.ts.fg, S.ts.bg), large = lo >= 24 || (lo >= 18.66 && st.weight >= 700), need = S.level === "AAA" ? (large ? 4.5 : 7) : (large ? 3 : 4.5), ok = r >= need, warn = [];
   if (TS_PARA.includes(st.id) && st.lh < 1.5) warn.push("Interligne sous 1,5 : à éviter pour les paragraphes (1.4.8, AAA)");
-  if (st.size < 12) warn.push("Moins de 12 px : difficile à lire");
+  if (lo < 12) warn.push("Moins de 12 px sur mobile : difficile à lire");
+  if (hi > 2.5 * lo) warn.push("Desktop plus de 2,5 fois plus grand que mobile : le zoom à 200 % risque de ne pas suffire (1.4.4)");
   return { large, need, ok, warn, r };
 }
 function tsSpecimen(st) {
-  const d = tsDef(st.id), f = tsFont(st);
-  return `font-family:${esc(fontCss(f))};font-size:${st.size}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;color:${S.ts.fg};background:${S.ts.bg}`;
+  const d = tsDef(st.id), f = tsFont(st), w = (BP.find(b => b.id === S.ts.view) || BP[3]).w;
+  return `font-family:${esc(fontCss(f))};font-size:${r1(sizeAt(st, w))}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;${d.italic ? "font-style:italic;" : ""}${d.upper ? "text-transform:uppercase;" : ""}color:${S.ts.fg};background:${S.ts.bg}`;
 }
-const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste consultable douze mois dans votre espace.", button: "Télécharger le PDF" };
+const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste consultable douze mois dans votre espace.", button: "Télécharger le PDF", label: "Dossier thématique" };
+const tsSample = d => d.id === "button" ? TS_SAMPLE.button : d.id === "label" ? TS_SAMPLE.label : TS_SAMPLE[d.role];
 function tsMetaHtml(st) {
   const d = tsDef(st.id), v = tsVerdict(st);
-  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="bd ${v.ok ? (S.level === "AAA" ? "b-aaa" : "b-aa") : "b-no"}">${v.ok ? "✓" : "✕"} ${S.level}${v.large ? " grand texte" : ""} · ${fmt(floor2(v.r))}:1${v.ok ? "" : `, ${fmt(v.need, 1)} requis`}</span>${v.warn.map(w => `<span class="ts-warn">⚠ ${w}</span>`).join("")}`;
+  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="ts-range">${st.min} → ${st.max} px</span><span class="bd ${v.ok ? (S.level === "AAA" ? "b-aaa" : "b-aa") : "b-no"}">${v.ok ? "✓" : "✕"} ${S.level}${v.large ? " grand texte" : ""} · ${fmt(floor2(v.r))}:1${v.ok ? "" : `, ${fmt(v.need, 1)} requis`}</span>${v.warn.map(w => `<span class="ts-warn">⚠ ${w}</span>`).join("")}`;
+}
+function renderFluidTable() {
+  $("tsTable").innerHTML = `<thead><tr><th scope="col">Style</th>${BP.map(b => `<th scope="col">${b.label}<br><span class="muted">${b.w}</span></th>`).join("")}<th scope="col">CSS font-size</th><th scope="col">Interligne</th></tr></thead><tbody>` +
+    S.ts.styles.map(st => { const d = tsDef(st.id); return `<tr><th scope="row">${esc(d.en)}</th>${BP.map(b => `<td data-l="${b.label} ${b.w}">${bpSize(st, b.w)}/${bpLh(st, b.w)}</td>`).join("")}<td data-l="CSS" class="mono">${tsClamp(st)}</td><td data-l="Interligne">${st.lh}</td></tr>`; }).join("") + "</tbody>";
 }
 function renderStyles() {
   const T = S.ts;
   $("tsHeadName").textContent = T.fonts.head.family; $("tsHeadName").style.fontFamily = fontCss(T.fonts.head);
   $("tsBodyName").textContent = T.fonts.body.family; $("tsBodyName").style.fontFamily = fontCss(T.fonts.body);
-  $("tsBase").value = T.base; $("tsRatio").value = T.ratio;
+  $("tsBaseM").value = T.m.base; $("tsRatioM").value = T.m.ratio; $("tsBaseD").value = T.d.base; $("tsRatioD").value = T.d.ratio;
   $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
   $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
-  $("tsSummary").textContent = `Contraste texte et fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, vérifié au niveau ${S.level} de WCAG ${S.version}.`;
+  $("tsView").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === T.view));
+  $("tsSummary").textContent = `Contraste texte et fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, vérifié au niveau ${S.level} de WCAG ${S.version}. Le verdict se base sur la taille mobile, la plus petite.`;
   $("tsList").innerHTML = T.styles.map(st => {
-    const d = tsDef(st.id), ws = fontWeights(tsFont(st)), smp = d.id === "button" ? TS_SAMPLE.button : TS_SAMPLE[d.role];
-    return `<div class="ts-row" data-id="${st.id}"><div style="min-width:0"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${smp}</div></div>
-      <div class="ts-in"><label>Taille<input type="number" data-k="size" min="8" max="160" step="1" value="${st.size}"></label><label>Graisse<select data-k="weight">${ws.map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join("")}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
+    const d = tsDef(st.id), ws = fontWeights(tsFont(st));
+    return `<div class="ts-row" data-id="${st.id}"><div style="min-width:0"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${tsSample(d)}</div></div>
+      <div class="ts-in"><label>Mobile<input type="number" data-k="min" min="8" max="200" step="1" value="${st.min}"></label><label>Desktop<input type="number" data-k="max" min="8" max="200" step="1" value="${st.max}"></label><label>Graisse<select data-k="weight">${ws.map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join("")}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
   }).join("");
-  renderTsExport();
+  renderFluidTable(); renderTsExport();
 }
 $("tsList").addEventListener("input", e => {
   const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || !row) return;
   const st = S.ts.styles.find(s => s.id === row.dataset.id), v = parseFloat(String(e.target.value).replace(",", ".")); if (!st || !isFinite(v)) return;
-  st[k] = k === "size" ? Math.max(1, Math.round(v)) : v; save();
-  $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); renderTsExport();
+  st[k] = k === "min" || k === "max" ? Math.max(1, Math.round(v)) : v; save();
+  $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); renderFluidTable(); renderTsExport();
 });
-const tsRegen = () => { const sz = tsSizes(S.ts.base, +S.ts.ratio); S.ts.styles.forEach(st => { st.size = Math.round(sz[st.id]); }); save(); renderStyles(); };
-$("tsBase").addEventListener("change", e => { const v = parseInt(e.target.value, 10); if (v >= 10 && v <= 32) { S.ts.base = v; tsRegen(); } else e.target.value = S.ts.base; });
-$("tsRatio").addEventListener("change", e => { S.ts.ratio = e.target.value; tsRegen(); });
+$("tsView").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ts.view = b.dataset.v; save(); renderStyles(); });
+const tsRegen = () => { S.ts.styles.forEach(st => { const d = tsDef(st.id); st.min = Math.round(tsSize(d, S.ts.m.base, +S.ts.m.ratio)); st.max = Math.round(tsSize(d, S.ts.d.base, +S.ts.d.ratio)); }); save(); renderStyles(); };
+[["tsBaseM", "m"], ["tsBaseD", "d"]].forEach(([id, k]) => $(id).addEventListener("change", e => { const v = parseInt(e.target.value, 10); if (v >= 10 && v <= 32) { S.ts[k].base = v; tsRegen(); } else e.target.value = S.ts[k].base; }));
+[["tsRatioM", "m"], ["tsRatioD", "d"]].forEach(([id, k]) => $(id).addEventListener("change", e => { S.ts[k].ratio = e.target.value; tsRegen(); }));
 $("tsApply").addEventListener("click", () => { tsRegen(); toast("Tailles recalculées"); });
 $("tsReset").addEventListener("click", () => { S.ts = tsDefault(); save(); renderStyles(); toast("Styles réinitialisés"); });
 $("tsFg").addEventListener("change", e => { S.ts.fg = e.target.value; save(); renderStyles(); });
@@ -1424,15 +1461,15 @@ function tsTokenRef(hex) {
   return hex === "#FFFFFF" ? "{color.neutral.white}" : hex === "#000000" ? "{color.neutral.black}" : hex;
 }
 const famList = f => f.src === "google" ? [f.family, FALLBACK[(GFmap.get(f.family) || { cat: "s" }).cat]] : [f.family, "sans-serif"];
-const r4 = n => Math.round(n * 10000) / 10000;
+const enNum = n => n.toFixed(2);
 const DS_DIM = {
-  spacing: { $d: "Espacements, multiples de 4 px", v: { 0: 0, 1: 4, 2: 8, 3: 12, 4: 16, 5: 24, 6: 32, 7: 48, 8: 64 } },
-  radius: { $d: "Arrondis", v: { none: 0, sm: 4, md: 8, lg: 16, full: 999 } },
-  size: { $d: "Tailles de cible", v: { "target-min": [24, "Cible minimale 24 × 24 px (2.5.8, AA, WCAG 2.2)"], "target-comfort": [44, "Cible confortable 44 × 44 px (2.5.5, AAA)"] } },
-  "border-width": { $d: "Épaisseurs de trait", v: { default: [1, "Bordure standard"], focus: [2, "Contour de focus d’au moins 2 px (2.4.13, AAA, WCAG 2.2)"], "focus-offset": [2, "Écart entre le contour de focus et l’élément"] } }
+  spacing: { $d: "Spacing scale, multiples of 4 px", v: { 0: 0, 1: 4, 2: 8, 3: 12, 4: 16, 5: 24, 6: 32, 7: 48, 8: 64 } },
+  radius: { $d: "Corner radius", v: { none: 0, sm: 4, md: 8, lg: 16, full: 999 } },
+  size: { $d: "Target sizes", v: { "target-min": [24, "Minimum target 24 × 24 px (WCAG 2.2 SC 2.5.8, AA)"], "target-comfort": [44, "Comfortable target 44 × 44 px (SC 2.5.5, AAA)"] } },
+  "border-width": { $d: "Stroke widths", v: { default: [1, "Default border"], focus: [2, "Focus outline at least 2 px thick (WCAG 2.2 SC 2.4.13, AAA)"], "focus-offset": [2, "Gap between focus outline and element"] } }
 };
 function dsSemantic() {
-  const fg = S.ts.fg, bg = S.ts.bg, need = S.level === "AAA" ? 7 : 4.5, rr = (a, b) => fmt(floor2(ratio(a, b)));
+  const fg = S.ts.fg, bg = S.ts.bg, need = S.level === "AAA" ? 7 : 4.5, rr = (a, b) => enNum(floor2(ratio(a, b)));
   const sc = scales.find(s => s.hex === fg || s.sw.includes(fg)) || scales.slice().sort((a, b) => ratio(b.hex, bg) - ratio(a.hex, bg))[0];
   const steps = sc ? sc.sw : [fg];
   const weakest = (min, vs) => steps.filter(h => ratio(h, vs) >= min).sort((a, b) => ratio(a, vs) - ratio(b, vs))[0];
@@ -1440,37 +1477,42 @@ function dsSemantic() {
   const onAct = ratio(fg, "#FFFFFF") >= ratio(fg, "#000000") ? "#FFFFFF" : "#000000";
   const hover = steps.filter(h => h !== fg && ratio(h, onAct) >= need && ratio(h, onAct) > ratio(fg, onAct)).sort((a, b) => ratio(a, onAct) - ratio(b, onAct))[0] || steps.filter(h => h !== fg && ratio(h, onAct) >= need).sort((a, b) => ratio(b, onAct) - ratio(a, onAct))[0] || fg;
   const surf = steps.filter(h => h !== bg && ratio(fg, h) >= need).sort((a, b) => ratio(a, bg) - ratio(b, bg))[0] || bg;
+  const ring = ratio(fg, bg) >= 3 ? fg : border;
   const T = ["TEXT_FILL"], F = ["FRAME_FILL", "SHAPE_FILL"], B = ["STROKE_COLOR"];
   return {
-    text: { default: [fg, `Texte principal : ${rr(fg, bg)}:1 sur le fond (1.4.3)`, T], muted: [muted, `Texte secondaire, le plus clair qui passe encore ${S.level} : ${rr(muted, bg)}:1`, T], "on-action": [onAct, `Texte sur un bouton principal : ${rr(onAct, fg)}:1`, T] },
-    background: { default: [bg, "Fond de page", F], subtle: [surf, `Fond secondaire (cartes, zones) : le texte principal y garde ${rr(fg, surf)}:1`, F] },
-    action: { default: [fg, "Fond du bouton principal", F], hover: [hover, `Survol du bouton : ${rr(onAct, hover)}:1 avec son texte`, F] },
-    border: { default: [border, `Bordure de champ ou de composant : ${rr(border, bg)}:1 (1.4.11, minimum 3:1)`, B], subtle: [subtle, `Séparateur décoratif, ne porte aucune information : ${rr(subtle, bg)}:1`, B] },
-    focus: { ring: [ratio(fg, bg) >= 3 ? fg : border, `Contour de focus : ${rr(ratio(fg, bg) >= 3 ? fg : border, bg)}:1 sur le fond (2.4.13, minimum 3:1)`, B] }
+    text: { default: [fg, `Primary text: ${rr(fg, bg)}:1 on background (SC 1.4.3)`, T], muted: [muted, `Secondary text, lightest step still passing ${S.level}: ${rr(muted, bg)}:1`, T], "on-action": [onAct, `Text on primary button: ${rr(onAct, fg)}:1`, T] },
+    background: { default: [bg, "Page background", F], subtle: [surf, `Secondary surface (cards, panels): primary text keeps ${rr(fg, surf)}:1`, F] },
+    action: { default: [fg, "Primary button fill", F], hover: [hover, `Primary button hover: ${rr(onAct, hover)}:1 with its text`, F] },
+    border: { default: [border, `Input and component border: ${rr(border, bg)}:1 (SC 1.4.11, minimum 3:1)`, B], subtle: [subtle, `Decorative divider, carries no information: ${rr(subtle, bg)}:1`, B] },
+    focus: { ring: [ring, `Focus outline: ${rr(ring, bg)}:1 on background (SC 2.4.13, minimum 3:1)`, B] }
   };
 }
 function tsJson() {
-  const o = { $description: `Base de design system accessible générée par Lisio, WCAG ${S.version} niveau ${S.level}`, color: { neutral: { white: { $type: "color", $value: "#FFFFFF" }, black: { $type: "color", $value: "#000000" } } } };
-  scales.forEach(s => { const g = o.color[s.slug] = { base: { $type: "color", $value: s.hex, $description: `${s.name}, couleur saisie` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contraste ${fmt(floor2(ratio(h, "#FFFFFF")))}:1 sur blanc, ${fmt(floor2(ratio(h, "#000000")))}:1 sur noir` }; }); });
+  const o = { $description: `Accessible design system foundations generated by Lisio, WCAG ${S.version} level ${S.level}`, color: { neutral: { white: { $type: "color", $value: "#FFFFFF" }, black: { $type: "color", $value: "#000000" } } } };
+  scales.forEach(s => { const g = o.color[s.slug] = { base: { $type: "color", $value: s.hex, $description: `${s.name}, source colour` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contrast ${enNum(floor2(ratio(h, "#FFFFFF")))}:1 on white, ${enNum(floor2(ratio(h, "#000000")))}:1 on black` }; }); });
   o.semantic = {}; for (const [g, items] of Object.entries(dsSemantic())) { o.semantic[g] = {}; for (const [k, [hex, d, scopes]] of Object.entries(items)) o.semantic[g][k] = { $type: "color", $value: tsTokenRef(hex), $description: d, $extensions: { "app.lisio": { scopes } } }; }
   for (const [g, def] of Object.entries(DS_DIM)) { o[g] = { $description: def.$d }; for (const [k, v] of Object.entries(def.v)) { const [n, d] = Array.isArray(v) ? v : [v, null]; o[g][k] = { $type: "dimension", $value: { value: n, unit: "px" } }; if (d) o[g][k].$description = d; } }
   o.font = { family: { heading: { $type: "fontFamily", $value: famList(S.ts.fonts.head) }, body: { $type: "fontFamily", $value: famList(S.ts.fonts.body) } } };
   o.typography = {};
-  S.ts.styles.forEach(st => { const d = tsDef(st.id), v = tsVerdict(st); o.typography[st.id] = { $type: "typography", $description: `${d.name} (${d.tag}). ${v.ok ? "Conforme" : "Non conforme"} ${S.level} avec le texte principal sur le fond (${fmt(floor2(v.r))}:1).`, $value: { fontFamily: d.role === "head" ? "{font.family.heading}" : "{font.family.body}", fontSize: { value: st.size, unit: "px" }, fontWeight: st.weight, lineHeight: st.lh, letterSpacing: { value: r4(st.size * st.ls / 100), unit: "px" } }, $extensions: { "app.lisio": { name: d.name, tag: d.tag, label: `${/^H\d$/.test(d.tag) ? d.tag + " · " : ""}${d.name}`, letterSpacingPercent: st.ls } } }; });
-  o.$extensions = { "app.lisio": { generator: "Lisio", url: "https://lisio-psi.vercel.app", wcag: S.version, level: S.level, baseSize: S.ts.base, ratio: +S.ts.ratio } };
+  S.ts.styles.forEach(st => { const d = tsDef(st.id), v = tsVerdict(st);
+    o.typography[st.id] = { $type: "typography", $description: `${d.en} (${d.tag}), fluid ${st.min} → ${st.max} px between ${VMIN} and ${VMAX} px. ${v.ok ? "Passes" : "Fails"} ${S.level} with primary text on background (${enNum(floor2(v.r))}:1).`,
+      $value: { fontFamily: d.role === "head" ? "{font.family.heading}" : "{font.family.body}", fontSize: { value: st.max, unit: "px" }, fontWeight: st.weight, lineHeight: st.lh, letterSpacing: { value: r4(st.max * st.ls / 100), unit: "px" } },
+      $extensions: { "app.lisio": { name: d.en, tag: d.tag, letterSpacingPercent: st.ls, italic: !!d.italic, textCase: d.upper ? "upper" : "none", fluid: { min: st.min, max: st.max, viewportMin: VMIN, viewportMax: VMAX, clamp: tsClamp(st), breakpoints: BP.map(b => ({ id: b.id, name: b.label, width: b.w, fontSize: bpSize(st, b.w), lineHeight: bpLh(st, b.w) })) } } } }; });
+  o.$extensions = { "app.lisio": { generator: "Lisio", url: "https://lisio-psi.vercel.app", wcag: S.version, level: S.level, scale: { mobile: { base: S.ts.m.base, ratio: +S.ts.m.ratio }, desktop: { base: S.ts.d.base, ratio: +S.ts.d.ratio } } } };
   return JSON.stringify(o, null, 2);
 }
 function tsCss() {
   const fam = f => famList(f).map((x, i) => i === 0 ? `"${x}"` : x).join(", ");
-  let c = `/* Lisio : base de design system accessible */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
+  let c = `/* Lisio: accessible design system foundations. Fluid type from ${VMIN} to ${VMAX} px. */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
   c += scales.map(s => `  --${s.slug}: ${s.hex};\n` + s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n\n";
   const cssRef = hex => { const r = tsTokenRef(hex); return r.startsWith("{color.") ? `var(--${r.slice(7, -1).replace(".base", "").replace(".", "-")})` : r.startsWith("{") ? (hex === "#FFFFFF" ? "#FFFFFF" : "#000000") : r; };
   for (const [g, items] of Object.entries(dsSemantic())) for (const [k, [hex, d]] of Object.entries(items)) c += `  --${g}-${k}: ${cssRef(hex)}; /* ${d} */\n`;
   for (const [g, def] of Object.entries(DS_DIM)) { c += "\n"; for (const [k, v] of Object.entries(def.v)) c += `  --${g}-${k}: ${Array.isArray(v) ? v[0] : v}px;${Array.isArray(v) ? ` /* ${v[1]} */` : ""}\n`; }
-  for (const st of S.ts.styles) c += `  --font-size-${st.id}: ${r4(st.size / 16)}rem;\n`;
+  c += "\n"; for (const st of S.ts.styles) c += `  --font-size-${st.id}: ${tsClamp(st)}; /* ${st.min} → ${st.max} px */\n`;
   c += "}\n\nbody {\n  color: var(--text-default);\n  background: var(--background-default);\n}\n\n:focus-visible {\n  outline: var(--border-width-focus) solid var(--focus-ring);\n  outline-offset: var(--border-width-focus-offset);\n}\n";
-  S.ts.styles.forEach(st => { const d = tsDef(st.id), sel = d.id.startsWith("h") && d.id.length === 2 ? `${d.id}, .${d.id}` : d.id === "body" ? "body, p, .body" : d.id === "body-l" ? ".lead, .body-l" : d.id === "small" ? "small, .small" : d.id === "caption" ? "figcaption, .caption" : "button, .button";
-    c += `\n${sel} {\n  font-family: var(--font-${d.role === "head" ? "heading" : "body"});\n  font-size: var(--font-size-${st.id}); /* ${st.size} px */\n  font-weight: ${st.weight};\n  line-height: ${st.lh};\n  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n}\n`; });
+  const SEL = { display: ".display", body: "body, p, .body", "body-strong": "strong, .body-strong", "body-italic": "em, .body-italic", small: "small, .small", caption: "figcaption, .caption", label: ".label", button: "button, .button" };
+  S.ts.styles.forEach(st => { const d = tsDef(st.id), sel = SEL[d.id] || `${d.id}, .${d.id}`;
+    c += `\n${sel} {\n  font-family: var(--font-${d.role === "head" ? "heading" : "body"});\n  font-size: var(--font-size-${st.id});\n  font-weight: ${st.weight};\n  line-height: ${st.lh};\n  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n${d.italic ? "  font-style: italic;\n" : ""}${d.upper ? "  text-transform: uppercase;\n" : ""}}\n`; });
   return c;
 }
 function renderTsExport() { $("tsOut").textContent = $("tsFmt").value === "css" ? tsCss() : tsJson(); }
