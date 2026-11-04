@@ -350,7 +350,6 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
   <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice">
     <header class="mhead">
       <div>
-        <div class="eyebrow" id="mEyebrow"></div>
         <h1>Matrice de contraste</h1>
         <p class="lead" id="mLead"></p>
       </div>
@@ -987,7 +986,6 @@ const f1 = r => fmt(Math.floor(r * 10) / 10, 1);
 const f2 = r => fmt(Math.floor(r * 100) / 100, 2);
 function renderMx() {
   const C = palette, n = C.length, v21 = V() >= 21;
-  $("mEyebrow").textContent = `WCAG ${S.version} · critères 1.4.3, 1.4.6${v21 ? ", 1.4.11" : ""}`;
   $("mLead").textContent = `${n} couleurs, ${n * (n - 1) / 2} paires. Ligne = couleur du texte, colonne = couleur du fond. Le ratio est le même dans les deux sens.`;
   $("lgLegend").textContent = v21 ? "≥ 3:1. Grands textes (24 px, ou 18,67 px gras) et éléments d’interface (1.4.11)." : "≥ 3:1. Grands textes (24 px, ou 18,67 px gras).";
   $("mFontName").textContent = S.font.family; $("mFontAa").style.fontFamily = fontCss(S.font);
