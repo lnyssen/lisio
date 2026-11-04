@@ -84,13 +84,14 @@
 .colors-edit{margin-top:12px}
 @media (max-width:1000px){.mlayout{grid-template-columns:minmax(0,1fr)}}
 .mtools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin-bottom:16px}
-.mwrap{overflow-x:auto;padding-bottom:6px}
+.mwrap{padding-bottom:6px;min-width:0}
 .mgrid{display:grid;gap:8px;align-items:stretch}
+@container (max-width:150px){.mcell .ck .pill .w{display:none}.mcell .ck .pill{min-width:26px;justify-content:center}.mcell .rr .r{font-size:16px}.mcell .sample .big{font-size:28px}.mcell .foot{padding:9px 8px 10px}}
 .mlist{display:flex;flex-direction:column;gap:22px}
 .mgroup h3{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:16px}
 .mgroup h3 .disc{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--hair)}
 .mgroup h3 code{font-size:12px;color:var(--muted);font-weight:500}
-.mgroup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mgroup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .mlist .mcell .sample .big{font-size:28px}
 .mcorner{font-size:12px;font-weight:600;color:var(--muted);line-height:1.5;align-self:end}
 .mcol{display:flex;flex-direction:column;gap:4px;min-width:0}
@@ -102,7 +103,7 @@
 .mrow .disc{width:32px;height:32px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px var(--hair)}
 .mrow div{display:flex;flex-direction:column;min-width:0}
 .mdiag{border:1.5px dashed var(--hair);border-radius:12px;display:grid;place-items:center;font-size:14px;color:var(--muted);min-height:112px;text-align:center;padding:8px}
-.mcell{border:0;padding:0;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);cursor:pointer;font:inherit;color:inherit;text-align:left;min-height:112px}
+.mcell{container-type:inline-size;min-width:0;border:0;padding:0;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair);cursor:pointer;font:inherit;color:inherit;text-align:left;min-height:112px}
 .mcell:hover{box-shadow:0 0 0 2px var(--ink)}
 .mcell[aria-pressed="true"]{box-shadow:0 0 0 3px var(--primary)}
 .mcell .sample{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 8px 14px;overflow:hidden;white-space:nowrap}
@@ -989,7 +990,7 @@ $("exportFmt").addEventListener("change", renderExport);
 $("copyExport").addEventListener("click", () => copy($("exportOut").textContent, "Export copié"));
 
 // ---------- Matrice ----------
-const mxNarrow = matchMedia("(max-width:760px)");
+const mxNarrow = matchMedia("(max-width:760px)"); let mxMode = "";
 let sel = null, dActs = [];
 const grade = r => r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AA", "b-aa"] : r >= 3 ? ["AA grand", "b-lg"] : ["✕ Échec", "b-no"];
 const f1 = r => fmt(Math.floor(r * 10) / 10, 1);
@@ -1008,10 +1009,10 @@ function renderMx() {
   const ws = fontWeights(S.font), w = ws.includes(700) ? 700 : ws[ws.length - 1], ff = esc(fontCss(S.font)), sample = esc(S.mSample || "Aa");
   $("palChips").innerHTML = palette.map(c => `<span class="palchip"><i style="background:${c.hex}"></i>${esc(c.name)}</span>`).join("");
   const g = $("mgrid");
-  const det = S.mView !== "ok", cw = det ? (innerWidth < 760 ? 150 : 168) : 118, rh = innerWidth < 760 ? 80 : 130;
-  g.style.gridTemplateColumns = `${rh}px repeat(${n}, minmax(${cw}px, 1fr))`;
-  g.style.minWidth = (rh + n * (cw + 8)) + "px";
-  const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓ Passe" : "✕ Échec"}</span>`;
+  const rh = 112, avail = (g.parentElement.clientWidth || innerWidth) - rh - n * 8, useList = mxNarrow.matches || avail / n < (S.mView === "ok" ? 96 : 124);
+  mxMode = useList ? "list" : "grid";
+  g.style.gridTemplateColumns = `${rh}px repeat(${n}, minmax(0, 1fr))`; g.style.minWidth = "";
+  const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓<span class=\"w\"> Passe</span>" : "✕<span class=\"w\"> Échec</span>"}</span>`;
   const cell = (i, j, label) => {
     const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r), on = sel && sel[0] === i && sel[1] === j;
     return `<button type="button" class="mcell" data-i="${i}" data-j="${j}" aria-pressed="${on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
@@ -1020,7 +1021,7 @@ function renderMx() {
           <span class="ck">Normal${pass(r >= tN)}</span><span class="ck">Grand${pass(r >= tL)}</span>${v21 ? `<span class="ck">Interface${pass(r >= 3)}</span>` : ""}</span></button>`;
   };
   let h = "";
-  if (mxNarrow.matches) {
+  if (useList) {
     g.className = "mlist"; g.style.gridTemplateColumns = ""; g.style.minWidth = "";
     C.forEach((b, j) => {
       const cells = C.map((t, i) => i === j || (S.mView === "ok" && ratio(t.hex, b.hex) < 4.5) ? "" : cell(i, j, "Texte " + esc(t.name))).join("");
@@ -1043,6 +1044,7 @@ function renderMx() {
   renderKeep(); renderDetail();
 }
 mxNarrow.addEventListener("change", () => renderMx());
+if ("ResizeObserver" in window) { let rz = 0; new ResizeObserver(() => { cancelAnimationFrame(rz); rz = requestAnimationFrame(() => { const g = $("mgrid"), n = palette.length, a = (g.parentElement.clientWidth || innerWidth) - 112 - n * 8, m = mxNarrow.matches || a / n < (S.mView === "ok" ? 96 : 124) ? "list" : "grid"; if (m !== mxMode) renderMx(); }); }).observe($("mgrid").parentElement); }
 $("mgrid").addEventListener("click", e => {
   const c = e.target.closest(".mcell"); if (!c) return;
   sel = [+c.dataset.i, +c.dataset.j]; renderMx();
