@@ -323,6 +323,28 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .l-aa{background:var(--ok-bg);color:var(--ok)}
 .l-large{background:var(--warn-bg);color:var(--warn)}
 .l-fail{background:transparent;color:var(--muted);opacity:.7}
+.ts-ctl{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+@media (max-width:480px){.ts-ctl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ts-font{font:inherit;text-align:left;border:1.5px solid var(--field);background:var(--surface);color:var(--ink);border-radius:12px;padding:8px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ts-font small,.ts-f{font-size:13px;font-weight:600;color:var(--muted)}
+.ts-font span{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (hover:hover){.ts-font:hover{background:var(--hover)}}
+.ts-f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ts-f select,.ts-f input{width:100%}
+.ts-unit{display:flex;align-items:center;gap:6px;color:var(--ink);font-weight:500}
+.ts-list{display:flex;flex-direction:column;gap:10px}
+.ts-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center;border-top:1px solid var(--hair);padding-top:12px}
+.ts-row:first-child{border-top:0;padding-top:0}
+.ts-spec{border-radius:12px;padding:12px 14px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ts-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ts-meta b{font-size:14px}
+.ts-meta code{font-family:var(--code);font-size:12px;color:var(--muted)}
+.ts-in{display:grid;grid-template-columns:repeat(4,minmax(62px,82px));gap:8px}
+.ts-in label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:600;color:var(--muted)}
+.ts-in input,.ts-in select{width:100%;padding:6px 8px}
+#tsFmt{max-width:100%}
+.ts-warn{font-size:13px;color:var(--muted)}
+@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-in{grid-template-columns:repeat(4,minmax(0,1fr))}}
 pre.code{background:var(--bg);border-radius:12px;padding:14px;overflow:auto;max-height:320px;font-family:var(--code);font-size:12.5px;margin:0}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .stat{border-radius:14px;padding:12px 14px;background:var(--bg)}
@@ -349,6 +371,7 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
     <nav class="tabs" role="tablist" aria-label="Sections">
       <button role="tab" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" fill="currentColor"/></svg><span>Matrice</span></button>
       <button role="tab" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19 8.5 5h1L15 19M5 14.5h8"/><path d="M21 19v-6.2a3 3 0 0 0-5.6-1.5M21 15.6c-2.4-.6-5.3 0-5.3 2 0 1.8 2.6 2.3 5.3.2"/></svg><span>Essai<span class="dsk"> typo</span></span></button>
+      <button role="tab" id="tab-styles" aria-controls="styles" data-view="styles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5v9M11 5v9M4 9.5h7"/><path d="M15 7h5M15 11h5M4 18.5h16"/></svg><span>Styles</span></button>
       <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="4.5" rx="1.5"/><rect x="4" y="9.75" width="16" height="4.5" rx="1.5" fill="currentColor" fill-opacity=".35"/><rect x="4" y="16" width="16" height="4.5" rx="1.5" fill="currentColor"/></svg><span>Nuances</span></button>
       <button role="tab" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 10.5h16M4 15h10M4 19.5h6"/><path d="m15.5 18 2 2 3.5-4" stroke-linejoin="round"/></svg><span>Lisibilité</span></button>
       <button role="tab" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h10.5L19 8v11.5H5z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke-linecap="round"/></svg><span>Sources</span></button>
@@ -466,6 +489,32 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
         <div class="sheet" id="sheet"></div>
         <div class="row between"><button class="btn sm" type="button" id="sheetMore" aria-controls="sheet" aria-expanded="false" hidden></button><label class="small checkline" for="showFail"><input type="checkbox" id="showFail"> Inclure les combinaisons non conformes</label></div>
       </div>
+    </div>
+  </section>
+
+  <!-- STYLES -->
+  <section id="styles" role="tabpanel" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:20px">
+    <header class="mhead phead"><div><div class="eyebrow">Système typographique</div><h1>Styles de texte</h1><p class="lead">Vos styles web, de H1 à la légende, vérifiés sur vos couleurs. Exportez-les avec la palette pour Figma ou le CSS.</p></div></header>
+    <div class="card-surface">
+      <h2>Réglages communs</h2>
+      <div class="ts-ctl">
+        <button class="ts-font" type="button" data-pop="popFont" data-target="head" aria-expanded="false" aria-controls="popFont"><small>Police des titres</small><span id="tsHeadName">–</span></button>
+        <button class="ts-font" type="button" data-pop="popFont" data-target="body" aria-expanded="false" aria-controls="popFont"><small>Police du texte</small><span id="tsBodyName">–</span></button>
+        <label class="ts-f">Taille de base<span class="ts-unit"><input type="number" id="tsBase" min="12" max="24" step="1" inputmode="numeric"> px</span></label>
+        <label class="ts-f">Échelle<select id="tsRatio"><option value="1.125">1,125 · seconde majeure</option><option value="1.2">1,2 · tierce mineure</option><option value="1.25">1,25 · tierce majeure</option><option value="1.333">1,333 · quarte</option><option value="1.5">1,5 · quinte</option></select></label>
+        <label class="ts-f">Texte<select id="tsFg"></select></label>
+        <label class="ts-f">Fond<select id="tsBg"></select></label>
+      </div>
+      <div class="row between"><p class="note" id="tsSummary"></p><div class="row"><button class="btn sm" type="button" id="tsApply">Recalculer les tailles</button><button class="btn sm" type="button" id="tsReset">Réinitialiser</button></div></div>
+    </div>
+    <div class="card-surface">
+      <div class="row between"><h2>Vos styles</h2><span class="small muted">Taille en px, interligne en multiple, approche en % de la taille</span></div>
+      <div class="ts-list" id="tsList"></div>
+    </div>
+    <div class="card-surface">
+      <div class="row between"><h2>Exporter pour Figma ou le code</h2><div class="row"><label for="tsFmt" class="sr">Format</label><select id="tsFmt"><option value="json">JSON pour Figma (W3C)</option><option value="css">CSS</option></select><button class="btn" id="tsCopy" type="button">Copier</button><button class="btn primary" id="tsDl" type="button">Télécharger</button></div></div>
+      <p class="note">Le fichier JSON contient vos couleurs, leurs 11 nuances et vos styles de texte, au format W3C Design Tokens. Déposez-le dans la conversation avec Claude : il crée le fichier Figma avec les variables et les styles de texte.</p>
+      <pre class="code" id="tsOut" tabindex="0"></pre>
     </div>
   </section>
 
@@ -723,14 +772,14 @@ function buildScales() {
 }
 
 // ---------- Popovers ----------
-let openBtn = null;
+let openBtn = null, fontTarget = "test";
 const POP_IDS = ["popFont", "popColor", "popMore", "popNorm"];
 function closePops() { POP_IDS.forEach(p => $(p).hidden = true); document.querySelectorAll("[data-pop]").forEach(b => b.setAttribute("aria-expanded", "false")); openBtn = null; }
 function openPop(btn) {
   const same = openBtn === btn; closePops(); if (same) return;
   const pid = btn.dataset.pop;
   if (pid === "popColor") { colorMode = btn.dataset.mode; renderColorPop(); }
-  if (pid === "popFont") renderFontList();
+  if (pid === "popFont") { fontTarget = btn.dataset.target || "test"; renderFontList(); }
   $(pid).hidden = false; btn.setAttribute("aria-expanded", "true"); openBtn = btn;
   if (pid === "popFont" && matchMedia("(pointer:fine)").matches) setTimeout(() => $("fontSearch").focus(), 0);
 }
@@ -748,7 +797,7 @@ function paintSrcTab() { document.querySelectorAll("[data-src]").forEach(b => b.
 document.querySelectorAll("[data-src]").forEach(b => b.addEventListener("click", () => { fontSrcTab = b.dataset.src; paintSrcTab(); }));
 function fontItem(f) {
   loadGoogle(f, false);
-  const w = f.weights.includes(400) ? 400 : f.weights[0], sel = S.font.src === "google" && S.font.family === f.name;
+  const cf = fontTarget === "test" ? S.font : S.ts.fonts[fontTarget], w = f.weights.includes(400) ? 400 : f.weights[0], sel = cf.src === "google" && cf.family === f.name;
   return `<li><button type="button" role="option" aria-selected="${sel}" data-family="${esc(f.name)}" style="font-family:'${esc(f.name)}', ${FALLBACK[f.cat]};font-weight:${w}"><span>${esc(f.name)}</span><span class="cat">${CATS[f.cat]} · ${f.weights.length}</span></button></li>`;
 }
 function renderFontList() {
@@ -767,6 +816,7 @@ $("fontList").addEventListener("click", e => { const b = e.target.closest("butto
 $("fontSearch").addEventListener("input", renderFontList);
 $("fontCat").addEventListener("change", renderFontList);
 function setFont(font) {
+  if (fontTarget !== "test") { S.ts.fonts[fontTarget] = font; ensureFont(font); S.ts.styles.forEach(st => { st.weight = snapW(st.weight, tsFont(st)); }); save(); renderStyles(); document.fonts.load(`400 40px ${fontCss(font)}`).then(renderStyles, () => {}); return; }
   S.font = font; ensureFont(font);
   const ws = fontWeights(font);
   if (!ws.includes(S.weight)) S.weight = ws.reduce((a, b) => Math.abs(b - S.weight) < Math.abs(a - S.weight) ? b : a, ws[0]);
@@ -902,8 +952,8 @@ $("sLine").addEventListener("input", e => { S.lh = +e.target.value; save(); rend
 $("sLetter").addEventListener("input", e => { S.ls = +e.target.value; save(); render(); });
 $("sMeasure").addEventListener("input", e => { S.measure = +e.target.value; save(); render(); });
 function paintNorm() { $("normV").textContent = "WCAG " + S.version; $("normL").textContent = S.level; $("normChip").setAttribute("aria-label", `Norme de référence : WCAG ${S.version}, niveau ${S.level}. Modifier`); }
-segInit("verSeg", () => S.version, v => { S.version = v; save(); paintNorm(); render(); });
-segInit("lvlSeg", () => S.level, v => { S.level = v; save(); paintNorm(); render(); });
+segInit("verSeg", () => S.version, v => { S.version = v; save(); paintNorm(); render(); renderStyles(); });
+segInit("lvlSeg", () => S.level, v => { S.level = v; save(); paintNorm(); render(); renderStyles(); });
 paintNorm();
 $("spacingTest").addEventListener("click", e => { spacingOn = !spacingOn; e.currentTarget.setAttribute("aria-pressed", spacingOn); e.currentTarget.classList.toggle("primary", spacingOn); renderCanvas(); renderVerdictAndChecks(); });
 
@@ -1244,8 +1294,115 @@ function renderRead() {
 $("rText").value = SAMPLE_TEXT;
 ["rText", "rLang", "rMax"].forEach(id => $(id).addEventListener("input", renderRead));
 
+// ---------- Styles de texte ----------
+const TS_DEF = [
+  { id: "h1", name: "Titre 1", tag: "H1", role: "head", w: 700, lh: 1.15, ls: -2 },
+  { id: "h2", name: "Titre 2", tag: "H2", role: "head", w: 700, lh: 1.2, ls: -1.5 },
+  { id: "h3", name: "Titre 3", tag: "H3", role: "head", w: 700, lh: 1.25, ls: -1 },
+  { id: "h4", name: "Titre 4", tag: "H4", role: "head", w: 700, lh: 1.3, ls: 0 },
+  { id: "h5", name: "Titre 5", tag: "H5", role: "head", w: 700, lh: 1.3, ls: 0 },
+  { id: "h6", name: "Titre 6", tag: "H6", role: "head", w: 700, lh: 1.3, ls: 0 },
+  { id: "body-l", name: "Corps grand", tag: "p.lead", role: "body", w: 400, lh: 1.5, ls: 0 },
+  { id: "body", name: "Corps", tag: "p", role: "body", w: 400, lh: 1.5, ls: 0 },
+  { id: "small", name: "Petit", tag: "small", role: "body", w: 400, lh: 1.5, ls: 0 },
+  { id: "caption", name: "Légende", tag: "figcaption", role: "body", w: 400, lh: 1.4, ls: 0 },
+  { id: "button", name: "Bouton", tag: "button", role: "body", w: 600, lh: 1.25, ls: 0 }
+];
+const TS_PARA = ["body-l", "body", "small"];
+const tsSizes = (b, r) => ({ h1: b * r ** 5, h2: b * r ** 4, h3: b * r ** 3, h4: b * r ** 2, h5: b * r, h6: b, "body-l": b * 1.125, body: b, small: Math.max(12, b * .875), caption: Math.max(12, b * .75), button: b });
+const snapW = (w, font) => { const ws = fontWeights(font); return ws.includes(w) ? w : ws.reduce((a, c) => Math.abs(c - w) < Math.abs(a - w) ? c : a, ws[0]); };
+function tsDefault() {
+  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, sz = tsSizes(16, 1.25);
+  return { fonts: { head: { ...font }, body: { ...font } }, base: 16, ratio: "1.25", fg: S.fg, bg: S.bg, styles: TS_DEF.map(d => ({ id: d.id, size: Math.round(sz[d.id]), weight: snapW(d.w, font), lh: d.lh, ls: d.ls })) };
+}
+if (!S.ts || !Array.isArray(S.ts.styles)) S.ts = tsDefault();
+["head", "body"].forEach(k => { const f = S.ts.fonts[k]; if (!f || f.src === "upload" || (f.src === "google" && !GFmap.has(f.family))) S.ts.fonts[k] = { ...DEF.font }; ensureFont(S.ts.fonts[k]); });
+const tsDef = id => TS_DEF.find(d => d.id === id);
+const tsFont = st => S.ts.fonts[tsDef(st.id).role];
+function tsColorOptions(cur) {
+  let h = `<optgroup label="Neutres"><option value="#FFFFFF">Blanc #FFFFFF</option><option value="#000000">Noir #000000</option></optgroup>`, found = ["#FFFFFF", "#000000"].includes(cur);
+  scales.forEach(s => { h += `<optgroup label="${esc(s.name)}"><option value="${s.hex}">${esc(s.name)} ${s.hex}</option>` + s.sw.map((x, i) => `<option value="${x}">${esc(s.name)} ${STEPS[i]} ${x}</option>`).join("") + `</optgroup>`; if (s.hex === cur || s.sw.includes(cur)) found = true; });
+  if (!found) h = `<option value="${esc(cur)}">Personnalisée ${esc(cur)}</option>` + h;
+  return h;
+}
+function tsVerdict(st) {
+  const r = ratio(S.ts.fg, S.ts.bg), large = st.size >= 24 || (st.size >= 18.66 && st.weight >= 700), need = S.level === "AAA" ? (large ? 4.5 : 7) : (large ? 3 : 4.5), ok = r >= need, warn = [];
+  if (TS_PARA.includes(st.id) && st.lh < 1.5) warn.push("Interligne sous 1,5 : à éviter pour les paragraphes (1.4.8, AAA)");
+  if (st.size < 12) warn.push("Moins de 12 px : difficile à lire");
+  return { large, need, ok, warn, r };
+}
+function tsSpecimen(st) {
+  const d = tsDef(st.id), f = tsFont(st);
+  return `font-family:${esc(fontCss(f))};font-size:${st.size}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;color:${S.ts.fg};background:${S.ts.bg}`;
+}
+const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste consultable douze mois dans votre espace.", button: "Télécharger le PDF" };
+function tsMetaHtml(st) {
+  const d = tsDef(st.id), v = tsVerdict(st);
+  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="bd ${v.ok ? (S.level === "AAA" ? "b-aaa" : "b-aa") : "b-no"}">${v.ok ? "✓" : "✕"} ${S.level}${v.large ? " grand texte" : ""} · ${fmt(floor2(v.r))}:1${v.ok ? "" : `, ${fmt(v.need, 1)} requis`}</span>${v.warn.map(w => `<span class="ts-warn">⚠ ${w}</span>`).join("")}`;
+}
+function renderStyles() {
+  const T = S.ts;
+  $("tsHeadName").textContent = T.fonts.head.family; $("tsHeadName").style.fontFamily = fontCss(T.fonts.head);
+  $("tsBodyName").textContent = T.fonts.body.family; $("tsBodyName").style.fontFamily = fontCss(T.fonts.body);
+  $("tsBase").value = T.base; $("tsRatio").value = T.ratio;
+  $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
+  $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
+  $("tsSummary").textContent = `Contraste texte et fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, vérifié au niveau ${S.level} de WCAG ${S.version}.`;
+  $("tsList").innerHTML = T.styles.map(st => {
+    const d = tsDef(st.id), ws = fontWeights(tsFont(st)), smp = d.id === "button" ? TS_SAMPLE.button : TS_SAMPLE[d.role];
+    return `<div class="ts-row" data-id="${st.id}"><div style="min-width:0"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${smp}</div></div>
+      <div class="ts-in"><label>Taille<input type="number" data-k="size" min="8" max="160" step="1" value="${st.size}"></label><label>Graisse<select data-k="weight">${ws.map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join("")}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
+  }).join("");
+  renderTsExport();
+}
+$("tsList").addEventListener("input", e => {
+  const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || !row) return;
+  const st = S.ts.styles.find(s => s.id === row.dataset.id), v = parseFloat(String(e.target.value).replace(",", ".")); if (!st || !isFinite(v)) return;
+  st[k] = k === "size" ? Math.max(1, Math.round(v)) : v; save();
+  $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); renderTsExport();
+});
+const tsRegen = () => { const sz = tsSizes(S.ts.base, +S.ts.ratio); S.ts.styles.forEach(st => { st.size = Math.round(sz[st.id]); }); save(); renderStyles(); };
+$("tsBase").addEventListener("change", e => { const v = parseInt(e.target.value, 10); if (v >= 10 && v <= 32) { S.ts.base = v; tsRegen(); } else e.target.value = S.ts.base; });
+$("tsRatio").addEventListener("change", e => { S.ts.ratio = e.target.value; tsRegen(); });
+$("tsApply").addEventListener("click", () => { tsRegen(); toast("Tailles recalculées"); });
+$("tsReset").addEventListener("click", () => { S.ts = tsDefault(); save(); renderStyles(); toast("Styles réinitialisés"); });
+$("tsFg").addEventListener("change", e => { S.ts.fg = e.target.value; save(); renderStyles(); });
+$("tsBg").addEventListener("change", e => { S.ts.bg = e.target.value; save(); renderStyles(); });
+function tsTokenRef(hex) {
+  for (const s of scales) { if (s.hex === hex) return `{color.${s.slug}.base}`; const i = s.sw.indexOf(hex); if (i >= 0) return `{color.${s.slug}.${STEPS[i]}}`; }
+  return hex === "#FFFFFF" ? "{color.neutral.white}" : hex === "#000000" ? "{color.neutral.black}" : hex;
+}
+const famList = f => f.src === "google" ? [f.family, FALLBACK[(GFmap.get(f.family) || { cat: "s" }).cat]] : [f.family, "sans-serif"];
+const r4 = n => Math.round(n * 10000) / 10000;
+function tsJson() {
+  const o = { color: { neutral: { white: { $type: "color", $value: "#FFFFFF" }, black: { $type: "color", $value: "#000000" } } } };
+  scales.forEach(s => { const g = o.color[s.slug] = { base: { $type: "color", $value: s.hex, $description: `${s.name}, couleur saisie` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contraste ${fmt(floor2(ratio(h, "#FFFFFF")))}:1 sur blanc, ${fmt(floor2(ratio(h, "#000000")))}:1 sur noir` }; }); });
+  o.semantic = { text: { $type: "color", $value: tsTokenRef(S.ts.fg) }, background: { $type: "color", $value: tsTokenRef(S.ts.bg), $description: `Contraste texte et fond ${fmt(floor2(ratio(S.ts.fg, S.ts.bg)))}:1` } };
+  o.font = { family: { heading: { $type: "fontFamily", $value: famList(S.ts.fonts.head) }, body: { $type: "fontFamily", $value: famList(S.ts.fonts.body) } } };
+  o.typography = {};
+  S.ts.styles.forEach(st => { const d = tsDef(st.id), v = tsVerdict(st); o.typography[st.id] = { $type: "typography", $description: `${d.name} (${d.tag}). ${v.ok ? "Conforme" : "Non conforme"} ${S.level} sur le couple texte et fond (${fmt(floor2(v.r))}:1).`, $value: { fontFamily: d.role === "head" ? "{font.family.heading}" : "{font.family.body}", fontSize: { value: st.size, unit: "px" }, fontWeight: st.weight, lineHeight: st.lh, letterSpacing: { value: r4(st.size * st.ls / 100), unit: "px" } }, $extensions: { "app.lisio": { name: d.name, tag: d.tag, letterSpacingPercent: st.ls } } }; });
+  o.$extensions = { "app.lisio": { generator: "Lisio", wcag: S.version, level: S.level, baseSize: S.ts.base, ratio: +S.ts.ratio } };
+  return JSON.stringify(o, null, 2);
+}
+function tsCss() {
+  const fam = f => famList(f).map((x, i) => i === 0 ? `"${x}"` : x).join(", ");
+  let c = `/* Lisio : couleurs, nuances et styles de texte */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n  --color-text: ${S.ts.fg};\n  --color-background: ${S.ts.bg};\n\n`;
+  c += scales.map(s => `  --${s.slug}: ${s.hex};\n` + s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n}\n\nbody {\n  color: var(--color-text);\n  background: var(--color-background);\n}\n";
+  S.ts.styles.forEach(st => { const d = tsDef(st.id), sel = d.id.startsWith("h") && d.id.length === 2 ? `${d.id}, .${d.id}` : d.id === "body" ? "body, p, .body" : d.id === "body-l" ? ".lead, .body-l" : d.id === "small" ? "small, .small" : d.id === "caption" ? "figcaption, .caption" : "button, .button";
+    c += `\n${sel} {\n  font-family: var(--font-${d.role === "head" ? "heading" : "body"});\n  font-size: ${r4(st.size / 16)}rem; /* ${st.size} px */\n  font-weight: ${st.weight};\n  line-height: ${st.lh};\n  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n}\n`; });
+  return c;
+}
+function renderTsExport() { $("tsOut").textContent = $("tsFmt").value === "css" ? tsCss() : tsJson(); }
+$("tsFmt").addEventListener("change", renderTsExport);
+$("tsCopy").addEventListener("click", () => copy($("tsOut").textContent, "Export copié"));
+$("tsDl").addEventListener("click", () => {
+  const css = $("tsFmt").value === "css", name = css ? "lisio-styles.css" : "lisio-tokens.json";
+  try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([$("tsOut").textContent], { type: css ? "text/css" : "application/json" })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast(name + " téléchargé"); }
+  catch (e) { copy($("tsOut").textContent, "Téléchargement bloqué : contenu copié"); }
+});
+
 // ---------- Onglets ----------
-const VIEWS = ["matrice", "tester", "palette", "lisibilite", "sources"];
+const VIEWS = ["matrice", "tester", "styles", "palette", "lisibilite", "sources"];
 function show(v) { if (!VIEWS.includes(v)) v = "matrice"; closePops(); VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v ? 0 : -1; }); }
 document.querySelectorAll("nav.tabs button").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
@@ -1254,7 +1411,7 @@ document.querySelectorAll("nav.tabs button").forEach(b => {
 window.addEventListener("hashchange", () => { show(location.hash.slice(1)); window.scrollTo(0, 0); });
 
 // ---------- Démarrage ----------
-function renderAll() { buildScales(); renderScales(); renderMatrix(); renderRules(); renderExport(); render(); }
+function renderAll() { buildScales(); renderScales(); renderMatrix(); renderRules(); renderExport(); renderStyles(); render(); }
 $("showFail").checked = S.showFail;
 paintSrcTab(); ensureFont(S.font); renderEditor(); renderAll(); renderRead();
 show(location.hash.slice(1));
