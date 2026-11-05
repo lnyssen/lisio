@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Formation Lisio : slides · Lisio</title>
 <meta name="description" content="Lisio, formation en diapositives : contrastes, nuances, rôles, Figma et code.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%2318181B%27/%3E%3Ccircle cx=%2716%27 cy=%279.6%27 r=%274.4%27 fill=%27none%27 stroke=%27white%27 stroke-width=%271.8%27/%3E%3Cpath d=%27M16 5.2a4.4 4.4 0 0 1 0 8.8z%27 fill=%27white%27/%3E%3Crect x=%2713.2%27 y=%2716.2%27 width=%275.6%27 height=%2710.6%27 rx=%272.8%27 fill=%27white%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%230B3C3D%27/%3E%3Ccircle cx=%2716%27 cy=%279.6%27 r=%274.4%27 fill=%27none%27 stroke=%27white%27 stroke-width=%271.8%27/%3E%3Cpath d=%27M16 5.2a4.4 4.4 0 0 1 0 8.8z%27 fill=%27%23FF6A13%27/%3E%3Crect x=%2713.2%27 y=%2716.2%27 width=%275.6%27 height=%2710.6%27 rx=%272.8%27 fill=%27white%27/%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<style>@font-face{font-family:"Switzer";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-400-normal.woff2) format("woff2")}@font-face{font-family:"Switzer";font-style:normal;font-weight:500;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-500-normal.woff2) format("woff2")}@font-face{font-family:"Switzer";font-style:normal;font-weight:600;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-600-normal.woff2) format("woff2")}@font-face{font-family:"Switzer";font-style:normal;font-weight:700;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-700-normal.woff2) format("woff2")}
-:root{--bg:#E8EBF1;--surface:#FFFFFF;--ink:#0F1B3D;--muted:#4C5674;--hair:#D4D9E3;--primary:#0F1B3D;--primary-ink:#FFFFFF;--hover:#DCE1EB;--focus:#0F1B3D;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1126;--surface:#111A33;--ink:#F3F6FC;--muted:#A6B0C8;--hair:#24304E;--primary:#E6ECF8;--primary-ink:#0F1B3D;--hover:#1C2846;--focus:#F3F6FC;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0A1126;--surface:#111A33;--ink:#F3F6FC;--muted:#A6B0C8;--hair:#24304E;--primary:#E6ECF8;--primary-ink:#0F1B3D;--hover:#1C2846;--focus:#F3F6FC;color-scheme:dark}
+<style>
+:root{--bg:#EEF3F2;--surface:#FFFFFF;--ink:#0B2B2C;--muted:#4F6766;--hair:#D3E0DE;--primary:#0B3C3D;--primary-ink:#FFFFFF;--accent:#FF6A13;--hover:#E2ECEA;--focus:#0B3C3D;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#061415;--surface:#0D2324;--ink:#E6F2F0;--muted:#93B3B0;--hair:#1F4546;--primary:#2DD4BF;--primary-ink:#04201E;--accent:#FF7A1A;--hover:#132E2F;--focus:#E6F2F0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#061415;--surface:#0D2324;--ink:#E6F2F0;--muted:#93B3B0;--hair:#1F4546;--primary:#2DD4BF;--primary-ink:#04201E;--accent:#FF7A1A;--hover:#132E2F;--focus:#E6F2F0;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Switzer","Helvetica Neue",system-ui,sans-serif;font-size:17px;line-height:1.6;font-weight:400}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Instrument Sans","Helvetica Neue",system-ui,sans-serif;font-size:17px;line-height:1.6;font-weight:400}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
 .skip{position:absolute;left:16px;top:-60px;background:var(--primary);color:var(--primary-ink);padding:10px 14px;border-radius:10px;font-weight:600;z-index:10}.skip:focus{top:12px}
@@ -35,7 +36,7 @@ a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}a:hover{
 .bar .n{font-variant-numeric:tabular-nums;font-weight:600;min-width:5.5em;text-align:center}
 .bar .sp{flex:1}
 .bar select{font:inherit;font-size:15px;min-height:44px;max-width:100%;border-radius:10px;border:1.5px solid var(--muted);background:var(--surface);color:var(--ink);padding:0 10px}
-.stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0F1B3D;box-shadow:0 1px 2px rgba(15,27,61,.08),0 12px 32px rgba(15,27,61,.14)}
+.stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0B3C3D;box-shadow:0 1px 2px rgba(11,43,44,.08),0 12px 32px rgba(11,43,44,.14)}
 .stage:fullscreen{border-radius:0;background:#000;display:grid;place-items:center}
 .slide{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;box-sizing:border-box}
 .slide[hidden]{display:none!important}
@@ -53,7 +54,7 @@ a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}a:hover{
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
-<header class="top"><a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true" width="32" height="32"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span>lisio</span><span class="sr-only">, retour à l’outil</span></a><nav aria-label="Pages"><a href="/">Ouvrir Lisio</a><a href="/guide">Guide</a><a href="/slides" aria-current="page">Slides</a></nav></header>
+<header class="top"><a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true" width="32" height="32"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--accent)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span>lisio</span><span class="sr-only">, retour à l’outil</span></a><nav aria-label="Pages"><a href="/">Ouvrir Lisio</a><a href="/guide">Guide</a><a href="/slides" aria-current="page">Slides</a></nav></header>
 <main id="main" class="deck">
 <h1>Formation Lisio : les slides</h1>
 <p class="lead">18 diapositives, une heure de formation dont quinze minutes d’exercice. Flèches gauche et droite pour avancer, Notes pour le texte de l’animateur. Le détail de chaque slide est dans le <a href="/guide">guide de formation</a>.</p>

@@ -1,5 +1,5 @@
 """Build both outputs from src/lisio.template.html.
-- index.html (Vercel): full document, Switzer from jsDelivr.
+- index.html (Vercel): full document, Instrument Sans and Geist Mono from Google Fonts.
 - dist/artifact.html (claude.ai): fonts inlined, no document skeleton.
 """
 import pathlib, re

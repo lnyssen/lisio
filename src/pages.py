@@ -5,19 +5,19 @@ import json, pathlib, re, html as H
 
 root = pathlib.Path(__file__).resolve().parent.parent
 src = root / "src/docs"
-CDN = "https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-{w}-normal.woff2"
-FONTS = "".join(f'@font-face{{font-family:"Switzer";font-style:normal;font-weight:{w};font-display:swap;src:url({CDN.format(w=w)}) format("woff2")}}' for w in (400, 500, 600, 700))
+FONTS = ""
+GF = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">'
 ICON = (root / "src/head.html").read_text()
 ICON = re.search(r'<link rel="icon"[^>]*>', ICON).group(0)
-LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true" width="32" height="32"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg>'
+LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true" width="32" height="32"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--accent)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg>'
 
 BASE_CSS = FONTS + """
-:root{--bg:#E8EBF1;--surface:#FFFFFF;--ink:#0F1B3D;--muted:#4C5674;--hair:#D4D9E3;--primary:#0F1B3D;--primary-ink:#FFFFFF;--hover:#DCE1EB;--focus:#0F1B3D;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1126;--surface:#111A33;--ink:#F3F6FC;--muted:#A6B0C8;--hair:#24304E;--primary:#E6ECF8;--primary-ink:#0F1B3D;--hover:#1C2846;--focus:#F3F6FC;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0A1126;--surface:#111A33;--ink:#F3F6FC;--muted:#A6B0C8;--hair:#24304E;--primary:#E6ECF8;--primary-ink:#0F1B3D;--hover:#1C2846;--focus:#F3F6FC;color-scheme:dark}
+:root{--bg:#EEF3F2;--surface:#FFFFFF;--ink:#0B2B2C;--muted:#4F6766;--hair:#D3E0DE;--primary:#0B3C3D;--primary-ink:#FFFFFF;--accent:#FF6A13;--hover:#E2ECEA;--focus:#0B3C3D;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#061415;--surface:#0D2324;--ink:#E6F2F0;--muted:#93B3B0;--hair:#1F4546;--primary:#2DD4BF;--primary-ink:#04201E;--accent:#FF7A1A;--hover:#132E2F;--focus:#E6F2F0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#061415;--surface:#0D2324;--ink:#E6F2F0;--muted:#93B3B0;--hair:#1F4546;--primary:#2DD4BF;--primary-ink:#04201E;--accent:#FF7A1A;--hover:#132E2F;--focus:#E6F2F0;color-scheme:dark}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Switzer","Helvetica Neue",system-ui,sans-serif;font-size:17px;line-height:1.6;font-weight:400}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Instrument Sans","Helvetica Neue",system-ui,sans-serif;font-size:17px;line-height:1.6;font-weight:400}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
 .skip{position:absolute;left:16px;top:-60px;background:var(--primary);color:var(--primary-ink);padding:10px 14px;border-radius:10px;font-weight:600;z-index:10}.skip:focus{top:12px}
@@ -40,6 +40,7 @@ def shell(title, desc, current, body, css="", js=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{H.escape(title)}</title>
 <meta name="description" content="{H.escape(desc)}">
+{GF}
 {ICON}
 <script>try{{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}}catch(e){{}}</script>
 <style>{BASE_CSS}{css}</style>
@@ -106,7 +107,7 @@ SLIDES_CSS = """
 .bar .n{font-variant-numeric:tabular-nums;font-weight:600;min-width:5.5em;text-align:center}
 .bar .sp{flex:1}
 .bar select{font:inherit;font-size:15px;min-height:44px;max-width:100%;border-radius:10px;border:1.5px solid var(--muted);background:var(--surface);color:var(--ink);padding:0 10px}
-.stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0F1B3D;box-shadow:0 1px 2px rgba(15,27,61,.08),0 12px 32px rgba(15,27,61,.14)}
+.stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0B3C3D;box-shadow:0 1px 2px rgba(11,43,44,.08),0 12px 32px rgba(11,43,44,.14)}
 .stage:fullscreen{border-radius:0;background:#000;display:grid;place-items:center}
 .slide{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;box-sizing:border-box}
 .slide[hidden]{display:none!important}
