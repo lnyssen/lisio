@@ -659,6 +659,9 @@ table.ver th,table.ver td{border-bottom:1px solid var(--hair);padding:9px 10px;t
 /* D1 · 2.4.11 : le défilement au clavier laisse la place des barres fixes (haut, et onglets en bas sur mobile). */
 html{scroll-padding-top:96px;scroll-padding-bottom:24px}
 @media (max-width:760px){html{scroll-padding-top:72px;scroll-padding-bottom:calc(var(--navh) + 16px)}}
+/* Page Polices : la barre d'outils flottante (dock) occupe aussi le bas de l'écran (jusqu'à 185 px sur mobile). */
+html:has(#tester:not([hidden])){scroll-padding-bottom:160px}
+@media (max-width:760px){html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--navh) + 130px)}}
 /* D5 · 1.4.11 : le champ de recherche a un bord visible (3:1 sur le fond). */
 .cmdk{border:1px solid var(--field)}
 /* D6 · 1.4.3 : textes indicatifs au contraste du texte secondaire, en clair comme en sombre. */
