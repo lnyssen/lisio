@@ -14,27 +14,31 @@
 
 :root{
   --bg:#E9EAEC; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#000000; --muted:#55565C; --hair:#D6D7DB; --field:#7B7C82;
-  --primary:#000000; --primary-ink:#FFFFFF; --hover:#EEEFF1; --link:#000000;
+  --primary:#1E3A8A; --primary-ink:#FFFFFF; --hover:#EEEFF1; --link:#1E3A8A;
   --aaa-bg:#14532D; --aaa-ink:#FFFFFF; --aa-bd:#DCFCE7; --aa-bg:#DCFCE7; --aa-ink:#166534; --lg-bg:#FEF3C7; --lg-ink:#92400E; --no-bg:#FEE2E2; --no-ink:#991B1B;
   --ok:#166534; --ok-bg:#DCFCE7; --warn:#92400E; --warn-bg:#FEF3C7; --bad:#991B1B; --bad-bg:#FEE2E2;
   --shadow:0 1px 2px rgba(0,0,0,.06), 0 10px 30px rgba(0,0,0,.12);
   --sans:"Switzer", "Helvetica Neue", system-ui, sans-serif;
   --mono:"Switzer", "Helvetica Neue", system-ui, sans-serif; --code:"JetBrains Mono", ui-monospace, Menlo, monospace;
   --r:14px;
+  --gut:clamp(16px,2.6vw,40px);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2355565C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#000000; --surface:#151517; --raised:#1F1F22; --ink:#FFFFFF; --muted:#A8A9B0; --hair:#2B2C30; --field:#75767D;
-  --primary:#FFFFFF; --primary-ink:#000000; --hover:#232327; --link:#FFFFFF;
+  --primary:#A5BEFF; --primary-ink:#0B1A4A; --hover:#232327; --link:#A5BEFF;
   --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
   --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23A8A9B0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#000000; --surface:#151517; --raised:#1F1F22; --ink:#FFFFFF; --muted:#A8A9B0; --hair:#2B2C30; --field:#75767D;
-  --primary:#FFFFFF; --primary-ink:#000000; --hover:#232327; --link:#FFFFFF;
+  --primary:#A5BEFF; --primary-ink:#0B1A4A; --hover:#232327; --link:#A5BEFF;
   --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
   --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23A8A9B0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark }
 /* image et pipette */
 .imgpanel{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--hair);padding-top:14px}
@@ -81,9 +85,9 @@
 .mgrid{display:grid;gap:8px;align-items:stretch}
 @container (max-width:150px){.mcell .ck .pill .w{display:none}.mcell .ck .pill{min-width:26px;justify-content:center}.mcell .rr .r{font-size:16px}.mcell .sample .big{font-size:28px}.mcell .foot{padding:9px 8px 10px}}
 .mlist{display:flex;flex-direction:column;gap:22px}
-.mgroup h3{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:16px}
-.mgroup h3 .disc{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--hair)}
-.mgroup h3 code{font-size:12px;color:var(--muted);font-weight:500}
+.mgroup h2{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:16px}
+.mgroup h2 .disc{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--hair)}
+.mgroup h2 code{font-size:12px;color:var(--muted);font-weight:500}
 .mgroup-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .mlist .mcell .sample .big{font-size:28px}
 .mcorner{font-size:12px;font-weight:600;color:var(--muted);line-height:1.5;align-self:end}
@@ -123,7 +127,7 @@
 section[role=tabpanel]{scroll-margin-top:90px}
 [hidden]{display:none!important}
 body{font-variant-numeric:tabular-nums;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;font-weight:500}
-.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 120px}
+.wrap{max-width:1680px;margin:0 auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px));padding-block:0 120px}
 h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;letter-spacing:-.015em}
 h2{font-size:20px;font-weight:700;letter-spacing:-.02em}
 h3{font-size:16px;font-weight:700}
@@ -136,6 +140,12 @@ a{color:inherit;text-underline-offset:.18em}
 :focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:8px}
 .sys-wrap{position:relative;overflow:hidden;border-radius:12px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--hair);margin-top:12px;max-width:100%}
 .sys-wrap iframe{display:block;border:0;transform-origin:0 0;background:#fff}
+@media (min-width:1280px){
+  #systeme:not([hidden]){display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}
+  #systeme>.mhead{grid-column:1/-1}
+  #systeme .ds-grid{grid-template-columns:minmax(0,1fr)}
+  #systeme>.sys-card{position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto;overscroll-behavior:contain}
+}
 .ts-derived{font-size:14px;line-height:1.5;color:var(--muted);background:var(--bg);border-radius:12px;padding:14px 16px;margin:4px 0 0;max-width:640px;display:flex;flex-direction:column;gap:8px}
 .ts-dv{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.ts-dv>span:not(.arr){display:flex;flex-direction:column}.ts-dv small{font-size:12px;font-weight:600}.ts-dv b{font-size:22px;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}.ts-dv .arr{font-size:22px;color:var(--muted)}.ts-why{font-size:13px}
 .ds-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
@@ -162,7 +172,7 @@ a{color:inherit;text-underline-offset:.18em}
 .prj-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin:16px 0 0;padding:16px 18px;border-radius:14px;background:var(--surface);border:2px solid var(--ink)}.prj-in h2{font-size:18px;margin:0 0 4px}.prj-in p{margin:0;font-size:14px;color:var(--muted);max-width:70ch}.prj-in[hidden]{display:none}
 .ex-name{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;flex:1 1 260px}.ex-name input{font:inherit;font-weight:400;min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--field);background:var(--surface);color:var(--ink)}
 .hist{list-style:none;margin:10px 0 0;padding:0;font-size:14px}.hist li{padding:6px 0;border-top:1px solid var(--hair);overflow-wrap:anywhere}.hist code{font-size:13px}.hist .add b,.hist .add{color:var(--ok)}.hist .del{color:var(--bad)}
-.sys-tools{margin-top:10px;gap:8px}.sys-chk{margin:6px 0 0;font-size:14px;font-weight:600}.sys-chk.ok{color:var(--ok)}.sys-chk.no{color:var(--bad)}
+.sys-tools{margin-top:10px;gap:8px}.sys-vis{flex-direction:row;align-items:center;gap:8px}.sys-vis select{min-height:36px;font-size:14px}.sys-chk{margin:6px 0 0;font-size:14px;font-weight:600}.sys-chk.ok{color:var(--ok)}.sys-chk.no{color:var(--bad)}
 .ds-more{border-top:1px solid var(--hair);padding-top:6px}.ds-more>summary{cursor:pointer;font-weight:700;font-size:15px;min-height:44px;display:flex;align-items:center;gap:6px}.ds-more>summary .muted{font-weight:500;font-size:13px}.ds-more .ds-grp{margin-top:14px}
 .ds-modebar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:10px 0 4px}.ds-modebar .note{margin:0;flex:1 1 240px}
 .ds-grp h4:has(.ds-hue){display:flex;justify-content:space-between;align-items:center;gap:8px}.ds-hue{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--muted)}.ds-hue input{width:36px;height:28px;padding:0;border:1px solid var(--hair);border-radius:6px;background:none;cursor:pointer}
@@ -204,7 +214,7 @@ a{color:inherit;text-underline-offset:.18em}
 
 /* barre du haut */
 :root{--navh:0px}
-.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;height:60px;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--hair);margin:0 calc(-1 * max(16px,env(safe-area-inset-right,0px))) 28px calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px))}
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:15;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;height:60px;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-image:linear-gradient(to top,var(--hair) 1px,color-mix(in srgb,var(--bg) 88%,transparent) 1px) fill 0//0 100vmax;margin:0 calc(-1 * max(var(--gut),env(safe-area-inset-right,0px))) 28px calc(-1 * max(var(--gut),env(safe-area-inset-left,0px)));padding:0 max(var(--gut),env(safe-area-inset-right,0px)) 0 max(var(--gut),env(safe-area-inset-left,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:16;background:var(--bg)}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.03em;flex:none}
 .logo-mark{width:30px;height:30px;flex:none;display:block}
@@ -219,6 +229,10 @@ nav.tabs button svg{width:18px;height:18px;flex:none}
 nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
 @media (hover:hover){nav.tabs button[aria-selected="false"]:hover{color:var(--ink);background:var(--hover)}}
 .appr{display:flex;align-items:center;gap:8px;justify-self:end}
+.undobtn{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);cursor:pointer;padding:0;flex:none}.undobtn svg{width:18px;height:18px}.undobtn:disabled{opacity:.45;cursor:default}
+@media (hover:hover){.undobtn:not(:disabled):hover{background:var(--hover)}}
+@media (max-width:480px){#redoB{display:none}}
+@media (min-width:761px) and (max-width:1000px){#redoB{display:none}}
 .expbtn{font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:7px 14px 7px 11px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 .expbtn svg{width:17px;height:17px}
 @media (max-width:480px){.expbtn span{display:none}.expbtn{padding:7px 9px;min-width:34px;min-height:34px;justify-content:center}}
@@ -236,6 +250,7 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
   :root{--navh:calc(62px + env(safe-area-inset-bottom,0px))}
   .appbar{height:52px;margin-bottom:18px;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none} /* sinon le filtre devient le repère du menu fixé en bas */
   .appbar{grid-template-columns:minmax(0,1fr) auto}
+  .appbar{border-image:none;border-bottom:1px solid var(--hair)}
   nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;height:var(--navh);padding:0 max(6px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(6px,env(safe-area-inset-left,0px));justify-content:space-around;align-items:stretch;gap:0;background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(16px);backdrop-filter:saturate(1.4) blur(16px);border-top:1px solid var(--hair)}
   nav.tabs button{flex:1;flex-direction:column;justify-content:center;gap:3px;font-size:11px;font-weight:600;padding:6px 2px 4px;border-radius:0;min-width:0;background:none!important}
   nav.tabs button svg{width:24px;height:24px}
@@ -250,9 +265,40 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
 /* contrôles génériques */
 input[type=text],input[type=number],input[type=search],select,textarea{font:inherit;font-weight:500;color:var(--ink);background:var(--surface);border:1.5px solid var(--field);border-radius:10px;padding:8px 10px;min-width:0}
 textarea{width:100%;resize:vertical;line-height:1.55;font-size:16px}
+.app-skip{position:fixed;left:12px;top:-60px;z-index:100;background:var(--primary);color:var(--primary-ink);font-weight:700;padding:10px 16px;border-radius:999px;text-decoration:none}.app-skip:focus{top:calc(10px + env(safe-area-inset-top,0px))}
+main:focus{outline:none}
+select{-webkit-appearance:none;appearance:none;background-image:var(--chev);background-repeat:no-repeat;background-position:right 12px center;background-size:14px 14px;padding-right:36px}
+.cp-btn{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:6px 12px 6px 8px;font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:var(--surface);border:1.5px solid var(--field);border-radius:10px;cursor:pointer;text-align:left}
+.cp-tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cp-hx{font-weight:500;color:var(--muted);font-size:.86em}
+.cp-chev{width:16px;height:16px;flex:none;color:var(--muted);transition:transform .15s}
+.cp-btn[aria-expanded="true"] .cp-chev{transform:rotate(180deg)}
+.cp-sw{width:24px;height:24px;border-radius:6px;flex:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 22%,transparent)}
+.cp-sw.sm{width:16px;height:16px;display:inline-block;vertical-align:-3px;margin-right:6px;border-radius:4px}
+.cp-pop{position:fixed;z-index:60;display:flex;flex-direction:column;background:var(--raised);border:1px solid var(--hair);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.cp-pop[hidden]{display:none}
+.cp-pop.cp-sheet{left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));max-height:72vh}
+.cp-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;padding:10px 12px;border-bottom:1px solid var(--hair)}
+.cp-ctx{margin:0;font-size:13px;line-height:1.4;color:var(--muted);flex:1 1 180px}.cp-ctx b{color:var(--ink)}
+.cp-only{font:inherit;font-size:12px;font-weight:700;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 10px;min-height:32px;cursor:pointer}
+.cp-only[aria-pressed="true"]{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.cp-list{list-style:none;margin:0;padding:0 6px 8px;overflow-y:auto;overscroll-behavior:contain;flex:1 1 auto;min-height:0}
+.cp-list:focus{outline:none}.cp-list:focus-visible{box-shadow:inset 0 0 0 2px var(--ink)}
+.cp-list ul{list-style:none;margin:0;padding:0}
+.cp-gh{display:block;position:sticky;top:0;z-index:1;background:var(--raised);font-size:12px;font-weight:700;color:var(--muted);padding:10px 8px 4px}
+.cp-list [role=option]{display:flex;align-items:center;gap:10px;min-height:40px;padding:4px 8px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600}
+.cp-list [role=option][aria-selected="true"]{background:var(--hover)}
+.cp-list [role=option][aria-selected="true"] .cp-tx{font-weight:800}
+.cp-list [role=option].is-act{background:var(--hover);box-shadow:inset 0 0 0 2px var(--ink)}
+.cp-r{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted)}
+.cp-r.ok{color:var(--ok);background:var(--ok-bg)}.cp-r.no{color:var(--bad);background:var(--bad-bg)}
+@media (hover:hover){.cp-list [role=option]:hover{background:var(--hover)}.cp-btn:hover{border-color:var(--ink)}}
+.cp-none{padding:14px 10px;font-size:14px;color:var(--muted)}
+.cp-x{font:inherit;font-size:14px;width:32px;height:32px;border-radius:999px;border:0;background:var(--hover);color:var(--ink);cursor:pointer;flex:none}
+.ts-cs:has(.cp-btn) .dot{display:none}
 input[type=color]{width:44px;height:40px;border:1.5px solid var(--field);border-radius:10px;background:var(--surface);padding:3px;cursor:pointer;flex:none}
 input[type=range]{width:100%;accent-color:var(--primary)}
-input[type=checkbox]{accent-color:var(--primary);width:18px;height:18px}
+input[type=checkbox]{accent-color:var(--primary);width:22px;height:22px;flex:none}
 label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-direction:column;gap:5px}
 .btn{font:inherit;font-size:14px;font-weight:700;border-radius:999px;padding:8px 14px;cursor:pointer;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;gap:8px}
 @media (hover:hover){.btn:hover{background:var(--hover)}}
@@ -507,6 +553,7 @@ a.btn{text-decoration:none}
 @media (max-width:760px){.j-steps li{flex:0 0 auto}.j-steps li:has(a[aria-current]){flex:1 1 auto}.j-steps a{padding-right:4px}.j-steps a:not([aria-current]) .j-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.j-now>p{font-size:13px}.exf-it{grid-template-columns:52px minmax(0,1fr)}.exf-it>.btn,.exf-it>.ds-fixb{grid-column:2}.jn-row .btn{flex:1 1 auto;justify-content:center}}
 </style>
 
+<a class="app-skip" href="#main">Aller au contenu</a>
 <div class="wrap">
   <header class="appbar">
     <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
@@ -519,10 +566,11 @@ a.btn{text-decoration:none}
       <button role="tab" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 10.5h16M4 15h10M4 19.5h6"/><path d="m15.5 18 2 2 3.5-4" stroke-linejoin="round"/></svg><span>Rédaction</span></button>
       <button role="tab" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h10.5L19 8v11.5H5z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke-linecap="round"/></svg><span>Guide</span></button>
     </nav>
-    <div class="appr"><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button>
+    <div class="appr"><button class="undobtn" type="button" id="undoB" disabled aria-label="Annuler la dernière modification" title="Annuler (Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Z Meta+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button class="undobtn" type="button" id="redoB" disabled aria-label="Rétablir la modification annulée" title="Rétablir (Maj + Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button>
   <button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="Norme de référence : WCAG 2.2, niveau AA. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button></div>
   </header>
 
+  <main id="main" tabindex="-1">
   <div class="prj-in" id="prjIn" role="region" aria-label="Projet partagé" hidden></div>
   <nav class="journey" id="journey" aria-label="Parcours en 6 étapes" hidden></nav>
 
@@ -701,9 +749,9 @@ a.btn{text-decoration:none}
         </div>
       </div>
     </div>
-    <div class="card-surface">
+    <div class="card-surface sys-card" role="region" aria-label="Aperçu du design system">
       <div class="row between"><div class="seg" role="group" aria-label="Largeur d’écran de l’aperçu" id="sysView"><button type="button" data-v="w320">320</button><button type="button" data-v="mobile">Mobile<span class="dsk"> 390</span></button><button type="button" data-v="tablet">Tablet<span class="dsk"> 768</span></button><button type="button" data-v="desktop">Desktop<span class="dsk"> 1024</span></button><button type="button" data-v="xl">XL<span class="dsk"> 1440</span></button></div><button class="btn sm" type="button" id="sysCss">Copier le CSS</button></div>
-      <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
+      <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
       <p class="note" id="sysNote"></p><p class="sys-chk" id="sysChk" role="status"></p>
       <div class="sys-wrap" id="sysWrap"><iframe id="sysFrame" title="Aperçu du design system" sandbox="allow-scripts" scrolling="no"></iframe></div>
     </div>
@@ -776,6 +824,11 @@ a.btn{text-decoration:none}
       <div class="row" style="align-items:flex-end"><label class="ex-name">Nom du projet<input type="text" id="prjName" maxlength="60" placeholder="Par exemple : Site public 2027"></label></div>
       <div class="row"><button class="btn primary" type="button" id="prjLink">Copier le lien de partage</button><button class="btn" type="button" id="prjSave">Enregistrer le projet</button><button class="btn" type="button" id="prjOpen">Ouvrir un projet</button><input type="file" id="prjFile" accept=".json,application/json" hidden></div>
       <p class="note" id="prjNote"></p>
+    </div>
+    <div class="card-surface" id="exReport">
+      <h2>Rapport d’accessibilité</h2>
+      <p class="note">Une page à imprimer ou à enregistrer en PDF : vos couleurs, chaque paire, chaque rôle en clair et en sombre, chaque style de texte, avec le ratio, le seuil et le verdict. Pratique pour une revue, un client ou un dossier de conformité. Il dit aussi ce que Lisio ne vérifie pas.</p>
+      <div class="row"><button class="btn primary" type="button" id="repOpen">Ouvrir le rapport</button><button class="btn" type="button" id="repDl">Télécharger le rapport (.html)</button></div>
     </div>
     <div class="card-surface" id="exHist">
       <div class="row between"><h2>Depuis le dernier export</h2><button class="btn sm" type="button" id="histCopy" hidden>Copier le résumé pour l’équipe</button></div>
@@ -875,7 +928,7 @@ a.btn{text-decoration:none}
       <h2 style="font-size:22px">Sources et méthode</h2>
       <h2>WCAG 2.0, 2.1, 2.2 : ce qui change</h2>
       <p class="note">Les seuils de contraste du texte sont identiques dans les trois versions. 2.1 ajoute le contraste des composants et l’espacement du texte ; 2.2 ajoute l’apparence du focus.</p>
-      <div class="tablewrap"><table class="ver">
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Tableau WCAG 2.0, 2.1, 2.2, défilable"><table class="ver">
         <thead><tr><th scope="col">Critère</th><th scope="col">Exigence</th><th scope="col">Niveau</th><th scope="col">Versions</th></tr></thead>
         <tbody>
           <tr><td>1.4.3 Contraste (minimum)</td><td>4,5:1 ; 3:1 pour le grand texte</td><td>AA</td><td>2.0, 2.1, 2.2</td></tr>
@@ -905,6 +958,7 @@ a.btn{text-decoration:none}
     </div>
   </section>
   <div class="jnext" id="jNext" hidden></div>
+  </main>
 </div>
 <div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
 <div class="pop" id="popFont" hidden>
@@ -1061,7 +1115,24 @@ const DEF = { font: { src: "google", family: "Figtree" }, size: 18, weight: 400,
 const S = Object.assign({}, DEF, store.get("state", {}));
 if (S.font.src === "upload" || (S.font.src === "google" && !GFmap.has(S.font.family))) S.font = { ...DEF.font };
 let spacingOn = false, vision = "normal", scales = [], uploadN = 0, colorMode = "fg";
-const save = () => store.set("state", S);
+const save = () => { store.set("state", S); snapPush(); };
+const UNDO = [], REDO = []; let snapPrev = JSON.stringify({ S, palette }), snapT = 0, undoing = false;
+function snapPush() {
+  if (undoing) return; const now = JSON.stringify({ S, palette }); if (now === snapPrev) return;
+  const t = Date.now(); if (t - snapT > 500 || !UNDO.length) { UNDO.push(snapPrev); if (UNDO.length > 80) UNDO.shift(); }
+  snapT = t; snapPrev = now; REDO.length = 0; undoUi();
+}
+function undoUi() { const u = document.getElementById("undoB"), r = document.getElementById("redoB"); if (u) u.disabled = !UNDO.length; if (r) r.disabled = !REDO.length; }
+function undoApply(str) {
+  undoing = true; const o = JSON.parse(str);
+  Object.keys(S).forEach(k => delete S[k]); Object.assign(S, o.S); palette = o.palette; isExample = false;
+  store.set("state", S); store.set("colors", palette); snapPrev = str; snapT = 0;
+  dsMode = S.sysTheme === "dark" ? "dark" : "light";
+  try { renderEditor(); renderAll(); if (!$("systeme").hidden) renderSystem(); else sysDirty = true; if (!$("exporter").hidden) renderExport2(); renderJourney(curView()); } finally { undoing = false; }
+  undoUi();
+}
+function undo() { if (!UNDO.length) { toast("Rien à annuler"); return; } REDO.push(snapPrev); undoApply(UNDO.pop()); toast("Modification annulée"); }
+function redo() { if (!REDO.length) { toast("Rien à rétablir"); return; } UNDO.push(snapPrev); undoApply(REDO.pop()); toast("Modification rétablie"); }
 const fontCss = font => font.src === "google" ? `"${font.family}", ${FALLBACK[(GFmap.get(font.family) || { cat: "s" }).cat]}` : `"${font.family}", system-ui, sans-serif`;
 const fontWeights = font => font.src === "google" ? (GFmap.get(font.family) || { weights: [400, 700] }).weights : [100, 200, 300, 400, 500, 600, 700, 800, 900];
 const fontLabel = font => ({ google: "Google Fonts", adobe: "Adobe Fonts", upload: "fichier importé", local: "installée" })[font.src] || "";
@@ -1309,7 +1380,7 @@ function renderEditor() {
   });
 }
 let raf = 0;
-function changed() { isExample = false; store.set("colors", palette); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); }
+function changed() { isExample = false; store.set("colors", palette); snapPush(); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); }
 function renderScales() {
   let h = `<div></div>` + STEPS.map(s => `<div class="scale-head">${s}</div>`).join("");
   scales.forEach(sc => {
@@ -1346,7 +1417,7 @@ function renderExport() {
 }
 $("vision").addEventListener("change", e => { vision = e.target.value; renderScales(); });
 $("addColor").addEventListener("click", () => { if (palette.length >= 12) { toast("12 couleurs maximum"); return; } const h = "#7A4FD0"; palette.push({ name: nameFor(h), hex: h }); changed(); renderEditor(); const ins = document.querySelectorAll("#editor input[type=color]"); if (ins.length) ins[ins.length - 1].focus(); });
-$("resetPalette").addEventListener("click", () => { palette = EXAMPLE.map(c => ({ ...c })); store.set("colors", null); isExample = true; sel = null; renderEditor(); renderAll(); });
+$("resetPalette").addEventListener("click", () => { palette = EXAMPLE.map(c => ({ ...c })); store.set("colors", null); snapPush(); isExample = true; sel = null; renderEditor(); renderAll(); });
 $("exportFmt").addEventListener("change", renderExport);
 $("copyExport").addEventListener("click", () => copy($("exportOut").textContent, "Export copié"));
 
@@ -1375,8 +1446,8 @@ function renderMx() {
   const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓<span class=\"w\"> Passe</span>" : "✕<span class=\"w\"> Échec</span>"}</span>`;
   const cell = (i, j, label) => {
     const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r), on = sel && sel[0] === i && sel[1] === j;
-    return `<button type="button" class="mcell" data-i="${i}" data-j="${j}" aria-pressed="${on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
-        <span class="sample" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span><span class="sm">${label}</span></span>
+    return `<button type="button" class="mcell" data-i="${i}" data-j="${j}" aria-pressed="${!!on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
+        <span class="sample" aria-hidden="true" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span><span class="sm">${label}</span></span>
         <span class="foot" aria-hidden="true"><span class="rr"><span class="r">${f2(r)}<small>:1</small></span><span class="bd ${cls}">${lab}</span></span>
           <span class="ck">Normal${pass(r >= tN)}</span><span class="ck">Grand${pass(r >= tL)}</span>${v21 ? `<span class="ck">Interface${pass(r >= 3)}</span>` : ""}</span></button>`;
   };
@@ -1385,7 +1456,7 @@ function renderMx() {
     g.className = "mlist"; g.style.gridTemplateColumns = ""; g.style.minWidth = "";
     C.forEach((b, j) => {
       const cells = C.map((t, i) => i === j || (S.mView === "ok" && ratio(t.hex, b.hex) < 4.5) ? "" : cell(i, j, "Texte " + esc(t.name))).join("");
-      h += `<section class="mgroup"><h3><span class="disc" style="background:${b.hex}"></span>Sur fond ${esc(b.name)} <code>${b.hex}</code></h3>${cells ? `<div class="mgroup-grid">${cells}</div>` : `<p class="note">Aucun texte de votre palette n’est lisible sur ce fond.</p>`}</section>`;
+      h += `<section class="mgroup"><h2><span class="disc" style="background:${b.hex}"></span>Sur fond ${esc(b.name)} <code>${b.hex}</code></h2>${cells ? `<div class="mgroup-grid">${cells}</div>` : `<p class="note">Aucun texte de votre palette n’est lisible sur ce fond.</p>`}</section>`;
     });
   } else {
   g.className = "mgrid";
@@ -1659,6 +1730,104 @@ function tsClamp(st) {
   const slope = (st.max - st.min) / (VMAX - VMIN), icpt = st.min - slope * VMIN, lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max);
   return `clamp(${r4(lo / 16)}rem, ${r3(icpt / 16)}rem + ${r3(slope * 100)}vw, ${r4(hi / 16)}rem)`;
 }
+// ---------- Sélecteur de couleur avec aperçu (remplace le <select> natif, qui reste la source de vérité) ----------
+const CP_CHEV = `<svg class="cp-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const cpHex = o => (o.dataset.hex || o.value || "").toUpperCase();
+const cpName = o => o.textContent.replace(/\s*#[0-9A-F]{6}\s*$/i, "").trim();
+let cpSel = null, cpOnlyOk = false;
+function cpEnhance(sel, key) {
+  if (!sel) return;
+  let b = sel._cp;
+  if (!b || !b.isConnected) {
+    b = document.createElement("button"); b.type = "button"; b.className = "cp-btn"; b.dataset.cpfor = key || sel.id || sel.dataset.role;
+    b.setAttribute("aria-haspopup", "listbox"); b.setAttribute("aria-expanded", "false");
+    sel.after(b); sel.hidden = true; sel._cp = b; b._sel = sel;
+    b.addEventListener("click", () => cpSel === sel ? cpClose(true) : cpOpen(sel));
+    b.addEventListener("keydown", e => { if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); cpOpen(sel); } });
+  }
+  const o = sel.selectedOptions[0] || sel.options[0]; if (!o) return;
+  const h = cpHex(o), pair = sel.dataset.pair, need = +sel.dataset.need || 0, r = pair && h ? ratio(h, pair) : 0;
+  const lab = sel.getAttribute("aria-label") || (sel.labels && sel.labels[0] ? sel.labels[0].textContent : "Couleur");
+  b.innerHTML = `<span class="cp-sw" style="background:${h}"></span><span class="cp-tx">${esc(cpName(o))}<span class="cp-hx"> ${h}</span></span>${CP_CHEV}`;
+  b.setAttribute("aria-label", `${lab} : ${cpName(o)} ${h}${pair && need ? `, ${fmt(floor2(r))} pour 1, ${r >= need ? "passe" : "ne passe pas"}` : ""}. Ouvrir la liste des couleurs`);
+}
+function cpPop() {
+  let p = $("cpPop"); if (p) return p;
+  p = document.createElement("div"); p.id = "cpPop"; p.className = "cp-pop"; p.hidden = true;
+  p.innerHTML = `<div class="cp-head"><p class="cp-ctx" id="cpCtx"></p><button type="button" class="cp-only" id="cpOnly" aria-pressed="false">Seulement celles qui passent</button><button type="button" class="cp-x" id="cpX" aria-label="Fermer la liste">✕</button></div><ul class="cp-list" id="cpList" role="listbox" tabindex="0"></ul>`;
+  document.body.appendChild(p);
+  const L = $("cpList");
+  L.addEventListener("click", e => { const li = e.target.closest("[role=option]"); if (li) cpPick(li); });
+  L.addEventListener("keydown", cpKey);
+  $("cpX").addEventListener("click", () => cpClose(true));
+  $("cpOnly").addEventListener("click", () => { cpOnlyOk = !cpOnlyOk; cpFill(); L.focus(); });
+  p.addEventListener("keydown", e => { if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); cpClose(true); } else if (e.key === "Tab") cpClose(false); });
+  document.addEventListener("pointerdown", e => { if (cpSel && !p.contains(e.target) && !e.target.closest(".cp-btn")) cpClose(false); });
+  addEventListener("resize", () => { if (cpSel) cpPlace(); });
+  document.addEventListener("scroll", e => { if (cpSel && !p.contains(e.target)) cpPlace(); }, true);
+  return p;
+}
+function cpFill() {
+  const sel = cpSel, L = $("cpList"), pair = sel.dataset.pair, need = +sel.dataset.need || 0, cur = sel.value;
+  let i = 0, html = "", shown = 0;
+  const opt = o => {
+    const h = cpHex(o), r = pair && h ? ratio(h, pair) : 0, ok = !need || r >= need;
+    if (cpOnlyOk && need && !ok && o.value !== cur) return "";
+    shown++;
+    const badge = pair && need ? `<span class="cp-r ${ok ? "ok" : "no"}">${fmt(floor2(r), r < 10 ? 2 : 1)}:1 ${ok ? "✓" : "✕"}</span>` : pair ? `<span class="cp-r">${fmt(floor2(r), 1)}:1</span>` : "";
+    return `<li role="option" id="cpo${i++}" data-v="${esc(o.value)}" aria-selected="${o.value === cur}"><span class="cp-sw" style="background:${h}"></span><span class="cp-tx">${esc(cpName(o))}<span class="cp-hx"> ${h}</span></span>${badge}</li>`;
+  };
+  [...sel.children].forEach((c, gi) => {
+    if (c.tagName === "OPTGROUP") { const items = [...c.children].map(opt).join(""); if (items) html += `<li role="presentation"><span class="cp-gh" id="cpg${gi}">${esc(c.label)}</span><ul role="group" aria-labelledby="cpg${gi}">${items}</ul></li>`; }
+    else html += opt(c);
+  });
+  L.innerHTML = html || `<li class="cp-none" role="presentation">Aucune nuance ne passe sur ce partenaire. Changez plutôt le partenaire.</li>`;
+  const lab = sel.getAttribute("aria-label") || (sel.labels && sel.labels[0] ? sel.labels[0].textContent : "Couleur");
+  L.setAttribute("aria-label", lab);
+  $("cpCtx").innerHTML = pair && need ? `<span class="cp-sw sm" style="background:${pair}"></span>Vérifié avec ${esc(sel.dataset.pairname || pair)} : il faut <b>${fmt(need, need % 1 ? 1 : 0)}:1</b>.` : pair ? `Décoratif : aucun seuil, ratio donné pour info.` : "";
+  $("cpOnly").hidden = !(pair && need); $("cpOnly").setAttribute("aria-pressed", String(cpOnlyOk));
+  const s = L.querySelector('[aria-selected="true"]') || L.querySelector("[role=option]");
+  cpActive(s);
+}
+function cpActive(li) {
+  const L = $("cpList"); L.querySelectorAll(".is-act").forEach(x => x.classList.remove("is-act"));
+  if (!li) { L.removeAttribute("aria-activedescendant"); return; }
+  li.classList.add("is-act"); L.setAttribute("aria-activedescendant", li.id);
+  const r = li.getBoundingClientRect(), lr = L.getBoundingClientRect();
+  if (r.top < lr.top + 28 || r.bottom > lr.bottom) li.scrollIntoView({ block: "nearest" });
+}
+function cpKey(e) {
+  const L = $("cpList"), all = [...L.querySelectorAll("[role=option]")], cur = L.querySelector(".is-act"), i = all.indexOf(cur);
+  const go = j => { e.preventDefault(); cpActive(all[Math.max(0, Math.min(all.length - 1, j))]); };
+  if (e.key === "ArrowDown") go(i + 1); else if (e.key === "ArrowUp") go(i - 1);
+  else if (e.key === "Home") go(0); else if (e.key === "End") go(all.length - 1);
+  else if (e.key === "PageDown") go(i + 8); else if (e.key === "PageUp") go(i - 8);
+  else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (cur) cpPick(cur); }
+  else if (e.key.length === 1 && /\S/.test(e.key)) { const q = e.key.toLowerCase(), n = all.slice(i + 1).concat(all.slice(0, i + 1)).find(li => li.textContent.trim().toLowerCase().startsWith(q)); if (n) go(all.indexOf(n)); }
+}
+function cpPlace() {
+  const p = $("cpPop"), b = cpSel && cpSel._cp; if (!b) return;
+  if (innerWidth < 560) { p.classList.add("cp-sheet"); p.style.cssText = ""; return; }
+  p.classList.remove("cp-sheet");
+  const r = b.getBoundingClientRect(), w = Math.max(r.width, 340), below = innerHeight - r.bottom - 12, above = r.top - 12, up = below < 300 && above > below;
+  const h = Math.min(440, up ? above : below);
+  p.style.cssText = `left:${Math.max(8, Math.min(r.left, innerWidth - w - 8))}px;width:${w}px;${up ? `bottom:${innerHeight - r.top + 6}px` : `top:${r.bottom + 6}px`};max-height:${Math.max(220, h)}px`;
+}
+function cpOpen(sel) {
+  if (cpSel) cpClose(false);
+  const p = cpPop(); cpSel = sel; sel._cp.setAttribute("aria-expanded", "true"); sel._cp.setAttribute("aria-controls", "cpList");
+  p.hidden = false; cpFill(); cpPlace(); $("cpList").focus();
+}
+function cpClose(focus) {
+  const sel = cpSel; if (!sel) return; cpSel = null; $("cpPop").hidden = true;
+  if (sel._cp && sel._cp.isConnected) { sel._cp.setAttribute("aria-expanded", "false"); if (focus) sel._cp.focus(); }
+}
+function cpPick(li) {
+  const sel = cpSel, v = li.dataset.v; cpClose(false);
+  const key = sel._cp.dataset.cpfor;
+  if (sel.value !== v) { sel.value = v; sel.dispatchEvent(new Event("change", { bubbles: true })); }
+  const b = document.querySelector(`.cp-btn[data-cpfor="${key}"]`); if (b) b.focus();
+}
 function tsColorOptions(cur) {
   let h = `<optgroup label="Neutres"><option value="#FFFFFF">Blanc #FFFFFF</option><option value="#000000">Noir #000000</option></optgroup>`, found = ["#FFFFFF", "#000000"].includes(cur);
   scales.forEach(s => { h += `<optgroup label="${esc(s.name)}"><option value="${s.hex}">${esc(s.name)} ${s.hex}</option>` + s.sw.map((x, i) => `<option value="${x}">${esc(s.name)} ${STEPS[i]} ${x}</option>`).join("") + `</optgroup>`; if (s.hex === cur || s.sw.includes(cur)) found = true; });
@@ -1700,6 +1869,9 @@ function renderStyles() {
   $("tsDerived").innerHTML = tsDerivedHtml(); $("tsBaseD").value = T.d.base; $("tsRatioD").value = T.d.ratio;
   $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
   $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
+  const tsNeed = S.level === "AAA" ? 7 : 4.5;
+  Object.assign($("tsFg").dataset, { pair: T.bg, pairname: "le fond (" + hexName(T.bg) + ")", need: tsNeed }); Object.assign($("tsBg").dataset, { pair: T.fg, pairname: "le texte (" + hexName(T.fg) + ")", need: tsNeed });
+  cpEnhance($("tsFg")); cpEnhance($("tsBg"));
   $("tsFgDot").style.background = T.fg; $("tsBgDot").style.background = T.bg;
   { const r = ratio(T.fg, T.bg), need = S.level === "AAA" ? 7 : 4.5, ok = r >= need, big = r >= (S.level === "AAA" ? 4.5 : 3); const el = $("tsCr"); el.className = "ts-cr " + (ok ? "ok" : big ? "lg" : "no"); el.innerHTML = `<span class="pair" style="--a:${T.fg};--b:${T.bg}" aria-hidden="true"></span><span class="ratio">${fmt(floor2(r))}:1</span><small>${ok ? "✓ " + S.level : big ? "◐ Titres seulement" : "✕ Échec"}</small>`;
     const F = $("tsCrFix"), fv = ok ? null : roleFix("text/default", dsRoles("light"), "light"); F.hidden = !fv;
@@ -2119,14 +2291,18 @@ let sysH = 1200;
 function sysScale() {
   const bp = sysBp(), wrap = $("sysWrap"), f = $("sysFrame"), W = wrap.clientWidth || bp.w, s = Math.min(1, W / bp.w);
   f.style.width = bp.w + "px"; f.style.height = sysH + "px"; f.style.transform = s < 1 ? `scale(${s})` : "none"; f.style.margin = s < 1 ? "0" : "0 auto"; wrap.style.height = Math.ceil(sysH * s) + "px";
-  $("sysNote").textContent = s < 1 ? `Rendu à ${bp.w} px de large, affiché à ${Math.round(s * 100)} % pour tenir dans la fenêtre.` : `Rendu à ${bp.w} px de large, taille réelle.`;
+  $("sysNote").textContent = (s < 1 ? `Rendu à ${bp.w} px de large, affiché à ${Math.round(s * 100)} % pour tenir dans la fenêtre.` : `Rendu à ${bp.w} px de large, taille réelle.`) + ({ protan: " Simulation de protanopie : le rouge est mal perçu.", deutan: " Simulation de deutéranopie : le vert est mal perçu.", tritan: " Simulation de tritanopie : le bleu et le jaune sont mal perçus.", achro: " Simulation sans couleur : seul le contraste reste.", blur: " Simulation de vision floue : les petits textes et les filets fins disparaissent en premier." }[S.sysVision] || "");
+}
+function sysDoc() {
+  const v = S.sysVision || "normal", f = $("sysFrame"); f.style.filter = v === "blur" ? "blur(1.6px)" : "";
+  const h = sysPage(); return v === "normal" || v === "blur" ? h : h.replace(/#[0-9a-fA-F]{6}\b/g, x => simulate(x.toUpperCase(), v));
 }
 function renderSystem() {
   sysDirty = false; renderDsPanel();
   $("sysView").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === sysBp().id));
   $("sysTheme").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === (S.sysTheme === "dark" ? "dark" : "light"))));
-  $("sysSpacing").setAttribute("aria-pressed", String(!!S.sysSpacing)); $("sysChk").textContent = "";
-  $("sysFrame").srcdoc = sysPage(); sysScale();
+  $("sysSpacing").setAttribute("aria-pressed", String(!!S.sysSpacing)); $("sysVision").value = S.sysVision || "normal"; $("sysChk").textContent = "";
+  $("sysFrame").srcdoc = sysDoc(); sysScale();
 }
 addEventListener("message", e => { if (e.source === $("sysFrame").contentWindow && e.data && typeof e.data.lisioSysH === "number") { sysH = Math.max(200, Math.ceil(e.data.lisioSysH)); sysScale(); sysReport(e.data.lisioChk); } });
 function sysReport(c) {
@@ -2135,6 +2311,7 @@ function sysReport(c) {
   el.textContent = c.n ? `✕ ${c.n} élément${c.n > 1 ? "s" : ""} débordent ou sont coupés ${what} : ${c.list.join(", ")}.` : `✓ Rien ne déborde ni n’est coupé ${what}.`;
 }
 $("sysTheme").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.sysTheme = dsMode = b.dataset.v; save(); renderSystem(); });
+$("sysVision").addEventListener("change", e => { S.sysVision = e.target.value; save(); renderSystem(); });
 $("sysSpacing").addEventListener("click", () => { S.sysSpacing = !S.sysSpacing; save(); renderSystem(); });
 addEventListener("resize", () => { if (!$("systeme").hidden) sysScale(); });
 $("sysView").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; if (b.dataset.v === "w320") { S.sys320 = true; save(); renderSystem(); return; } S.sys320 = false; S.ts.view = b.dataset.v; S.ts.vw = (BP.find(x => x.id === b.dataset.v) || BP[3]).w; tsVwTouched = true; save(); renderSystem(); });
@@ -2164,6 +2341,13 @@ function roleFix(k, R, m) {
   const pick = list => near(list, goal) || near(list, req);
   return pick([...(sc ? sc.sw : []), "#FFFFFF", "#000000"]) || pick(allScales().flatMap(s => s.sw)) || null;
 }
+function partnerFix(k, R, m) {
+  R = R || dsRoles(m); const pair = ROLE_FR[k][1]; if (!pair || !roleNeed(k)) return null;
+  const h = R[k], p = R[pair], req = roleNeed(k), L = lum(p);
+  const sc = allScales().find(s => s.hex.toUpperCase() === p.toUpperCase() || s.sw.some(x => x.toUpperCase() === p.toUpperCase()));
+  const near = list => list.filter(x => ratio(x, h) >= req).sort((a, b) => Math.abs(lum(a) - L) - Math.abs(lum(b) - L))[0];
+  return near([...(sc ? sc.sw : []), "#FFFFFF", "#000000"]) || near(allScales().flatMap(s => s.sw)) || null;
+}
 function roleApply(k, v, m) {
   m = m || dsMode;
   if (m === "dark") { const d = S.ds.dark = S.ds.dark || {}; if (k === "text/default") { if (v) d.fg = v; else delete d.fg; } else if (k === "background/default") { if (v) d.bg = v; else delete d.bg; } else { d.roles = d.roles || {}; if (v) d.roles[k] = v; else delete d.roles[k]; } return; }
@@ -2180,7 +2364,7 @@ function dsRoleOptions(k, cur, auto, m) {
   let opts = tsColorOptions(cur);
   const st = ST_KEYS.find(x => k.startsWith(x + "/"));
   if (st) opts = `<optgroup label="${ST_DEF[st][0]}">` + stScales[st].sw.map((x, i) => `<option value="${x}">${ST_DEF[st][0]} ${STEPS[i]} ${x}</option>`).join("") + `</optgroup>` + opts;
-  return isFixedRole(k) && (m || dsMode) === "light" ? opts : `<option value="">Auto : ${esc(hexName(auto))}</option>` + opts;
+  return isFixedRole(k) && (m || dsMode) === "light" ? opts : `<option value="" data-hex="${auto}">Auto : ${esc(hexName(auto))}</option>` + opts;
 }
 function roleSample(k, R) {
   const h = R[k], bg = R["background/default"], tx = R["text/default"], pair = ROLE_FR[k][1];
@@ -2202,7 +2386,7 @@ function roleSay(k, R) {
 }
 let dsMoreOpen = false;
 function renderDsPanel() {
-  const ae = document.activeElement, keep = ae && ae.closest && ae.closest(".ds-panel") ? (ae.dataset.role ? `[data-role="${ae.dataset.role}"]` : ae.dataset.fix ? `[data-role="${ae.dataset.fix}"]` : ae.dataset.st ? `[data-st="${ae.dataset.st}"]` : ae.dataset.bp ? `[data-bp="${ae.dataset.bp}"][data-k="${ae.dataset.k}"]` : null) : null;
+  const ae = document.activeElement, keep = ae && ae.closest && ae.closest(".ds-panel") ? (ae.dataset.cpfor ? `.cp-btn[data-cpfor="${ae.dataset.cpfor}"]` : ae.dataset.role ? `[data-role="${ae.dataset.role}"]` : ae.dataset.fix ? `[data-role="${ae.dataset.fix}"]` : ae.dataset.st ? `[data-st="${ae.dataset.st}"]` : ae.dataset.bp ? `[data-bp="${ae.dataset.bp}"][data-k="${ae.dataset.k}"]` : null) : null;
   const m = dsMode, A = dsAuto(m), R = dsRoles(m), B = modeBase(m);
   $("dsModeSeg").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === m)));
   $("dsModeNote").textContent = m === "dark" ? "Mode sombre : Lisio le calcule à partir du clair (fond 950, texte 50 de vos gammes) et revérifie chaque paire. Tout se règle ici, sans toucher au clair." : "Mode clair : le texte principal et le fond de page sont ceux des Styles de texte.";
@@ -2210,18 +2394,18 @@ function renderDsPanel() {
     const [fr, pair, kind] = ROLE_FR[k], own = isFixedRole(k) ? (m === "dark" ? (k === "text/default" ? (S.ds.dark || {}).fg : (S.ds.dark || {}).bg) : null) : B.roles[k], h = R[k];
     const bad = !!pair && roleNeed(k) > 0 && ratio(h, R[pair]) < roleNeed(k), fix = bad ? roleFix(k, R, m) : null;
     const lvl = kind === "deco" || kind === "off" ? "" : bad ? "" : `<span class="ds-lvl">✓ ${kind === "ui" ? "3:1" : ratio(h, R[pair]) >= 7 ? "AAA" : "AA"}</span>`;
-    const act = bad ? (fix ? `<button type="button" class="ds-fixb" data-fix="${k}" data-v="${fix}"><span class="sw" style="background:${fix}"></span>Utiliser ${esc(hexName(fix))}</button>` : `<span class="ds-lvl no">Aucune nuance ne passe</span>`) : lvl;
-    return `<div class="ds-role${bad ? " is-bad" : ""}">${roleSample(k, R)}<div class="ds-rtx"><b>${fr}${own ? ` <span class="ds-own">choisi</span>` : ""}</b>${roleSay(k, R)}</div><div class="ds-rct"><select data-role="${k}" aria-label="${fr}, couleur, mode ${MODE_FR[m]}">${dsRoleOptions(k, own || h, A[k], m)}</select>${act}</div></div>`;
+    const act = bad ? (fix ? `<button type="button" class="ds-fixb" data-fix="${k}" data-v="${fix}"><span class="sw" style="background:${fix}"></span>Utiliser ${esc(hexName(fix))}</button>` : (pf => pf ? `<span class="ds-lvl no">Aucune nuance ne passe sur « ${esc(ROLE_FR[pair][0])} »</span><button type="button" class="ds-fixb" data-fix="${pair}" data-v="${pf}"><span class="sw" style="background:${pf}"></span>Corriger plutôt « ${esc(ROLE_FR[pair][0])} » : ${esc(hexName(pf))}</button>` : `<span class="ds-lvl no">Aucune nuance ne passe. Changez « ${esc(ROLE_FR[pair][0])} ».</span>`)(partnerFix(k, R, m))) : lvl;
+    return `<div class="ds-role${bad ? " is-bad" : ""}">${roleSample(k, R)}<div class="ds-rtx"><b>${fr}${own ? ` <span class="ds-own">choisi</span>` : ""}</b>${roleSay(k, R)}</div><div class="ds-rct"><select data-role="${k}" aria-label="${fr}, mode ${MODE_FR[m]}"${pair ? ` data-pair="${R[pair]}" data-pairname="${esc(ROLE_FR[pair][0].toLowerCase() + " (" + hexName(R[pair]) + ")")}" data-need="${roleNeed(k)}"` : ""}>${dsRoleOptions(k, own || h, A[k], m)}</select>${act}</div></div>`;
   }).join("") + `</div>`;
   const moreBad = ROLE_GRP.slice(5).some(([, ks]) => ks.some(k => roleIssues(R).includes(k)));
   $("dsRoles").innerHTML = ROLE_GRP.slice(0, 5).map(grpHtml).join("") + `<details class="ds-more" id="dsMore"${dsMoreOpen || moreBad ? " open" : ""}><summary>États et désactivé <span class="muted">: erreur, succès, alerte, info, composants inactifs${moreBad ? ", à corriger" : ", tout passe"}</span></summary>${ROLE_GRP.slice(5).map(grpHtml).join("")}</details>`;
   $("dsMore").addEventListener("toggle", e => { dsMoreOpen = e.target.open; });
-  $("dsRoles").querySelectorAll("select").forEach(sel => { const k = sel.dataset.role; sel.value = isFixedRole(k) ? (m === "light" ? (k === "text/default" ? S.ts.fg : S.ts.bg) : ((k === "text/default" ? (S.ds.dark || {}).fg : (S.ds.dark || {}).bg) || "")) : (B.roles[k] || ""); });
+  $("dsRoles").querySelectorAll("select").forEach(sel => { const k = sel.dataset.role; sel.value = isFixedRole(k) ? (m === "light" ? (k === "text/default" ? S.ts.fg : S.ts.bg) : ((k === "text/default" ? (S.ds.dark || {}).fg : (S.ds.dark || {}).bg) || "")) : (B.roles[k] || ""); cpEnhance(sel, k); });
   const ch = chartPalette(m), md = chartMinDist(m);
   $("dsChart").innerHTML = `<div class="ds-chsw">${ch.map((h, i) => `<span style="background:${h}" title="chart/${i + 1} ${h}"><b>${i + 1}</b></span>`).join("")}</div><p class="note">${ch.length} séries, toutes à 3:1 au moins sur le fond ${MODE_FR[m]} (1.4.11), choisies dans vos gammes pour rester distinctes en vision typique et pour les trois daltonismes (écart minimal ${fmt(md * 100, 1)}, ${md >= 0.1 ? "confortable" : md >= 0.06 ? "correct" : "serré : nommez les séries directement sur le graphique"}). Dans Figma : <b>chart/1</b> à <b>chart/${ch.length}</b>.</p>`;
   [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
   const L = dsLay(), rows = [["margin", "Marge"], ["gutter", "Gouttière"], ["columns", "Colonnes"], ["section", "Entre sections"]];
-  $("dsGrid").innerHTML = `<thead><tr><th scope="col"></th>${BP.map(b => `<th scope="col">${b.label === "Desktop XL" ? "XL" : b.label}</th>`).join("")}</tr></thead><tbody>` + rows.map(([k, l]) => `<tr><th scope="row">${l}${k === "columns" ? "" : ' <span class="muted">px</span>'}</th>${BP.map(b => `<td><input type="number" inputmode="numeric" data-bp="${b.id}" data-k="${k}" min="${k === "columns" ? 1 : 0}" max="${k === "columns" ? 16 : 240}" value="${L[b.id][k]}" aria-label="${l}, ${b.label}"></td>`).join("")}</tr>`).join("") + "</tbody>";
+  $("dsGrid").innerHTML = `<thead><tr><td></td>${BP.map(b => `<th scope="col">${b.label === "Desktop XL" ? "XL" : b.label}</th>`).join("")}</tr></thead><tbody>` + rows.map(([k, l]) => `<tr><th scope="row">${l}${k === "columns" ? "" : ' <span class="muted">px</span>'}</th>${BP.map(b => `<td><input type="number" inputmode="numeric" data-bp="${b.id}" data-k="${k}" min="${k === "columns" ? 1 : 0}" max="${k === "columns" ? 16 : 240}" value="${L[b.id][k]}" aria-label="${l}, ${b.label}"></td>`).join("")}</tr>`).join("") + "</tbody>";
   const iss = roleIssues(R), fails = iss.length, all = allIssues(), other = all.filter(x => x.m !== m).length;
   $("dsFixAll").hidden = !fails;
   $("dsFixAll").innerHTML = fails ? `<p><b>${fails} rôle${fails > 1 ? "s" : ""} à corriger en mode ${MODE_FR[m]}.</b> ${iss.map(k => ROLE_FR[k][0]).join(", ")}.</p><button type="button" class="btn" data-fixall>Tout corriger</button>` : "";
@@ -2242,7 +2426,7 @@ $("dsModeSeg").addEventListener("click", e => { const b = e.target.closest("butt
 $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset.bp) return; const k = i.dataset.k, v = Math.round(+i.value), lo = k === "columns" ? 1 : 0, hi = k === "columns" ? 16 : 240;
   if (!isFinite(v) || v < lo || v > hi) { i.value = dsLay()[i.dataset.bp][k]; return; }
   S.ds.layout = S.ds.layout || {}; S.ds.layout[i.dataset.bp] = { ...(S.ds.layout[i.dataset.bp] || {}), [k]: v }; save(); renderTsExport();
-  if (!$("systeme").hidden) { $("sysFrame").srcdoc = sysPage(); sysScale(); $("dsState").textContent = "Système personnalisé."; $("dsReset").disabled = false; } else sysDirty = true; });
+  if (!$("systeme").hidden) { $("sysFrame").srcdoc = sysDoc(); sysScale(); $("dsState").textContent = "Système personnalisé."; $("dsReset").disabled = false; } else sysDirty = true; });
 $("dsReset").addEventListener("click", () => { S.ds = JSON.parse(JSON.stringify(DS_BASE)); buildStatus(); dsChanged(); toast("Système de base rétabli"); });
 
 // ---------- Page Exporter ----------
@@ -2339,8 +2523,60 @@ document.querySelectorAll("nav.tabs button").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
   b.addEventListener("keydown", e => { if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
 });
+document.querySelector(".app-skip").addEventListener("click", e => { e.preventDefault(); const v = curView(), h = v && $(v).querySelector("h1"); $("main").focus(); if (h) h.scrollIntoView(); });
+$("undoB").addEventListener("click", undo); $("redoB").addEventListener("click", redo); snapPrev = JSON.stringify({ S, palette }); UNDO.length = 0; undoUi();
+document.addEventListener("keydown", e => {
+  if (!(e.metaKey || e.ctrlKey) || e.altKey) return; const k = e.key.toLowerCase(); if (k !== "z" && k !== "y") return;
+  if (e.target.closest && e.target.closest('input[type=text],input[type=number],input[type=search],input:not([type]),textarea,[contenteditable="true"]')) return;
+  e.preventDefault(); if (k === "y" || e.shiftKey) redo(); else undo();
+});
 window.addEventListener("hashchange", () => { show(location.hash.slice(1)); window.scrollTo(0, 0); });
 
+
+// ---------- Rapport d’accessibilité ----------
+function reportHtml() {
+  const lvl = S.level, need = lvl === "AAA" ? 7 : 4.5, needL = lvl === "AAA" ? 4.5 : 3, date = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  const name = S.projectName || "Design system", C = palette, sw = h => `<span class="sw" style="background:${h}"></span>`;
+  const verdict = (r, n) => r >= n ? `<b class="ok">Passe</b>` : `<b class="no">Échec</b>`;
+  let pairs = 0, pairsOk = 0;
+  const mx = `<table><thead><tr><th scope="col">Texte ↓ / Fond →</th>${C.map(b => `<th scope="col">${sw(b.hex)}${esc(b.name)}</th>`).join("")}</tr></thead><tbody>${C.map((t, i) => `<tr><th scope="row">${sw(t.hex)}${esc(t.name)}</th>${C.map((b, j) => { if (i === j) return `<td class="na">–</td>`; const r = ratio(t.hex, b.hex); if (i < j) { pairs++; if (r >= need) pairsOk++; } return `<td class="${r >= need ? "ok" : r >= needL ? "lg" : "no"}">${f2(r)} :1<br><small>${grade(r)[0]}</small></td>`; }).join("")}</tr>`).join("")}</tbody></table>`;
+  const roleRows = m => { const R = dsRoles(m); return Object.keys(ROLE_FR).map(k => { const [fr, pair, kind] = ROLE_FR[k], n = roleNeed(k); if (!pair) return `<tr><th scope="row">${esc(fr)}</th><td>${sw(R[k])}${esc(hexName(R[k]))} <code>${R[k]}</code></td><td>–</td><td>–</td><td>${kind === "off" ? "Exempté (inactif)" : "Décoratif"}</td></tr>`; const r = ratio(R[k], R[pair]); return `<tr><th scope="row">${esc(fr)}</th><td>${sw(R[k])}${esc(hexName(R[k]))} <code>${R[k]}</code></td><td>${esc(ROLE_FR[pair][0])}</td><td>${f2(r)} :1</td><td>${n ? `${fmt(n, n % 1 ? 1 : 0)} :1, ${verdict(r, n)}` : kind === "off" ? "Exempté (inactif)" : "Décoratif"}</td></tr>`; }).join(""); };
+  const totR = 2 * Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && roleNeed(k)).length, iss = allIssues(), stOk = S.ts.styles.filter(st => tsVerdict(st).ok).length;
+  const sty = S.ts.styles.map(st => { const d = tsDef(st.id) || { name: st.id }, v = tsVerdict(st); return `<tr><th scope="row">${esc(d.name)}</th><td>${st.min} → ${st.max} px</td><td>${st.weight}</td><td>${fmt(st.lh, 2)}</td><td>${v.large ? "Grand texte" : "Texte courant"}, ${fmt(v.need, v.need % 1 ? 1 : 0)} :1</td><td>${verdict(v.r, v.need)}${v.warn.length ? `<br><small>${v.warn.map(esc).join(" ; ")}</small>` : ""}</td></tr>`; }).join("");
+  const crit = [["1.4.3", "Contraste minimum", "contrast-minimum"], ["1.4.6", "Contraste renforcé", "contrast-enhanced"], ["1.4.11", "Contraste des éléments non textuels", "non-text-contrast"], ["1.4.12", "Espacement du texte", "text-spacing"], ["1.4.10", "Redistribution à 320 px", "reflow"], ["1.4.1", "Utilisation de la couleur", "use-of-color"], ["2.4.13", "Apparence du focus", "focus-appearance"], ["2.5.8", "Taille des cibles", "target-size-minimum"]];
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Rapport d’accessibilité, ${esc(name)}</title><style>
+:root{color-scheme:light}body{font:15px/1.5 "Helvetica Neue",system-ui,sans-serif;color:#111;background:#fff;margin:0;padding:32px max(16px,4vw)}
+h1{font-size:30px;margin:0 0 4px}h2{font-size:20px;margin:36px 0 10px;padding-top:14px;border-top:2px solid #111}p{max-width:75ch}
+.meta{color:#444;margin:0 0 20px}.kpi{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}.kpi div{border:1.5px solid #111;border-radius:10px;padding:10px 14px;min-width:150px}.kpi b{display:block;font-size:24px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}th,td{border:1px solid #bbb;padding:6px 8px;text-align:left;vertical-align:top}thead th{background:#f1f1f3}
+td.ok{background:#DCFCE7}td.lg{background:#FEF3C7}td.no{background:#FEE2E2}td.na{color:#777;text-align:center}
+b.ok{color:#14532D}b.no{color:#991B1B}small{color:#444}code{font:12px ui-monospace,Menlo,monospace}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pal{display:flex;flex-wrap:wrap;gap:8px}.pal span.c{display:flex;align-items:center;gap:8px;border:1px solid #bbb;border-radius:8px;padding:6px 10px}.pal .sw{width:28px;height:28px;margin:0}
+.bar{position:sticky;top:0;background:#fff;padding:10px 0;display:flex;gap:10px;align-items:center;border-bottom:1px solid #ddd;margin-bottom:12px}.bar button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:10px 18px;background:#1E3A8A;color:#fff;cursor:pointer}
+ul{padding-left:20px}li{margin:3px 0}a{color:#1E3A8A}
+@media print{.bar{display:none}body{padding:0}h2{break-after:avoid}tr{break-inside:avoid}td.ok,td.lg,td.no{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style></head><body>
+<div class="bar"><button type="button" onclick="print()">Imprimer ou enregistrer en PDF</button><span>Fait avec Lisio</span></div>
+<h1>Rapport d’accessibilité : ${esc(name)}</h1><p class="meta">${date} · Référence WCAG ${S.version}, niveau ${lvl} · Texte courant ${fmt(need, need % 1 ? 1 : 0)} :1, grand texte et interface ${fmt(needL, needL % 1 ? 1 : 0)} :1</p>
+<div class="kpi"><div><b>${pairsOk}/${pairs}</b>paires lisibles en texte courant</div><div><b>${totR - iss.length}/${totR}</b>rôles conformes, clair et sombre</div><div><b>${stOk}/${S.ts.styles.length}</b>styles de texte conformes</div></div>
+<h2>Couleurs</h2><div class="pal">${C.map(c => `<span class="c">${sw(c.hex)}<span><b>${esc(c.name)}</b><br><code>${c.hex}</code></span></span>`).join("")}</div>
+<h2>Toutes les paires</h2><p>Chaque case donne le contraste du texte (ligne) sur le fond (colonne). Vert : texte courant ${lvl}. Ambre : grands textes et interface seulement. Rouge : décoratif uniquement.</p>${mx}
+<h2>Rôles, mode clair</h2><table><thead><tr><th scope="col">Rôle</th><th scope="col">Couleur</th><th scope="col">Vérifié avec</th><th scope="col">Ratio</th><th scope="col">Seuil et verdict</th></tr></thead><tbody>${roleRows("light")}</tbody></table>
+<h2>Rôles, mode sombre</h2><table><thead><tr><th scope="col">Rôle</th><th scope="col">Couleur</th><th scope="col">Vérifié avec</th><th scope="col">Ratio</th><th scope="col">Seuil et verdict</th></tr></thead><tbody>${roleRows("dark")}</tbody></table>
+<h2>Styles de texte</h2><p>Texte ${esc(hexName(S.ts.fg))} <code>${S.ts.fg}</code> sur ${esc(hexName(S.ts.bg))} <code>${S.ts.bg}</code> : ${f2(ratio(S.ts.fg, S.ts.bg))} :1. Tailles de 390 à 1440 px.</p><table><thead><tr><th scope="col">Style</th><th scope="col">Taille</th><th scope="col">Graisse</th><th scope="col">Interligne</th><th scope="col">Catégorie et seuil</th><th scope="col">Verdict</th></tr></thead><tbody>${sty}</tbody></table>
+<h2>Critères couverts par Lisio</h2><ul>${crit.map(([n, t, u]) => `<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/${u}.html">${n} ${t}</a></li>`).join("")}</ul>
+<h2>Ce que Lisio ne vérifie pas</h2><p>Ce rapport couvre les couleurs, la typographie et les composants de base. Il reste à vérifier sur les écrans réels : alternatives textuelles des images, navigation au clavier et ordre du focus, titres et repères, intitulés des champs et messages d’erreur, sous-titres des vidéos, compatibilité avec les lecteurs d’écran. Un audit complet suit le RGAA ou les WCAG critère par critère.</p>
+</body></html>`;
+}
+function reportOpen() {
+  const html = reportHtml(), url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+  const w = window.open(url, "_blank");
+  if (!w) saveFile("lisio-rapport-accessibilite.html", html, "text/html", "Fenêtre bloquée : rapport téléchargé à la place");
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+$("repOpen").addEventListener("click", reportOpen);
+$("repDl").addEventListener("click", () => saveFile("lisio-rapport-accessibilite.html", reportHtml(), "text/html", "Rapport téléchargé"));
 
 // ---------- Projet partageable ----------
 const PRJ_BASE = "https://lisio-psi.vercel.app/";
