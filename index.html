@@ -428,7 +428,8 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
   .dock-in{gap:2px;padding:6px;border-radius:18px;justify-content:center}.dk{padding:6px 8px;gap:6px}.dk .k small,.dk-sep{display:none}.dk .k span{max-width:92px}.stepper .sv{min-width:52px}.stepper button{width:32px;height:32px}
   .eyebrow{font-size:11px;letter-spacing:.04em}}
 .scales{overflow-x:auto;padding-bottom:4px}
-.scale-table{display:grid;grid-template-columns:110px repeat(11,minmax(64px,1fr));gap:22px 8px;min-width:900px}
+.scale-table{display:grid;grid-template-columns:110px repeat(12,minmax(64px,1fr));gap:22px 8px;min-width:980px}
+.swt.main .swc{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent),0 0 0 2px var(--surface),0 0 0 3.5px var(--ink)}
 .scale-name{font-weight:700;font-size:15px;display:flex;align-items:flex-start;padding-top:2px;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .swt{border:0;background:none;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;font:inherit;text-align:left;min-width:0;border-radius:6px}
 .swc{display:block;height:64px;border-radius:4px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);position:relative;margin-bottom:10px}
@@ -807,7 +808,7 @@ a.btn{text-decoration:none}
         </ol>
         <div class="nu-demo-wrap"><p class="small muted" id="nuDemoLead"></p><div class="nu-demo" id="nuDemo"></div></div>
       </div>
-      <span class="legend"><span>● nuance la plus proche de votre couleur</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
+      <span class="legend"><span><b>Main</b> : votre couleur, telle que saisie</span><span>● nuance la plus proche de Main</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
       <div class="scales"><div class="scale-table" id="scales"></div></div>
       <h3>Règles à retenir</h3>
       <div class="rules" id="rules"></div>
@@ -896,7 +897,7 @@ a.btn{text-decoration:none}
         <li>Dans l’application Figma pour ordinateur, ouvrez un fichier, puis le menu Figma en haut à gauche, <b>Plugins › Development › Import new plugin from manifest…</b>, et choisissez <code>manifest.json</code>. À faire une seule fois.</li>
         <li>Lancez <b>Plugins › Development › Lisio</b>, collez avec Ctrl ou Cmd + V (ou déposez le fichier), puis <b>Importer</b>.</li>
       </ol>
-      <p class="note">Le plugin ajoute aussi trois planches de présentation : Color palette, Semantic colors et Fluid typography. Relancer l’import met à jour l’existant, sans doublons. Son onglet <b>Vérifier les contrastes</b> mesure chaque texte d’une maquette existante contre son fond, et signale ce qui ne passe pas.</p>
+      <p class="note">Le plugin ajoute aussi trois planches de présentation : Color palette, Semantic colors et Fluid typography. Relancer l’import met à jour l’existant, sans doublons. Son onglet <b>Vérifier les contrastes</b> mesure chaque texte d’une maquette existante contre son fond, propose pour chaque échec la couleur de votre design system qui passe (un clic, ou « Tout corriger »), et liste les couleurs qui sortent du système. Cochez « Créer aussi les composants » pour obtenir Bouton, Champ et Alerte, déjà reliés aux variables, sur une page « Lisio components ».</p>
     </div>
     <div class="card-surface">
       <h2>Lisio, Figma, code : les mêmes noms</h2>
@@ -1435,6 +1436,7 @@ function renderScales() {
   let h = "";
   scales.forEach(sc => {
     h += `<div class="scale-name" title="${esc(sc.name)}">${esc(sc.name)}</div>`;
+    { const hex = sc.hex, shown = simulate(hex, vision), rw = floor2(ratio(hex, "#FFFFFF")), rb = floor2(ratio(hex, "#000000")); h += `<button type="button" class="swt main" data-hex="${hex}" aria-label="${esc(sc.name)} Main, votre couleur principale, ${hex}, ${fmt(rw)} pour 1 sur blanc, ${fmt(rb)} pour 1 sur noir. Copier." title="Couleur principale · ${fmt(rw, 1)}:1 sur blanc · ${fmt(rb, 1)}:1 sur noir"><span class="swc" style="background:${shown}"></span><b>Main</b><code>${hex}</code></button>`; }
     sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = floor2(ratio(hex, "#FFFFFF")), rb = floor2(ratio(hex, "#000000")); h += `<button type="button" class="swt" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]}, ${hex}${i === sc.nearest ? ", votre couleur d’origine" : ""}, ${fmt(rw)} pour 1 sur blanc, ${fmt(rb)} pour 1 sur noir. Copier." title="${fmt(rw, 1)}:1 sur blanc · ${fmt(rb, 1)}:1 sur noir"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}</span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
   });
   $("scales").innerHTML = h;
@@ -1956,7 +1958,7 @@ $("tsReset").addEventListener("click", () => { S.ts = tsDefault(); save(); rende
 $("tsFg").addEventListener("change", e => { S.ts.fg = e.target.value; save(); renderStyles(); });
 $("tsBg").addEventListener("change", e => { S.ts.bg = e.target.value; save(); renderStyles(); });
 function tsTokenRef(hex) {
-  for (const s of allScales()) { if (s.hex === hex) return `{color.${s.slug}.base}`; const i = s.sw.indexOf(hex); if (i >= 0) return `{color.${s.slug}.${STEPS[i]}}`; }
+  for (const s of allScales()) { if (s.hex === hex) return `{color.${s.slug}.main}`; const i = s.sw.indexOf(hex); if (i >= 0) return `{color.${s.slug}.${STEPS[i]}}`; }
   return hex === "#FFFFFF" ? "{color.neutral.white}" : hex === "#000000" ? "{color.neutral.black}" : hex;
 }
 const famList = f => f.src === "google" ? [f.family, FALLBACK[(GFmap.get(f.family) || { cat: "s" }).cat]] : [f.family, "sans-serif"];
@@ -2051,7 +2053,7 @@ function chartPalette(m, n) {
 function chartMinDist(m) { const p = chartPalette(m); let d = Infinity; for (let i = 0; i < p.length; i++) for (let j = i + 1; j < p.length; j++) d = Math.min(d, cvdDist(p[i], p[j])); return d; }
 function tsJson() {
   const o = { $description: `Accessible design system foundations generated by Lisio, WCAG ${S.version} level ${S.level}`, color: { neutral: { white: { $type: "color", $value: "#FFFFFF" }, black: { $type: "color", $value: "#000000" } } } };
-  allScales().forEach(s => { const g = o.color[s.slug] = { base: { $type: "color", $value: s.hex, $description: s.status ? `${ST_DEF[s.slug][3]} status hue` : `${s.name}, source colour` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contrast ${enNum(floor2(ratio(h, "#FFFFFF")))}:1 on white, ${enNum(floor2(ratio(h, "#000000")))}:1 on black` }; }); });
+  allScales().forEach(s => { const g = o.color[s.slug] = { $description: s.name, main: { $type: "color", $value: s.hex, $description: s.status ? `${ST_DEF[s.slug][3]} status hue` : `${s.name}, main colour (as entered)` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contrast ${enNum(floor2(ratio(h, "#FFFFFF")))}:1 on white, ${enNum(floor2(ratio(h, "#000000")))}:1 on black` }; }); });
   const semD = dsSemantic("dark");
   o.semantic = { $description: "Semantic roles. $value is the light mode; $extensions app.lisio.modes.dark holds the dark mode (a second mode in Figma, prefers-color-scheme and data-theme in CSS)" };
   for (const [g, items] of Object.entries(dsSemantic("light"))) { o.semantic[g] = {}; for (const [k, [hex, d, scopes]] of Object.entries(items)) { const dk = semD[g] && semD[g][k]; o.semantic[g][k] = { $type: "color", $value: tsTokenRef(hex), $description: d, $extensions: { "app.lisio": { scopes, modes: dk ? { dark: tsTokenRef(dk[0]) } : {}, darkDescription: dk ? dk[1] : undefined } } }; } }
@@ -2075,7 +2077,7 @@ function tsJson() {
 }
 function tsCss() {
   const fam = f => famList(f).map((x, i) => i === 0 ? `"${x}"` : x).join(", ");
-  const cssRef = hex => { const r = tsTokenRef(hex); return r.startsWith("{color.") ? `var(--${r.slice(7, -1).replace(".base", "").replace(".", "-")})` : r.startsWith("{") ? (hex === "#FFFFFF" ? "#FFFFFF" : "#000000") : r; };
+  const cssRef = hex => { const r = tsTokenRef(hex); return r.startsWith("{color.") ? `var(--${r.slice(7, -1).replace(".main", "").replace(".", "-")})` : r.startsWith("{") ? (hex === "#FFFFFF" ? "#FFFFFF" : "#000000") : r; };
   let c = `/* Lisio: accessible design system foundations, WCAG ${S.version} level ${S.level}.
    Four layers, each one only uses the layer below:
    1. Primitives  2. Semantic roles  3. Layout and spacing  4. Typography (fluid from ${VMIN} to ${VMAX} px).
@@ -2668,8 +2670,8 @@ function fmRender(focus) {
 
 // ---------- À vérifier à la main ----------
 const MANUAL = [
-  ["Clavier", [["kb", "Tout se fait au clavier", "Tab, Maj + Tab, Entrée, Espace, flèches : chaque lien, bouton, menu et champ s’atteint et s’utilise.", "2.1.1", "keyboard"], ["trap", "Aucun piège clavier", "On sort de chaque fenêtre, menu ou lecteur vidéo avec Tab ou Échap.", "2.1.2", "no-keyboard-trap"], ["order", "Ordre du focus logique", "Le focus suit l’ordre de lecture, sans saut d’un bout à l’autre de la page.", "2.4.3", "focus-order"], ["focus", "Focus toujours visible et non masqué", "Le contour de focus se voit partout, et aucun bandeau collant ne le cache.", "2.4.7", "focus-visible"]]],
-  ["Images et médias", [["alt", "Textes alternatifs", "Chaque image utile a une alternative qui dit ce qu’elle apporte ; les images décoratives ont alt=\"\".", "1.1.1", "non-text-content"], ["cc", "Sous-titres", "Chaque vidéo avec du son a des sous-titres synchronisés.", "1.2.2", "captions-prerecorded"], ["motion", "Mouvement maîtrisé", "Ce qui bouge plus de 5 secondes peut être mis en pause ; rien ne clignote plus de 3 fois par seconde.", "2.2.2", "pause-stop-hide"]]],
+  ["Clavier", [["kb", "Tout se fait au clavier", "Tab, Maj + Tab, Entrée, Espace, flèches : chaque lien, bouton, menu et champ s’atteint et s’utilise.", "2.1.1", "keyboard"], ["trap", "Aucun piège clavier", "On sort de chaque fenêtre, menu ou lecteur vidéo avec Tab ou Échap.", "2.1.2", "no-keyboard-trap"], ["order", "Ordre du focus logique", "Le focus suit l’ordre de lecture, sans saut d’un bout à l’autre de la page.", "2.4.3", "focus-order"], ["focus", "Focus toujours visible", "Le contour de focus se voit sur chaque lien, bouton et champ.", "2.4.7", "focus-visible"], ["obsc", "Focus jamais caché", "Aucun bandeau collant, bannière cookies ou menu ne recouvre entièrement l’élément qui a le focus.", "2.4.11", "focus-not-obscured-minimum"]]],
+  ["Images et médias", [["alt", "Textes alternatifs", "Chaque image utile a une alternative qui dit ce qu’elle apporte ; les images décoratives ont alt=\"\".", "1.1.1", "non-text-content"], ["cc", "Sous-titres", "Chaque vidéo avec du son a des sous-titres synchronisés.", "1.2.2", "captions-prerecorded"], ["motion", "Mouvement maîtrisé", "Ce qui bouge, défile ou clignote plus de 5 secondes peut être mis en pause, arrêté ou masqué.", "2.2.2", "pause-stop-hide"], ["flash", "Pas de flash", "Rien ne flashe plus de 3 fois par seconde.", "2.3.1", "three-flashes-or-below-threshold"]]],
   ["Formulaires", [["label", "Chaque champ a une étiquette visible", "Pas seulement un texte indicatif qui disparaît à la saisie.", "3.3.2", "labels-or-instructions"], ["err", "Erreurs décrites en texte", "Le message dit ce qui ne va pas et comment corriger, pas seulement une bordure rouge.", "3.3.1", "error-identification"], ["name", "Noms lus par le lecteur d’écran", "Les boutons-icônes et les champs ont un nom accessible, vérifié avec VoiceOver ou NVDA.", "4.1.2", "name-role-value"]]],
   ["Structure et contenu", [["title", "Titre de page unique", "L’onglet du navigateur dit où l’on est : « Contact, Ma marque ».", "2.4.2", "page-titled"], ["head", "Titres dans l’ordre", "Un seul h1, puis h2, h3 sans sauter de niveau, qui décrivent vraiment les sections.", "1.3.1", "info-and-relationships"], ["lang", "Langue déclarée", "lang=\"fr\" sur la page, et sur les passages dans une autre langue.", "3.1.1", "language-of-page"], ["link", "Liens explicites", "Le texte du lien dit où il mène : pas de « cliquez ici ».", "2.4.4", "link-purpose-in-context"]]],
   ["Zoom et petits écrans", [["zoom", "Lisible à 200 %", "Zoom du navigateur à 200 % : rien n’est coupé ni superposé.", "1.4.4", "resize-text"], ["reflow", "Lisible à 320 px de large", "Sans défilement horizontal, sauf pour les tableaux et les cartes.", "1.4.10", "reflow"], ["target", "Cibles assez grandes", "Au moins 24 × 24 px, ou assez espacées. 44 px est plus confortable sur mobile.", "2.5.8", "target-size-minimum"]]]

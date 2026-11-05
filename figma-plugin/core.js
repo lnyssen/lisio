@@ -29,6 +29,7 @@ async function lisioImport(data, opts) {
   const getCol = name => { let c = cols.find(c => c.name === name); if (!c) { c = figma.variables.createVariableCollection(name); cols.push(c); if (name !== "Typography") c.renameMode(c.modes[0].modeId, "Default"); } return c; };
   const getVar = (col, name, type) => {
     let v = allVars.find(x => x.variableCollectionId === col.id && x.name === name);
+    if (!v && /\/main$/.test(name)) { v = allVars.find(x => x.variableCollectionId === col.id && x.name === name.replace(/main$/, "base")); if (v) v.name = name; }
     if (v && v.resolvedType !== type) { v.remove(); v = null; }
     if (v) report.updated++; else { v = figma.variables.createVariable(name, col, type); allVars.push(v); report.created++; }
     return v;
@@ -133,13 +134,13 @@ async function lisioBoards(data, map, made, cTypo, modes, famName) {
   // Color palette
   const groups = Object.entries(data.color).filter(([g]) => g !== "neutral");
   const pal = board("Color palette"); ids.push(pal.id);
-  txt("Color palette", 36, false, pal);
-  txt(`Collection Colors · ${groups.length} colors × 11 steps (50 to 950) + source color · var(--color-name-step)`, 14, false, pal, true);
+  txt("Palette de couleurs", 36, false, pal);
+  txt(`Collection Colors · ${groups.length} couleurs × 11 nuances (50 à 950) + Main, votre couleur telle que saisie · même numéro = même clarté · var(--nom-nuance)`, 14, false, pal, true);
   const swatchCell = (parent, ref, top, bottom, w) => { const c = lisioAuto("VERTICAL", { name: top, itemSpacing: 6 }); const r = figma.createRectangle(); r.resize(w || 74, 60); r.fills = [paint(ref)]; r.strokes = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: .08 }]; c.appendChild(r); txt(top, 15, true, c, false, w || 74); txt(bottom, 11, false, c, true, w || 74); parent.appendChild(c); };
   for (const [g, steps] of Object.entries(data.color)) {
-    const row = lisioAuto("HORIZONTAL", { name: g, itemSpacing: 6 }); txt(g.charAt(0).toUpperCase() + g.slice(1), 16, true, row, false, 112);
-    const keys = Object.keys(steps).filter(k => !k.startsWith("$"));
-    for (const k of keys.filter(k => k !== "base").concat(keys.includes("base") ? ["base"] : [])) swatchCell(row, `{color.${g}.${k}}`, k === "base" ? "Source" : k, steps[k].$value);
+    const row = lisioAuto("HORIZONTAL", { name: g, itemSpacing: 6 }); txt(g === "neutral" ? "Neutres" : typeof steps.$description === "string" ? steps.$description : g.charAt(0).toUpperCase() + g.slice(1), 16, true, row, false, 112);
+    const keys = Object.keys(steps).filter(k => !k.startsWith("$")), MAIN = ["main", "base"], NEU = { white: "Blanc", black: "Noir" };
+    for (const k of keys.filter(k => MAIN.includes(k)).concat(keys.filter(k => !MAIN.includes(k)))) swatchCell(row, `{color.${g}.${k}}`, MAIN.includes(k) ? "Main" : NEU[k] || k, steps[k].$value);
     pal.appendChild(row);
   }
   cy += pal.height + 120;
