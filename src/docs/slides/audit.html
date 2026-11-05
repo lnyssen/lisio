@@ -1,0 +1,15 @@
+<section id="audit" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Vérifier une maquette existante</h2>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:28px;color:#0F1B3D">
+<tr><th style="width:40%;text-align:left">Texte de la maquette</th><th style="width:16%;text-align:left">Avant</th><th style="width:28%;text-align:left">Correction proposée</th><th style="width:16%;text-align:left">Après</th></tr>
+<tr><td>Gris trop clair</td><td>1,90:1</td><td>ink/500</td><td>4,64:1</td></tr>
+<tr><td>Lien orange trop pâle</td><td>1,90:1</td><td>warning/500</td><td>4,66:1</td></tr>
+<tr><td>Gris collé à la main</td><td>2,64:1</td><td>canvas/500</td><td>4,67:1</td></tr>
+<tr><td>Blanc sur bouton bleu clair</td><td>3,18:1</td><td>noir</td><td>6,58:1</td></tr>
+</table>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Corriger, ou Tout corriger</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">La couleur passe dans le design system, reliée à sa variable, dans la même famille. Ctrl ou Cmd + Z annule.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Ses limites</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Fonds unis seulement. Dégradé ou image : « à vérifier ». Il change le texte, jamais le fond.</p></div>
+</div>
+<aside>Résultats réels d’un test du plugin sur une maquette volontairement ratée, au niveau AA : 4 textes sous le seuil, 4 corrigés. Le plugin liste aussi les couleurs utilisées et signale celles qui sortent du design system. Pour le bouton bleu clair, la meilleure correction est souvent de foncer le fond : à faire à la main.</aside>
+</section>

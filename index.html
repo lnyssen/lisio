@@ -134,7 +134,7 @@
 *{box-sizing:border-box}
 section[role=tabpanel]{scroll-margin-top:90px}
 [hidden]{display:none!important}
-body{font-variant-numeric:tabular-nums;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;font-weight:500}
+body{font-variant-numeric:tabular-nums;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;font-weight:400}
 .wrap{max-width:1680px;margin:0 auto;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px));padding-block:0 120px}
 h1,h2,h3{margin:0;line-height:1.1;text-wrap:balance;letter-spacing:-.015em}
 h2{font-size:20px;font-weight:700;letter-spacing:-.02em}
@@ -197,6 +197,13 @@ a{color:inherit;text-underline-offset:.18em}
 .ds-fixall{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:10px 0 14px;border-radius:12px;background:var(--bad-bg);color:var(--bad)}.ds-fixall p{margin:0;font-size:14px}.ds-fixall[hidden]{display:none}
 .ds-fixb .sw{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
 .gprev{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.elv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:18px;border-radius:12px;border:1px solid var(--hair)}
+.elv-c{display:flex;flex-direction:column;gap:2px;padding:10px;border-radius:10px;min-height:96px;min-width:0;font-size:12px;line-height:1.3}.elv-c b{font-size:18px}.elv-c code{margin-top:auto;font-size:11px;opacity:.8}
+@media (max-width:520px){.elv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.elchk{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.45}.elchk li{display:flex;gap:8px}.elchk li>span:first-child{flex:none;font-weight:700;width:1.1em}.elchk li.ok>span:first-child{color:var(--ok)}.elchk li.no{font-weight:600}.elchk li.no>span:first-child{color:var(--bad)}
+.imrs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:end}.imr{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}.imr>div{border-radius:8px;border:1px dashed var(--field);background:var(--hover);display:grid;place-items:center;font-weight:700;font-size:13px}.imr figcaption{font-size:12px;line-height:1.35;display:flex;flex-direction:column}
+@media (max-width:520px){.imrs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.imrules{margin:0;display:grid;gap:4px 0;font-size:14px;line-height:1.5}.imrules dt{font-weight:700;margin-top:8px}.imrules dd{margin:0;color:var(--muted)}
 .gp{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center}
 .gp-l{font-size:13px;font-weight:700;line-height:1.15}.gp-l small{display:block;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
 .gp-f{height:40px;border-radius:6px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--muted) 22%,transparent) 0 1px,transparent 1px 6px);box-shadow:inset 0 0 0 1px var(--hair);box-sizing:border-box;display:flex;transition:width .35s cubic-bezier(.3,1.25,.4,1)}
@@ -871,6 +878,21 @@ a.btn{text-decoration:none}
             <div class="ds-f"><span class="ds-l" id="dsLinkL">Soulignement des liens</span><div class="seg" role="group" aria-labelledby="dsLinkL" id="dsLink"><button type="button" data-v="dotted">Pointillé</button><button type="button" data-v="solid">Plein</button></div></div>
           </section>
           <section class="ds-sec" aria-labelledby="dsGrH"><h3 id="dsGrH">Grille par écran</h3><div class="ds-tw"><table class="ds-gt" id="dsGrid"></table></div><div class="gprev" id="dsGridPrev"></div></section>
+          <section class="ds-sec" aria-labelledby="dsElH"><h3 id="dsElH">Effets et élévations</h3><p class="note">Ombres, opacités et flous. Une ombre dit « ceci est au-dessus », jamais « ceci est un bouton » : le contour d’un composant reste sa bordure. Dans Figma : styles d’effet <b>Elevation</b> et <b>Blur/Glass</b>, variables de la collection <b>Effects</b>.</p>
+            <div class="ds-f"><span class="ds-l" id="dsElevL">Ombres</span><div class="seg" role="group" aria-labelledby="dsElevL" id="dsElev"><button type="button" data-v="none">Aucune</button><button type="button" data-v="soft">Douces</button><button type="button" data-v="strong">Marquées</button></div></div>
+            <div class="elv" id="dsElevPrev"></div>
+            <div class="ds-f"><span class="ds-l" id="dsGlassL">Surfaces translucides (en-tête collant, barre d’outils)</span><div class="seg" role="group" aria-labelledby="dsGlassL" id="dsGlass"><button type="button" data-v="1">Opaques</button><button type="button" data-v="0.95">95 %</button><button type="button" data-v="0.9">90 %</button><button type="button" data-v="0.8">80 %</button></div></div>
+            <ul class="elchk" id="dsElevChk"></ul>
+          </section>
+          <section class="ds-sec" aria-labelledby="dsImH"><h3 id="dsImH">Images et icônes</h3><p class="note">Quatre formats d’image, exportés en tokens <code>ratio-*</code>, et les règles qui vont avec.</p><div class="imrs"><figure class="imr"><div style="aspect-ratio:16/9"><span>16:9</span></div><figcaption><b>Bannière, vidéo</b> <code>ratio-wide</code></figcaption></figure><figure class="imr"><div style="aspect-ratio:3/2"><span>3:2</span></div><figcaption><b>Photo</b> <code>ratio-photo</code></figcaption></figure><figure class="imr"><div style="aspect-ratio:1/1"><span>1:1</span></div><figcaption><b>Vignette, avatar</b> <code>ratio-square</code></figcaption></figure><figure class="imr"><div style="aspect-ratio:4/5"><span>4:5</span></div><figcaption><b>Portrait</b> <code>ratio-portrait</code></figcaption></figure></div>
+            <dl class="imrules">
+              <dt>Texte alternatif (1.1.1)</dt><dd>Décorative : <code>alt=""</code>. Informative : ce qu’elle apprend, en une phrase. Dans un lien ou un bouton : l’action, par exemple « Télécharger le PDF ». Graphique : un résumé, et les données à côté. <a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" target="_blank" rel="noopener">L’arbre de décision du W3C</a></dd>
+              <dt>Pas de texte dans l’image (1.4.5)</dt><dd>Sauf le logo : un vrai texte s’agrandit, se traduit et se lit à voix haute.</dd>
+              <dt>Texte sur photo</dt><dd>Toujours sur le voile <code>opacity-scrim</code>, mesuré ci-dessus sur la zone la plus claire possible.</dd>
+              <dt>Formats</dt><dd>SVG pour les logos et les icônes, AVIF ou WebP pour les photos. Toujours <code>width</code> et <code>height</code> sur l’image : la place est réservée et la page ne saute pas au chargement.</dd>
+              <dt>Icônes (1.4.11, 4.1.2)</dt><dd>Un seul style (contour ou plein) et trois tailles : 16, 20, 24 px. Porteuse de sens : 3:1 sur son fond. Seule dans un bouton : un nom accessible.</dd>
+            </dl>
+          </section>
         </div>
       </div>
     </div>
@@ -1008,6 +1030,7 @@ a.btn{text-decoration:none}
     <header class="mhead phead"><div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
     <div class="card-surface guide">
       <div class="g-train"><div><h2>S’entraîner en dix questions</h2><p>Avant de commencer, ou pour former l’équipe : des questions courtes avec vos couleurs, et la réponse expliquée.</p></div><a class="btn primary" href="#formation">Commencer</a></div>
+      <div class="g-train"><div><h2>Former l’équipe</h2><p>Le guide de formation à lire ou imprimer, et les slides de la séance d’une heure, avec les notes de l’animateur.</p></div><div class="row" style="gap:8px;flex-wrap:wrap"><a class="btn" href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener">Guide de formation<span class="sr-only">, nouvel onglet</span></a><a class="btn" href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener">Slides<span class="sr-only">, nouvel onglet</span></a></div></div>
       <h2>Lisio en six étapes</h2>
       <p>Le bandeau en haut de chaque page indique où vous en êtes, et le bouton du bas mène à l’étape suivante. Les pastilles « ? » expliquent chaque notion en deux phrases.</p>
       <ol class="g-steps">
@@ -1104,7 +1127,7 @@ a.btn{text-decoration:none}
   </section>
   <div class="jnext" id="jNext" hidden></div>
   </main>
-  <footer class="appfoot"><p><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><nav aria-label="Liens utiles"><a href="#sources">Guide</a><a href="#formation">S’entraîner</a><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2 (W3C)<span class="sr-only">, nouvel onglet</span></a></nav><p>Sans compte ni serveur : vos réglages restent dans ce navigateur.</p></footer>
+  <footer class="appfoot"><p><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><nav aria-label="Liens utiles"><a href="#sources">Aide</a><a href="#formation">S’entraîner</a><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener">Guide de formation<span class="sr-only">, nouvel onglet</span></a><a href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener">Slides<span class="sr-only">, nouvel onglet</span></a><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2 (W3C)<span class="sr-only">, nouvel onglet</span></a></nav><p>Sans compte ni serveur : vos réglages restent dans ce navigateur.</p></footer>
 </div>
 <div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
 <div class="pop" id="popFont" hidden>
@@ -2059,7 +2082,7 @@ function tsTokenRef(hex) {
 const famList = f => f.src === "google" ? [f.family, FALLBACK[(GFmap.get(f.family) || { cat: "s" }).cat]] : [f.family, "sans-serif"];
 const enNum = n => n.toFixed(2);
 // Système de base + personnalisation (S.ds). Chaque réglage absent = valeur de base.
-const DS_BASE = { roles: {}, shape: "soft", space: 4, btn: 44, link: "dotted", layout: null };
+const DS_BASE = { roles: {}, shape: "soft", space: 4, btn: 44, link: "dotted", elev: "soft", glass: 0.9, layout: null };
 const DS_SHAPES = { square: { label: "Droit", v: { none: 0, sm: 0, md: 2, lg: 4, control: 0, full: 999 } }, soft: { label: "Doux", v: { none: 0, sm: 4, md: 8, lg: 16, control: 8, full: 999 } }, round: { label: "Arrondi", v: { none: 0, sm: 8, md: 12, lg: 24, control: 12, full: 999 } }, pill: { label: "Pilule", v: { none: 0, sm: 8, md: 12, lg: 24, control: 999, full: 999 } } };
 const DS_SPACE = { 4: [0, 4, 8, 12, 16, 24, 32, 48, 64], 8: [0, 8, 16, 24, 32, 48, 64, 96, 128] };
 if (!S.ds || typeof S.ds !== "object") S.ds = JSON.parse(JSON.stringify(DS_BASE));
@@ -2075,7 +2098,34 @@ function dsDim() {
   };
 }
 const dsLay = () => { const L = S.ds.layout; if (!L) return LAYOUT; const o = {}; BP.forEach(b => { o[b.id] = { ...LAYOUT[b.id], ...(L[b.id] || {}) }; }); return o; };
-const dsIsBase = () => !Object.keys(S.ds.roles || {}).length && !S.ds.dark && !S.ds.status && ["shape", "space", "btn", "link"].every(k => S.ds[k] == null || S.ds[k] === DS_BASE[k]) && !S.ds.layout;
+const dsIsBase = () => !Object.keys(S.ds.roles || {}).length && !S.ds.dark && !S.ds.status && ["shape", "space", "btn", "link", "elev", "glass"].every(k => S.ds[k] == null || S.ds[k] === DS_BASE[k]) && !S.ds.layout;
+// ---------- Effets : ombres, opacités, flous ----------
+const ELEV_USE = [null, ["Cartes posées sur la page", "Cards and panels resting on the page"], ["Survol, élément déplacé", "Raised: hover, dragged item"], ["Menus, listes, info-bulles", "Menus, dropdowns, popovers, tooltips"], ["Dialogues, tiroirs", "Dialogs and drawers"]];
+const ELEV_L = [null, [[0, 1, 2, 0, .06], [0, 1, 3, 0, .1]], [[0, 2, 4, -1, .06], [0, 4, 8, -2, .1]], [[0, 4, 6, -2, .05], [0, 10, 20, -4, .12]], [[0, 8, 10, -6, .06], [0, 20, 40, -8, .18]]];
+const BLUR_GLASS = 12;
+const RATIOS = [["wide", 16, 9, "Bannière, vidéo", "Banner, video"], ["photo", 3, 2, "Photo", "Photo in content"], ["square", 1, 1, "Vignette, avatar", "Thumbnail, avatar"], ["portrait", 4, 5, "Portrait", "Portrait, product"]];
+const shadowInk = m => m === "dark" ? "#000000" : S.ts.fg;
+function dsShadow(n, m) { const e = dsCfg("elev"); if (e === "none") return []; const k = (e === "strong" ? 1.8 : 1) * (m === "dark" ? 3 : 1); return ELEV_L[n].map(([x, y, b, sp, a]) => ({ x, y, b, s: sp, a: Math.min(.8, +(a * k).toFixed(2)), c: shadowInk(m) })); }
+const rgbSp = h => hex2rgb(h).map(v => Math.round(v * 255)).join(" ");
+const shCss = (n, m) => { const L = dsShadow(n, m); return L.length ? L.map(l => `${l.x}px ${l.y}px ${l.b}px ${l.s}px rgb(${rgbSp(l.c)} / ${l.a})`).join(", ") : "none"; };
+const hexA = (h, a) => h + Math.round(a * 255).toString(16).padStart(2, "0").toUpperCase();
+const blendHex = (top, a, under) => { const u = hex2rgb(under); return rgb2hex(hex2rgb(top).map((v, i) => a * v + (1 - a) * u[i])); };
+const scrimInk = () => ratio("#FFFFFF", S.ts.fg) >= 12 ? S.ts.fg : "#000000";
+// Voile sur photo : la plus petite opacité qui garde un texte blanc lisible même sur une zone d’image blanche
+function scrimAlpha() { const need = S.level === "AAA" ? 7 : 4.5, c = scrimInk(); for (let i = 6; i <= 19; i++) { const a = i / 20; if (ratio("#FFFFFF", blendHex(c, a, "#FFFFFF")) >= need) return a; } return .95; }
+// Contrôles 1.4.11 et lisibilité des effets, pour un mode
+function elevChecks(m) {
+  const R = dsRoles(m), bg = R["background/default"], need = S.level === "AAA" ? 7 : 4.5, fr = n => fmt(floor2(n)), out = [];
+  const rb = ratio(R["border/default"], bg); out.push([rb >= 3, `Bordure des champs à ${fr(rb)}:1 sur le fond : un composant reste visible sans son ombre (1.4.11).`]);
+  const L = dsShadow(4, m), peak = L.reduce((t, l) => t + l.a, 0), rp = L.length ? ratio(blendHex(L[0].c, Math.min(1, peak), bg), bg) : 1;
+  out.push([true, L.length ? `Une ombre ne délimite rien : même la plus forte (niveau 4) atteint au mieux ${fr(rp)}:1 face au fond. Une carte cliquable garde sa bordure.` : "Sans ombre : l’élévation passe par la surface et la bordure. C’est le choix le plus sûr."]);
+  const rs = ratio(R["background/subtle"], bg); out.push([true, m === "dark" ? `En sombre, l’ombre se voit peu : c’est la surface des cartes, plus claire, qui porte l’élévation (${fr(rs)}:1 face au fond).` : `Surface des cartes à ${fr(rs)}:1 face au fond : décoratif, aucun seuil, tant que la carte n’est pas le seul repère d’un composant.`]);
+  const sa = scrimAlpha(), rsc = ratio("#FFFFFF", blendHex(scrimInk(), sa, "#FFFFFF")); out.push([rsc >= need, `Voile sur photo à ${Math.round(sa * 100)} % (<code>opacity-scrim</code>) : texte blanc à ${fr(rsc)}:1, même sur la zone la plus claire de l’image.`]);
+  const g = +dsCfg("glass"); if (g < 1) { const under = R["text/default"], sf = blendHex(bg, g, under), rm = Math.min(ratio(R["text/default"], sf), ratio(R["text/muted"], sf)); out.push([rm >= roleNeed("text/muted"), `Surface translucide à ${Math.round(g * 100)} % : texte secondaire à ${fr(rm)}:1 au pire, avec du contenu foncé qui passe dessous.${rm >= roleNeed("text/muted") ? "" : " Passez à 95 % ou à opaque."}`]); }
+  else out.push([true, "Surfaces opaques : le contraste du texte ne dépend pas de ce qui défile dessous."]);
+  out.push([true, "Mode contraste élevé de Windows : les ombres y disparaissent, le CSS exporté ajoute un contour transparent qui devient visible."]);
+  return out;
+}
 let dsMode = S.sysTheme === "dark" ? "dark" : "light";
 function darkDefault() {
   const find = h => scales.find(sc => sc.hex === h || sc.sw.includes(h));
@@ -2161,6 +2211,16 @@ function tsJson() {
   o.layout.measure = { $type: "number", $value: 70, $description: "Maximum line length for running text, in characters (CSS 70ch). SC 1.4.8 (AAA) asks for 80 or fewer", $extensions: { "app.lisio": { scopes: [] } } };
   o.duration = { $description: "Motion durations. All drop to 0 with prefers-reduced-motion (SC 2.3.3, AAA)", fast: { $type: "duration", $value: { value: 120, unit: "ms" }, $description: "Hover, focus, small feedback" }, base: { $type: "duration", $value: { value: 200, unit: "ms" }, $description: "Panels, menus, toasts" }, slow: { $type: "duration", $value: { value: 320, unit: "ms" }, $description: "Large movements, page transitions" } };
   o.easing = { standard: { $type: "cubicBezier", $value: [0.2, 0, 0, 1], $description: "Default easing" } };
+  const shVal = (n, m) => (dsShadow(n, m).length ? dsShadow(n, m) : [{ x: 0, y: 0, b: 0, s: 0, a: 0, c: "#000000" }]).map(l => ({ color: hexA(l.c, l.a), offsetX: { value: l.x, unit: "px" }, offsetY: { value: l.y, unit: "px" }, blur: { value: l.b, unit: "px" }, spread: { value: l.s, unit: "px" } }));
+  o.shadow = { $description: `Elevation, style "${dsCfg("elev")}". A shadow never replaces a border: components keep border/default at 3:1 (SC 1.4.11). Forced colors mode removes shadows, so elevated surfaces also get a transparent outline. In Figma: effect styles Elevation/Light and Elevation/Dark` };
+  for (let n = 1; n <= 4; n++) o.shadow[n] = { $type: "shadow", $value: shVal(n, "light"), $description: ELEV_USE[n][1], $extensions: { "app.lisio": { modes: { dark: shVal(n, "dark") } } } };
+  const sa = scrimAlpha();
+  o.opacity = { $description: "Named opacities. Never put opacity on text itself: contrast is measured on the final colour",
+    scrim: { $type: "number", $value: sa, $description: `Overlay for text on photos and behind dialogs, colour ${scrimInk()}: white text keeps ${enNum(floor2(ratio("#FFFFFF", blendHex(scrimInk(), sa, "#FFFFFF"))))}:1 even over a white area of the image`, $extensions: { "app.lisio": { color: scrimInk() } } },
+    glass: { $type: "number", $value: +dsCfg("glass"), $description: "Translucent surfaces (sticky header, toolbar), background/default at this opacity. Text contrast checked in the worst case, dark content scrolling underneath. Opaque with prefers-reduced-transparency" } };
+  o.blur = { glass: { $type: "dimension", $value: { value: BLUR_GLASS, unit: "px" }, $description: "Background blur behind translucent surfaces. In Figma: effect style Blur/Glass" } };
+  o.ratio = { $description: "Image aspect ratios. Always set width and height on <img> so the space is reserved" };
+  RATIOS.forEach(([k, w, h, , en]) => { o.ratio[k] = { $type: "number", $value: +(w / h).toFixed(4), $description: `${w}:${h}, ${en}`, $extensions: { "app.lisio": { css: `${w} / ${h}`, scopes: [] } } }; });
   o.font = { family: { heading: { $type: "fontFamily", $value: famList(S.ts.fonts.head) }, body: { $type: "fontFamily", $value: famList(S.ts.fonts.body) } } };
   o.typography = {};
   S.ts.styles.forEach(st => { const d = tsDef(st.id), v = tsVerdict(st);
@@ -2183,12 +2243,13 @@ function tsCss() {
 ` + allScales().map(s => `  --${s.slug}: ${s.hex};\n` + s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n}\n\n/* ===== 2. Semantic roles (light mode) ===== */\n:root {\n  color-scheme: light;\n";
   for (const [g, items] of Object.entries(dsSemantic("light"))) for (const [k, [hex, d]] of Object.entries(items)) c += `  --${g}-${k}: ${cssRef(hex)}; /* ${d} */\n`;
   let dk = ""; for (const [g, items] of Object.entries(dsSemantic("dark"))) for (const [k, [hex]] of Object.entries(items)) dk += `    --${g}-${k}: ${cssRef(hex)};\n`;
+  for (let n = 1; n <= 4; n++) dk += `    --shadow-${n}: ${shCss(n, "dark")};\n`;
   c += `}\n\n/* Dark mode: follows the system setting. Force a theme with data-theme="light" or "dark" on <html>. Every pair is checked again in dark mode. */\n@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {\n    color-scheme: dark;\n${dk}  }\n}\n:root[data-theme="dark"] {\n  color-scheme: dark;\n${dk.replace(/^    /gm, "  ")}}\n\n/* ===== 3. Layout and spacing ===== */\n:root {\n`;
   for (const [g, def] of Object.entries(dsDim())) { for (const [k, v] of Object.entries(def.v)) c += `  --${g}-${k}: ${Array.isArray(v) ? v[0] : v}px;${Array.isArray(v) ? ` /* ${v[1]} */` : ""}\n`; c += "\n"; }
   const lay = L => `--layout-margin: ${L.margin}px; --layout-gutter: ${L.gutter}px; --layout-columns: ${L.columns}; --layout-section: ${L.section}px;`;
   c += `  /* ${BP[0].label} first (${BP[0].w} px) */\n  ${lay(dsLay()[BP[0].id])}\n  --layout-content-max: ${LAYOUT_MAX}px;\n  --layout-measure: 70ch; /* line length for running text, SC 1.4.8 asks for 80 or fewer */\n\n  /* Motion: everything drops to 0 with prefers-reduced-motion (SC 2.3.3) */\n  --duration-fast: 120ms;\n  --duration-base: 200ms;\n  --duration-slow: 320ms;\n  --easing-standard: cubic-bezier(0.2, 0, 0, 1);\n}\n@media (prefers-reduced-motion: reduce) {\n  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; }\n  *, *::before, *::after { scroll-behavior: auto !important; }\n}\n`;
   BP.slice(1).forEach(b => { c += `@media (min-width: ${b.w}px) { :root { ${lay(dsLay()[b.id])} } } /* ${b.label} */\n`; });
-  c += `.measure, .prose > * { max-inline-size: var(--layout-measure); }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));\n  column-gap: var(--layout-gutter);\n}\n.container {\n  padding-inline: var(--layout-margin);\n  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));\n  margin-inline: auto;\n}\n\n/* ===== 4. Typography ===== */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
+  c += `.measure, .prose > * { max-inline-size: var(--layout-measure); }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));\n  column-gap: var(--layout-gutter);\n}\n.container {\n  padding-inline: var(--layout-margin);\n  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));\n  margin-inline: auto;\n}\n\n/* ===== Effects: elevation, opacity, blur, image ratios ===== */\n/* A shadow never replaces a border: inputs, buttons and clickable cards keep border/default at 3:1 (SC 1.4.11). */\n:root {\n${[1, 2, 3, 4].map(n => `  --shadow-${n}: ${shCss(n, "light")}; /* ${ELEV_USE[n][1]} */`).join("\n")}\n  --opacity-scrim: ${scrimAlpha()}; /* white text on photos keeps ${S.level} even over white */\n  --scrim-color: rgb(${rgbSp(scrimInk())} / var(--opacity-scrim));\n  --opacity-glass: ${+dsCfg("glass")};\n  --blur-glass: ${BLUR_GLASS}px;\n${RATIOS.map(([k, w, h, , en]) => `  --ratio-${k}: ${w} / ${h}; /* ${en} */`).join("\n")}\n}\n.elevation-1, .elevation-2, .elevation-3, .elevation-4 { outline: 1px solid transparent; /* becomes visible in forced colors mode, where shadows are removed */ }\n${[1, 2, 3, 4].map(n => `.elevation-${n} { box-shadow: var(--shadow-${n}); }`).join("\n")}\n.scrim { background: var(--scrim-color); color: #FFFFFF; } /* behind any text set on a photo */\n.glass {\n  background: color-mix(in srgb, var(--background-default) ${Math.round(+dsCfg("glass") * 100)}%, transparent);\n  -webkit-backdrop-filter: blur(var(--blur-glass));\n  backdrop-filter: blur(var(--blur-glass));\n}\n@media (prefers-reduced-transparency: reduce) { .glass { background: var(--background-default); -webkit-backdrop-filter: none; backdrop-filter: none; } }\nimg, video { max-inline-size: 100%; block-size: auto; }\n.ratio-wide { aspect-ratio: var(--ratio-wide); } .ratio-photo { aspect-ratio: var(--ratio-photo); } .ratio-square { aspect-ratio: var(--ratio-square); } .ratio-portrait { aspect-ratio: var(--ratio-portrait); }\n.ratio-wide, .ratio-photo, .ratio-square, .ratio-portrait { object-fit: cover; inline-size: 100%; }\n\n/* ===== 4. Typography ===== */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
   for (const st of S.ts.styles) c += `  --font-size-${st.id}: ${tsClamp(st)}; /* ${st.min} → ${st.max} px */\n  --line-height-${st.id}: ${st.lh};\n`;
   c += "}\n";
   const SEL = { display: ".display", body: "body, p, .body", "body-strong": "strong, .body-strong", "body-italic": "em, .body-italic", small: "small, .small", caption: "figcaption, .caption", label: ".label", button: "button, .button" };
@@ -2637,6 +2698,14 @@ html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 .skip-demo{position:static;transform:none;display:inline-block;box-shadow:0 0 0 var(--border-width-focus) var(--focus-ring)}
 .icons{display:flex;gap:var(--spacing-5);align-items:flex-end;flex-wrap:wrap}.icons div{display:flex;flex-direction:column;align-items:center;gap:var(--spacing-1)}
 .ibtn{min-block-size:var(--size-target-min);min-inline-size:var(--size-target-min);padding:0;justify-content:center}
+.elevs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:var(--spacing-6);padding:var(--spacing-4) 0}
+.elevs .card{background:var(--background-default)}
+.ph-img{background:linear-gradient(120deg,#FFFFFF 0 30%,var(--${allScales()[0].slug}-200) 60%,var(--${allScales()[0].slug}-500));border:var(--border-width-default) solid var(--border-subtle);border-radius:var(--radius-md)}
+.photo{position:relative;margin:0;border-radius:var(--radius-md);overflow:hidden}.photo .ph-img{position:absolute;inset:0;border:0;border-radius:0}.photo figcaption{position:absolute;inset-inline:0;bottom:0;padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-1)}
+.glass-demo{position:relative;border:var(--border-width-default) solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;min-height:200px}
+.glass-bar{position:absolute;inset-inline:0;top:0;padding:var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-1);border-bottom:var(--border-width-default) solid var(--border-subtle);z-index:1}
+.glass-under{padding:calc(var(--spacing-8) + var(--spacing-4)) var(--spacing-4) var(--spacing-4);display:flex;flex-direction:column;gap:var(--spacing-2);color:var(--text-default)}
+.ratios{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:var(--spacing-4);align-items:end}.ratios figure{margin:0;display:flex;flex-direction:column;gap:var(--spacing-2)}
 ${TPL_CSS}`;
   const pg = sysPg(), gov = S.sysGrid ? `<div class="gov" aria-hidden="true"><div class="container grid">${"<div></div>".repeat(L.columns)}</div></div>` : "";
   const body = pg !== "ds" ? frNb(tplBody(pg, R, badge)) + gov : `<main class="page">
@@ -2654,6 +2723,12 @@ ${TPL_CSS}`;
 <div class="comp"><h3 class="t-h5">Icônes</h3><div class="icons"><div><span class="icon icon-sm icon-info" aria-hidden="true"></span><code>icon-sm 16</code></div><div><span class="icon icon-success" aria-hidden="true"></span><code>icon-md 20</code></div><div><span class="icon icon-lg icon-warning" aria-hidden="true"></span><code>icon-lg 24</code></div><div><button class="btn btn-secondary ibtn" type="button" aria-label="Plus d’informations"><span class="icon icon-info" aria-hidden="true"></span></button><code>bouton icône</code></div></div><ul><li>Icône seule : un nom accessible, ici aria-label (1.1.1).</li><li>Icône porteuse de sens : 3:1 sur son fond (1.4.11).</li><li>Bouton icône : 24 px minimum (2.5.8).</li></ul></div>
 <div class="comp"><h3 class="t-h5">Étiquette et carte</h3><span class="tag t-label">Dossier</span><div class="card"><h4 class="t-h4">Carte de séjour</h4><p class="t-body">Les pièces à fournir et les délais, en une page.</p><a href="#" class="t-link link-arrow">Lire le dossier</a></div><ul><li>Texte sur la surface à ${fr(ratio(R["text/default"], R["background/subtle"]))}:1.</li><li>L’étiquette est un mot, jamais une couleur seule.</li></ul></div>
 </div></section>
+<hr class="hr"><section><p class="t-label layer">Effets</p><h2 class="t-h2">Élévations, voile et transparence</h2><p class="t-body mut measure">Quatre niveaux d’ombre${dsCfg("elev") === "none" ? ", ici désactivés : tout repose sur la surface et la bordure" : ""}. L’ombre dit ce qui passe au-dessus, jamais où s’arrête un composant : les champs et les cartes cliquables gardent leur bordure (1.4.11).</p>
+<div class="elevs">${[1, 2, 3, 4].map(n => `<div class="card elevation-${n}"><p class="t-h4">${n}</p><p class="t-body">${ELEV_USE[n][0]}</p><code class="t-caption mut">.elevation-${n}</code></div>`).join("")}</div>
+<div class="two"><figure class="photo ratio-photo"><div class="ph-img" aria-hidden="true"></div><figcaption class="scrim"><p class="t-body-strong">Texte sur photo</p><p class="t-caption">Voile à ${Math.round(scrimAlpha() * 100)} % : ${fr(ratio("#FFFFFF", blendHex(scrimInk(), scrimAlpha(), "#FFFFFF")))}:1 même sur la zone blanche.</p></figcaption></figure>
+<div class="glass-demo"><div class="glass-bar glass"><p class="t-body-strong">Barre ${+dsCfg("glass") < 1 ? `translucide à ${Math.round(+dsCfg("glass") * 100)} %` : "opaque"}</p><p class="t-caption mut">Le texte secondaire reste lisible au pire.</p></div><div class="glass-under" aria-hidden="true">${"<p class=\"t-body-strong\">Contenu qui défile sous la barre, ici le plus foncé possible.</p>".repeat(5)}</div></div></div></section>
+<hr class="hr"><section><p class="t-label layer">Images</p><h2 class="t-h2">Formats et texte alternatif</h2><p class="t-body mut measure">Quatre formats. Chaque image dit ce qu’elle apprend dans son <code>alt</code>, ou <code>alt=""</code> si elle est décorative (1.1.1). Pas de texte dans l’image, sauf le logo (1.4.5).</p>
+<div class="ratios">${RATIOS.map(([k, w, h, l]) => `<figure><div class="ph-img ratio-${k}" aria-hidden="true"></div><figcaption class="t-caption"><b>${l}</b> · ${w}:${h} · <code>.ratio-${k}</code></figcaption></figure>`).join("")}</div></section>
 <hr class="hr"><section><p class="t-label layer">Données</p><h2 class="t-h2">Palette de graphiques</h2><p class="t-body mut measure">${ch.length} séries à 3:1 minimum sur le fond (1.4.11), choisies pour rester distinctes en vision typique, protanopie, deutéranopie et tritanopie. Écart minimal entre deux séries : ${fmt(mins * 100, 1)} (OKLab ×100). Nommez toujours les séries en clair, sur le graphique.</p><div class="bars" role="img" aria-label="Exemple de graphique en barres, six séries">${bars}</div></section>
 </main>${gov}`;
   const js = `<script>document.addEventListener("click",e=>{if(e.target.closest("a"))e.preventDefault()});
@@ -2788,7 +2863,10 @@ function renderDsPanel() {
   $("dsRoles").querySelectorAll("select").forEach(sel => { const k = sel.dataset.role; sel.value = isFixedRole(k) ? (m === "light" ? (k === "text/default" ? S.ts.fg : S.ts.bg) : ((k === "text/default" ? (S.ds.dark || {}).fg : (S.ds.dark || {}).bg) || "")) : (B.roles[k] || ""); cpEnhance(sel, k); });
   const ch = chartPalette(m), md = chartMinDist(m);
   $("dsChart").innerHTML = `<div class="ds-chsw">${ch.map((h, i) => `<span style="background:${h}" title="chart/${i + 1} ${h}"><b>${i + 1}</b></span>`).join("")}</div><p class="note">${ch.length} séries, toutes à 3:1 au moins sur le fond ${MODE_FR[m]} (1.4.11), choisies dans vos gammes pour rester distinctes en vision typique et pour les trois daltonismes (écart minimal ${fmt(md * 100, 1)}, ${md >= 0.1 ? "confortable" : md >= 0.06 ? "correct" : "serré : nommez les séries directement sur le graphique"}). Dans Figma : <b>chart/1</b> à <b>chart/${ch.length}</b>.</p>`;
-  [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
+  [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"], ["dsElev", "elev"], ["dsGlass", "glass"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
+  $("dsElevPrev").style.background = R["background/default"];
+  $("dsElevPrev").innerHTML = [1, 2, 3, 4].map(n => `<div class="elv-c" style="background:${R["background/subtle"]};color:${R["text/default"]};box-shadow:${shCss(n, m)}"><b>${n}</b><span>${ELEV_USE[n][0]}</span><code>shadow-${n}</code></div>`).join("");
+  $("dsElevChk").innerHTML = elevChecks(m).map(([ok, t]) => `<li class="${ok ? "ok" : "no"}"><span aria-hidden="true">${ok ? "✓" : "✕"}</span><span>${ok ? "" : '<span class="sr-only">À corriger : </span>'}${t}</span></li>`).join("");
   const L = dsLay(), rows = [["margin", "Marge"], ["gutter", "Gouttière"], ["columns", "Colonnes"], ["section", "Entre sections"]];
   renderGridPrev(L);
   $("dsGrid").innerHTML = `<thead><tr><td></td>${BP.map(b => `<th scope="col">${b.label === "Desktop XL" ? "XL" : b.label}</th>`).join("")}</tr></thead><tbody>` + rows.map(([k, l]) => `<tr><th scope="row">${l}${k === "columns" ? "" : ' <span class="muted">px</span>'}</th>${BP.map(b => `<td><input type="number" inputmode="numeric" data-bp="${b.id}" data-k="${k}" min="${k === "columns" ? 1 : 0}" max="${k === "columns" ? 16 : 240}" value="${L[b.id][k]}" aria-label="${l}, ${b.label}"></td>`).join("")}</tr>`).join("") + "</tbody>";
@@ -2808,7 +2886,7 @@ function roleFixAll(m) { let n = 0; for (const mm of m ? [m] : ["light", "dark"]
 $("dsFixAll").addEventListener("click", e => { if (!e.target.closest("[data-fixall]")) return; const n = roleFixAll(dsMode); dsChanged(); toast(n ? `${n} correction${n > 1 ? "s" : ""} appliquée${n > 1 ? "s" : ""}` : "Rien à corriger automatiquement"); });
 $("dsRoles").addEventListener("click", e => { const b = e.target.closest("[data-fix]"); if (!b) return; const k = b.dataset.fix; roleApply(k, b.dataset.v); dsChanged(); toast(`${ROLE_FR[k][0]} : ${hexName(b.dataset.v)}`); });
 $("dsModeSeg").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; dsMode = b.dataset.v; S.sysTheme = dsMode; save(); renderSystem(); });
-[["dsShape", "shape", String], ["dsSpace", "space", Number], ["dsBtn", "btn", Number], ["dsLink", "link", String]].forEach(([id, k, cast]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ds[k] = cast(b.dataset.v); dsChanged(); }));
+[["dsShape", "shape", String], ["dsSpace", "space", Number], ["dsBtn", "btn", Number], ["dsLink", "link", String], ["dsElev", "elev", String], ["dsGlass", "glass", Number]].forEach(([id, k, cast]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ds[k] = cast(b.dataset.v); dsChanged(); }));
 $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset.bp) return; const k = i.dataset.k, v = Math.round(+i.value), lo = k === "columns" ? 1 : 0, hi = k === "columns" ? 16 : 240;
   if (!isFinite(v) || v < lo || v > hi) { i.value = dsLay()[i.dataset.bp][k]; return; }
   S.ds.layout = S.ds.layout || {}; S.ds.layout[i.dataset.bp] = { ...(S.ds.layout[i.dataset.bp] || {}), [k]: v }; save(); renderTsExport(); renderGridPrev();

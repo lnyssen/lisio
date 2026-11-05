@@ -1,0 +1,20 @@
+<section id="css" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Pour les développeurs : le même système en CSS</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+<div style="background:#0F1B3D;border-radius:16px;padding:40px;display:flex;flex-direction:column;gap:6px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9BBCFF">/* 1. Primitives */</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--marine: #0D1D45;</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--marine-600: #4E628B;</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9BBCFF">/* 2. Rôles */</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--text-default: var(--marine);</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--background-default: var(--blanc);</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:32px;line-height:1.4"><b>Quatre couches</b> : primitives, rôles, layout, typographie.</p>
+<p style="font-size:32px;line-height:1.4"><b>Prêt à l’emploi</b> : une classe .t- par style, focus, liens, .btn, .field, .alert.</p>
+<p style="font-size:32px;line-height:1.4"><b>Mode sombre</b> : prefers-color-scheme ou data-theme.</p>
+</div>
+</div>
+<p style="font-size:24px;color:#4C5674">Page Exporter, « Copier le CSS ». Le JSON suit le format des design tokens du W3C.</p>
+<aside>Extrait simplifié du CSS exporté avec la palette de l’équipe. Les composants ne pointent jamais vers une primitive : ils passent par un rôle. Même logique que dans Figma, avec les mêmes noms.</aside>
+</section>

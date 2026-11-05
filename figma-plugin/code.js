@@ -1,9 +1,11 @@
 // Lisio for Figma: import core (shared by the plugin and tests)
 const LISIO_W = { 100: ["Thin", "Hairline"], 200: ["ExtraLight", "Extra Light", "UltraLight", "Ultra Light"], 300: ["Light"], 400: ["Regular", "Normal", "Book", "Roman"], 500: ["Medium"], 600: ["SemiBold", "Semi Bold", "DemiBold", "Demi Bold"], 700: ["Bold"], 800: ["ExtraBold", "Extra Bold", "UltraBold", "Ultra Bold"], 900: ["Black", "Heavy"] };
-const LISIO_COL = { color: "Colors", semantic: "Semantic", font: "Typography", duration: "Motion" };
-const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], icon: ["WIDTH_HEIGHT"], duration: [], font: ["FONT_FAMILY"] };
+const LISIO_COL = { color: "Colors", semantic: "Semantic", font: "Typography", duration: "Motion", opacity: "Effects", blur: "Effects" };
+const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], icon: ["WIDTH_HEIGHT"], duration: [], font: ["FONT_FAMILY"], opacity: ["OPACITY"], blur: ["EFFECT_FLOAT"], ratio: [] };
 const LISIO_BP = [{ id: "mobile", name: "Mobile", width: 390 }, { id: "tablet", name: "Tablet", width: 768 }, { id: "desktop", name: "Desktop", width: 1024 }, { id: "xl", name: "Desktop XL", width: 1440 }];
 function lisioHex(hex) { const h = hex.replace("#", ""); return { r: parseInt(h.slice(0, 2), 16) / 255, g: parseInt(h.slice(2, 4), 16) / 255, b: parseInt(h.slice(4, 6), 16) / 255 }; }
+function lisioRgba(hex) { const c = lisioHex(hex), h = hex.replace("#", ""); return { r: c.r, g: c.g, b: c.b, a: h.length >= 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1 }; }
+function lisioShadow(layers) { return (Array.isArray(layers) ? layers : [layers]).filter(l => l && l.color && lisioRgba(l.color).a > 0).map(l => ({ type: "DROP_SHADOW", color: lisioRgba(l.color), offset: { x: (l.offsetX && l.offsetX.value) || 0, y: (l.offsetY && l.offsetY.value) || 0 }, radius: (l.blur && l.blur.value) || 0, spread: (l.spread && l.spread.value) || 0, visible: true, blendMode: "NORMAL", showShadowBehindNode: false })); }
 function lisioWalk(obj, path, out) {
   for (const [k, v] of Object.entries(obj || {})) {
     if (k.startsWith("$") || !v || typeof v !== "object") continue;
@@ -54,7 +56,7 @@ async function lisioImport(data, opts) {
     if (!type) continue;
     const perBp = t.ext.breakpoints && typeof t.ext.breakpoints === "object";
     if (perBp && !cLay) { cLay = getCol("Layout"); layModes = bpModes(cLay, "Only the first breakpoint value is kept."); }
-    const col = perBp ? cLay : getCol(LISIO_COL[top] || "Dimensions"), name = (perBp || LISIO_COL[top] ? t.path.slice(1) : t.path).join("/");
+    const col = perBp ? cLay : getCol(LISIO_COL[top] || "Dimensions"), name = (perBp || (LISIO_COL[top] && LISIO_COL[top] !== "Effects") ? t.path.slice(1) : t.path).join("/");
     const v = getVar(col, name, type); v.scopes = t.ext.scopes || LISIO_SCOPES[top] || ["ALL_SCOPES"];
     if (t.desc) v.description = t.desc;
     v.setVariableCodeSyntax("WEB", `var(--${t.path.join("-")})`);
@@ -85,6 +87,17 @@ async function lisioImport(data, opts) {
       st.description = `${n} columns, ${g} px gutter, ${m} px side margin. Lisio layout tokens, ${bp.name} (${bp.width} px).`;
       report.styles++;
     }
+  }
+  // 1d. Effect styles: elevation (light and dark) and background blur
+  const shT = tokens.filter(t => t.path[0] === "shadow" && t.type === "shadow"), blT = tokens.find(t => t.path[0] === "blur" && t.path[1] === "glass");
+  if (shT.length || blT) {
+    const es = await figma.getLocalEffectStylesAsync();
+    const put = (name, effects, desc) => { let st = es.find(x => x.name === name); if (!st) { st = figma.createEffectStyle(); st.name = name; es.push(st); } st.effects = effects; if (desc) st.description = desc; report.styles++; };
+    for (const t of shT) {
+      put(`Elevation/Light/${t.path[1]}`, lisioShadow(t.value), `${t.desc || ""}. Never replaces a 3:1 border (WCAG 1.4.11).`);
+      if (t.ext.modes && t.ext.modes.dark) put(`Elevation/Dark/${t.path[1]}`, lisioShadow(t.ext.modes.dark), `${t.desc || ""}, dark mode. Elevation also shows through the lighter surface.`);
+    }
+    if (blT) put("Blur/Glass", [{ type: "BACKGROUND_BLUR", blurType: "NORMAL", radius: (blT.value && blT.value.value) || 12, visible: true }], "Background blur behind translucent surfaces (opacity/glass). Check text contrast in the worst case.");
   }
   // 1b. Extra modes (semantic roles: Light and Dark)
   const modeId = (col, name) => {

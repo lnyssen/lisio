@@ -23,3 +23,5 @@ pl = root / "figma-plugin"
 with zipfile.ZipFile(root / "lisio-figma-plugin.zip", "w", zipfile.ZIP_DEFLATED) as z:
     for f in ("manifest.json", "code.js", "ui.html"):
         z.write(pl / f, f"lisio-figma-plugin/{f}")
+
+import sys; sys.path.insert(0, str(root / "src")); import pages; pages.build()

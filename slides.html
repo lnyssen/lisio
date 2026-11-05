@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formation Lisio : slides · Lisio</title>
+<meta name="description" content="Lisio, formation en diapositives : contrastes, nuances, rôles, Figma et code.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%2318181B%27/%3E%3Ccircle cx=%2716%27 cy=%279.6%27 r=%274.4%27 fill=%27none%27 stroke=%27white%27 stroke-width=%271.8%27/%3E%3Cpath d=%27M16 5.2a4.4 4.4 0 0 1 0 8.8z%27 fill=%27white%27/%3E%3Crect x=%2713.2%27 y=%2716.2%27 width=%275.6%27 height=%2710.6%27 rx=%272.8%27 fill=%27white%27/%3E%3C/svg%3E">
+<script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>@font-face{font-family:"Switzer";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-400-normal.woff2) format("woff2")}@font-face{font-family:"Switzer";font-style:normal;font-weight:500;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-500-normal.woff2) format("woff2")}@font-face{font-family:"Switzer";font-style:normal;font-weight:600;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-600-normal.woff2) format("woff2")}@font-face{font-family:"Switzer";font-style:normal;font-weight:700;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-700-normal.woff2) format("woff2")}
+:root{--bg:#E8EBF1;--surface:#FFFFFF;--ink:#0F1B3D;--muted:#4C5674;--hair:#D4D9E3;--primary:#0F1B3D;--primary-ink:#FFFFFF;--hover:#DCE1EB;--focus:#0F1B3D;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A1126;--surface:#111A33;--ink:#F3F6FC;--muted:#A6B0C8;--hair:#24304E;--primary:#E6ECF8;--primary-ink:#0F1B3D;--hover:#1C2846;--focus:#F3F6FC;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A1126;--surface:#111A33;--ink:#F3F6FC;--muted:#A6B0C8;--hair:#24304E;--primary:#E6ECF8;--primary-ink:#0F1B3D;--hover:#1C2846;--focus:#F3F6FC;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Switzer","Helvetica Neue",system-ui,sans-serif;font-size:17px;line-height:1.6;font-weight:400}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:16px;top:-60px;background:var(--primary);color:var(--primary-ink);padding:10px 14px;border-radius:10px;font-weight:600;z-index:10}.skip:focus{top:12px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px clamp(16px,3vw,40px);border-bottom:1px solid var(--hair);background:var(--bg)}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:20px;text-decoration:none;letter-spacing:-.01em;min-height:44px}
+.top nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.top nav a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px}
+.top nav a:hover{background:var(--hover)}.top nav a[aria-current="page"]{background:var(--primary);color:var(--primary-ink)}
+.foot{border-top:1px solid var(--hair);padding:20px clamp(16px,3vw,40px);color:var(--muted);font-size:14px;display:flex;gap:8px 24px;flex-wrap:wrap}
+
+.deck{max-width:1320px;margin:0 auto;padding:clamp(16px,3vw,32px) clamp(12px,3vw,32px) 48px;display:flex;flex-direction:column;gap:16px}
+.deck h1{font-size:clamp(26px,3.6vw,36px);line-height:1.15;margin:0;letter-spacing:-.01em}
+.deck .lead{margin:0;color:var(--muted)}
+.bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bar button,.bar a.b{font:inherit;font-weight:600;font-size:15px;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.bar button:hover{background:var(--hover)}.bar button:disabled{opacity:.55;cursor:default}
+.bar button[aria-pressed="true"]{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.bar .n{font-variant-numeric:tabular-nums;font-weight:600;min-width:5.5em;text-align:center}
+.bar .sp{flex:1}
+.bar select{font:inherit;font-size:15px;min-height:44px;max-width:100%;border-radius:10px;border:1.5px solid var(--muted);background:var(--surface);color:var(--ink);padding:0 10px}
+.stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0F1B3D;box-shadow:0 1px 2px rgba(15,27,61,.08),0 12px 32px rgba(15,27,61,.14)}
+.stage:fullscreen{border-radius:0;background:#000;display:grid;place-items:center}
+.slide{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;box-sizing:border-box}
+.slide[hidden]{display:none!important}
+.slide *{margin:0;box-sizing:border-box}.slide a{color:inherit;text-decoration:underline}
+.slide aside{display:none}
+.slide table{border-collapse:collapse}
+.notes{background:var(--surface);border:1px solid var(--hair);border-radius:14px;padding:16px 20px}
+.notes h2{font-size:15px;margin:0 0 6px}.notes p{margin:0;max-width:75ch}
+.all .slide{position:relative}
+.allwrap{display:flex;flex-direction:column;gap:24px}
+.allwrap .stage{box-shadow:none;border:1px solid var(--hair)}
+@media print{.top,.foot,.skip,.bar,.deck>h1,.deck .lead,.notes{display:none}.deck{padding:0;max-width:none}.stage{break-after:page;border-radius:0;box-shadow:none}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..800&family=JetBrains+Mono:wght@400;600&display=swap">
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="top"><a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true" width="32" height="32"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span>lisio</span><span class="sr-only">, retour à l’outil</span></a><nav aria-label="Pages"><a href="/">Ouvrir Lisio</a><a href="/guide">Guide</a><a href="/slides" aria-current="page">Slides</a></nav></header>
+<main id="main" class="deck">
+<h1>Formation Lisio : les slides</h1>
+<p class="lead">18 diapositives, une heure de formation dont quinze minutes d’exercice. Flèches gauche et droite pour avancer, Notes pour le texte de l’animateur. Le détail de chaque slide est dans le <a href="/guide">guide de formation</a>.</p>
+<div class="bar" role="group" aria-label="Navigation dans les slides">
+<button type="button" id="prev"><span aria-hidden="true">←</span> Précédente</button><span class="n" id="cnt" aria-hidden="true">1 / 18</span><button type="button" id="next">Suivante <span aria-hidden="true">→</span></button>
+<label class="sr-only" for="pick">Aller à la diapositive</label><select id="pick"><option value="0">1. Des couleurs lisibles par tout le monde</option><option value="1">2. Une couleur n’est pas accessible. Une paire l’est.</option><option value="2">3. Le ratio de contraste et ses seuils</option><option value="3">4. Notre palette, en texte sur le fond Blanc</option><option value="4">5. Main, puis 11 nuances de 50 à 950</option><option value="5">6. Les rôles : une couleur avec un métier</option><option value="6">7. Le parcours en 6 étapes</option><option value="7">8. Une typo fluide, qui garde le zoom</option><option value="8">9. Installer le plugin Figma, une seule fois</option><option value="9">10. Importer : ce qui arrive dans Figma</option><option value="10">11. Vérifier une maquette existante</option><option value="11">12. Pour les développeurs : le même système en CSS</option><option value="12">13. Voir le système sur de vraies pages</option><option value="13">14. États des composants et grille</option><option value="14">15. Travailler à plusieurs</option><option value="15">16. Ce que Lisio ne vérifie pas</option><option value="16">17. Mode Formation : 10 questions</option><option value="17">18. Pour aller plus loin</option></select>
+<span class="sp"></span><button type="button" id="notesB" aria-pressed="false" aria-controls="notes">Notes</button><button type="button" id="fsB" aria-pressed="false">Plein écran</button>
+</div>
+<p class="sr-only" id="live" aria-live="polite"></p>
+<div class="stage" id="stage">
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="1 sur 18 : Des couleurs lisibles par tout le monde" id="cover" data-transition="fade" style="background:#0F1B3D;color:#F4F5F8;font-family:'DM Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between">
+<div style="display:flex;flex-direction:row;align-items:center;gap:20px">
+<div style="width:56px;height:56px;border-radius:12px;background:#F4F5F8"></div>
+<p style="font-size:44px;font-weight:700;letter-spacing:-1px">lisio</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:40px">
+<p style="font-size:32px;color:#9BBCFF;font-weight:600;letter-spacing:2px;text-transform:uppercase">Formation équipe · design et développement</p>
+<h2 style="font-size:120px;font-weight:700;line-height:1.05;letter-spacing:-3px">Des couleurs lisibles<br>par tout le monde</h2>
+<p style="font-size:44px;color:#C3CCE0;line-height:1.3">Contrastes, nuances, rôles : de Lisio à Figma et au code, en une heure.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1200px;font-size:24px;color:#C3CCE0">lisio-psi.vercel.app · WCAG 2.2, niveau AA</p>
+<aside>Accueil. Objectif de la séance : repartir en sachant vérifier une paire de couleurs, utiliser les nuances et les rôles, et passer le design system dans Figma avec le plugin. Durée : une heure, dont quinze minutes d’exercice avec le mode Formation.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="2 sur 18 : Une couleur n’est pas accessible. Une paire l’est." id="paire" data-transition="fade" style="background:#0F1B3D;color:#F4F5F8;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:56px">
+<p style="font-size:32px;color:#9BBCFF;font-weight:600;letter-spacing:2px;text-transform:uppercase">L’idée à retenir</p>
+<h2 style="font-size:120px;font-weight:700;line-height:1.05;letter-spacing:-3px">Une couleur n’est pas accessible.<br><span style="color:#9BBCFF">Une paire l’est.</span></h2>
+<p style="font-size:44px;color:#C3CCE0;line-height:1.3;width:1400px">Le contraste se mesure toujours entre un texte et son fond. La même couleur peut passer sur blanc et échouer sur gris clair.</p>
+<aside>Point de départ de toute la formation. Quand quelqu’un demande « est-ce que ce bleu est accessible ? », la bonne réponse est « sur quel fond ? ». Lisio raisonne en paires : la matrice croise chaque texte avec chaque fond.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="3 sur 18 : Le ratio de contraste et ses seuils" id="ratio" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Le ratio de contraste et ses seuils</h2>
+<p style="font-size:32px;color:#4C5674;line-height:1.4;width:1500px">De 1:1, aucune différence, à 21:1, noir sur blanc. Les seuils viennent des WCAG, reprises par le RGAA et la norme européenne EN 301 549.</p>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:32px;color:#0F1B3D">
+<tr><th style="width:52%;text-align:left">Ce qu’on affiche</th><th style="width:16%;text-align:left">AA</th><th style="width:16%;text-align:left">AAA</th><th style="width:16%;text-align:left">Critère</th></tr>
+<tr><td>Texte courant</td><td><b>4,5:1</b></td><td>7:1</td><td>1.4.3</td></tr>
+<tr><td>Grand texte : 24 px, ou 18,66 px en gras</td><td><b>3:1</b></td><td>4,5:1</td><td>1.4.6</td></tr>
+<tr><td>Bordure de champ, icône, focus</td><td><b>3:1</b></td><td>3:1</td><td>1.4.11</td></tr>
+<tr><td>Décoration, élément désactivé</td><td>aucun</td><td>aucun</td><td>exemption</td></tr>
+</table>
+<p style="font-size:24px;color:#4C5674">AA est le niveau exigé par la loi. Un ratio de 4,49:1 ne passe pas : les seuils sont des minimums stricts.</p>
+<aside>Le ratio compare la luminance relative des deux couleurs, avec la formule du W3C. AA est la cible légale. AAA est plus confortable pour les longs textes. Insister : pas d’arrondi, 4,49 échoue.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="4 sur 18 : Notre palette, en texte sur le fond Blanc" id="exemple" data-transition="fade" style="background:#FAF9F4;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Notre palette, en texte sur le fond Blanc</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px">
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#0D1D45"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Marine 15,57:1</p><p style="font-size:24px;color:#00722F;font-weight:600">Passe en AAA</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#8A3FFC"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Violet 4,74:1</p><p style="font-size:24px;color:#00722F;font-weight:600">Passe en AA</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#2F6BFF"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Bleu 4,26:1</p><p style="font-size:24px;color:#C11C1B;font-weight:600">Grand texte seulement</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#D627C9"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Magenta 3,98:1</p><p style="font-size:24px;color:#C11C1B;font-weight:600">Grand texte seulement</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#FF5A4E"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Corail 2,91:1</p><p style="font-size:24px;color:#C11C1B;font-weight:600">Aucun texte</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#FF7A1A"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Orange 2,47:1</p><p style="font-size:24px;color:#C11C1B;font-weight:600">Aucun texte</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#00B3B0"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Turquoise 2,46:1</p><p style="font-size:24px;color:#C11C1B;font-weight:600">Aucun texte</p></div></div>
+<div style="background:#FFFFFF;border:1px solid #E2E1DA;border-radius:16px;padding:24px;display:flex;flex-direction:row;gap:20px;align-items:center"><div style="width:72px;height:72px;border-radius:12px;background:#F5A00B"></div><div style="display:flex;flex-direction:column;gap:4px"><p style="font-size:32px;font-weight:700">Ambre 2,00:1</p><p style="font-size:24px;color:#C11C1B;font-weight:600">Aucun texte</p></div></div>
+</div>
+<p style="font-size:32px;color:#4C5674;line-height:1.4">Ces couleurs restent superbes en fond et en accent. Pour le texte, on prend leur nuance 600 : toutes passent, autour de 5,8:1.</p>
+<aside>Chiffres mesurés avec Lisio sur le fond Blanc #FAF9F4, couleurs Main telles que saisies. Bleu et Magenta passent le seuil de 3:1 du grand texte (24 px, ou 18,66 px en gras), pas celui de 4,5:1 du texte courant. Corail, Orange, Turquoise et Ambre n’atteignent même pas 3:1 : ni texte, ni bordure de champ. Leur nuance 600 passe entre 5,77:1 et 5,81:1 sur le même fond.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="5 sur 18 : Main, puis 11 nuances de 50 à 950" id="nuances" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Main, puis 11 nuances de 50 à 950</h2>
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:grid;grid-template-columns:200px repeat(12, 1fr);gap:8px;align-items:center">
+<p style="font-size:24px;font-weight:700">Turquoise</p>
+<div style="height:72px;border-radius:8px;background:#00B3B0;border:3px solid #0F1B3D"></div><div style="height:72px;border-radius:8px;background:#DFFFFD"></div><div style="height:72px;border-radius:8px;background:#C7F9F6"></div><div style="height:72px;border-radius:8px;background:#94E9E5"></div><div style="height:72px;border-radius:8px;background:#50CECB"></div><div style="height:72px;border-radius:8px;background:#00A3A1"></div><div style="height:72px;border-radius:8px;background:#008280"></div><div style="height:72px;border-radius:8px;background:#006E6C"></div><div style="height:72px;border-radius:8px;background:#005A58"></div><div style="height:72px;border-radius:8px;background:#004443"></div><div style="height:72px;border-radius:8px;background:#002F2E"></div><div style="height:72px;border-radius:8px;background:#001D1C"></div>
+</div>
+<div style="display:grid;grid-template-columns:200px repeat(12, 1fr);gap:8px;align-items:center">
+<p style="font-size:24px;font-weight:700">Ambre</p>
+<div style="height:72px;border-radius:8px;background:#F5A00B;border:3px solid #0F1B3D"></div><div style="height:72px;border-radius:8px;background:#FFF7EE"></div><div style="height:72px;border-radius:8px;background:#FFECD7"></div><div style="height:72px;border-radius:8px;background:#FFD29D"></div><div style="height:72px;border-radius:8px;background:#FFAA2A"></div><div style="height:72px;border-radius:8px;background:#CB8300"></div><div style="height:72px;border-radius:8px;background:#A26800"></div><div style="height:72px;border-radius:8px;background:#895700"></div><div style="height:72px;border-radius:8px;background:#714700"></div><div style="height:72px;border-radius:8px;background:#563500"></div><div style="height:72px;border-radius:8px;background:#3C2300"></div><div style="height:72px;border-radius:8px;background:#271500"></div>
+</div>
+<div style="display:grid;grid-template-columns:200px repeat(12, 1fr);gap:8px;align-items:center">
+<p style="font-size:24px;font-weight:700"></p>
+<p style="font-size:24px;font-weight:700">Main</p><p style="font-size:24px">50</p><p style="font-size:24px">100</p><p style="font-size:24px">200</p><p style="font-size:24px">300</p><p style="font-size:24px">400</p><p style="font-size:24px">500</p><p style="font-size:24px;font-weight:700">600</p><p style="font-size:24px">700</p><p style="font-size:24px">800</p><p style="font-size:24px">900</p><p style="font-size:24px">950</p>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Main d’abord</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Votre couleur, telle que saisie, en tête de chaque gamme.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Un numéro, une clarté</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Turquoise 600 et Ambre 600 ont le même contraste : 5,77:1 et 5,81:1 sur Blanc.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">On retient des numéros</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Si 700 sur 100 passe pour une couleur, il passe pour toutes.</p></div>
+</div>
+<aside>La page Couleurs de Lisio décline chaque couleur. Main est la couleur saisie, entourée ici. Les nuances sont calées sur la clarté, pas sur un pourcentage de blanc : c’est ce qui permet d’avoir des nuances foncées lisibles même pour un jaune ou un turquoise. Montrer la page Couleurs en direct si possible.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="6 sur 18 : Les rôles : une couleur avec un métier" id="roles" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Les rôles : une couleur avec un métier</h2>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:28px;color:#0F1B3D">
+<tr><th style="width:30%;text-align:left">Rôle</th><th style="width:22%;text-align:left">En clair</th><th style="width:22%;text-align:left">En sombre</th><th style="width:26%;text-align:left">Vérifié contre</th></tr>
+<tr><td>text/default</td><td>Marine Main</td><td>Marine 50</td><td>background/default</td></tr>
+<tr><td>background/default</td><td>Blanc Main</td><td>Blanc 950</td><td>text/default</td></tr>
+<tr><td>action/default</td><td>Marine Main</td><td>Marine 50</td><td>text/on-action</td></tr>
+<tr><td>border/default</td><td>Marine 500</td><td>Marine 500</td><td>3:1 sur le fond</td></tr>
+<tr><td>error/text</td><td>Erreur 600</td><td>Erreur 400</td><td>error/surface</td></tr>
+</table>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Dans les maquettes, toujours le rôle</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Jamais la nuance brute. Changer de marque ou passer en sombre ne touche alors que les rôles.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">La couleur ne suffit jamais</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Une erreur a aussi une icône et un texte qui dit quoi corriger (critères 1.4.1 et 3.3.1).</p></div>
+</div>
+<aside>Les valeurs viennent de la palette de l’équipe chargée dans Lisio. Lisio propose les rôles automatiquement, puis revérifie chaque paire en clair et en sombre. Dans Figma, ce sont les variables de la collection Semantic, avec deux modes Light et Dark.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="7 sur 18 : Le parcours en 6 étapes" id="parcours" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Le parcours en 6 étapes</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><p style="font-size:24px;font-weight:700;color:#1C54E5">1</p><h3 style="font-size:32px;font-weight:700">Contrastes</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Saisir les couleurs. La matrice dit quel texte se lit sur quel fond.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><p style="font-size:24px;font-weight:700;color:#1C54E5">2</p><h3 style="font-size:32px;font-weight:700">Couleurs</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Chaque couleur devient Main et 11 nuances.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><p style="font-size:24px;font-weight:700;color:#1C54E5">3</p><h3 style="font-size:32px;font-weight:700">Polices</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Tester la police sur un vrai texte, avec nos couleurs.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><p style="font-size:24px;font-weight:700;color:#1C54E5">4</p><h3 style="font-size:32px;font-weight:700">Styles de texte</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Régler le desktop, Lisio calcule le mobile.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><p style="font-size:24px;font-weight:700;color:#1C54E5">5</p><h3 style="font-size:32px;font-weight:700">Design system</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Un rôle par couleur, en clair et en sombre.</p></div>
+<div style="background:#0F1B3D;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><p style="font-size:24px;font-weight:700;color:#9BBCFF">6</p><h3 style="font-size:32px;font-weight:700;color:#F4F5F8">Exporter</h3><p style="font-size:24px;color:#C3CCE0;line-height:1.4">Un fichier, un plugin, et tout arrive dans Figma.</p></div>
+</div>
+<p style="font-size:24px;color:#4C5674">En haut de chaque page, un compteur d’erreurs par étape. En bas, « Étape suivante » propose de corriger avant d’avancer.</p>
+<aside>Les étapes s’affichent en haut de chaque page de Lisio. On peut avancer avec des erreurs et y revenir. Avant l’export, la liste « À corriger avant d’exporter » récapitule tout, avec la correction en un clic.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="8 sur 18 : Une typo fluide, qui garde le zoom" id="typo" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Une typo fluide, qui garde le zoom</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:40px;display:flex;flex-direction:column;gap:16px"><p style="font-size:72px;font-weight:700;letter-spacing:-1.5px;white-space:nowrap">390 → 1440</p><p style="font-size:24px;color:#4C5674;line-height:1.4">La taille glisse du mobile au grand écran avec clamp(). On règle le desktop, Lisio calcule le mobile.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:40px;display:flex;flex-direction:column;gap:16px"><p style="font-size:72px;font-weight:700;letter-spacing:-1.5px">2,5 ×</p><p style="font-size:24px;color:#4C5674;line-height:1.4">Écart maximum entre desktop et mobile. Au-delà, le zoom ne peut plus atteindre 200 % (critère 1.4.4) : Lisio bloque.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:40px;display:flex;flex-direction:column;gap:16px"><p style="font-size:72px;font-weight:700;letter-spacing:-1.5px">4 styles</p><p style="font-size:24px;color:#4C5674;line-height:1.4">Dans Figma, chaque style existe en Mobile, Tablet, Desktop et Desktop XL.</p></div>
+</div>
+<p style="font-size:24px;color:#4C5674">Les WCAG ne fixent pas de taille minimum. 16 px reste l’usage pour le texte courant, et Lisio prévient sous 12 px.</p>
+<aside>Source de la limite de 2,5 fois : Maxwell Barvian, « Addressing Accessibility Concerns With Using Fluid Type », Smashing Magazine, 7 novembre 2023. Le calcul vient de ce que le zoom du navigateur n’agrandit pas la partie de la taille liée à la largeur de l’écran.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="9 sur 18 : Installer le plugin Figma, une seule fois" id="plugin" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Installer le plugin Figma, une seule fois</h2>
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px 40px;display:flex;flex-direction:row;gap:32px;align-items:center"><p style="font-size:44px;font-weight:700;color:#1C54E5;width:60px">1</p><p style="font-size:32px;line-height:1.35">Dans Lisio, page Exporter : <b>Plugin Figma (.zip)</b>, puis décompresser.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px 40px;display:flex;flex-direction:row;gap:32px;align-items:center"><p style="font-size:44px;font-weight:700;color:#1C54E5;width:60px">2</p><p style="font-size:32px;line-height:1.35">Dans l’application Figma pour ordinateur : <b>Plugins › Development › Import new plugin from manifest…</b>, puis manifest.json.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px 40px;display:flex;flex-direction:row;gap:32px;align-items:center"><p style="font-size:44px;font-weight:700;color:#1C54E5;width:60px">3</p><p style="font-size:32px;line-height:1.35">Ensuite, il est dans <b>Plugins › Development › Lisio</b>.</p></div>
+</div>
+<p style="font-size:24px;color:#4C5674">Plugin de développement : il s’installe depuis l’application pour ordinateur, pas depuis le navigateur.</p>
+<aside>Faire la manipulation en direct, une personne à la fois si besoin. Le zip est aussi dans les fichiers du projet. Une fois les variables importées dans un fichier, elles s’utilisent partout, navigateur compris.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="10 sur 18 : Importer : ce qui arrive dans Figma" id="import" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Importer : ce qui arrive dans Figma</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Variables</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Colors, Semantic (Light et Dark), Typography (un mode par écran), Layout, Dimensions.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Styles de texte</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">H1/Mobile à Body/Desktop XL, reliés aux variables de police.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Planches</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Palette de couleurs avec Main en premier, couleurs par rôle, typographie fluide.</p></div>
+<div style="background:#0F1B3D;border-radius:16px;padding:36px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700;color:#F4F5F8">Composants</h3><p style="font-size:24px;color:#C3CCE0;line-height:1.4">Bouton, Champ et Alerte, reliés aux variables : passez une maquette en Dark, ils suivent.</p></div>
+</div>
+<p style="font-size:24px;color:#4C5674">Exporter dans Lisio copie le fichier : on le colle dans le plugin. Relancer l’import met à jour, sans doublons.</p>
+<aside>Noms en anglais dans Figma pour coller au code. Les composants sont créés sur une page « Lisio components » si on coche la case dans le plugin, ou avec le bouton « Créer seulement les composants ».</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="11 sur 18 : Vérifier une maquette existante" id="audit" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Vérifier une maquette existante</h2>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:28px;color:#0F1B3D">
+<tr><th style="width:40%;text-align:left">Texte de la maquette</th><th style="width:16%;text-align:left">Avant</th><th style="width:28%;text-align:left">Correction proposée</th><th style="width:16%;text-align:left">Après</th></tr>
+<tr><td>Gris trop clair</td><td>1,90:1</td><td>ink/500</td><td>4,64:1</td></tr>
+<tr><td>Lien orange trop pâle</td><td>1,90:1</td><td>warning/500</td><td>4,66:1</td></tr>
+<tr><td>Gris collé à la main</td><td>2,64:1</td><td>canvas/500</td><td>4,67:1</td></tr>
+<tr><td>Blanc sur bouton bleu clair</td><td>3,18:1</td><td>noir</td><td>6,58:1</td></tr>
+</table>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Corriger, ou Tout corriger</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">La couleur passe dans le design system, reliée à sa variable, dans la même famille. Ctrl ou Cmd + Z annule.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Ses limites</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Fonds unis seulement. Dégradé ou image : « à vérifier ». Il change le texte, jamais le fond.</p></div>
+</div>
+<aside>Résultats réels d’un test du plugin sur une maquette volontairement ratée, au niveau AA : 4 textes sous le seuil, 4 corrigés. Le plugin liste aussi les couleurs utilisées et signale celles qui sortent du design system. Pour le bouton bleu clair, la meilleure correction est souvent de foncer le fond : à faire à la main.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="12 sur 18 : Pour les développeurs : le même système en CSS" id="css" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Pour les développeurs : le même système en CSS</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+<div style="background:#0F1B3D;border-radius:16px;padding:40px;display:flex;flex-direction:column;gap:6px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9BBCFF">/* 1. Primitives */</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--marine: #0D1D45;</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--marine-600: #4E628B;</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#9BBCFF">/* 2. Rôles */</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--text-default: var(--marine);</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#F4F5F8">--background-default: var(--blanc);</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:32px;line-height:1.4"><b>Quatre couches</b> : primitives, rôles, layout, typographie.</p>
+<p style="font-size:32px;line-height:1.4"><b>Prêt à l’emploi</b> : une classe .t- par style, focus, liens, .btn, .field, .alert.</p>
+<p style="font-size:32px;line-height:1.4"><b>Mode sombre</b> : prefers-color-scheme ou data-theme.</p>
+</div>
+</div>
+<p style="font-size:24px;color:#4C5674">Page Exporter, « Copier le CSS ». Le JSON suit le format des design tokens du W3C.</p>
+<aside>Extrait simplifié du CSS exporté avec la palette de l’équipe. Les composants ne pointent jamais vers une primitive : ils passent par un rôle. Même logique que dans Figma, avec les mêmes noms.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="13 sur 18 : Voir le système sur de vraies pages" id="pages" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Voir le système sur de vraies pages</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Accueil</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Menu, accroche, une seule action principale, trois offres.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Formulaire</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Étapes, erreurs dites en mots, résumé des champs à corriger.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Article</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Fil d’Ariane, « En bref », lignes de 70 caractères au plus.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Tableau de bord</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Cartes, statuts en mots, état vide qui dit quoi faire.</p></div>
+</div>
+<p style="font-size:32px;line-height:1.4"><b>Sous chaque page, les lois UX qui s’y appliquent</b> : Fitts, Hick, Jakob, proximité… Un ✓ ou un ✕ quand Lisio peut les mesurer sur votre système.</p>
+<p style="font-size:24px;color:#4C5674">Onglet Design system, sélecteur « Page ». Définitions : Jon Yablonski, Laws of UX, lawsofux.com.</p>
+<aside>Les pages sont dessinées uniquement avec le CSS exporté : si une couleur ou une taille change dans Lisio, elles suivent. Changer d’écran (320 à 1440 px) et de mode (clair, sombre) pour voir le comportement réel. Exemple de contrôle : la loi de proximité vérifie que l’étiquette est plus proche de son champ que du champ suivant.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="14 sur 18 : États des composants et grille" id="etats" data-transition="fade" style="background:#E8EBF1;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">États des composants et grille</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Page États</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Repos, survol, appuyé, focus clavier, chargement, désactivé, erreur, vide. Chaque contraste est mesuré.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Grille par écran</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Colonnes, gouttières et marges, avec un schéma à l’échelle et le calque « Afficher la grille » sur les pages.</p></div>
+</div>
+<p style="font-size:32px;line-height:1.4"><b>Notre règle</b> : un composant n’est pas fini tant que ses états ne sont pas dessinés.</p>
+<aside>Dans Figma, le plugin crée un style de grille par écran (Grid/Mobile 390 à Grid/Desktop XL 1440) à partir des mêmes valeurs. Le bouton clair / sombre en haut de Lisio ne change que l’interface de l’outil ; le mode de l’aperçu se règle à part.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="15 sur 18 : Travailler à plusieurs" id="equipe" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Travailler à plusieurs</h2>
+<table style="font-family:'DM Sans', Arial, sans-serif;font-size:28px;color:#0F1B3D">
+<tr><th style="width:42%;text-align:left">Besoin</th><th style="width:58%;text-align:left">Dans Lisio, page Exporter</th></tr>
+<tr><td>Donner le projet à un collègue</td><td>Copier le lien de partage</td></tr>
+<tr><td>Archiver une version</td><td>Enregistrer le projet, puis Ouvrir un projet</td></tr>
+<tr><td>Voir ce qui a changé</td><td>Depuis le dernier export, Copier le résumé</td></tr>
+<tr><td>Comparer avec un collègue</td><td>Comparer deux versions</td></tr>
+<tr><td>Présenter à un client</td><td>Rapport d’accessibilité, en PDF</td></tr>
+<tr><td>Revenir en arrière</td><td>Annuler, ou Ctrl ou Cmd + Z</td></tr>
+</table>
+<p style="font-size:32px;line-height:1.4"><b>Notre règle</b> : une seule personne exporte vers Figma. Les autres envoient un lien, elle compare avant de reprendre.</p>
+<aside>Pas de compte ni de serveur : les réglages vivent dans le navigateur. Un lien de partage contient tout le projet, donc toute personne qui a le lien peut l’ouvrir. La comparaison liste les écarts variable par variable et leur effet sur les contrastes, sans rien remplacer.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="16 sur 18 : Ce que Lisio ne vérifie pas" id="limites" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Ce que Lisio ne vérifie pas</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Clavier</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Tout au clavier, pas de piège, ordre logique, focus visible et jamais caché.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Images et médias</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Textes alternatifs, sous-titres, mouvement qu’on peut arrêter, pas de flash.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Formulaires</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Étiquette visible, erreur décrite en texte, nom lu par le lecteur d’écran.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Structure</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Titre de page, titres dans l’ordre, langue déclarée, liens explicites.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Zoom</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Lisible à 200 % et à 320 px de large, cibles d’au moins 24 px.</p></div>
+<div style="background:#0F1B3D;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700;color:#F4F5F8">La check-list</h3><p style="font-size:24px;color:#C3CCE0;line-height:1.4">Page Exporter, écran par écran. Elle part dans le rapport.</p></div>
+</div>
+<aside>Lisio couvre les couleurs et la typographie, pas toute l’accessibilité. Le reste se teste sur les vrais écrans, au clavier et avec un lecteur d’écran : VoiceOver sur Mac et iPhone, NVDA sur Windows. Chaque point de la check-list renvoie vers le critère WCAG correspondant.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="17 sur 18 : Mode Formation : 10 questions" id="exercice" data-transition="fade" style="background:#0F1B3D;color:#F4F5F8;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:48px">
+<p style="font-size:32px;color:#9BBCFF;font-weight:600;letter-spacing:2px;text-transform:uppercase">À vous · 15 minutes</p>
+<h2 style="font-size:120px;font-weight:700;line-height:1.05;letter-spacing:-3px">Mode Formation :<br>10 questions</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px">
+<div style="background:#18264F;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">1. Ouvrir</h3><p style="font-size:24px;color:#C3CCE0;line-height:1.4">Lisio, onglet Guide, carte « S’entraîner ».</p></div>
+<div style="background:#18264F;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">2. Répondre</h3><p style="font-size:24px;color:#C3CCE0;line-height:1.4">Paires, seuils, rôles, calcul : chaque réponse est expliquée.</p></div>
+<div style="background:#18264F;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">3. Comparer</h3><p style="font-size:24px;color:#C3CCE0;line-height:1.4">On met en commun les scores et la liste « À revoir ».</p></div>
+</div>
+<aside>Les questions utilisent les couleurs chargées dans Lisio : ouvrir d’abord le lien de partage de la palette de l’équipe pour que tout le monde ait les mêmes. En écran partagé, on peut aussi faire le quiz ensemble et voter à main levée.</aside>
+</section>
+<section class="slide" role="group" aria-roledescription="diapositive" aria-label="18 sur 18 : Pour aller plus loin" id="sources" data-transition="fade" style="background:#F4F5F8;color:#0F1B3D;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-size:72px;font-weight:700;letter-spacing:-1.5px;line-height:1.1">Pour aller plus loin</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">L’outil</h3><p style="font-size:24px;color:#4C5674;line-height:1.4"><a href="https://lisio-psi.vercel.app" rel="noopener">lisio-psi.vercel.app</a>, et le guide de formation écrit, qui reprend cette séance.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">La norme</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">W3C, <a href="https://www.w3.org/TR/WCAG22/" rel="noopener">WCAG 2.2</a>, recommandation du 5 octobre 2023, et ses pages <a href="https://www.w3.org/WAI/WCAG22/Understanding/" rel="noopener">Understanding</a>.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">Le cadre légal</h3><p style="font-size:24px;color:#4C5674;line-height:1.4"><a href="https://accessibilite.numerique.gouv.fr/" rel="noopener">RGAA 4.1</a>, norme EN 301 549, directive (UE) <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj" rel="noopener">2019/882</a>, applicable depuis le 28 juin 2025.</p></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px"><h3 style="font-size:32px;font-weight:700">La typo fluide</h3><p style="font-size:24px;color:#4C5674;line-height:1.4">Maxwell Barvian, « <a href="https://www.smashingmagazine.com/2023/11/addressing-accessibility-concerns-fluid-type/" rel="noopener">Addressing Accessibility Concerns With Using Fluid Type</a> », Smashing Magazine, 7 novembre 2023.</p></div>
+</div>
+<p style="font-size:32px;font-weight:700">Questions ?</p>
+<aside>Le guide de formation écrit est un document partagé : il reprend chaque slide avec plus de détails, la FAQ et la check-list complète. Le zip du plugin est dans les fichiers du projet.</aside>
+</section>
+</div>
+<section class="notes" id="notes" aria-labelledby="notesH" hidden><h2 id="notesH">Notes de l’animateur</h2><p id="notesP"></p></section>
+</main>
+<footer class="foot"><p style="margin:0"><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><p style="margin:0"><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 (W3C)</a></p></footer>
+<script>
+(function(){
+const stage=document.getElementById("stage"),slides=[...stage.querySelectorAll(".slide")],N=slides.length;
+const prev=document.getElementById("prev"),next=document.getElementById("next"),cnt=document.getElementById("cnt"),pick=document.getElementById("pick"),notesB=document.getElementById("notesB"),notes=document.getElementById("notes"),notesP=document.getElementById("notesP"),fsB=document.getElementById("fsB"),live=document.getElementById("live");
+let i=0,showNotes=false;try{showNotes=localStorage.getItem("lisio-slide-notes")==="1"}catch(e){}
+function fit(){const r=stage.getBoundingClientRect(),s=Math.min(r.width/1920,r.height/1080),dx=(r.width-1920*s)/2,dy=(r.height-1080*s)/2;slides.forEach(el=>{el.style.transform=`translate(${dx}px,${dy}px) scale(${s})`});}
+function go(k,announce){i=Math.max(0,Math.min(N-1,k));slides.forEach((el,j)=>{el.hidden=j!==i});prev.disabled=i===0;next.disabled=i===N-1;cnt.textContent=`${i+1} / ${N}`;pick.value=String(i);
+ const a=slides[i].querySelector("aside");notesP.textContent=a?a.textContent:"Pas de note pour cette diapositive.";notes.hidden=!showNotes;notesB.setAttribute("aria-pressed",String(showNotes));
+ if(announce)live.textContent=`Diapositive ${i+1} sur ${N} : ${slides[i].getAttribute("aria-label").replace(/^\d+ sur \d+ : /,"")}`;
+ history.replaceState(null,"","#"+(i+1));}
+prev.addEventListener("click",()=>go(i-1,true));next.addEventListener("click",()=>go(i+1,true));
+pick.addEventListener("change",()=>go(+pick.value,true));
+notesB.addEventListener("click",()=>{showNotes=!showNotes;try{localStorage.setItem("lisio-slide-notes",showNotes?"1":"0")}catch(e){}go(i)});
+if(stage.requestFullscreen){fsB.addEventListener("click",()=>{document.fullscreenElement?document.exitFullscreen():stage.requestFullscreen()});document.addEventListener("fullscreenchange",()=>{fsB.setAttribute("aria-pressed",String(!!document.fullscreenElement));requestAnimationFrame(fit)})}else fsB.hidden=true;
+document.addEventListener("keydown",e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const t=e.target;if(t.closest&&t.closest("select,input,textarea"))return;
+ if(e.key==="ArrowRight"||e.key==="PageDown"||(e.key===" "&&document.fullscreenElement)){e.preventDefault();go(i+1,true)}else if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(i-1,true)}else if(e.key==="Home"&&!t.closest("a,button")){go(0,true)}else if(e.key==="End"&&!t.closest("a,button")){go(N-1,true)}});
+new ResizeObserver(fit).observe(stage);
+const h=parseInt(location.hash.slice(1),10);go(h>=1&&h<=N?h-1:0);fit();
+})();
+</script>
+</body>
+</html>
