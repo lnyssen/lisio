@@ -741,7 +741,7 @@ body{background:var(--bg)}
   :root{--navh:calc(72px + env(safe-area-inset-bottom,0px))}
   .appbar{height:60px;border-bottom:0!important;margin-bottom:12px}
   nav.tabs{padding-right:20vw!important;background:var(--surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-top:0!important;border-radius:24px 24px 0 0;box-shadow:0 -6px 28px rgba(11,43,44,.10)}
-  #tab-styles,#tab-lisibilite,#tab-sources{display:none!important}
+  #tab-palette,#tab-styles,#tab-lisibilite,#tab-sources{display:none!important}
   nav.tabs button{font-size:11.5px;gap:4px;color:var(--muted)}
   nav.tabs button[aria-selected="true"]{color:var(--ink)}
   nav.tabs button svg,nav.tabs button[aria-selected="false"] svg{width:56px!important;height:32px!important;padding:4px 16px!important;box-sizing:border-box}
@@ -941,6 +941,56 @@ body{background:var(--bg)}
 .palbar .paledit{background:var(--primary);color:var(--primary-ink);border-color:var(--primary);min-height:44px;padding:0 18px;font-size:14px}
 .palbar[open] .paledit{background:var(--hover);color:var(--ink);border-color:transparent}
 @media (max-width:760px){.palchip i{width:32px;height:32px;border-radius:10px}.palchip{padding:4px 10px 4px 4px;font-size:14px}.palbar .paledit{width:100%;justify-content:center}}
+
+/* ===== Personnalisation plus fine et blocs à inclure ===== */
+.ds-inc{border:0;margin:0 0 18px;padding:16px 18px;border-radius:20px;background:var(--bg)}
+.ds-inc legend{float:left;width:100%;padding:0;margin:0 0 4px;font-size:17px;font-weight:600}
+.ds-inc .note{clear:both;margin:0 0 10px}
+.ds-incg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.ds-incg label{display:flex!important;flex-direction:row!important;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:14px;background:var(--surface);cursor:pointer;line-height:1.3}
+.ds-incg input{width:20px;height:20px;margin:0;flex:none;accent-color:var(--primary)}
+.ds-incg b{display:block;font-weight:600;font-size:14px}.ds-incg small{color:var(--muted);font-size:12px}
+.ds-incg label:has(input:not(:checked)) b{color:var(--muted);text-decoration:line-through}
+.ds-x{margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--hover);color:var(--muted);font-size:12px;font-weight:600;vertical-align:middle}
+.ds-sec.ds-off>:not(h3){opacity:.55}
+.ds-rg{display:grid;gap:8px;margin:4px 0 10px}
+.ds-r{display:grid;grid-template-columns:90px minmax(0,1fr) 52px;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--muted)}
+.ds-r input{width:100%;accent-color:var(--primary);min-height:24px}
+.ds-r output{font-family:var(--mono);font-size:13px;color:var(--ink);text-align:right}
+.imrs{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))!important;margin-bottom:10px}
+.imr{position:relative;cursor:pointer}.imr-c{font-size:12px;display:flex;flex-direction:column;line-height:1.35;overflow-wrap:anywhere}
+.imr input{position:absolute;top:6px;left:6px;width:20px;height:20px;margin:0;accent-color:var(--primary);z-index:1}
+.imr:has(input:not(:checked))>div{opacity:.35}
+.imr:has(input:checked)>div{border-style:solid;border-color:var(--primary)}
+
+/* ===== Menu replié : colonne en pilule, ronds partout ===== */
+@media (min-width:761px){
+  :root.side-c{--sbtn:clamp(40px,5.6vh,52px);--st:calc(var(--sbtn) * 2 + 52px);--sf:calc(var(--sbtn) + 40px)}
+  :root.side-c .side-top{border-radius:38px 38px 0 0!important;padding:22px 0 8px!important;justify-content:flex-start!important;gap:12px!important}
+  :root.side-c .side-foot{border-radius:0 0 38px 38px!important;padding:8px 0 22px!important;align-items:center}
+  :root.side-c nav.tabs,:root.side-c nav.tabs.has-ink{border-radius:38px!important}
+  :root.side-c .side-b,:root.side-c nav.tabs button,:root.side-c .help-b{width:var(--sbtn)!important;height:var(--sbtn)!important;min-width:0;border-radius:50%!important;padding:0!important;justify-content:center}
+  :root.side-c .side-b{display:grid;place-items:center}
+  :root.side-c .tab-ink,:root.side-c .tab-hov{border-radius:999px!important}
+  :root.side-c .side-b:focus-visible,:root.side-c nav.tabs button:focus-visible,:root.side-c .help-b:focus-visible{outline:2px solid #FFFFFF;outline-offset:3px}
+}
+
+/* ===== Parcours : Couleurs, Nuances ===== */
+.palrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 14px 14px 18px;border-radius:var(--tile);background:var(--surface)}
+.palrow .paledit{text-decoration:none}
+.cwatch h2{margin:0 0 4px}.cw-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.cw-list li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--bg)}
+.cw-sw{width:44px;height:44px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.45)}
+.cw-t b{display:block}.cw-t span{font-size:14px;color:var(--muted)}
+.cw-a{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.cw-a .dot{width:14px;height:14px;border-radius:50%;display:inline-block;box-shadow:inset 0 0 0 1px rgba(127,127,127,.5)}
+.cw-ok{color:var(--muted)}
+.cw-v{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700}
+@media (max-width:640px){.cw-list li{grid-template-columns:44px minmax(0,1fr)}.cw-a{grid-column:1/-1;justify-content:flex-start}}
+.shgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px 20px;margin-top:12px;align-items:end}
+.shx{display:flex!important;flex-direction:row!important;gap:10px;align-items:flex-start;font-size:14px;grid-column:1/-1}.shx input{width:20px;height:20px;margin:0;flex:none;accent-color:var(--primary)}
+.j-sub{display:inline-flex;gap:4px;margin-left:8px;vertical-align:middle}.j-sub a{padding:4px 12px;border-radius:999px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:13px;font-weight:600;box-shadow:inset 0 0 0 1px var(--hair)}.j-sub a[aria-current="page"]{background:var(--primary);color:var(--primary-ink);box-shadow:none}
+.pd-ds{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:var(--bg)}.pd-ds h3{margin:0;font-size:15px}.pd-ds .row{gap:6px}
 </style>
 
 <a class="app-skip" href="#main">Aller au contenu</a>
@@ -953,9 +1003,10 @@ body{background:var(--bg)}
     <nav class="tabs" id="sideNav" role="tablist" aria-label="Sections">
       <span class="tab-hov" aria-hidden="true"></span><span class="tab-ink" aria-hidden="true"></span>
       <span class="tab-grp first" aria-hidden="true">Couleurs</span>
+      <button role="tab" id="tab-couleurs" aria-controls="couleurs" data-view="couleurs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg><span>Couleurs</span></button>
+      <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9.3h16M4 14.7h16"/></svg><span>Nuances</span></button>
       <button role="tab" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/></svg><span><span class="dsk">Contrastes</span><span class="mob">Contraste</span></span></button>
-      <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg><span>Couleurs</span></button>
-      <span class="tab-grp" aria-hidden="true">Texte</span>
+      <span class="tab-grp" aria-hidden="true">Typographie</span>
       <button role="tab" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18.5 8 5.5l5 13M4.8 14h6.4"/><path d="M15.5 11c.6-.6 1.4-1 2.3-1 1.6 0 2.7 1 2.7 2.6v5.9M20.5 15.1c-2.8 0-5 .5-5 2 0 1 .8 1.6 2 1.6 1.7 0 3-1.2 3-3"/></svg><span>Polices</span></button>
       <button role="tab" id="tab-styles" aria-controls="styles" data-view="styles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16M4 10h11M4 14.5h16M4 19h8"/></svg><span>Styles<span class="dsk"> de texte</span></span></button>
       <span class="tab-grp" aria-hidden="true">Système</span>
@@ -976,18 +1027,11 @@ body{background:var(--bg)}
   <nav class="journey" id="journey" aria-label="Parcours en 6 étapes" hidden></nav>
 
   <!-- MATRICE -->
-  <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice">
-    <header class="mhead">
-      <div>
-        <h1>Contrastes</h1>
-        <p class="lead" id="mLead"></p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Semantic</p>
-      </div>
-      <div class="counts" id="counts"></div>
-    </header>
-    <details class="palbar" id="palBar">
-      <summary><span class="palchips" id="palChips"></span><span class="btn sm paledit"><span class="when-closed">Modifier les couleurs</span><span class="when-open">Fermer</span></span></summary>
+  <!-- COULEURS -->
+  <section id="couleurs" role="tabpanel" aria-labelledby="tab-couleurs" hidden style="display:flex;flex-direction:column;gap:20px">
+    <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">Votre palette de marque : saisissez-la, importez-la d’une image, puis corrigez tout de suite les couleurs qui ne se lisent avec aucune autre.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
         <div class="card-surface colors-edit" id="colorsCard">
-          <div class="row between"><h2 class="sr">Modifier vos couleurs</h2><button class="btn sm" id="resetPalette" type="button">Revenir à l’exemple</button></div>
+          <div class="row between"><h2>Vos couleurs</h2><button class="btn sm" id="resetPalette" type="button">Revenir à l’exemple</button></div>
           <p class="small muted">De 2 à 12 couleurs. Ajoutez‑les une à une, depuis une image (bouton, glisser‑déposer ou Ctrl+V), ou collez une liste.</p>
           <div class="editor-inline" id="editor"></div>
           <div class="row">
@@ -1012,7 +1056,18 @@ body{background:var(--bg)}
             <div class="row"><button class="btn primary" id="imgReplace" type="button">Remplacer mes couleurs</button><button class="btn" id="imgAdd" type="button">Ajouter à mes couleurs</button></div>
           </div>
         </div>
-    </details>
+    <div class="card-surface cwatch" id="cWatch" aria-live="polite"></div>
+  </section>
+
+  <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice" hidden>
+    <header class="mhead">
+      <div>
+        <h1>Contrastes</h1>
+        <p class="lead" id="mLead"></p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Semantic</p>
+      </div>
+      <div class="counts" id="counts"></div>
+    </header>
+    <div class="palbar palrow" id="palBar"><span class="palchips" id="palChips"></span><a class="btn sm paledit" href="#couleurs">Modifier les couleurs</a></div>
     <div class="mx-main">
         <div class="mtools">
           <button class="btn" type="button" data-pop="popFont" aria-expanded="false" aria-controls="popFont"><span id="mFontAa" style="font-weight:800">Aa</span> <span id="mFontName">Police</span></button>
@@ -1136,6 +1191,7 @@ body{background:var(--bg)}
     <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté. Passez du système à des pages types (accueil, formulaire, article, tableau de bord) avec les lois UX qui s’y appliquent, puis aux états des composants. Changez d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
     <div class="card-surface ds-panel">
       <div class="row between"><div><h2>Personnaliser</h2><p class="note" id="dsState"></p></div><button class="btn sm" type="button" id="dsReset">Revenir au système de base</button></div>
+      <fieldset class="ds-inc" id="dsInc"><legend>Ce que contient votre design system</legend><p class="note">Toujours inclus : couleurs et nuances, rôles, espacements, tailles de cible et typographie. Décochez un bloc : il sort du fichier pour Figma et du CSS. L’aperçu le montre quand même, pour comparer.</p><div class="ds-incg" id="dsIncG"></div></fieldset>
       <div class="ds-grid">
         <section class="ds-sec" aria-labelledby="dsColH"><h3 id="dsColH">Couleurs des rôles</h3><p class="note">Un rôle, c’est une couleur qui a un métier : le texte, le fond, le bouton. Chaque rôle est vérifié avec son partenaire (le texte avec son fond, le bouton avec son libellé). « Auto » laisse Lisio choisir une nuance qui passe. Dans Figma, ce sont les variables de la collection <b>Semantic</b>.</p><div class="ds-modebar"><div class="seg" role="group" aria-label="Mode à régler" id="dsModeSeg"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><p class="note" id="dsModeNote"></p></div><div id="dsFixAll" class="ds-fixall" hidden></div><div class="ds-roles" id="dsRoles"></div></section>
         <section class="ds-sec" aria-labelledby="dsChH"><h3 id="dsChH">Graphiques</h3><div id="dsChart"></div></section>
@@ -1149,17 +1205,18 @@ body{background:var(--bg)}
           <section class="ds-sec" aria-labelledby="dsGrH"><h3 id="dsGrH">Grille par écran</h3><div class="ds-tw"><table class="ds-gt" id="dsGrid"></table></div><div class="gprev" id="dsGridPrev"></div></section>
           <section class="ds-sec" aria-labelledby="dsElH"><h3 id="dsElH">Effets et élévations</h3><p class="note">Ombres, opacités et flous. Une ombre dit « ceci est au-dessus », jamais « ceci est un bouton » : le contour d’un composant reste sa bordure. Dans Figma : styles d’effet <b>Elevation</b> et <b>Blur/Glass</b>, variables de la collection <b>Effects</b>.</p>
             <div class="ds-f"><span class="ds-l" id="dsElevL">Ombres</span><div class="seg" role="group" aria-labelledby="dsElevL" id="dsElev"><button type="button" data-v="none">Aucune</button><button type="button" data-v="soft">Douces</button><button type="button" data-v="strong">Marquées</button></div></div>
+            <div class="ds-rg" id="dsElevAdv"><div class="ds-r"><label for="dsElevI">Intensité</label><input type="range" id="dsElevI" min="0.5" max="2.5" step="0.25"><output for="dsElevI" id="dsElevIO"></output></div><div class="ds-r"><label for="dsElevB">Flou</label><input type="range" id="dsElevB" min="0.5" max="2" step="0.25"><output for="dsElevB" id="dsElevBO"></output></div><div class="ds-r"><label for="dsElevY">Hauteur</label><input type="range" id="dsElevY" min="0.5" max="2" step="0.25"><output for="dsElevY" id="dsElevYO"></output></div></div><div class="ds-f"><span class="ds-l" id="dsElevCL">Couleur des ombres</span><div class="seg" role="group" aria-labelledby="dsElevCL" id="dsElevC"><button type="button" data-v="ink">Encre du texte</button><button type="button" data-v="black">Noir</button><button type="button" data-v="brand">Couleur du bouton</button></div></div>
             <div class="elv" id="dsElevPrev"></div>
-            <div class="ds-f"><span class="ds-l" id="dsGlassL">Surfaces translucides (en-tête collant, barre d’outils)</span><div class="seg" role="group" aria-labelledby="dsGlassL" id="dsGlass"><button type="button" data-v="1">Opaques</button><button type="button" data-v="0.95">95 %</button><button type="button" data-v="0.9">90 %</button><button type="button" data-v="0.8">80 %</button></div></div>
+            <div class="ds-f"><span class="ds-l" id="dsGlassL">Surfaces translucides (en-tête collant, barre d’outils)</span><div class="seg" role="group" aria-labelledby="dsGlassL" id="dsGlass"><button type="button" data-v="1">Opaques</button><button type="button" data-v="0.95">95 %</button><button type="button" data-v="0.9">90 %</button><button type="button" data-v="0.8">80 %</button></div></div><div class="ds-f"><span class="ds-l" id="dsGlassBL">Flou derrière le verre</span><div class="seg" role="group" aria-labelledby="dsGlassBL" id="dsGlassB"><button type="button" data-v="0">Aucun</button><button type="button" data-v="8">8 px</button><button type="button" data-v="12">12 px</button><button type="button" data-v="16">16 px</button><button type="button" data-v="24">24 px</button></div></div><div class="ds-f"><span class="ds-l" id="dsScrimL">Voile sur photo</span><div class="seg" role="group" aria-labelledby="dsScrimL" id="dsScrim"><button type="button" data-v="0">Minimum lisible</button><button type="button" data-v="0.1">+ 10 %</button><button type="button" data-v="0.2">+ 20 %</button></div></div>
             <ul class="elchk" id="dsElevChk"></ul>
           </section>
-          <section class="ds-sec" aria-labelledby="dsImH"><h3 id="dsImH">Images et icônes</h3><p class="note">Quatre formats d’image, exportés en tokens <code>ratio-*</code>, et les règles qui vont avec.</p><div class="imrs"><figure class="imr"><div style="aspect-ratio:16/9"><span>16:9</span></div><figcaption><b>Bannière, vidéo</b> <code>ratio-wide</code></figcaption></figure><figure class="imr"><div style="aspect-ratio:3/2"><span>3:2</span></div><figcaption><b>Photo</b> <code>ratio-photo</code></figcaption></figure><figure class="imr"><div style="aspect-ratio:1/1"><span>1:1</span></div><figcaption><b>Vignette, avatar</b> <code>ratio-square</code></figcaption></figure><figure class="imr"><div style="aspect-ratio:4/5"><span>4:5</span></div><figcaption><b>Portrait</b> <code>ratio-portrait</code></figcaption></figure></div>
+          <section class="ds-sec" aria-labelledby="dsImH"><h3 id="dsImH">Images et icônes</h3><p class="note">Cochez les formats d’image à garder (tokens <code>ratio-*</code>), puis réglez arrondi, remplissage et tailles d’icônes.</p><div class="imrs" id="dsRatios" role="group" aria-label="Formats d’image à inclure"></div><div class="ds-f"><span class="ds-l" id="dsImgRL">Arrondi des images</span><div class="seg" role="group" aria-labelledby="dsImgRL" id="dsImgR"><button type="button" data-v="none">Droit</button><button type="button" data-v="sm">Petit</button><button type="button" data-v="md">Moyen</button><button type="button" data-v="lg">Grand</button></div></div><div class="ds-f"><span class="ds-l" id="dsImgFitL">Remplissage du cadre</span><div class="seg" role="group" aria-labelledby="dsImgFitL" id="dsImgFit"><button type="button" data-v="cover">Recadrer</button><button type="button" data-v="contain">Image entière</button></div></div><div class="ds-f"><span class="ds-l" id="dsIconL">Tailles d’icônes</span><div class="seg" role="group" aria-labelledby="dsIconL" id="dsIcon"><button type="button" data-v="compact">14 · 16 · 20</button><button type="button" data-v="std">16 · 20 · 24</button><button type="button" data-v="large">20 · 24 · 32</button></div></div>
             <dl class="imrules">
               <dt>Texte alternatif (1.1.1)</dt><dd>Décorative : <code>alt=""</code>. Informative : ce qu’elle apprend, en une phrase. Dans un lien ou un bouton : l’action, par exemple « Télécharger le PDF ». Graphique : un résumé, et les données à côté. <a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" target="_blank" rel="noopener">L’arbre de décision du W3C</a></dd>
               <dt>Pas de texte dans l’image (1.4.5)</dt><dd>Sauf le logo : un vrai texte s’agrandit, se traduit et se lit à voix haute.</dd>
               <dt>Texte sur photo</dt><dd>Toujours sur le voile <code>opacity-scrim</code>, mesuré ci-dessus sur la zone la plus claire possible.</dd>
               <dt>Formats</dt><dd>SVG pour les logos et les icônes, AVIF ou WebP pour les photos. Toujours <code>width</code> et <code>height</code> sur l’image : la place est réservée et la page ne saute pas au chargement.</dd>
-              <dt>Icônes (1.4.11, 4.1.2)</dt><dd>Un seul style (contour ou plein) et trois tailles : 16, 20, 24 px. Porteuse de sens : 3:1 sur son fond. Seule dans un bouton : un nom accessible.</dd>
+              <dt>Icônes (1.4.11, 4.1.2)</dt><dd>Un seul style (contour ou plein) et trois tailles, réglées ci-dessus. Porteuse de sens : 3:1 sur son fond. Seule dans un bouton : un nom accessible.</dd>
             </dl>
           </section>
         </div>
@@ -1177,7 +1234,15 @@ body{background:var(--bg)}
 
   <!-- PALETTE -->
   <section id="palette" role="tabpanel" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
+    <header class="mhead phead"><div><h1>Nuances</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
+    <div class="card-surface shset" id="shSet"><div class="row between"><div><h2>Régler les nuances</h2><p class="note">Les mêmes réglages pour toutes vos gammes : un même numéro garde la même clarté d’une couleur à l’autre. Le 500 reste à 4,65:1 sur blanc, donc lisible en texte courant.</p></div><button class="btn sm" type="button" id="shReset">Réglages de base</button></div>
+      <div class="shgrid">
+        <div class="ds-f"><span class="ds-l" id="shLightL">Nuance 50, la plus claire</span><div class="seg" role="group" aria-labelledby="shLightL" id="shLight"><button type="button" data-v="1.03">Presque blanche</button><button type="button" data-v="1.06">Standard</button><button type="button" data-v="1.12">Teintée</button></div></div>
+        <div class="ds-f"><span class="ds-l" id="shDarkL">Nuance 950, la plus foncée</span><div class="seg" role="group" aria-labelledby="shDarkL" id="shDark"><button type="button" data-v="15">Douce</button><button type="button" data-v="17.6">Standard</button><button type="button" data-v="19.5">Presque noire</button></div></div>
+        <div class="ds-r"><label for="shSat">Saturation</label><input type="range" id="shSat" min="0.5" max="1.4" step="0.05"><output for="shSat" id="shSatO"></output></div>
+        <label class="shx"><input type="checkbox" id="shExact"> Mettre la couleur exacte à la place de la nuance la plus proche <span class="muted">(elle peut alors s’écarter d’un cran de la règle des numéros)</span></label>
+      </div>
+    </div>
     <div class="card-surface">
       <div class="row between"><h2>Comment ça marche</h2>
         <label for="vision" class="row" style="flex-direction:row;gap:8px">Vision
@@ -1480,7 +1545,8 @@ const GF_RAW = "__GF__";
 (() => {
 "use strict";
 const QHELP = {"ratio": ["C’est quoi, un ratio de contraste ?", "Il compare la clarté de deux couleurs, de 1:1 (aucune différence) à 21:1 (noir sur blanc). Plus le chiffre est haut, plus c’est lisible. Le calcul est celui des WCAG, à partir de la luminance relative."], "aa": ["AA ou AAA ?", "AA est le niveau visé par les lois, dont le RGAA en France et la norme européenne EN 301 549 : 4,5:1 pour le texte courant, 3:1 pour le grand texte (24 px, ou 18,66 px en gras) et les composants. AAA est plus exigeant : 7:1 pour le texte. Choisissez le niveau avec la pastille WCAG en haut à droite."], "pair": ["Que veut dire le petit disque ?", "C’est une paire : moitié couleur du texte, moitié couleur du fond. Le contraste se mesure toujours entre deux couleurs, jamais une seule. Une couleur n’est pas « accessible » en soi, une paire l’est."], "nuance": ["Pourquoi 11 nuances ?", "Chaque couleur est déclinée de 50 (très clair) à 950 (très foncé). Dans Lisio, les nuances de même numéro ont la même clarté d’une couleur à l’autre : si Gris 700 sur Gris 50 passe, Brand 700 sur Brand 50 passe aussi. On retient des numéros, pas des codes."], "taille": ["Quelle taille minimum ?", "Les WCAG ne fixent pas de taille minimum. 16 px est la taille par défaut des navigateurs et l’usage courant pour le texte courant. Sous 12 px, Lisio vous prévient."], "fluid": ["C’est quoi, une typo fluide ?", "La taille glisse en douceur entre le mobile (390 px) et le grand écran (1440 px), grâce à la fonction CSS clamp(). Vous réglez le desktop, Lisio calcule le mobile. Dans Figma, chaque style existe en 4 versions, une par écran."], "zoom": ["Pourquoi 2,5 fois maximum ?", "Le critère 1.4.4 demande que le texte reste lisible zoomé à 200 %. Avec une taille fluide, si le desktop dépasse 2,5 fois le mobile, le zoom peut ne plus atteindre 200 % (Barvian, Smashing Magazine, 7 novembre 2023). Lisio bloque donc les écarts trop grands."], "role": ["C’est quoi, un rôle ?", "Un rôle donne un métier à une nuance : text/default pour le texte, background/default pour le fond, action/default pour le bouton. Dans les maquettes et le code, on utilise le rôle, pas la nuance : pour changer de thème, on rebranche les rôles et tout suit."], "focus": ["Pourquoi un contour de focus ?", "Quand on navigue au clavier (touche Tab), ce contour montre où l’on est. Lisio l’exporte en 2 px avec au moins 3:1 de contraste, ce que demande le critère 2.4.13 (AAA) ; le critère 2.4.7 (AA) exige qu’il soit visible."], "cible": ["Pourquoi 44 px pour les boutons ?", "Une cible trop petite se rate au doigt ou avec une main qui tremble. Les WCAG demandent 24 px minimum (2.5.8, AA) et recommandent 44 px (2.5.5, AAA)."], "plugin": ["Comment marche le plugin ?", "Le plugin Lisio lit le fichier JSON exporté et crée dans Figma les collections de variables (Colors, Semantic, Typography, Layout, Dimensions) et les styles de texte. Il s’installe une fois, puis chaque import met à jour l’existant sans doublons."], "variable": ["Variable ou style, quelle différence ?", "Dans Figma, une variable stocke une valeur (une couleur, un nombre) et peut avoir plusieurs modes, ici un par écran. Un style de texte regroupe police, taille et interligne. Lisio crée les deux, reliés entre eux."], "lecture": ["À quoi sert le score de lecture ?", "Il estime la difficulté d’un texte à partir de la longueur des phrases et des mots. Le critère 3.1.5 (AAA) demande une version plus simple quand un texte dépasse le niveau de fin de collège."], "reflow": ["Pourquoi 320 px et l’espacement ?", "Le critère 1.4.10 demande qu’une page reste lisible sans défilement horizontal à 320 px de large, ce qui équivaut à un écran de 1280 px zoomé à 400 %. Le critère 1.4.12 demande que rien ne se perde quand l’utilisateur élargit l’interligne (1,5), l’espace après les paragraphes (2 fois la taille), entre les lettres (0,12) et entre les mots (0,16). Lisio applique ces valeurs à l’aperçu et cherche ce qui déborde."], "sombre": ["Comment marche le mode sombre ?", "Chaque rôle a deux valeurs : une en clair, une en sombre. Lisio part du clair, prend la nuance 950 de votre fond et la 50 de votre texte, puis recalcule et revérifie toutes les paires. Dans Figma, c’est un deuxième mode de la collection Semantic : on bascule une maquette entière d’un clic."], "etat": ["Pourquoi des couleurs d’état ?", "Erreur, succès, alerte et info ont chacune un texte, un fond et une bordure vérifiés. Mais la couleur ne doit jamais être le seul indice (1.4.1) : un message d’erreur a toujours une icône et un texte qui dit ce qui ne va pas et comment corriger (3.3.1, 3.3.3)."]};
-const JOURNEY = [["matrice", "Contrastes", "Saisissez vos couleurs : la matrice dit quel texte se lit sur quel fond.", ["ratio", "aa", "pair"]], ["palette", "Couleurs", "Chaque couleur devient une gamme de 11 nuances, de 50 à 950.", ["nuance", "ratio"]], ["tester", "Polices", "Choisissez votre police et testez-la sur un vrai texte, avec vos couleurs.", ["taille", "aa"]], ["styles", "Styles de texte", "Réglez le desktop, Lisio calcule le mobile et vérifie chaque style.", ["fluid", "zoom", "taille"]], ["systeme", "Design system", "Donnez un rôle à chaque couleur, puis réglez formes et grille.", ["role", "sombre", "etat", "focus", "cible"]], ["exporter", "Exporter", "Un fichier, un plugin, et tout arrive dans Figma.", ["plugin", "variable"]]];
+const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur qui ne se lit avec aucune autre se corrige ici, en un clic.", ["ratio", "aa"]], ["palette", "Nuances", "Chaque couleur devient une gamme de 11 nuances, de 50 à 950. Réglez la plus claire, la plus foncée et la saturation.", ["nuance", "ratio"]], ["matrice", "Contrastes", "La matrice dit quel texte se lit sur quel fond. Choisissez vos paires : elles deviennent les rôles du design system.", ["ratio", "aa", "pair"]], ["tester", "Typographie", "Choisissez la police, puis réglez les styles de texte : Lisio calcule le mobile et vérifie chaque style.", ["taille", "aa", "fluid"], ["tester", "styles"]], ["systeme", "Design system", "Rôles, formes, effets, images : réglez tout, et cochez ce qui entre dans votre design system.", ["role", "sombre", "etat", "focus", "cible"]], ["exporter", "Exporter", "Un fichier, un plugin, et tout arrive dans Figma.", ["plugin", "variable"]]];
+const SEQ = [["couleurs", "Couleurs"], ["palette", "Nuances"], ["matrice", "Contrastes"], ["tester", "Polices"], ["styles", "Styles de texte"], ["systeme", "Design system"], ["exporter", "Exporter"]];
 // ---------- Couleur ----------
 const clamp01 = v => Math.min(1, Math.max(0, v));
 const normHex = h => { h = String(h).trim().replace(/^#/, ""); if (/^[0-9a-f]{3}$/i.test(h)) h = h.split("").map(c => c + c).join(""); return /^[0-9a-f]{6}$/i.test(h) ? "#" + h.toUpperCase() : null; };
@@ -1506,12 +1572,18 @@ function maxChroma(L, h, want) { if (inGamut(oklchToLin(L, want, h))) return wan
 const linToHex = lin => rgb2hex(lin.map(v => toGam(clamp01(v))));
 const chromaShape = (L, L0) => Math.max(0.08, L < L0 ? 1 - 0.45 * ((L0 - L) / Math.max(L0, 0.05)) ** 2 : 1 - 0.85 * ((L - L0) / Math.max(1 - L0, 0.05)) ** 2);
 function colorForY(base, targetY) {
-  const { L: L0, C: C0, h } = base; let lo = 0, hi = 1, lin = [0, 0, 0];
+  const { L: L0, h } = base, C0 = base.C * (+shCfg("sat") || 1); let lo = 0, hi = 1, lin = [0, 0, 0];
   for (let i = 0; i < 32; i++) { const mid = (lo + hi) / 2; lin = oklchToLin(mid, maxChroma(mid, h, C0 * chromaShape(mid, L0)), h).map(clamp01); if (Yof(lin) < targetY) lo = mid; else hi = mid; }
   return linToHex(lin);
 }
 const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-const TARGET = [1.06, 1.15, 1.4, 1.9, 3.1, 4.65, 6.1, 8.1, 11, 14.6, 17.6];
+const TARGET0 = [1.06, 1.15, 1.4, 1.9, 3.1, 4.65, 6.1, 8.1, 11, 14.6, 17.6];
+let TARGET = TARGET0.slice();
+const SH_BASE = { light: 1.06, dark: 17.6, sat: 1, exact: false };
+const shCfg = k => (S.sh && S.sh[k] != null) ? S.sh[k] : SH_BASE[k];
+// Les extrémités bougent, le 500 reste à 4,65:1 : interpolation en log de chaque côté
+function shTargets() { const M = Math.log(4.65), L0 = Math.log(1.06), D0 = Math.log(17.6), L = Math.log(+shCfg("light")), D = Math.log(+shCfg("dark"));
+  TARGET = TARGET0.map((t, i) => i < 5 ? Math.exp(M + (Math.log(t) - M) * (L - M) / (L0 - M)) : i > 5 ? Math.exp(M + (Math.log(t) - M) * (D - M) / (D0 - M)) : t); }
 const targetY = r => 1.05 / r - 0.05;
 const CVD = {
   protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
@@ -1591,10 +1663,12 @@ const fontLabel = font => ({ google: "Google Fonts", adobe: "Adobe Fonts", uploa
 const ensureFont = font => { if (font.src === "google") { const f = GFmap.get(font.family); if (f) loadGoogle(f, true); } };
 
 function buildScales() {
+  shTargets();
   scales = palette.map(c => {
     const base = hexToOklch(c.hex), sw = TARGET.map(r => colorForY(base, targetY(r))), by = lum(c.hex);
     let nearest = 0, best = Infinity;
     sw.forEach((h, i) => { const d = Math.abs(Math.log((lum(h) + 0.05) / (by + 0.05))); if (d < best) { best = d; nearest = i; } });
+    if (shCfg("exact")) sw[nearest] = c.hex;
     return { name: c.name, hex: c.hex, slug: slug(c.name), sw, nearest };
   });
   buildStatus();
@@ -1939,6 +2013,21 @@ $("mSample").addEventListener("input", e => { S.mSample = e.target.value; save()
 segInit("mView", () => S.mView, v => { S.mView = v; save(); renderMx(); });
 $("mVision").value = S.mVision;
 $("mVision").addEventListener("change", e => { S.mVision = e.target.value; save(); renderMx(); });
+// Couleurs : celles qui ne se lisent avec aucune autre, et la correction en un clic
+function cwIssues() { const tN = S.level === "AAA" ? 7 : 4.5; return palette.map((c, i) => { let bj = -1, br = 0; palette.forEach((d, j) => { if (j !== i) { const r = ratio(c.hex, d.hex); if (r > br) { br = r; bj = j; } } }); return { i, c, bj, br }; }).filter(x => x.bj >= 0 && x.br < tN); }
+let cwActs = [];
+function renderWatch() {
+  const el = $("cWatch"); if (!el) return; cwActs = [];
+  const tN = S.level === "AAA" ? 7 : 4.5, lst = cwIssues(), tw = [];
+  for (let i = 0; i < palette.length; i++) for (let j = i + 1; j < palette.length; j++) { const r = ratio(palette[i].hex, palette[j].hex); if (r < 1.25) tw.push([i, j, r]); }
+  const act = (lab, fn, dot, pri) => { cwActs.push(fn); return `<button type="button" class="btn sm${pri ? " primary" : ""}" data-cw="${cwActs.length - 1}">${dot ? `<span class="dot" style="background:${dot}" aria-hidden="true"></span>` : ""}${lab}</button>`; };
+  const look = (i, j) => act("Voir dans Contrastes", () => { sel = [i, j]; cmdGoView("matrice"); renderMx(); const t = $("pdTitle"); if (t) t.focus(); });
+  let rows = lst.map(({ i, c, bj, br }) => { const p = palette[bj], fx = suggestFix(c.hex, p.hex, tN);
+    return `<li><span class="cw-sw" style="background:${c.hex}" aria-hidden="true"></span><span class="cw-t"><b>${esc(c.name)} <code>${c.hex}</code></b><span>Au mieux ${f2(br)}:1, avec ${esc(p.name)} : sous ${fmt(tN, 1).replace(",0", "")}:1, aucun texte courant possible.</span></span><span class="cw-a">${fx ? act(`Corriger : ${esc(c.name)} → ${fx}`, () => { palette[i].hex = fx; changed(); renderEditor(); toast(`${c.name} remplacé par ${fx}`); }, fx, true) : ""}${look(i, bj)}</span></li>`; }).join("");
+  rows += tw.map(([i, j, r]) => `<li><span class="cw-sw" style="background:linear-gradient(90deg,${palette[i].hex} 50%,${palette[j].hex} 50%)" aria-hidden="true"></span><span class="cw-t"><b>${esc(palette[i].name)} et ${esc(palette[j].name)}</b><span>Presque jumelles (${f2(r)}:1) : on ne les distingue pas l’une de l’autre. Gardez-en une, ou écartez-les.</span></span><span class="cw-a">${look(i, j)}</span></li>`).join("");
+  el.innerHTML = `<h2>À corriger avant d’aller plus loin</h2>` + (rows ? `<p class="note">« Corriger » garde la teinte et change seulement la clarté. Une couleur réservée au décor (illustration, fond coloré) peut rester telle quelle.</p><ul class="cw-list">${rows}</ul>` : `<p class="cw-ok">Rien à signaler : chaque couleur se lit en texte courant avec au moins une autre, et aucune paire n’est jumelle. Étape suivante : les nuances.</p>`);
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-cw]"); if (b && cwActs[+b.dataset.cw]) cwActs[+b.dataset.cw](); });
 function renderKeep() {
   const C = palette, P = [], out = [], v21 = V() >= 21, nm = c => `<b>${esc(c.name)}</b>`;
   for (let i = 0; i < C.length; i++) for (let j = i + 1; j < C.length; j++) P.push({ a: C[i], b: C[j], r: ratio(C[i].hex, C[j].hex) });
@@ -1949,6 +2038,16 @@ function renderKeep() {
   out.push(`${okN} paire${okN > 1 ? "s" : ""} sur ${P.length} conviennent au texte courant (AA).`);
   if (P.length) { const best = P.reduce((x, y) => y.r > x.r ? y : x); out.push(`Meilleure paire : ${nm(best.a)} et ${nm(best.b)} (${f1(best.r)}:1).`); }
   $("keep").innerHTML = out.slice(0, 6).map(s => `<p>${s}</p>`).join("");
+}
+// Paire retenue → rôles du design system ; sinon, la nuance de la gamme qui passe
+function pdDs(fg, bg, r, tN, btn) {
+  const sc = scales.find(s => s.hex === fg.hex), use = (f, b, lab) => btn(lab, () => { roleApply("text/default", f, "light"); roleApply("background/default", b, "light"); save(); renderStyles(); sysDirty = true; renderJourney(curView()); toast("Texte principal et fond de page mis à jour"); }, f, true)
+    + btn("Libellé et bouton principal", () => { roleApply("action/default", b, "light"); roleApply("text/on-action", f, "light"); save(); sysDirty = true; renderJourney(curView()); toast("Bouton principal mis à jour"); });
+  if (r >= tN) return `<div class="pd-ds"><h3>Utiliser cette paire dans le design system</h3><div class="row">${use(fg.hex, bg.hex, "Texte principal sur fond de page")}</div></div>`;
+  if (!sc) return "";
+  const ok = sc.sw.map((h, k) => [h, STEPS[k]]).filter(([h]) => ratio(h, bg.hex) >= tN).sort((a, b) => Math.abs(lum(a[0]) - lum(fg.hex)) - Math.abs(lum(b[0]) - lum(fg.hex)))[0];
+  if (!ok) return "";
+  return `<div class="pd-ds"><h3>Ou garder ${esc(fg.name)} et prendre une nuance</h3><p class="note">${esc(fg.name)} ${ok[1]} <code>${ok[0]}</code> passe à ${f2(ratio(ok[0], bg.hex))}:1 sur ${esc(bg.name)}. Votre couleur de marque ne change pas : seule la paire du design system utilise la nuance.</p><div class="row">${btn(`Texte ${esc(fg.name)} ${ok[1]} sur fond ${esc(bg.name)}`, () => { roleApply("text/default", ok[0], "light"); roleApply("background/default", bg.hex, "light"); save(); renderStyles(); sysDirty = true; renderJourney(curView()); toast(`Texte principal : ${fg.name} ${ok[1]}`); }, ok[0], true)}</div></div>`;
 }
 function renderDetail() {
   const d = $("pairDetail");
@@ -1993,6 +2092,7 @@ function renderDetail() {
       <div class="checks">${rows.map(([t, ok]) => `<div class="check"><div>${t}</div><span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓ Passe" : "✕ Non"}</span></div>`).join("")}</div>
     </div>
     ${fixes.length && !ba ? `<div style="display:flex;flex-direction:column;gap:8px"><h3>Corriger en gardant la teinte</h3><div class="row" style="gap:6px">${fixes.join("")}</div><p class="note">Le bouton remplace la couleur dans votre liste : toute la matrice est recalculée.</p></div>` : ""}
+    ${pdDs(fg, bg, r, tN, btn)}
     <div class="row">${btn("Ouvrir dans l’aperçu", () => { S.fg = fg.hex; S.bg = bg.hex; save(); location.hash = "tester"; show("tester"); render(); window.scrollTo(0, 0); }, null, true)}${btn("Inverser texte et fond", () => { sel = [j, i]; renderMx(); })}${btn("Fermer", () => { sel = null; renderMx(); })}</div>`;
 }
 $("pairDetail").addEventListener("click", e => { const b = e.target.closest("[data-dact]"); if (b && dActs[+b.dataset.dact]) dActs[+b.dataset.dact](); });
@@ -2041,7 +2141,7 @@ function loadImageFile(file) {
     const c = $("imgCanvas"); c.width = Math.round(im.naturalWidth * s); c.height = Math.round(im.naturalHeight * s);
     c.getContext("2d", { willReadFrequently: true }).drawImage(im, 0, 0, c.width, c.height);
     URL.revokeObjectURL(url); imgCanvas = c;
-    $("palBar").open = true; $("imgPanel").hidden = false; runExtract();
+    if ($("couleurs").hidden) cmdGoView("couleurs"); $("imgPanel").hidden = false; runExtract();
     $("imgPanel").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
   };
   im.onerror = () => { URL.revokeObjectURL(url); toast("Cette image n’a pas pu être ouverte"); };
@@ -2114,7 +2214,7 @@ const dz = $("colorsCard");
 ["dragleave", "drop"].forEach(t => dz.addEventListener(t, () => dz.classList.remove("drop")));
 dz.addEventListener("drop", e => { const f = e.dataTransfer?.files?.[0]; if (f) { e.preventDefault(); loadImageFile(f); } });
 document.addEventListener("paste", e => {
-  if ($("matrice").hidden) return;
+  if ($("matrice").hidden && $("couleurs").hidden) return;
   const item = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith("image/"));
   if (item) { e.preventDefault(); loadImageFile(item.getAsFile()); }
 });
@@ -2379,8 +2479,12 @@ function tsTokenRef(hex) {
 const famList = f => f.src === "google" ? [f.family, FALLBACK[(GFmap.get(f.family) || { cat: "s" }).cat]] : [f.family, "sans-serif"];
 const enNum = n => n.toFixed(2);
 // Système de base + personnalisation (S.ds). Chaque réglage absent = valeur de base.
-const DS_BASE = { roles: {}, shape: "soft", space: 4, btn: 44, link: "dotted", elev: "soft", glass: 0.9, layout: null };
+const DS_BASE = { roles: {}, shape: "soft", space: 4, btn: 44, link: "dotted", elev: "soft", glass: 0.9, layout: null, elevI: 1, elevB: 1, elevY: 1, elevC: "ink", glassBlur: 12, ratios: ["wide", "photo", "square", "portrait"], imgR: "md", imgFit: "cover", iconSet: "std", scrimPlus: 0, inc: {} };
+// Blocs optionnels du design system : décochés, ils ne sont ni dans le JSON (Figma) ni dans le CSS
+const DS_GROUPS = [["dark", "Mode sombre", "Second mode des variables, styles Elevation/Dark"], ["status", "Couleurs d’état", "Erreur, succès, alerte, info"], ["chart", "Couleurs de graphiques", "chart/1 à chart/n"], ["radius", "Arrondis", "radius-*"], ["layout", "Grille par écran", "layout-*, .grid, .container"], ["motion", "Animations", "duration-*, easing"], ["shadow", "Ombres", "shadow-1 à 4, styles Elevation"], ["opacity", "Opacités", "Voile sur photo, verre"], ["blur", "Flou", "blur-glass, style Blur/Glass"], ["ratio", "Formats d’image", "ratio-*"], ["icon", "Tailles d’icônes", "icon-*"]];
+const dsOn = g => !(S.ds.inc && S.ds.inc[g] === false);
 const DS_SHAPES = { square: { label: "Droit", v: { none: 0, sm: 0, md: 2, lg: 4, control: 0, full: 999 } }, soft: { label: "Doux", v: { none: 0, sm: 4, md: 8, lg: 16, control: 8, full: 999 } }, round: { label: "Arrondi", v: { none: 0, sm: 8, md: 12, lg: 24, control: 12, full: 999 } }, pill: { label: "Pilule", v: { none: 0, sm: 8, md: 12, lg: 24, control: 999, full: 999 } } };
+const DS_ICONS = { compact: [14, 16, 20], std: [16, 20, 24], large: [20, 24, 32] };
 const DS_SPACE = { 4: [0, 4, 8, 12, 16, 24, 32, 48, 64], 8: [0, 8, 16, 24, 32, 48, 64, 96, 128] };
 if (!S.ds || typeof S.ds !== "object") S.ds = JSON.parse(JSON.stringify(DS_BASE));
 const dsCfg = k => S.ds[k] != null ? S.ds[k] : DS_BASE[k];
@@ -2388,28 +2492,29 @@ function dsDim() {
   const sp = {}; DS_SPACE[dsCfg("space")].forEach((v, i) => { sp[i] = v; });
   return {
     spacing: { $d: `Spacing scale, multiples of ${dsCfg("space")} px`, v: sp },
-    radius: { $d: `Corner radius, shape "${dsCfg("shape")}". control = buttons and inputs`, v: { ...DS_SHAPES[dsCfg("shape")].v } },
+    radius: { $d: `Corner radius, shape "${dsCfg("shape")}". control = buttons and inputs, image = photos and videos`, v: { ...DS_SHAPES[dsCfg("shape")].v, image: dsCfg("imgR") === "none" ? 0 : DS_SHAPES[dsCfg("shape")].v[dsCfg("imgR")] } },
     size: { $d: "Target sizes", v: { "target-min": [24, "Minimum target 24 × 24 px (WCAG 2.2 SC 2.5.8, AA)"], "target-comfort": [dsCfg("btn"), `Button and input height ${dsCfg("btn")} px, at least 44 × 44 px (SC 2.5.5, AAA)`] } },
     "border-width": { $d: "Stroke widths", v: { default: [1, "Default border"], focus: [2, "Focus outline at least 2 px thick (WCAG 2.2 SC 2.4.13, AAA)"], "focus-offset": [2, "Gap between focus outline and element"] } },
-    icon: { $d: "Icon sizes. An icon alone needs an accessible name (SC 1.1.1, 4.1.2); meaningful icons need 3:1 against their background (SC 1.4.11)", v: { sm: [16, "Small icon, inside dense text or tags"], md: [20, "Default icon, next to a label"], lg: [24, "Large icon, icon-only buttons (keep the 24 px target, SC 2.5.8)"] } }
+    icon: { $d: "Icon sizes. An icon alone needs an accessible name (SC 1.1.1, 4.1.2); meaningful icons need 3:1 against their background (SC 1.4.11)", v: (I => ({ sm: [I[0], "Small icon, inside dense text or tags"], md: [I[1], "Default icon, next to a label"], lg: [I[2], "Large icon, icon-only buttons (keep the 24 px target, SC 2.5.8)"] }))(DS_ICONS[dsCfg("iconSet")] || DS_ICONS.std) }
   };
 }
 const dsLay = () => { const L = S.ds.layout; if (!L) return LAYOUT; const o = {}; BP.forEach(b => { o[b.id] = { ...LAYOUT[b.id], ...(L[b.id] || {}) }; }); return o; };
-const dsIsBase = () => !Object.keys(S.ds.roles || {}).length && !S.ds.dark && !S.ds.status && ["shape", "space", "btn", "link", "elev", "glass"].every(k => S.ds[k] == null || S.ds[k] === DS_BASE[k]) && !S.ds.layout;
+const dsIsBase = () => !Object.keys(S.ds.roles || {}).length && !S.ds.dark && !S.ds.status && ["shape", "space", "btn", "link", "elev", "glass", "elevI", "elevB", "elevY", "elevC", "glassBlur", "imgR", "imgFit", "iconSet", "scrimPlus"].every(k => S.ds[k] == null || S.ds[k] === DS_BASE[k]) && !S.ds.layout && (!S.ds.ratios || S.ds.ratios.join() === DS_BASE.ratios.join()) && !Object.values(S.ds.inc || {}).includes(false);
 // ---------- Effets : ombres, opacités, flous ----------
 const ELEV_USE = [null, ["Cartes posées sur la page", "Cards and panels resting on the page"], ["Survol, élément déplacé", "Raised: hover, dragged item"], ["Menus, listes, info-bulles", "Menus, dropdowns, popovers, tooltips"], ["Dialogues, tiroirs", "Dialogs and drawers"]];
 const ELEV_L = [null, [[0, 1, 2, 0, .06], [0, 1, 3, 0, .1]], [[0, 2, 4, -1, .06], [0, 4, 8, -2, .1]], [[0, 4, 6, -2, .05], [0, 10, 20, -4, .12]], [[0, 8, 10, -6, .06], [0, 20, 40, -8, .18]]];
-const BLUR_GLASS = 12;
-const RATIOS = [["wide", 16, 9, "Bannière, vidéo", "Banner, video"], ["photo", 3, 2, "Photo", "Photo in content"], ["square", 1, 1, "Vignette, avatar", "Thumbnail, avatar"], ["portrait", 4, 5, "Portrait", "Portrait, product"]];
-const shadowInk = m => m === "dark" ? "#000000" : S.ts.fg;
-function dsShadow(n, m) { const e = dsCfg("elev"); if (e === "none") return []; const k = (e === "strong" ? 1.8 : 1) * (m === "dark" ? 3 : 1); return ELEV_L[n].map(([x, y, b, sp, a]) => ({ x, y, b, s: sp, a: Math.min(.8, +(a * k).toFixed(2)), c: shadowInk(m) })); }
+const blurGlass = () => +dsCfg("glassBlur");
+const RATIOS = [["cinema", 21, 9, "Bandeau large", "Wide hero band"], ["wide", 16, 9, "Bannière, vidéo", "Banner, video"], ["photo", 3, 2, "Photo", "Photo in content"], ["square", 1, 1, "Vignette, avatar", "Thumbnail, avatar"], ["portrait", 4, 5, "Portrait", "Portrait, product"], ["tall", 3, 4, "Portrait haut", "Tall portrait"], ["story", 9, 16, "Story, vertical", "Story, vertical video"]];
+const ratiosOn = () => RATIOS.filter(r => (dsCfg("ratios") || []).includes(r[0]));
+const shadowInk = m => m === "dark" || dsCfg("elevC") === "black" ? "#000000" : dsCfg("elevC") === "brand" ? dsRoles(m)["action/default"] : S.ts.fg;
+function dsShadow(n, m) { const e = dsCfg("elev"); if (e === "none") return []; const k = (e === "strong" ? 1.8 : 1) * (m === "dark" ? 3 : 1) * +dsCfg("elevI"), bl = +dsCfg("elevB"), yy = +dsCfg("elevY"), c = shadowInk(m); return ELEV_L[n].map(([x, y, b, sp, a]) => ({ x, y: Math.round(y * yy), b: Math.round(b * bl), s: sp, a: Math.min(.8, +(a * k).toFixed(2)), c })); }
 const rgbSp = h => hex2rgb(h).map(v => Math.round(v * 255)).join(" ");
 const shCss = (n, m) => { const L = dsShadow(n, m); return L.length ? L.map(l => `${l.x}px ${l.y}px ${l.b}px ${l.s}px rgb(${rgbSp(l.c)} / ${l.a})`).join(", ") : "none"; };
 const hexA = (h, a) => h + Math.round(a * 255).toString(16).padStart(2, "0").toUpperCase();
 const blendHex = (top, a, under) => { const u = hex2rgb(under); return rgb2hex(hex2rgb(top).map((v, i) => a * v + (1 - a) * u[i])); };
 const scrimInk = () => ratio("#FFFFFF", S.ts.fg) >= 12 ? S.ts.fg : "#000000";
 // Voile sur photo : la plus petite opacité qui garde un texte blanc lisible même sur une zone d’image blanche
-function scrimAlpha() { const need = S.level === "AAA" ? 7 : 4.5, c = scrimInk(); for (let i = 6; i <= 19; i++) { const a = i / 20; if (ratio("#FFFFFF", blendHex(c, a, "#FFFFFF")) >= need) return a; } return .95; }
+function scrimAlpha() { const need = S.level === "AAA" ? 7 : 4.5, c = scrimInk(), p = +dsCfg("scrimPlus") || 0; for (let i = 6; i <= 19; i++) { const a = i / 20; if (ratio("#FFFFFF", blendHex(c, a, "#FFFFFF")) >= need) return Math.min(.95, +(a + p).toFixed(2)); } return .95; }
 // Contrôles 1.4.11 et lisibilité des effets, pour un mode
 function elevChecks(m) {
   const R = dsRoles(m), bg = R["background/default"], need = S.level === "AAA" ? 7 : 4.5, fr = n => fmt(floor2(n)), out = [];
@@ -2493,6 +2598,14 @@ function chartPalette(m, n) {
   return (chartCache[key] = pick);
 }
 function chartMinDist(m) { const p = chartPalette(m); let d = Infinity; for (let i = 0; i < p.length; i++) for (let j = i + 1; j < p.length; j++) d = Math.min(d, cvdDist(p[i], p[j])); return d; }
+function dsTrim(o) {
+  const drop = g => !dsOn(g);
+  if (drop("status")) { allScales().filter(sc => sc.status).forEach(sc => { delete o.color[sc.slug]; }); ST_KEYS.forEach(k => { delete o.semantic[k]; }); }
+  if (drop("chart")) delete o.semantic.chart;
+  if (drop("dark")) { const w = x => { if (!x || typeof x !== "object") return; const e = x.$extensions && x.$extensions["app.lisio"]; if (e) { delete e.modes; delete e.darkDescription; } for (const k in x) if (k[0] !== "$") w(x[k]); }; w(o.semantic); w(o.shadow); o.semantic.$description = "Semantic roles, light mode only"; }
+  [["radius", "radius"], ["layout", "layout"], ["shadow", "shadow"], ["opacity", "opacity"], ["blur", "blur"], ["ratio", "ratio"], ["icon", "icon"]].forEach(([g, k]) => { if (drop(g)) delete o[k]; });
+  if (drop("motion")) { delete o.duration; delete o.easing; }
+}
 function tsJson() {
   const o = { $description: `Accessible design system foundations generated by Lisio, WCAG ${S.version} level ${S.level}`, color: { neutral: { white: { $type: "color", $value: "#FFFFFF" }, black: { $type: "color", $value: "#000000" } } } };
   allScales().forEach(s => { const g = o.color[s.slug] = { $description: s.name, main: { $type: "color", $value: s.hex, $description: s.status ? `${ST_DEF[s.slug][3]} status hue` : `${s.name}, main colour (as entered)` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contrast ${enNum(floor2(ratio(h, "#FFFFFF")))}:1 on white, ${enNum(floor2(ratio(h, "#000000")))}:1 on black` }; }); });
@@ -2515,19 +2628,34 @@ function tsJson() {
   o.opacity = { $description: "Named opacities. Never put opacity on text itself: contrast is measured on the final colour",
     scrim: { $type: "number", $value: sa, $description: `Overlay for text on photos and behind dialogs, colour ${scrimInk()}: white text keeps ${enNum(floor2(ratio("#FFFFFF", blendHex(scrimInk(), sa, "#FFFFFF"))))}:1 even over a white area of the image`, $extensions: { "app.lisio": { color: scrimInk() } } },
     glass: { $type: "number", $value: +dsCfg("glass"), $description: "Translucent surfaces (sticky header, toolbar), background/default at this opacity. Text contrast checked in the worst case, dark content scrolling underneath. Opaque with prefers-reduced-transparency" } };
-  o.blur = { glass: { $type: "dimension", $value: { value: BLUR_GLASS, unit: "px" }, $description: "Background blur behind translucent surfaces. In Figma: effect style Blur/Glass" } };
+  o.blur = { glass: { $type: "dimension", $value: { value: blurGlass(), unit: "px" }, $description: "Background blur behind translucent surfaces. In Figma: effect style Blur/Glass" } };
   o.ratio = { $description: "Image aspect ratios. Always set width and height on <img> so the space is reserved" };
-  RATIOS.forEach(([k, w, h, , en]) => { o.ratio[k] = { $type: "number", $value: +(w / h).toFixed(4), $description: `${w}:${h}, ${en}`, $extensions: { "app.lisio": { css: `${w} / ${h}`, scopes: [] } } }; });
+  ratiosOn().forEach(([k, w, h, , en]) => { o.ratio[k] = { $type: "number", $value: +(w / h).toFixed(4), $description: `${w}:${h}, ${en}`, $extensions: { "app.lisio": { css: `${w} / ${h}`, scopes: [] } } }; });
   o.font = { family: { heading: { $type: "fontFamily", $value: famList(S.ts.fonts.head) }, body: { $type: "fontFamily", $value: famList(S.ts.fonts.body) } } };
   o.typography = {};
   S.ts.styles.forEach(st => { const d = tsDef(st.id), v = tsVerdict(st);
     o.typography[st.id] = { $type: "typography", $description: `${d.en} (${d.tag}), fluid ${st.min} → ${st.max} px between ${VMIN} and ${VMAX} px. ${v.ok ? "Passes" : "Fails"} ${S.level} with primary text on background (${enNum(floor2(v.r))}:1).`,
       $value: { fontFamily: d.role === "head" ? "{font.family.heading}" : "{font.family.body}", fontSize: { value: st.max, unit: "px" }, fontWeight: st.weight, lineHeight: st.lh, letterSpacing: { value: r4(st.max * st.ls / 100), unit: "px" } },
       $extensions: { "app.lisio": { name: d.en, tag: d.tag, letterSpacingPercent: st.ls, italic: !!d.italic, textCase: d.upper ? "upper" : "none", fluid: { min: st.min, max: st.max, viewportMin: VMIN, viewportMax: VMAX, clamp: tsClamp(st), breakpoints: BP.map(b => ({ id: b.id, name: b.label, width: b.w, fontSize: bpSize(st, b.w), lineHeight: bpLh(st, b.w) })) } } } }; });
-  o.$extensions = { "app.lisio": { generator: "Lisio", url: "https://lisio-psi.vercel.app", wcag: S.version, level: S.level, scale: { mobile: { base: S.ts.m.base, ratio: +S.ts.m.ratio }, desktop: { base: S.ts.d.base, ratio: +S.ts.d.ratio } } } };
+  dsTrim(o);
+  o.$extensions = { "app.lisio": { generator: "Lisio", excluded: DS_GROUPS.filter(g => !dsOn(g[0])).map(g => g[0]), url: "https://lisio-psi.vercel.app", wcag: S.version, level: S.level, scale: { mobile: { base: S.ts.m.base, ratio: +S.ts.m.ratio }, desktop: { base: S.ts.d.base, ratio: +S.ts.d.ratio } } } };
   return JSON.stringify(o, null, 2);
 }
-function tsCss() {
+function dsFx(on) {
+  const R = on("ratio") ? (on.full ? RATIOS : ratiosOn()) : [], v = [];
+  if (on("shadow")) v.push(...[1, 2, 3, 4].map(n => `  --shadow-${n}: ${shCss(n, "light")}; /* ${ELEV_USE[n][1]} */`));
+  if (on("opacity")) v.push(`  --opacity-scrim: ${scrimAlpha()}; /* white text on photos keeps ${S.level} even over white */`, `  --scrim-color: rgb(${rgbSp(scrimInk())} / var(--opacity-scrim));`, `  --opacity-glass: ${+dsCfg("glass")};`);
+  if (on("blur")) v.push(`  --blur-glass: ${blurGlass()}px;`);
+  v.push(...R.map(([k, w, h, , en]) => `  --ratio-${k}: ${w} / ${h}; /* ${en} */`));
+  let c = (on("shadow") ? "/* A shadow never replaces a border: inputs, buttons and clickable cards keep border/default at 3:1 (SC 1.4.11). */\n" : "") + (v.length ? `:root {\n${v.join("\n")}\n}\n` : "");
+  if (on("shadow")) c += `.elevation-1, .elevation-2, .elevation-3, .elevation-4 { outline: 1px solid transparent; /* becomes visible in forced colors mode, where shadows are removed */ }\n${[1, 2, 3, 4].map(n => `.elevation-${n} { box-shadow: var(--shadow-${n}); }`).join("\n")}\n`;
+  if (on("opacity")) c += `.scrim { background: var(--scrim-color); color: #FFFFFF; } /* behind any text set on a photo */\n.glass {\n  background: color-mix(in srgb, var(--background-default) ${Math.round(+dsCfg("glass") * 100)}%, transparent);\n${on("blur") ? "  -webkit-backdrop-filter: blur(var(--blur-glass));\n  backdrop-filter: blur(var(--blur-glass));\n" : ""}}\n@media (prefers-reduced-transparency: reduce) { .glass { background: var(--background-default); -webkit-backdrop-filter: none; backdrop-filter: none; } }\n`;
+  c += `img, video { max-inline-size: 100%; block-size: auto;${on("radius") ? " border-radius: var(--radius-image);" : ""} }\n`;
+  if (R.length) c += R.map(([k]) => `.ratio-${k} { aspect-ratio: var(--ratio-${k}); }`).join(" ") + `\n${R.map(([k]) => `.ratio-${k}`).join(", ")} { object-fit: ${dsCfg("imgFit")}; inline-size: 100%; }\n`;
+  return c;
+}
+function tsCss(full) {
+  const on = g => full || dsOn(g); on.full = !!full;
   const fam = f => famList(f).map((x, i) => i === 0 ? `"${x}"` : x).join(", ");
   const cssRef = hex => { const r = tsTokenRef(hex); return r.startsWith("{color.") ? `var(--${r.slice(7, -1).replace(".main", "").replace(".", "-")})` : r.startsWith("{") ? (hex === "#FFFFFF" ? "#FFFFFF" : "#000000") : r; };
   let c = `/* Lisio: accessible design system foundations, WCAG ${S.version} level ${S.level}.
@@ -2538,15 +2666,16 @@ function tsCss() {
 /* ===== 1. Primitives ===== */
 :root {
 ` + allScales().map(s => `  --${s.slug}: ${s.hex};\n` + s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n}\n\n/* ===== 2. Semantic roles (light mode) ===== */\n:root {\n  color-scheme: light;\n";
-  for (const [g, items] of Object.entries(dsSemantic("light"))) for (const [k, [hex, d]] of Object.entries(items)) c += `  --${g}-${k}: ${cssRef(hex)}; /* ${d} */\n`;
-  let dk = ""; for (const [g, items] of Object.entries(dsSemantic("dark"))) for (const [k, [hex]] of Object.entries(items)) dk += `    --${g}-${k}: ${cssRef(hex)};\n`;
-  for (let n = 1; n <= 4; n++) dk += `    --shadow-${n}: ${shCss(n, "dark")};\n`;
-  c += `}\n\n/* Dark mode: follows the system setting. Force a theme with data-theme="light" or "dark" on <html>. Every pair is checked again in dark mode. */\n@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {\n    color-scheme: dark;\n${dk}  }\n}\n:root[data-theme="dark"] {\n  color-scheme: dark;\n${dk.replace(/^    /gm, "  ")}}\n\n/* ===== 3. Layout and spacing ===== */\n:root {\n`;
-  for (const [g, def] of Object.entries(dsDim())) { for (const [k, v] of Object.entries(def.v)) c += `  --${g}-${k}: ${Array.isArray(v) ? v[0] : v}px;${Array.isArray(v) ? ` /* ${v[1]} */` : ""}\n`; c += "\n"; }
+  const semOn = g => !(g === "chart" && !on("chart")) && !(ST_KEYS.includes(g) && !on("status"));
+  for (const [g, items] of Object.entries(dsSemantic("light"))) if (semOn(g)) for (const [k, [hex, d]] of Object.entries(items)) c += `  --${g}-${k}: ${cssRef(hex)}; /* ${d} */\n`;
+  let dk = ""; for (const [g, items] of Object.entries(dsSemantic("dark"))) if (semOn(g)) for (const [k, [hex]] of Object.entries(items)) dk += `    --${g}-${k}: ${cssRef(hex)};\n`;
+  if (on("shadow")) for (let n = 1; n <= 4; n++) dk += `    --shadow-${n}: ${shCss(n, "dark")};\n`;
+  c += !on("dark") ? "}\n\n/* ===== 3. Layout and spacing ===== */\n:root {\n" : `}\n\n/* Dark mode: follows the system setting. Force a theme with data-theme="light" or "dark" on <html>. Every pair is checked again in dark mode. */\n@media (prefers-color-scheme: dark) {\n  :root:not([data-theme="light"]) {\n    color-scheme: dark;\n${dk}  }\n}\n:root[data-theme="dark"] {\n  color-scheme: dark;\n${dk.replace(/^    /gm, "  ")}}\n\n/* ===== 3. Layout and spacing ===== */\n:root {\n`;
+  for (const [g, def] of Object.entries(dsDim())) { if (!on(g)) continue; for (const [k, v] of Object.entries(def.v)) c += `  --${g}-${k}: ${Array.isArray(v) ? v[0] : v}px;${Array.isArray(v) ? ` /* ${v[1]} */` : ""}\n`; c += "\n"; }
   const lay = L => `--layout-margin: ${L.margin}px; --layout-gutter: ${L.gutter}px; --layout-columns: ${L.columns}; --layout-section: ${L.section}px;`;
-  c += `  /* ${BP[0].label} first (${BP[0].w} px) */\n  ${lay(dsLay()[BP[0].id])}\n  --layout-content-max: ${LAYOUT_MAX}px;\n  --layout-measure: 70ch; /* line length for running text, SC 1.4.8 asks for 80 or fewer */\n\n  /* Motion: everything drops to 0 with prefers-reduced-motion (SC 2.3.3) */\n  --duration-fast: 120ms;\n  --duration-base: 200ms;\n  --duration-slow: 320ms;\n  --easing-standard: cubic-bezier(0.2, 0, 0, 1);\n}\n@media (prefers-reduced-motion: reduce) {\n  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; }\n  *, *::before, *::after { scroll-behavior: auto !important; }\n}\n`;
-  BP.slice(1).forEach(b => { c += `@media (min-width: ${b.w}px) { :root { ${lay(dsLay()[b.id])} } } /* ${b.label} */\n`; });
-  c += `.measure, .prose > * { max-inline-size: var(--layout-measure); }\n.grid {\n  display: grid;\n  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));\n  column-gap: var(--layout-gutter);\n}\n.container {\n  padding-inline: var(--layout-margin);\n  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));\n  margin-inline: auto;\n}\n\n/* ===== Effects: elevation, opacity, blur, image ratios ===== */\n/* A shadow never replaces a border: inputs, buttons and clickable cards keep border/default at 3:1 (SC 1.4.11). */\n:root {\n${[1, 2, 3, 4].map(n => `  --shadow-${n}: ${shCss(n, "light")}; /* ${ELEV_USE[n][1]} */`).join("\n")}\n  --opacity-scrim: ${scrimAlpha()}; /* white text on photos keeps ${S.level} even over white */\n  --scrim-color: rgb(${rgbSp(scrimInk())} / var(--opacity-scrim));\n  --opacity-glass: ${+dsCfg("glass")};\n  --blur-glass: ${BLUR_GLASS}px;\n${RATIOS.map(([k, w, h, , en]) => `  --ratio-${k}: ${w} / ${h}; /* ${en} */`).join("\n")}\n}\n.elevation-1, .elevation-2, .elevation-3, .elevation-4 { outline: 1px solid transparent; /* becomes visible in forced colors mode, where shadows are removed */ }\n${[1, 2, 3, 4].map(n => `.elevation-${n} { box-shadow: var(--shadow-${n}); }`).join("\n")}\n.scrim { background: var(--scrim-color); color: #FFFFFF; } /* behind any text set on a photo */\n.glass {\n  background: color-mix(in srgb, var(--background-default) ${Math.round(+dsCfg("glass") * 100)}%, transparent);\n  -webkit-backdrop-filter: blur(var(--blur-glass));\n  backdrop-filter: blur(var(--blur-glass));\n}\n@media (prefers-reduced-transparency: reduce) { .glass { background: var(--background-default); -webkit-backdrop-filter: none; backdrop-filter: none; } }\nimg, video { max-inline-size: 100%; block-size: auto; }\n.ratio-wide { aspect-ratio: var(--ratio-wide); } .ratio-photo { aspect-ratio: var(--ratio-photo); } .ratio-square { aspect-ratio: var(--ratio-square); } .ratio-portrait { aspect-ratio: var(--ratio-portrait); }\n.ratio-wide, .ratio-photo, .ratio-square, .ratio-portrait { object-fit: cover; inline-size: 100%; }\n\n/* ===== 4. Typography ===== */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
+  c += (on("layout") ? `  /* ${BP[0].label} first (${BP[0].w} px) */\n  ${lay(dsLay()[BP[0].id])}\n  --layout-content-max: ${LAYOUT_MAX}px;\n` : "") + `  --layout-measure: 70ch; /* line length for running text, SC 1.4.8 asks for 80 or fewer */\n` + (on("motion") ? `\n  /* Motion: everything drops to 0 with prefers-reduced-motion (SC 2.3.3) */\n  --duration-fast: 120ms;\n  --duration-base: 200ms;\n  --duration-slow: 320ms;\n  --easing-standard: cubic-bezier(0.2, 0, 0, 1);\n}\n@media (prefers-reduced-motion: reduce) {\n  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; }\n  *, *::before, *::after { scroll-behavior: auto !important; }\n}\n` : "}\n");
+  if (on("layout")) BP.slice(1).forEach(b => { c += `@media (min-width: ${b.w}px) { :root { ${lay(dsLay()[b.id])} } } /* ${b.label} */\n`; });
+  c += `.measure, .prose > * { max-inline-size: var(--layout-measure); }\n` + (on("layout") ? `.grid {\n  display: grid;\n  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));\n  column-gap: var(--layout-gutter);\n}\n.container {\n  padding-inline: var(--layout-margin);\n  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));\n  margin-inline: auto;\n}\n` : "") + `\n/* ===== Effects: elevation, opacity, blur, image ratios ===== */\n${dsFx(on)}\n/* ===== 4. Typography ===== */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
   for (const st of S.ts.styles) c += `  --font-size-${st.id}: ${tsClamp(st)}; /* ${st.min} → ${st.max} px */\n  --line-height-${st.id}: ${st.lh};\n`;
   c += "}\n";
   const SEL = { display: ".display", body: "body, p, .body", "body-strong": "strong, .body-strong", "body-italic": "em, .body-italic", small: "small, .small", caption: "figcaption, .caption", label: ".label", button: "button, .button" };
@@ -2689,6 +2818,14 @@ function saveFile(name, text, mime, okMsg) {
 $("tsDl").addEventListener("click", () => { const css = $("tsFmt").value === "css"; saveFile(css ? "lisio-styles.css" : "lisio-design-system.json", $("tsOut").textContent, css ? "text/css" : "application/json"); });
 $("expAll").addEventListener("click", () => { const same = location.hash.slice(1) === "exporter"; location.hash = "exporter"; show("exporter"); window.scrollTo(0, 0); });
 
+// ---------- Réglages des nuances ----------
+function shRender() { [["shLight", "light"], ["shDark", "dark"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.v === +shCfg(k))))); const v = +shCfg("sat"); $("shSat").value = v; $("shSatO").textContent = Math.round(v * 100) + " %"; $("shSat").setAttribute("aria-valuetext", Math.round(v * 100) + " %"); $("shExact").checked = !!shCfg("exact"); $("shReset").disabled = !S.sh || !Object.keys(S.sh).length; }
+const shSet = (k, v) => { S.sh = { ...(S.sh || {}), [k]: v }; save(); shRender(); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); };
+[["shLight", "light"], ["shDark", "dark"]].forEach(([id, k]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (b) shSet(k, +b.dataset.v); }));
+let shT = null; $("shSat").addEventListener("input", e => { const v = +e.target.value; $("shSatO").textContent = Math.round(v * 100) + " %"; clearTimeout(shT); shT = setTimeout(() => shSet("sat", v), 120); });
+$("shExact").addEventListener("change", e => shSet("exact", e.target.checked));
+$("shReset").addEventListener("click", () => { S.sh = {}; save(); shRender(); renderAll(); toast("Réglages de base des nuances"); });
+shRender();
 // ---------- Système : aperçu du design system ----------
 const LAYOUT = { mobile: { margin: 16, gutter: 16, columns: 4, section: 40 }, tablet: { margin: 32, gutter: 16, columns: 8, section: 56 }, desktop: { margin: 48, gutter: 24, columns: 12, section: 72 }, xl: { margin: 64, gutter: 24, columns: 12, section: 96 } };
 const LAYOUT_MAX = 1312;
@@ -2957,7 +3094,7 @@ function sysPage() {
   const ST_TXT = { error: ["Le paiement n’a pas abouti", "Votre carte a été refusée. Essayez une autre carte ou contactez votre banque."], success: ["Dossier envoyé", "Vous recevrez une réponse par e-mail sous dix jours."], warning: ["Pièce bientôt expirée", "Votre justificatif de domicile date de plus de trois mois."], info: ["Nouveau service", "Vous pouvez maintenant suivre votre dossier en ligne."] };
   const alerts = ST_KEYS.map(k => `<div class="alert alert-${k}" role="${k === "error" ? "alert" : "status"}"><p class="alert-title t-body-strong">${ST_TXT[k][0]}</p><p class="t-body">${ST_TXT[k][1]}</p></div>`).join("");
   const stRoles = ST_KEYS.map(k => `<p class="t-caption mut">${ST_DEF[k][0]} : texte ${fr(ratio(R[k + "/text"], R[k + "/surface"]))}:1 sur son fond, bordure ${fr(ratio(R[k + "/border"], R["background/default"]))}:1 sur la page.</p>`).join("");
-  const css = `${tsCss()}
+  const css = `${tsCss(true)}
 /* Mise en page de l’aperçu, avec les seuls tokens */
 html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 .page{padding:var(--layout-section) var(--layout-margin);display:flex;flex-direction:column;gap:var(--layout-section);max-width:calc(var(--layout-content-max) + 2 * var(--layout-margin));margin:0 auto;box-sizing:border-box}
@@ -3025,7 +3162,7 @@ ${TPL_CSS}`;
 <div class="two"><figure class="photo ratio-photo"><div class="ph-img" aria-hidden="true"></div><figcaption class="scrim"><p class="t-body-strong">Texte sur photo</p><p class="t-caption">Voile à ${Math.round(scrimAlpha() * 100)} % : ${fr(ratio("#FFFFFF", blendHex(scrimInk(), scrimAlpha(), "#FFFFFF")))}:1 même sur la zone blanche.</p></figcaption></figure>
 <div class="glass-demo"><div class="glass-bar glass"><p class="t-body-strong">Barre ${+dsCfg("glass") < 1 ? `translucide à ${Math.round(+dsCfg("glass") * 100)} %` : "opaque"}</p><p class="t-caption mut">Le texte secondaire reste lisible au pire.</p></div><div class="glass-under" aria-hidden="true">${"<p class=\"t-body-strong\">Contenu qui défile sous la barre, ici le plus foncé possible.</p>".repeat(5)}</div></div></div></section>
 <hr class="hr"><section><p class="t-label layer">Images</p><h2 class="t-h2">Formats et texte alternatif</h2><p class="t-body mut measure">Quatre formats. Chaque image dit ce qu’elle apprend dans son <code>alt</code>, ou <code>alt=""</code> si elle est décorative (1.1.1). Pas de texte dans l’image, sauf le logo (1.4.5).</p>
-<div class="ratios">${RATIOS.map(([k, w, h, l]) => `<figure><div class="ph-img ratio-${k}" aria-hidden="true"></div><figcaption class="t-caption"><b>${l}</b> · ${w}:${h} · <code>.ratio-${k}</code></figcaption></figure>`).join("")}</div></section>
+<div class="ratios">${ratiosOn().map(([k, w, h, l]) => `<figure><div class="ph-img ratio-${k}" aria-hidden="true"></div><figcaption class="t-caption"><b>${l}</b> · ${w}:${h} · <code>.ratio-${k}</code></figcaption></figure>`).join("")}</div></section>
 <hr class="hr"><section><p class="t-label layer">Données</p><h2 class="t-h2">Palette de graphiques</h2><p class="t-body mut measure">${ch.length} séries à 3:1 minimum sur le fond (1.4.11), choisies pour rester distinctes en vision typique, protanopie, deutéranopie et tritanopie. Écart minimal entre deux séries : ${fmt(mins * 100, 1)} (OKLab ×100). Nommez toujours les séries en clair, sur le graphique.</p><div class="bars" role="img" aria-label="Exemple de graphique en barres, six séries">${bars}</div></section>
 </main>${gov}`;
   const js = `<script>document.addEventListener("click",e=>{if(e.target.closest("a"))e.preventDefault()});
@@ -3160,7 +3297,11 @@ function renderDsPanel() {
   $("dsRoles").querySelectorAll("select").forEach(sel => { const k = sel.dataset.role; sel.value = isFixedRole(k) ? (m === "light" ? (k === "text/default" ? S.ts.fg : S.ts.bg) : ((k === "text/default" ? (S.ds.dark || {}).fg : (S.ds.dark || {}).bg) || "")) : (B.roles[k] || ""); cpEnhance(sel, k); });
   const ch = chartPalette(m), md = chartMinDist(m);
   $("dsChart").innerHTML = `<div class="ds-chsw">${ch.map((h, i) => `<span style="background:${h}" title="chart/${i + 1} ${h}"><b>${i + 1}</b></span>`).join("")}</div><p class="note">${ch.length} séries, toutes à 3:1 au moins sur le fond ${MODE_FR[m]} (1.4.11), choisies dans vos gammes pour rester distinctes en vision typique et pour les trois daltonismes (écart minimal ${fmt(md * 100, 1)}, ${md >= 0.1 ? "confortable" : md >= 0.06 ? "correct" : "serré : nommez les séries directement sur le graphique"}). Dans Figma : <b>chart/1</b> à <b>chart/${ch.length}</b>.</p>`;
-  [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"], ["dsElev", "elev"], ["dsGlass", "glass"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
+  DS_SEG.forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
+  [["dsElevI", "elevI"], ["dsElevB", "elevB"], ["dsElevY", "elevY"]].forEach(([id, k]) => { const v = +dsCfg(k), el = $(id); el.value = v; el.disabled = dsCfg("elev") === "none"; $(id + "O").textContent = Math.round(v * 100) + " %"; el.setAttribute("aria-valuetext", Math.round(v * 100) + " %"); });
+  $("dsRatios").innerHTML = RATIOS.map(([k, w, h, l]) => `<label class="imr"><input type="checkbox" data-ratio="${k}"${dsCfg("ratios").includes(k) ? " checked" : ""}><div style="aspect-ratio:${w}/${h};border-radius:${dsCfg("imgR") === "none" ? 0 : Math.min(16, DS_SHAPES[dsCfg("shape")].v[dsCfg("imgR")])}px"><span>${w}:${h}</span></div><span class="imr-c"><b>${l}</b> <code>ratio-${k}</code></span></label>`).join("");
+  $("dsIncG").innerHTML = DS_GROUPS.map(([g, l, d]) => `<label><input type="checkbox" data-inc="${g}"${dsOn(g) ? " checked" : ""}><span><b>${l}</b><small>${d}</small></span></label>`).join("");
+  [["dsChH", ["chart"]], ["dsGrH", ["layout"]], ["dsElH", ["shadow", "opacity", "blur"]], ["dsImH", ["ratio", "icon"]]].forEach(([h, gs]) => { const el = $(h), off = gs.every(g => !dsOn(g)), some = gs.some(g => !dsOn(g)); el.closest(".ds-sec").classList.toggle("ds-off", off); let x = el.querySelector(".ds-x"); if (!x) { x = document.createElement("span"); x.className = "ds-x"; el.appendChild(x); } x.hidden = !some; x.textContent = off ? "Non exporté" : "En partie exporté"; });
   $("dsElevPrev").style.background = R["background/default"];
   $("dsElevPrev").innerHTML = [1, 2, 3, 4].map(n => `<div class="elv-c" style="background:${R["background/subtle"]};color:${R["text/default"]};box-shadow:${shCss(n, m)}"><b>${n}</b><span>${ELEV_USE[n][0]}</span><code>shadow-${n}</code></div>`).join("");
   $("dsElevChk").innerHTML = elevChecks(m).map(([ok, t]) => `<li class="${ok ? "ok" : "no"}"><span aria-hidden="true">${ok ? "✓" : "✕"}</span><span>${ok ? "" : '<span class="sr-only">À corriger : </span>'}${t}</span></li>`).join("");
@@ -3174,6 +3315,7 @@ function renderDsPanel() {
   $("dsReset").disabled = dsIsBase();
   if (keep) { const el = document.querySelector(".ds-panel " + keep); if (el) el.focus(); }
 }
+const DS_SEG = [["dsShape", "shape", String], ["dsSpace", "space", Number], ["dsBtn", "btn", Number], ["dsLink", "link", String], ["dsElev", "elev", String], ["dsGlass", "glass", Number], ["dsElevC", "elevC", String], ["dsGlassB", "glassBlur", Number], ["dsScrim", "scrimPlus", Number], ["dsImgR", "imgR", String], ["dsImgFit", "imgFit", String], ["dsIcon", "iconSet", String]];
 const curView = () => [...VIEWS, "exporter", "formation"].find(n => !$(n).hidden);
 const dsChanged = () => { save(); renderStyles(); if ($("systeme").hidden) renderDsPanel(); renderJourney(curView()); };
 $("dsRoles").addEventListener("change", e => { const k = e.target.dataset.role; if (k) { roleApply(k, e.target.value); dsChanged(); } });
@@ -3183,7 +3325,11 @@ function roleFixAll(m) { let n = 0; for (const mm of m ? [m] : ["light", "dark"]
 $("dsFixAll").addEventListener("click", e => { if (!e.target.closest("[data-fixall]")) return; const n = roleFixAll(dsMode); dsChanged(); toast(n ? `${n} correction${n > 1 ? "s" : ""} appliquée${n > 1 ? "s" : ""}` : "Rien à corriger automatiquement"); });
 $("dsRoles").addEventListener("click", e => { const b = e.target.closest("[data-fix]"); if (!b) return; const k = b.dataset.fix; roleApply(k, b.dataset.v); dsChanged(); toast(`${ROLE_FR[k][0]} : ${hexName(b.dataset.v)}`); });
 $("dsModeSeg").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; dsMode = b.dataset.v; S.sysTheme = dsMode; save(); renderSystem(); });
-[["dsShape", "shape", String], ["dsSpace", "space", Number], ["dsBtn", "btn", Number], ["dsLink", "link", String], ["dsElev", "elev", String], ["dsGlass", "glass", Number]].forEach(([id, k, cast]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ds[k] = cast(b.dataset.v); dsChanged(); }));
+DS_SEG.forEach(([id, k, cast]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ds[k] = cast(b.dataset.v); dsChanged(); }));
+let rngT = null;
+["dsElevI", "dsElevB", "dsElevY"].forEach(id => $(id).addEventListener("input", e => { const k = { dsElevI: "elevI", dsElevB: "elevB", dsElevY: "elevY" }[id], v = +e.target.value; S.ds[k] = v; $(id + "O").textContent = Math.round(v * 100) + " %"; e.target.setAttribute("aria-valuetext", Math.round(v * 100) + " %"); const m = dsMode; $("dsElevPrev").querySelectorAll(".elv-c").forEach((c, i) => { c.style.boxShadow = shCss(i + 1, m); }); clearTimeout(rngT); rngT = setTimeout(() => { dsChanged(); const el = $(id); if (el) el.focus(); }, 250); }));
+$("dsRatios").addEventListener("change", e => { const k = e.target.dataset.ratio; if (!k) return; const on = new Set(dsCfg("ratios")); e.target.checked ? on.add(k) : on.delete(k); S.ds.ratios = RATIOS.map(r => r[0]).filter(x => on.has(x)); dsChanged(); const el = document.querySelector(`#dsRatios [data-ratio="${k}"]`); if (el) el.focus(); });
+$("dsIncG").addEventListener("change", e => { const g = e.target.dataset.inc; if (!g) return; S.ds.inc = { ...(S.ds.inc || {}) }; if (e.target.checked) delete S.ds.inc[g]; else S.ds.inc[g] = false; dsChanged(); const el = document.querySelector(`#dsIncG [data-inc="${g}"]`); if (el) el.focus(); toast(e.target.checked ? "Ajouté au design system" : "Retiré du fichier Figma et du CSS"); });
 $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset.bp) return; const k = i.dataset.k, v = Math.round(+i.value), lo = k === "columns" ? 1 : 0, hi = k === "columns" ? 16 : 240;
   if (!isFinite(v) || v < lo || v > hi) { i.value = dsLay()[i.dataset.bp][k]; return; }
   S.ds.layout = S.ds.layout || {}; S.ds.layout[i.dataset.bp] = { ...(S.ds.layout[i.dataset.bp] || {}), [k]: v }; save(); renderTsExport(); renderGridPrev();
@@ -3222,26 +3368,27 @@ $("exCopy").addEventListener("click", () => { const txt = tsJson(); histMark(txt
 $("exCss").addEventListener("click", () => copy(tsCss(), "CSS copié"));
 
 // ---------- Onglets ----------
-const VIEWS = ["matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources"];
+const VIEWS = ["couleurs", "palette", "matrice", "tester", "styles", "systeme", "lisibilite", "sources"];
 
 const jStepIssues = id => {
   if (id === "systeme") return allIssues().length;
-  if (id === "styles") return S.ts.styles.some(st => !tsVerdict(st).ok) ? 1 : 0;
+  if (id === "tester" || id === "styles") return S.ts.styles.some(st => !tsVerdict(st).ok) ? 1 : 0;
+  if (id === "couleurs") return cwIssues().length;
   if (id === "exporter") return allIssues().length;
   return 0;
 };
 function renderJourney(v) {
-  const i = JOURNEY.findIndex(x => x[0] === v), J = $("journey"), X = $("jNext");
+  const i = JOURNEY.findIndex(x => x[0] === v || (x[4] || []).includes(v)), J = $("journey"), X = $("jNext");
   J.hidden = X.hidden = i < 0; if (i < 0) return;
   const [, , say, qs] = JOURNEY[i];
   let seen = true; try { seen = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
   const hello = !seen && i === 0 ? `<div class="j-hello"><p><b>Nouveau sur Lisio ?</b> Suivez les six étapes ci-dessus, dans l’ordre ou non. Chaque page vérifie votre travail, signale ce qui ne passe pas et propose la correction. Les pastilles « ? » expliquent le jargon. Pour vous échauffer : <a href="#formation">dix questions avec la réponse expliquée</a>.</p><button type="button" class="btn sm" data-hello>Compris</button></div>` : "";
   J.innerHTML = `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="${n < i ? "done" : ""}"><span class="j-n">${n + 1}</span><span class="j-l">${lab}</span>${iss ? `<span class="j-i" title="${iss} à corriger">${iss}<span class="sr"> à corriger</span></span>` : ""}</a></li>`; }).join("")}</ol>
-  <div class="j-now"><p><b>Étape ${i + 1} sur ${JOURNEY.length}.</b> ${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p></div>${hello}`;
-  const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
+  <div class="j-now"><p><b>Étape ${i + 1} sur ${JOURNEY.length}.</b> ${say}${JOURNEY[i][4] ? `<span class="j-sub">${JOURNEY[i][4].map(x => `<a href="#${x}"${x === v ? ' aria-current="page"' : ""}>${SEQ.find(q => q[0] === x)[1]}</a>`).join("")}</span>` : ""}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p></div>${hello}`;
+  const si = SEQ.findIndex(x => x[0] === v), nx = SEQ[si + 1], pv = SEQ[si - 1], iss = jStepIssues(v);
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm), nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
-  const why = v === "styles" ? `Texte trop pâle sur le fond : ${nT} style${nT > 1 ? "s" : ""} sous le seuil ${S.level}.` : `${iss} rôle${iss > 1 ? "s" : ""} sous le seuil ${S.level}.`;
-  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn" href="#${pv[0]}">← ${pv[1]}</a>` : "<span></span>"}${nx ? `<a class="btn primary" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
+  const why = v === "couleurs" ? `${iss} couleur${iss > 1 ? "s" : ""} ne se lit avec aucune autre en texte courant.` : v === "styles" ? `Texte trop pâle sur le fond : ${nT} style${nT > 1 ? "s" : ""} sous le seuil ${S.level}.` : `${iss} rôle${iss > 1 ? "s" : ""} sous le seuil ${S.level}.`;
+  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn" href="#${pv[0]}">← ${pv[1]}</a>` : "<span></span>"}${nx ? `<a class="btn primary" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
 }
 // ---------- Aide « ? » ----------
 let qBtn = null;
@@ -3280,7 +3427,7 @@ $("exFix").addEventListener("click", fixClick);
 $("jNext").addEventListener("click", fixClick);
 $("tsCrFix").addEventListener("click", fixClick);
 $("journey").addEventListener("click", e => { if (!e.target.closest("[data-hello]")) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("journey").querySelector(".j-hello"); if (h) h.remove(); $("journey").querySelector("a[aria-current]").focus(); });
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); tabInk(); }
+function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "couleurs"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); tabInk(); }
 // Mode clair ou sombre : suit le système, jusqu’à ce qu’on choisisse
 const DARKQ = matchMedia("(prefers-color-scheme: dark)"), themeNow = () => document.documentElement.getAttribute("data-theme") || (DARKQ.matches ? "dark" : "light");
 function themeLabel() { const d = themeNow() === "dark"; $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
@@ -3314,7 +3461,7 @@ HELPP.addEventListener("keydown", e => { if (e.key === "Escape") { e.stopPropaga
 document.addEventListener("pointerdown", e => { if (!HELPP.hidden && !e.target.closest("#helpPop,#helpB")) helpSet(false); });
 HELPP.addEventListener("focusout", e => { if (!HELPP.hidden && e.relatedTarget && !e.relatedTarget.closest("#helpPop,#helpB")) helpSet(false); });
 // Mobile : 4 onglets dans la barre, le reste dans la feuille « Plus »
-const MORE_T = ["styles", "lisibilite"], MOREB = $("moreB"), MORES = $("moreSheet");
+const MORE_T = ["palette", "styles", "lisibilite"], MOREB = $("moreB"), MORES = $("moreSheet");
 const moreIc = { formation: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>', exporter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>', ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>', slides: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M12 16.5V20M8.5 20h7"/></svg>' };
 function moreRender() { const v = curView(), cur = n => n === v ? ' aria-current="page"' : "";
   $("moreG").innerHTML = MORE_T.map(n => { const t = $("tab-" + n), ic = t.querySelector("svg").outerHTML; return `<button type="button" class="mi" data-go="${n}"${cur(n)}>${ic}${esc(tabLabel(t))}</button>`; }).join("")
@@ -3631,8 +3778,8 @@ function cmdSource() {
   const L = [], dark = themeNow() === "dark";
   VIEWS.forEach(v => { const t = $("tab-" + v); L.push({ k: "Page", t: tabLabel(t), run: () => cmdGoView(v) }); });
   L.push({ k: "Page", t: "Exporter", x: "export json figma plugin", run: () => cmdGoView("exporter") }, { k: "Page", t: "S’entraîner", x: "quiz formation exercices", run: () => cmdGoView("formation") });
-  L.push({ k: "Action", t: "Ajouter une couleur", run: () => { cmdGoView("matrice"); $("palBar").open = true; setTimeout(() => $("addColor").click(), 50); } },
-    { k: "Action", t: "Modifier les couleurs", x: "palette editer", run: () => { cmdGoView("matrice"); $("palBar").open = true; $("palBar").querySelector("summary").focus(); } },
+  L.push({ k: "Action", t: "Ajouter une couleur", run: () => { cmdGoView("couleurs"); setTimeout(() => $("addColor").click(), 50); } },
+    { k: "Action", t: "Modifier les couleurs", x: "palette editer", run: () => { cmdGoView("couleurs"); setTimeout(() => $("addColor").focus(), 50); } },
     { k: "Action", t: dark ? "Passer en mode clair" : "Passer en mode sombre", x: "theme", run: () => $("themeB").click() },
     { k: "Action", t: "Projets : ouvrir, créer, dupliquer", x: "projet sauvegarder enregistrer equipe", run: () => $("prjB").click() },
     { k: "Action", t: "Nouveau projet", x: "creer", run: () => $("prjNew").click() },
@@ -3707,7 +3854,7 @@ $("histCopy").addEventListener("click", () => copy(histText(), "Résumé copié"
 const histMark = txt => { store.set("lastExport", { date: new Date().toISOString(), flat: flatTokens(txt) }); setTimeout(renderHist, 50); };
 
 // ---------- Démarrage ----------
-function renderAll() { buildScales(); renderScales(); renderMatrix(); renderRules(); renderExport(); renderStyles(); render(); }
+function renderAll() { buildScales(); renderWatch(); renderScales(); renderMatrix(); renderRules(); renderExport(); renderStyles(); render(); }
 $("showFail").checked = S.showFail;
 paintSrcTab(); ensureFont(S.font); renderEditor(); renderAll(); renderRead();
 show(location.hash.slice(1));
