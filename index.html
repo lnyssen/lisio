@@ -180,6 +180,14 @@ a{color:inherit;text-underline-offset:.18em}
 .prj-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin:16px 0 0;padding:16px 18px;border-radius:14px;background:var(--surface);border:2px solid var(--ink)}.prj-in h2{font-size:18px;margin:0 0 4px}.prj-in p{margin:0;font-size:14px;color:var(--muted);max-width:70ch}.prj-in[hidden]{display:none}
 .ex-name{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;flex:1 1 260px}.ex-name input{font:inherit;font-weight:400;min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--field);background:var(--surface);color:var(--ink)}
 .hist{list-style:none;margin:10px 0 0;padding:0;font-size:14px}.hist li{padding:6px 0;border-top:1px solid var(--hair);overflow-wrap:anywhere}.hist code{font-size:13px}.hist .add b,.hist .add{color:var(--ok)}.hist .del{color:var(--bad)}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.sys-pages{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:12px;padding-bottom:14px;border-bottom:1px solid var(--hair)}.sys-pages .seg{flex-wrap:wrap}
+.laws{margin-top:20px;display:flex;flex-direction:column;gap:8px}.laws h3{margin:0}.laws>.note{margin:0 0 6px}
+.laws-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:12px}
+.law{border:1px solid var(--hair);border-radius:12px;padding:14px 16px;background:var(--surface);display:flex;flex-direction:column;gap:6px;min-width:0}
+.law h4{margin:0;font-size:15px;line-height:1.3}.law h4 .muted{font-weight:500;font-size:13px}
+.law p{margin:0;font-size:14px;line-height:1.5}.law .def{color:var(--muted);font-style:italic}
+.law .lchk{font-weight:600}.law .lchk.ok{color:var(--ok)}.law .lchk.no{color:var(--bad)}.law .lnk{font-size:14px;margin-top:auto;align-self:flex-start;min-height:24px;display:inline-flex;align-items:center}
 .sys-tools{margin-top:10px;gap:8px}.sys-vis{flex-direction:row;align-items:center;gap:8px}.sys-vis select{min-height:36px;font-size:14px}.sys-chk{margin:6px 0 0;font-size:14px;font-weight:600}.sys-chk.ok{color:var(--ok)}.sys-chk.no{color:var(--bad)}
 .ds-more{border-top:1px solid var(--hair);padding-top:6px}.ds-more>summary{cursor:pointer;font-weight:700;font-size:15px;min-height:44px;display:flex;align-items:center;gap:6px}.ds-more>summary .muted{font-weight:500;font-size:13px}.ds-more .ds-grp{margin-top:14px}
 .ds-modebar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:10px 0 4px}.ds-modebar .note{margin:0;flex:1 1 240px}
@@ -187,6 +195,14 @@ a{color:inherit;text-underline-offset:.18em}
 .ds-chsw{display:flex;gap:6px;margin:8px 0}.ds-chsw span{flex:1;height:40px;border-radius:8px;display:grid;place-items:end start;padding:4px 7px}.ds-chsw b{font-size:12px;color:#fff;text-shadow:0 0 3px rgba(0,0,0,.6)}
 .ds-fixall{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;margin:10px 0 14px;border-radius:12px;background:var(--bad-bg);color:var(--bad)}.ds-fixall p{margin:0;font-size:14px}.ds-fixall[hidden]{display:none}
 .ds-fixb .sw{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.gprev{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.gp{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center}
+.gp-l{font-size:13px;font-weight:700;line-height:1.15}.gp-l small{display:block;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.gp-f{height:40px;border-radius:6px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--muted) 22%,transparent) 0 1px,transparent 1px 6px);box-shadow:inset 0 0 0 1px var(--hair);box-sizing:border-box;display:flex;transition:width .35s cubic-bezier(.3,1.25,.4,1)}
+.gprev{--gpc:rgba(229,72,77,.2);--gpe:rgba(229,72,77,.6)}:root[data-theme="dark"] .gprev{--gpc:rgba(255,110,115,.28);--gpe:rgba(255,110,115,.75)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gprev{--gpc:rgba(255,110,115,.28);--gpe:rgba(255,110,115,.75)}}
+.gp-c{display:grid;flex:1;height:100%;background:var(--surface)}.gp-c span{background:var(--gpc);box-shadow:inset 1px 0 0 var(--gpe),inset -1px 0 0 var(--gpe)}
+.gp-key{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin:2px 0 0 74px}.gp-key i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+@media (prefers-reduced-motion:reduce){.gp-f{transition:none}}
 .ds-tw{overflow-x:auto}.ds-gt{border-collapse:collapse;width:100%;font-size:14px}
 .ds-gt th{font-weight:600;color:var(--muted);text-align:left;padding:4px 6px;white-space:nowrap}.ds-gt td{padding:3px 4px}
 @media (max-width:520px){.ds-gt td{padding:3px 2px}.ds-gt td input{min-width:46px!important;padding:4px 2px!important;text-align:center}.ds-gt th{padding:4px 3px!important;font-size:13px}.ds-gt tbody th{white-space:normal}}
@@ -229,15 +245,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .logo-word{color:var(--primary);font-weight:700;font-size:22px;letter-spacing:-.045em;line-height:1}
 nav.tabs{display:flex;justify-content:center;align-items:center;gap:2px;min-width:0;justify-self:center}
 .tab-sep{display:none}
-@media (min-width:761px){nav.tabs{background:var(--surface);border:1px solid var(--hair);border-radius:999px;padding:4px;box-shadow:0 1px 2px rgba(15,27,61,.05)}.tab-sep{display:block;width:1px;height:18px;background:var(--hair);margin:0 6px;flex:none}}
+@media (min-width:761px){nav.tabs{background:var(--surface);border:1px solid var(--hair);border-radius:999px;padding:3px;height:var(--ctl);box-sizing:border-box}nav.tabs button{height:100%;padding-top:0!important;padding-bottom:0!important}.tab-sep{display:block;width:1px;height:18px;background:var(--hair);margin:0 6px;flex:none}}
 nav.tabs button{font:inherit;font-size:14px;font-weight:600;border:0;background:none;color:var(--muted);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;user-select:none}
 nav.tabs button svg{width:18px;height:18px;flex:none}
 @media (min-width:761px){nav.tabs button svg{display:none}nav.tabs button{padding:7px 9px}}
 @media (min-width:1101px) and (max-width:1260px){nav.tabs button{padding:7px 5px}#normV{display:none}#normChip{min-width:0}}
 @media (min-width:761px) and (max-width:1000px){nav.tabs .dsk{display:none}nav.tabs .mob{display:inline}nav.tabs button{padding:6px 5px!important;font-size:12.5px!important}.logo-word{display:none}.appbar{grid-template-columns:auto minmax(0,1fr) auto!important;gap:10px!important}nav.tabs{justify-content:center}#normV{display:none}}
-@media (min-width:1300px){.appbar{grid-template-columns:minmax(max-content,1fr) auto minmax(max-content,1fr)}}
+@media (min-width:1001px){nav.tabs{justify-self:start}}@media (min-width:1261px){nav.tabs{margin-inline-start:16px}}
 @media (min-width:761px) and (max-width:840px){nav.tabs button{padding:6px 3px!important}}
-@media (min-width:761px) and (max-width:1100px){#normV{display:none}#normChip{min-width:0}.expbtn span{display:none}.expbtn{padding:7px 9px;min-width:34px;min-height:34px;justify-content:center}.normchip{min-width:0}nav.tabs button{padding:7px 6px;font-size:13px}}
+@media (min-width:761px) and (max-width:1100px){#normV{display:none}#normChip{min-width:0}.expbtn span{display:none}.expbtn{padding:0 9px;min-width:var(--ctl);justify-content:center}.normchip{min-width:0}nav.tabs button{padding:7px 6px;font-size:13px}}
 nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
 @media (hover:hover){nav.tabs button[aria-selected="false"]:hover{color:var(--ink);background:var(--hover)}}
 /* Pastille qui glisse d’un onglet à l’autre (desktop) */
@@ -261,8 +277,15 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
 }
 @media (prefers-reduced-motion:reduce){.tab-ink,.tab-hov{transition:opacity .15s!important}}
 .appr{display:flex;align-items:center;gap:8px;justify-self:end}
-.hist{display:flex;align-items:center;background:var(--surface);border:1px solid var(--hair);border-radius:999px;padding:2px}
-.hist .undobtn{border:0;background:none;width:32px;height:32px}
+/* En-tête : une seule hauteur pour tout (--ctl), un seul axe */
+.appbar{--ctl:40px}
+@media (max-width:760px){.appbar{--ctl:36px}}
+.hgrp{display:flex;align-items:center;gap:2px;background:var(--surface);border:1px solid var(--hair);border-radius:999px;padding:3px;height:var(--ctl);box-sizing:border-box}
+.hgrp .undobtn{border:0;background:none;width:34px;height:100%}
+@media (hover:hover){.hgrp .undobtn:not(:disabled):hover{background:var(--hover)}}
+.appr .themebtn{width:var(--ctl);height:var(--ctl);border-width:1px;box-sizing:border-box}
+.appr .normchip,.appr .expbtn{height:var(--ctl);box-sizing:border-box;padding-top:0;padding-bottom:0}
+.appr .expbtn{min-height:0}
 .themebtn .i-sun{display:none}
 :root[data-theme="dark"] .themebtn .i-sun{display:block}:root[data-theme="dark"] .themebtn .i-moon{display:none}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .themebtn .i-sun{display:block}:root:not([data-theme="light"]) .themebtn .i-moon{display:none}}
@@ -274,7 +297,7 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
 @media (min-width:761px) and (max-width:1000px){#redoB{display:none}}
 .expbtn{font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:7px 14px 7px 11px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 .expbtn svg{width:17px;height:17px}
-@media (max-width:480px){.expbtn span{display:none}.expbtn{padding:7px 9px;min-width:34px;min-height:34px;justify-content:center}}
+@media (max-width:480px){.expbtn span{display:none}.expbtn{padding:0 9px;min-width:var(--ctl);justify-content:center}}
 .normchip{font:inherit;font-size:13px;font-weight:700;flex:none;justify-self:end;min-width:152px;justify-content:space-between;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--hair);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 8px 6px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap}
 .normchip .lv{background:var(--bg);border-radius:999px;padding:1px 0;font-size:12px;min-width:38px;text-align:center}
 .normchip svg{width:14px;height:14px;color:var(--muted)}
@@ -634,7 +657,7 @@ a.btn{text-decoration:none}
       <button role="tab" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 10.5h16M4 15h10M4 19.5h6"/><path d="m15.5 18 2 2 3.5-4" stroke-linejoin="round"/></svg><span>Rédaction</span></button>
       <button role="tab" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h10.5L19 8v11.5H5z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke-linecap="round"/></svg><span>Guide</span></button>
     </nav>
-    <div class="appr"><div class="hist" role="group" aria-label="Historique"><button class="undobtn" type="button" id="undoB" disabled aria-label="Annuler la dernière modification" title="Annuler (Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Z Meta+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button class="undobtn" type="button" id="redoB" disabled aria-label="Rétablir la modification annulée" title="Rétablir (Maj + Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button></div><button class="undobtn themebtn" type="button" id="themeB" aria-label="Passer en mode sombre" title="Mode clair ou sombre"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button><button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="Norme de référence : WCAG 2.2, niveau AA. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button></div>
+    <div class="appr"><div class="hgrp" role="group" aria-label="Historique"><button class="undobtn" type="button" id="undoB" disabled aria-label="Annuler la dernière modification" title="Annuler (Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Z Meta+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button class="undobtn" type="button" id="redoB" disabled aria-label="Rétablir la modification annulée" title="Rétablir (Maj + Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button></div><button class="undobtn themebtn" type="button" id="themeB" aria-label="Passer en mode sombre" title="Mode clair ou sombre"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button><button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="Norme de référence : WCAG 2.2, niveau AA. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button></div>
   </header>
 
   <main id="main" tabindex="-1">
@@ -799,7 +822,7 @@ a.btn{text-decoration:none}
 
   <!-- SYSTÈME -->
   <section id="systeme" role="tabpanel" aria-labelledby="tab-systeme" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté : couleurs, rôles, typo fluide, grille et composants. Changez d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
+    <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté. Passez du système à des pages types (accueil, formulaire, article, tableau de bord) avec les lois UX qui s’y appliquent, puis aux états des composants. Changez d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
     <div class="card-surface ds-panel">
       <div class="row between"><div><h2>Personnaliser</h2><p class="note" id="dsState"></p></div><button class="btn sm" type="button" id="dsReset">Revenir au système de base</button></div>
       <div class="ds-grid">
@@ -812,15 +835,17 @@ a.btn{text-decoration:none}
             <div class="ds-f"><span class="ds-l" id="dsBtnL">Hauteur des boutons et champs</span><div class="seg" role="group" aria-labelledby="dsBtnL" id="dsBtn"><button type="button" data-v="44">44 px</button><button type="button" data-v="48">48 px</button><button type="button" data-v="56">56 px</button></div></div>
             <div class="ds-f"><span class="ds-l" id="dsLinkL">Soulignement des liens</span><div class="seg" role="group" aria-labelledby="dsLinkL" id="dsLink"><button type="button" data-v="dotted">Pointillé</button><button type="button" data-v="solid">Plein</button></div></div>
           </section>
-          <section class="ds-sec" aria-labelledby="dsGrH"><h3 id="dsGrH">Grille par écran</h3><div class="ds-tw"><table class="ds-gt" id="dsGrid"></table></div></section>
+          <section class="ds-sec" aria-labelledby="dsGrH"><h3 id="dsGrH">Grille par écran</h3><div class="ds-tw"><table class="ds-gt" id="dsGrid"></table></div><div class="gprev" id="dsGridPrev"></div></section>
         </div>
       </div>
     </div>
     <div class="card-surface sys-card" role="region" aria-label="Aperçu du design system">
+      <div class="sys-pages"><span class="ds-l" id="sysPgL">Page</span><div class="seg" role="group" aria-labelledby="sysPgL" id="sysPg"><button type="button" data-v="ds">Système</button><button type="button" data-v="home">Accueil</button><button type="button" data-v="form">Formulaire</button><button type="button" data-v="article">Article</button><button type="button" data-v="dash">Tableau de bord</button><button type="button" data-v="states">États</button></div></div>
       <div class="row between"><div class="seg" role="group" aria-label="Largeur d’écran de l’aperçu" id="sysView"><button type="button" data-v="w320">320</button><button type="button" data-v="mobile">Mobile<span class="dsk"> 390</span></button><button type="button" data-v="tablet">Tablet<span class="dsk"> 768</span></button><button type="button" data-v="desktop">Desktop<span class="dsk"> 1024</span></button><button type="button" data-v="xl">XL<span class="dsk"> 1440</span></button></div><button class="btn sm" type="button" id="sysCss">Copier le CSS</button></div>
-      <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
+      <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysGrid" aria-pressed="false">Afficher la grille</button><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
       <p class="note" id="sysNote"></p><p class="sys-chk" id="sysChk" role="status"></p>
       <div class="sys-wrap" id="sysWrap"><iframe id="sysFrame" title="Aperçu du design system" sandbox="allow-scripts" scrolling="no"></iframe></div>
+      <section class="laws" id="sysLaws" aria-labelledby="sysLawsH" hidden></section>
     </div>
   </section>
 
@@ -2290,6 +2315,232 @@ const sysBp = () => S.sys320 ? W320 : !tsVwTouched && matchMedia("(max-width:760
 const sysTouch = () => { sysDirty = true; if (!$("systeme").hidden) renderSystem(); };
 const inkOn = h => ratio(h, "#FFFFFF") >= ratio(h, "#000000") ? "#FFFFFF" : "#000000";
 const W320 = { id: "w320", label: "Mobile 320", w: 320 };
+// ---------- Gabarits de pages et lois UX ----------
+const frNb = h => h.replace(/« /g, "«\u00a0").replace(/ »/g, "\u00a0»").replace(/ ([:;!?])(?=[\s<])/g, "\u00a0$1");
+const SYS_PAGES = [["ds", "Système"], ["home", "Accueil"], ["form", "Formulaire"], ["article", "Article"], ["dash", "Tableau de bord"], ["states", "États"]];
+const sysPg = () => SYS_PAGES.some(p => p[0] === S.sysPg) ? S.sysPg : "ds";
+// Définitions : Jon Yablonski, Laws of UX (lawsofux.com), traduites en français.
+const LAWS = {
+  "fittss-law": ["Loi de Fitts", "Fitts’s Law", "Le temps pour atteindre une cible dépend de sa distance et de sa taille."],
+  "hicks-law": ["Loi de Hick", "Hick’s Law", "Le temps de décision augmente avec le nombre et la complexité des choix."],
+  "jakobs-law": ["Loi de Jakob", "Jakob’s Law", "Les gens passent l’essentiel de leur temps sur d’autres sites : ils préfèrent que le vôtre fonctionne comme ceux qu’ils connaissent déjà."],
+  "law-of-proximity": ["Loi de proximité", "Law of Proximity", "Des éléments proches les uns des autres sont perçus comme un groupe."],
+  "law-of-common-region": ["Loi de la région commune", "Law of Common Region", "Des éléments qui partagent une zone clairement délimitée sont perçus comme un groupe."],
+  "law-of-similarity": ["Loi de similarité", "Law of Similarity", "L’œil perçoit des éléments semblables comme un ensemble, même quand ils sont séparés."],
+  "von-restorff-effect": ["Effet Von Restorff", "Von Restorff Effect", "Parmi plusieurs objets semblables, celui qui diffère est le mieux retenu."],
+  "serial-position-effect": ["Effet de position sérielle", "Serial Position Effect", "On retient mieux le premier et le dernier élément d’une série."],
+  "goal-gradient-effect": ["Effet de gradient d’objectif", "Goal-Gradient Effect", "L’envie d’atteindre un but augmente à mesure qu’on s’en approche."],
+  "zeigarnik-effect": ["Effet Zeigarnik", "Zeigarnik Effect", "On se souvient mieux des tâches inachevées ou interrompues que des tâches terminées."],
+  "teslers-law": ["Loi de Tesler", "Tesler’s Law", "Tout système contient une part de complexité qui ne peut pas être réduite."],
+  "postels-law": ["Loi de Postel", "Postel’s Law", "Soyez tolérant dans ce que vous acceptez, et rigoureux dans ce que vous renvoyez."],
+  "doherty-threshold": ["Seuil de Doherty", "Doherty Threshold", "La productivité s’envole quand l’ordinateur et la personne échangent assez vite (moins de 400 ms) pour que ni l’un ni l’autre n’attende."],
+  "cognitive-load": ["Charge cognitive", "Cognitive Load", "La quantité de ressources mentales nécessaire pour comprendre une interface et s’en servir."],
+  "chunking": ["Regroupement", "Chunking", "Découper une information en morceaux, puis les regrouper en un ensemble qui a du sens."],
+  "choice-overload": ["Surcharge de choix", "Choice Overload", "Face à un grand nombre d’options, on se sent vite submergé."],
+  "aesthetic-usability-effect": ["Effet esthétique-utilisabilité", "Aesthetic-Usability Effect", "Un design jugé beau est souvent perçu comme plus facile à utiliser."],
+  "peak-end-rule": ["Règle pic-fin", "Peak-End Rule", "On juge une expérience surtout sur son moment le plus fort et sur sa fin, plutôt que sur la moyenne."]
+};
+const HOME_NAV = ["Offres", "Méthode", "Réalisations", "Tarifs", "Contact"];
+// [slug, ce que fait le gabarit, contrôle mesuré ou null]
+function pageLaws(pg, R) {
+  const fr = n => fmt(floor2(n)), btn = dsCfg("btn"), sp = dsDim().spacing.v;
+  const fitts = () => [btn >= 44, `Boutons et champs : ${btn} px de haut. Minimum 24 px (2.5.8, AA), 44 px pour une cible confortable (2.5.5, AAA).`];
+  const cta = () => { const r = ratio(R["action/default"], R["background/default"]); return [r >= 3, `Le bouton principal se détache du fond à ${fr(r)}:1. Il faut 3:1 pour repérer un composant (1.4.11).`]; };
+  const L = {
+    home: [
+      ["jakobs-law", "Logo en haut à gauche qui ramène à l’accueil, menu en haut, action principale à droite, liens légaux en pied de page. Rien à réapprendre.", null],
+      ["hicks-law", `${HOME_NAV.length} entrées dans le menu, plus une seule action. Chaque entrée ajoutée allonge la décision : regroupez avant d’ajouter.`, null],
+      ["von-restorff-effect", "Un seul bouton plein par écran : « Prendre rendez-vous ». Les autres actions sont secondaires.", cta],
+      ["fittss-law", "Les actions principales sont grandes et proches du texte qui les annonce.", fitts],
+      ["choice-overload", "Trois offres, pas dix. Chacune a un seul lien.", null],
+      ["serial-position-effect", "Menu : « Offres » en premier, « Contact » en dernier. Ce sont les deux entrées qu’on retient.", null]
+    ],
+    form: [
+      ["goal-gradient-effect", "« Étape 2 sur 3 » et une barre de progression : on voit la fin, on continue.", null],
+      ["law-of-proximity", "L’étiquette colle à son champ, et les champs sont bien séparés entre eux.", () => [sp[1] * 2 <= sp[5], `Étiquette à ${sp[1]} px de son champ, ${sp[5]} px entre deux champs (spacing-1 et spacing-5).`]],
+      ["chunking", "Les champs sont rangés en deux blocs titrés, « Vous » et « Adresse », au lieu d’une longue liste.", null],
+      ["teslers-law", "La complexité reste du côté du site : saisie automatique (autocomplete), ville remplie d’après le code postal.", null],
+      ["postels-law", "Le téléphone est accepté avec ou sans espaces. Le site le remet en forme, pas la personne.", null],
+      ["doherty-threshold", "Après « Continuer », un retour visible en moins de 400 ms : le bouton passe en « Envoi… » (voir la page États).", null],
+      ["peak-end-rule", "La dernière étape compte double : une confirmation claire, avec la suite et un délai.", null]
+    ],
+    article: [
+      ["cognitive-load", (() => { const st = S.ts.styles.find(s => s.id === "body"); return `Une idée par paragraphe, lignes limitées à 70 caractères${st ? `, texte courant à ${bpSize(st, sysBp().w)} px à cette largeur` : ""}. Le critère 1.4.8 (AAA) demande 80 caractères au plus.`; })(), null],
+      ["serial-position-effect", "« En bref » au début, « À retenir » à la fin : les deux endroits qu’on retient.", null],
+      ["law-of-proximity", "Chaque intertitre est plus proche du texte qu’il annonce que du paragraphe d’avant.", () => [sp[3] < sp[6] + sp[4], `${sp[6] + sp[4]} px au-dessus d’un intertitre, ${sp[3]} px en dessous.`]],
+      ["jakobs-law", "Fil d’Ariane en haut, date et temps de lecture sous le titre : les repères d’un article.", null],
+      ["chunking", "Intertitres, liste à puces et encadré découpent le texte en morceaux faciles à parcourir.", null]
+    ],
+    dash: [
+      ["law-of-common-region", "Chaque indicateur vit dans sa carte : fond et bordure délimitent le groupe.", () => { const r = ratio(R["background/subtle"], R["background/default"]); return [true, `Fond de carte à ${fr(r)}:1 avec la page. Aucun seuil ici, la bordure border/subtle fait le reste.`]; }],
+      ["law-of-similarity", "Tous les statuts ont la même forme d’étiquette. Le mot porte le sens, la couleur le confirme (1.4.1).", null],
+      ["zeigarnik-effect", "« Profil complété à 60 % » : une tâche ouverte qu’on a envie de finir.", null],
+      ["goal-gradient-effect", "« Plus que 2 étapes » rapproche le but.", null],
+      ["choice-overload", "Trois indicateurs, pas douze. Le reste vit dans les pages dédiées.", null],
+      ["von-restorff-effect", "Un seul message d’information en tête de page, pour qu’il se remarque.", null]
+    ]
+  };
+  return L[pg] || [];
+}
+function renderLaws() {
+  const el = $("sysLaws"), pg = sysPg(), list = pageLaws(pg, dsRoles(S.sysTheme === "dark" ? "dark" : "light"));
+  el.hidden = !list.length; if (!list.length) { el.innerHTML = ""; return; }
+  const name = SYS_PAGES.find(p => p[0] === pg)[1].toLowerCase();
+  el.innerHTML = `<h3 id="sysLawsH">Lois UX en jeu sur la page ${esc(name)}</h3><p class="note">Définitions de Jon Yablonski, <a href="https://lawsofux.com/" target="_blank" rel="noopener">Laws of UX</a>, traduites en français. Le ✓ ou le ✕ est mesuré sur votre design system.</p><div class="laws-grid">` + list.map(([slug, here, chk]) => {
+    const [frn, en, def] = LAWS[slug], c = chk ? chk() : null;
+    return `<article class="law"><h4>${frn} <span class="muted">${en}</span></h4><p class="def">« ${def} »</p><p class="here"><b>Ici :</b> ${here}</p>${c ? `<p class="lchk ${c[0] ? "ok" : "no"}">${c[0] ? "✓" : "✕"} ${c[1]}</p>` : ""}<a class="lnk" href="https://lawsofux.com/${slug}/" target="_blank" rel="noopener" lang="en">${en}<span class="sr-only" lang="fr"> : la fiche sur Laws of UX, en anglais, nouvel onglet</span></a></article>`;
+  }).join("") + `</div>`;
+  el.innerHTML = frNb(el.innerHTML);
+}
+const TPL_CSS = `
+:where(.tpl-head,.tpl-foot,#main) :where(h1,h2,h3,h4,h5,h6,p,ul,ol,blockquote,figure){margin-block:0}
+.tpl{padding:0;max-width:none;gap:0;display:block;margin:0}
+.tpl .container{box-sizing:border-box}
+.tpl-head{border-bottom:var(--border-width-default) solid var(--border-subtle)}
+.tpl-head .container{display:flex;align-items:center;gap:var(--spacing-4);min-height:72px}
+.brand{font-weight:800;font-size:20px;color:var(--text-default);text-decoration:none;display:inline-flex;align-items:center;gap:var(--spacing-2);min-height:var(--size-target-min);white-space:nowrap}
+.brand i{width:28px;height:28px;border-radius:var(--radius-md);background:var(--action-default);flex:none}
+.tpl-nav{display:flex;gap:var(--spacing-1);margin-inline-start:auto;align-items:center;flex-wrap:wrap}
+.tpl-nav a{color:var(--text-default);text-decoration:none;padding:var(--spacing-2) var(--spacing-3);border-radius:var(--radius-sm);min-height:var(--size-target-min);display:inline-flex;align-items:center}
+.tpl-nav a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px;font-weight:700}
+.menu-btn{display:none;margin-inline-start:auto}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--background-subtle);border:var(--border-width-default) solid var(--border-default);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+@media (max-width:1023px){.tpl-nav{display:none}.menu-btn{display:inline-flex}.head-cta{display:none}}
+.sec{padding-block:var(--layout-section)}.sec.alt{background:var(--background-subtle)}
+.stack{display:flex;flex-direction:column;gap:var(--spacing-5)}.stack-s{display:flex;flex-direction:column;gap:var(--spacing-2)}
+.actions{display:flex;flex-wrap:wrap;gap:var(--spacing-3);align-items:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:var(--layout-gutter)}
+.tcard{background:var(--background-default);border:var(--border-width-default) solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--spacing-5);display:flex;flex-direction:column;gap:var(--spacing-3);min-width:0}
+.tcard.sub{background:var(--background-subtle)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--layout-gutter);counter-reset:s}
+.steps li{display:flex;flex-direction:column;gap:var(--spacing-2);counter-increment:s}
+.steps li::before{content:counter(s);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--action-default);color:var(--text-on-action)}
+.tpl-foot{border-top:var(--border-width-default) solid var(--border-subtle);padding-block:var(--spacing-6)}
+.tpl-foot .container{display:flex;flex-wrap:wrap;gap:var(--spacing-3) var(--spacing-5);align-items:center}
+.meter{height:8px;border-radius:var(--radius-full);background:var(--background-subtle);box-shadow:inset 0 0 0 1px var(--border-default);overflow:hidden}.meter span{display:block;height:100%;background:var(--action-default);border-radius:inherit}
+.tform{display:flex;flex-direction:column;gap:var(--spacing-6);max-inline-size:36rem}
+.tform fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--spacing-5);min-width:0}
+.tform legend{padding:0;margin-block-end:var(--spacing-4)}
+.duo{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:var(--spacing-4)}
+.choice{display:flex;gap:var(--spacing-2);align-items:center;min-height:var(--size-target-min)}
+.choice input{width:20px;height:20px;margin:0;accent-color:var(--action-default)}
+.alert ul{margin:var(--spacing-2) 0 0;padding-inline-start:1.2em}
+.crumbs{display:flex;flex-wrap:wrap;gap:var(--spacing-2);list-style:none;padding:0;margin:0}
+.crumbs li:not(:last-child)::after{content:"/";margin-inline-start:var(--spacing-2);color:var(--text-muted)}
+.art{display:flex;flex-direction:column;gap:var(--spacing-4)}
+.art h2{margin-block:var(--spacing-6) calc(var(--spacing-3) - var(--spacing-4))}
+.art ul{margin:0;padding-inline-start:1.2em;display:flex;flex-direction:column;gap:var(--spacing-1)}
+.art blockquote{margin:0;border-inline-start:4px solid var(--action-default);padding-inline-start:var(--spacing-4)}
+.art figure{margin:0;display:flex;flex-direction:column;gap:var(--spacing-2)}
+.ph{aspect-ratio:2/1;max-inline-size:40rem;border-radius:var(--radius-lg);background:var(--background-subtle);border:var(--border-width-default) solid var(--border-subtle);display:grid;place-items:center;color:var(--text-muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:var(--layout-gutter)}
+.tbl{width:100%;border-collapse:collapse;text-align:start}
+.tbl th,.tbl td{padding:var(--spacing-3) var(--spacing-2);border-bottom:var(--border-width-default) solid var(--border-subtle);text-align:start;vertical-align:middle}
+.tbl th{color:var(--text-muted);font-weight:600}
+@media (max-width:767px){.hide-s{display:none}}
+.tag.st-success{color:var(--success-text);background:var(--success-surface);border-color:var(--success-border)}
+.tag.st-warning{color:var(--warning-text);background:var(--warning-surface);border-color:var(--warning-border)}
+.tag.st-info{color:var(--info-text);background:var(--info-surface);border-color:var(--info-border)}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:var(--layout-gutter);align-items:start}
+.st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:var(--spacing-5)}
+.st-grid.wide{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
+.st-grid>div{display:flex;flex-direction:column;gap:var(--spacing-2);align-items:flex-start;min-width:0}
+.st-grid .field{align-self:stretch}
+.spin{width:1em;height:1em;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.spin{animation:none;border-right-color:currentColor;opacity:.6}}
+.btn[aria-busy="true"]{cursor:progress}
+.t-link.is-hover{text-decoration-thickness:2px}
+.field input.is-focus{outline:var(--border-width-focus) solid var(--focus-ring);outline-offset:var(--border-width-focus-offset)}
+.field input.is-hover{border-color:var(--text-muted)}
+.skel{display:flex;flex-direction:column;gap:var(--spacing-2)}.skel span{height:14px;border-radius:var(--radius-sm);background:var(--background-subtle);box-shadow:inset 0 0 0 1px var(--border-subtle)}
+.empty{align-items:flex-start;text-align:start}
+.gov{position:absolute;inset:0;pointer-events:none;z-index:50}.gov .grid{height:100%}
+.gov .grid div{min-height:0;padding:0;background:rgba(229,72,77,.10);outline:1px solid rgba(229,72,77,.35);outline-offset:-1px}
+body{position:relative}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}`;
+function tplHead(nav, cur, right) {
+  return `<header class="tpl-head"><div class="container"><a class="brand" href="#"><i aria-hidden="true"></i>Votre marque</a><nav class="tpl-nav" aria-label="Menu principal">${nav.map(n => `<a href="#"${n === cur ? ' aria-current="page"' : ""}>${n}</a>`).join("")}</nav>${right}<button class="btn btn-secondary t-button menu-btn" type="button" aria-expanded="false">Menu</button></div></header>`;
+}
+const tplFoot = () => `<footer class="tpl-foot"><div class="container"><span class="t-caption mut">© 2026 Votre marque</span><a href="#" class="t-link link-subtle t-caption">Mentions légales</a><a href="#" class="t-link link-subtle t-caption">Accessibilité : partiellement conforme</a><a href="#" class="t-link link-subtle t-caption">Plan du site</a></div></footer>`;
+function tplBody(pg, R, badge) {
+  const skip = `<a class="skip-link" href="#main">Aller au contenu</a>`;
+  if (pg === "home") return `${skip}${tplHead(HOME_NAV, null, `<a class="btn btn-primary t-button head-cta" href="#">Prendre rendez-vous</a>`)}
+<main id="main"><section class="sec"><div class="container stack"><p class="t-label mut">Conception web accessible</p><h1 class="t-display measure">Des sites que tout le monde peut utiliser</h1><p class="t-body measure">Nous concevons des sites clairs, rapides et accessibles, testés avec de vraies personnes avant la mise en ligne.</p><div class="actions"><a class="btn btn-primary t-button" href="#">Prendre rendez-vous</a><a class="btn btn-secondary t-button" href="#">Voir nos réalisations</a></div></div></section>
+<section class="sec alt" aria-labelledby="h-off"><div class="container stack"><h2 class="t-h2" id="h-off">Trois façons de travailler ensemble</h2><div class="cards">
+<article class="tcard"><h3 class="t-h4">Audit</h3><p class="t-body">Un état des lieux de votre site, critère par critère, avec les corrections classées par effort.</p><a href="#" class="t-link link-arrow">Découvrir l’audit</a></article>
+<article class="tcard"><h3 class="t-h4">Conception</h3><p class="t-body">Un design system et des pages pensés pour être lisibles dès la première maquette.</p><a href="#" class="t-link link-arrow">Découvrir la conception</a></article>
+<article class="tcard"><h3 class="t-h4">Formation</h3><p class="t-body">Une journée pour que votre équipe sache vérifier un contraste, un formulaire, un parcours au clavier.</p><a href="#" class="t-link link-arrow">Découvrir la formation</a></article>
+</div></div></section>
+<section class="sec" aria-labelledby="h-met"><div class="container stack"><h2 class="t-h2" id="h-met">Comment ça se passe</h2><ol class="steps"><li><h3 class="t-h5">On écoute</h3><p class="t-body mut">Une heure pour comprendre vos publics et vos contraintes.</p></li><li><h3 class="t-h5">On conçoit</h3><p class="t-body mut">Maquettes vérifiées à chaque étape, en clair et en sombre.</p></li><li><h3 class="t-h5">On teste</h3><p class="t-body mut">Au clavier, au lecteur d’écran, et avec des personnes concernées.</p></li></ol></div></section></main>${tplFoot()}`;
+  if (pg === "form") return `${skip}${tplHead(HOME_NAV, null, "")}
+<main id="main" class="sec"><div class="container stack"><nav aria-label="Fil d’Ariane"><ol class="crumbs t-caption"><li><a href="#" class="t-link">Accueil</a></li><li><a href="#" class="t-link">Tarifs</a></li><li aria-current="page">Demander un devis</li></ol></nav>
+<div class="stack-s"><h1 class="t-h1">Demander un devis</h1><p class="t-body-strong">Étape 2 sur 3 : vos coordonnées</p><div class="meter" aria-hidden="true" style="max-inline-size:36rem"><span style="width:66%"></span></div></div>
+<form class="tform" novalidate onsubmit="return false">
+<div class="alert alert-error" role="alert"><p class="alert-title t-body-strong">2 champs à corriger</p><ul class="t-body"><li><a href="#em" class="t-link">Adresse e-mail : il manque la fin de l’adresse</a></li><li><a href="#cp" class="t-link">Code postal : il compte 5 chiffres</a></li></ul></div>
+<fieldset><legend class="t-h4">Vous</legend>
+<div class="field"><label for="nm" class="t-body-strong">Nom complet</label><input id="nm" type="text" autocomplete="name" value="Camille Martin"></div>
+<div class="field"><label for="em" class="t-body-strong">Adresse e-mail</label><input id="em" type="email" autocomplete="email" value="camille@exemple" aria-invalid="true" aria-describedby="em-e"><p id="em-e" class="field-error t-caption">Ajoutez la fin de l’adresse, par exemple camille@exemple.fr.</p></div>
+<div class="field"><label for="tl" class="t-body-strong">Téléphone (facultatif)</label><p id="tl-h" class="field-help t-caption">Avec ou sans espaces, comme vous préférez.</p><input id="tl" type="tel" autocomplete="tel" aria-describedby="tl-h"></div></fieldset>
+<fieldset><legend class="t-h4">Adresse</legend><div class="duo">
+<div class="field"><label for="cp" class="t-body-strong">Code postal</label><input id="cp" type="text" inputmode="numeric" autocomplete="postal-code" value="750" aria-invalid="true" aria-describedby="cp-e"><p id="cp-e" class="field-error t-caption">Le code postal compte 5 chiffres.</p></div>
+<div class="field"><label for="vl" class="t-body-strong">Ville</label><p id="vl-h" class="field-help t-caption">Remplie d’après le code postal.</p><input id="vl" type="text" autocomplete="address-level2" aria-describedby="vl-h"></div></div></fieldset>
+<fieldset><legend class="t-body-strong">Comment préférez-vous être contacté ?</legend><div><label class="choice t-body"><input type="radio" name="ct" checked> Par e-mail</label><label class="choice t-body"><input type="radio" name="ct"> Par téléphone</label></div></fieldset>
+<div class="actions"><button class="btn btn-primary t-button" type="submit">Continuer</button><button class="btn btn-secondary t-button" type="button">Retour</button></div>
+<p class="t-caption mut">Vos réponses sont gardées 30 jours : vous pouvez reprendre plus tard.</p></form></div></main>${tplFoot()}`;
+  if (pg === "article") return `${skip}${tplHead(HOME_NAV, null, "")}
+<main id="main" class="sec"><div class="container"><article class="art prose"><nav aria-label="Fil d’Ariane"><ol class="crumbs t-caption"><li><a href="#" class="t-link">Accueil</a></li><li><a href="#" class="t-link">Ressources</a></li><li aria-current="page">Couleurs lisibles</li></ol></nav>
+<h1 class="t-h1">Choisir des couleurs lisibles en cinq minutes</h1><p class="t-caption mut">5 novembre 2026 · 4 min de lecture</p>
+<div class="tcard sub"><p class="t-body-strong">En bref</p><ul class="t-body"><li>Un texte courant demande un contraste de 4,5:1 avec son fond.</li><li>Un bouton ou une icône utile demande 3:1.</li><li>La couleur seule ne suffit jamais à porter un sens.</li></ul></div>
+<h2 class="t-h2">Pourquoi le contraste compte</h2><p class="t-body">Un texte trop pâle fatigue tout le monde, et devient illisible en plein soleil ou sur un écran bas de gamme. Les règles <a href="#" class="t-link">WCAG 2.2</a> fixent des seuils simples à vérifier.</p>
+<h2 class="t-h2">La règle des numéros</h2><p class="t-body">Quand toutes vos couleurs sont déclinées sur la même échelle de clarté, une paire qui passe pour une couleur passe pour les autres.</p><ul class="t-body"><li>Texte 700 sur fond 50 : lisible.</li><li>Texte 500 sur fond 50 : à vérifier.</li></ul>
+<blockquote class="t-body"><p>« On ne choisit plus une couleur au jugé, on choisit un numéro. »</p></blockquote>
+<figure><div class="ph t-caption" role="img" aria-label="Exemple de nuancier en 11 nuances">Illustration</div><figcaption class="t-caption mut">Un nuancier de 11 nuances, du 50 au 950.</figcaption></figure>
+<h2 class="t-h2">À retenir</h2><div class="tcard sub"><p class="t-body">Vérifiez chaque paire texte et fond, nommez vos couleurs par rôle, et testez en mode sombre.</p><a href="#" class="t-link link-arrow">Ouvrir la check-list</a></div></article></div></main>${tplFoot()}`;
+  if (pg === "dash") return `${skip}${tplHead(["Accueil", "Dossiers", "Messages", "Profil"], "Accueil", `<span class="avatar" role="img" aria-label="Camille Martin">CM</span>`)}
+<main id="main" class="sec"><div class="container stack"><div class="stack-s"><h1 class="t-h1">Bonjour Camille</h1><p class="t-caption mut">Dernière connexion : hier à 18 h 20</p></div>
+<div class="alert alert-info" role="status"><p class="alert-title t-body-strong">Nouveau</p><p class="t-body">Vous pouvez maintenant suivre vos dossiers en temps réel.</p></div>
+<div class="stats"><div class="tcard sub"><p class="t-caption mut">Dossiers en cours</p><p class="t-h2">3</p></div><div class="tcard sub"><p class="t-caption mut">À compléter</p><p class="t-h2">1</p></div><div class="tcard sub"><p class="t-caption mut">Validés</p><p class="t-h2">12</p></div></div>
+<div class="dash-grid"><section class="tcard" aria-labelledby="h-pr"><h2 class="t-h4" id="h-pr">Votre profil est complété à 60 %</h2><div class="meter" aria-hidden="true"><span style="width:60%"></span></div><p class="t-body">Plus que 2 étapes : justificatif de domicile, coordonnées bancaires.</p><a href="#" class="t-link link-arrow">Compléter mon profil</a></section>
+<section class="tcard empty" aria-labelledby="h-msg"><h2 class="t-h4" id="h-msg">Messages</h2><p class="t-body-strong">Aucun message pour l’instant</p><p class="t-body mut">Quand un conseiller vous écrit, son message apparaît ici.</p><a href="#" class="t-link link-arrow">Écrire à un conseiller</a></section></div>
+<section class="stack-s" aria-labelledby="h-dos"><h2 class="t-h3" id="h-dos">Derniers dossiers</h2><table class="tbl t-body"><thead><tr><th scope="col">Dossier</th><th scope="col">Statut</th><th scope="col" class="hide-s">Mis à jour</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>
+<tr><td>Carte de séjour</td><td><span class="tag t-label st-info">En cours</span></td><td class="hide-s">3 nov.</td><td><a href="#" class="t-link">Ouvrir<span class="sr-only"> : carte de séjour</span></a></td></tr>
+<tr><td>Aide au logement</td><td><span class="tag t-label st-warning">À compléter</span></td><td class="hide-s">28 oct.</td><td><a href="#" class="t-link">Ouvrir<span class="sr-only"> : aide au logement</span></a></td></tr>
+<tr><td>Inscription crèche</td><td><span class="tag t-label st-success">Validé</span></td><td class="hide-s">12 oct.</td><td><a href="#" class="t-link">Ouvrir<span class="sr-only"> : inscription crèche</span></a></td></tr></tbody></table></section></div></main>${tplFoot()}`;
+  if (pg === "states") {
+    const it = (html, cap, note) => `<div>${html}<span class="t-caption mut">${cap}</span>${note ? `<span class="t-caption">${note}</span>` : ""}</div>`;
+    return `<main class="page" id="main"><section><p class="t-label layer">États des composants</p><h1 class="t-h1">Chaque état, dessiné et vérifié</h1><p class="t-body mut measure">Un composant n’est pas fini tant qu’on n’a pas dessiné ce qui se passe au survol, au clavier, pendant l’attente, en cas d’erreur et quand il n’y a rien à montrer. Les contrastes sont mesurés sur votre système.</p></section>
+<section><h2 class="t-h3">Bouton</h2><div class="st-grid">
+${it(`<button class="btn btn-primary t-button" type="button">Envoyer</button>`, "Repos", badge("text/on-action"))}
+${it(`<button class="btn btn-primary t-button is-hover" type="button" tabindex="-1">Envoyer</button>`, "Survol", badge("action/hover"))}
+${it(`<button class="btn btn-primary t-button is-active" type="button" tabindex="-1">Envoyer</button>`, "Appuyé", badge("action/pressed"))}
+${it(`<button class="btn btn-primary t-button is-focus" type="button" tabindex="-1">Envoyer</button>`, "Focus clavier (2.4.7)", badge("focus/ring"))}
+${it(`<button class="btn btn-primary t-button" type="button" aria-busy="true" tabindex="-1"><span class="spin" aria-hidden="true"></span>Envoi…</button>`, "Chargement : le libellé change, l’attente est annoncée (4.1.3)", "")}
+${it(`<button class="btn btn-primary t-button" type="button" disabled>Envoyer</button>`, "Désactivé : dites pourquoi à côté", badge("disabled/text"))}
+</div></section>
+<section><h2 class="t-h3">Champ</h2><div class="st-grid">
+${it(`<div class="field"><label for="s1" class="t-body-strong">Vide</label><input id="s1" type="text"></div>`, "Repos", badge("border/default"))}
+${it(`<div class="field"><label for="s2" class="t-body-strong">Survol</label><input id="s2" type="text" class="is-hover" tabindex="-1"></div>`, "Survol", "")}
+${it(`<div class="field"><label for="s3" class="t-body-strong">Focus</label><input id="s3" type="text" class="is-focus" tabindex="-1" value="Camille"></div>`, "Focus clavier", "")}
+${it(`<div class="field"><label for="s4" class="t-body-strong">Erreur</label><input id="s4" type="text" value="750" aria-invalid="true" aria-describedby="s4e"><p id="s4e" class="field-error t-caption">5 chiffres attendus.</p></div>`, "Erreur dite en mots (3.3.1)", badge("error/border"))}
+${it(`<div class="field"><label for="s5" class="t-body-strong">Désactivé</label><input id="s5" type="text" value="75011" disabled></div>`, "Désactivé", badge("disabled/surface"))}
+${it(`<div class="field"><label for="s6" class="t-body-strong">Lecture seule</label><input id="s6" type="text" value="75011" readonly></div>`, "Lecture seule : lisible et copiable", "")}
+</div></section>
+<section><h2 class="t-h3">Lien et choix</h2><div class="st-grid">
+${it(`<a href="#" class="t-link">Voir le dossier</a>`, "Lien au repos", badge("link/default"))}
+${it(`<a href="#" class="t-link is-hover" tabindex="-1">Voir le dossier</a>`, "Lien au survol", "")}
+${it(`<a href="#" class="t-link is-focus" tabindex="-1">Voir le dossier</a>`, "Lien au focus", "")}
+${it(`<label class="choice t-body"><input type="checkbox" checked> Recevoir le suivi</label>`, "Case cochée", "")}
+${it(`<label class="choice t-body"><input type="checkbox" disabled> Option indisponible</label>`, "Case désactivée", "")}
+</div></section>
+<section><h2 class="t-h3">Contenu</h2><div class="st-grid wide">
+${it(`<div class="tcard" style="align-self:stretch" aria-busy="true"><div class="skel" aria-hidden="true"><span style="width:60%"></span><span></span><span style="width:80%"></span></div><span class="sr-only">Chargement</span></div>`, "Chargement : squelette, annoncé aux lecteurs d’écran", "")}
+${it(`<div class="tcard" style="align-self:stretch"><p class="t-body-strong">Aucun dossier</p><p class="t-body mut">Créez votre premier dossier en deux minutes.</p><a href="#" class="t-link link-arrow">Créer un dossier</a></div>`, "Vide : dit quoi faire ensuite", "")}
+${it(`<div class="alert alert-error" role="alert" style="align-self:stretch"><p class="alert-title t-body-strong">Chargement impossible</p><p class="t-body">Vérifiez votre connexion.</p><p><button class="btn btn-secondary t-button" type="button">Réessayer</button></p></div>`, "Erreur : une cause et une sortie", badge("error/text"))}
+</div></section></main>`;
+  }
+  return "";
+}
+
 function sysPage() {
   const theme = S.sysTheme === "dark" ? "dark" : "light", R = dsRoles(theme), need = S.level === "AAA" ? 7 : 4.5, fr = n => fmt(floor2(n));
   const bp = sysBp();
@@ -2349,8 +2600,10 @@ html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 .bars{display:flex;flex-direction:column;gap:var(--spacing-2)}.bar{display:grid;grid-template-columns:72px 1fr 44px;align-items:center;gap:var(--spacing-3)}.bar .b{height:20px;border-radius:var(--radius-sm)}
 .skip-demo{position:static;transform:none;display:inline-block;box-shadow:0 0 0 var(--border-width-focus) var(--focus-ring)}
 .icons{display:flex;gap:var(--spacing-5);align-items:flex-end;flex-wrap:wrap}.icons div{display:flex;flex-direction:column;align-items:center;gap:var(--spacing-1)}
-.ibtn{min-block-size:var(--size-target-min);min-inline-size:var(--size-target-min);padding:0;justify-content:center}`;
-  const body = `<main class="page">
+.ibtn{min-block-size:var(--size-target-min);min-inline-size:var(--size-target-min);padding:0;justify-content:center}
+${TPL_CSS}`;
+  const pg = sysPg(), gov = S.sysGrid ? `<div class="gov" aria-hidden="true"><div class="container grid">${"<div></div>".repeat(L.columns)}</div></div>` : "";
+  const body = pg !== "ds" ? frNb(tplBody(pg, R, badge)) + gov : `<main class="page">
 <section><p class="t-label layer">Aperçu à ${bp.w} px · ${bp.label} · mode ${theme === "dark" ? "sombre" : "clair"}</p><h1 class="t-display">Design system</h1><p class="t-body mut measure">WCAG ${S.version}, niveau ${S.level}. Tout ce qui suit est dessiné avec le CSS exporté, sans autre règle que la mise en page de cet aperçu.</p><p><a class="skip-link skip-demo" href="#">Aller au contenu</a></p><p class="t-caption mut">Le lien d’évitement, ici affiché : sur un vrai site, il n’apparaît qu’à la première pression sur Tab (2.4.1).</p></section>
 <hr class="hr"><section><p class="t-label layer">Couche 1 · Primitives</p><h2 class="t-h2">Couleurs</h2><p class="t-body mut measure">Valeurs brutes, couleurs d’état comprises. Un composant ne les utilise jamais directement : il passe par un rôle.</p>${prim}</section>
 <hr class="hr"><section><p class="t-label layer">Couche 2 · Sémantique</p><h2 class="t-h2">Rôles</h2><p class="t-body mut measure">Chaque rôle pointe vers une nuance, avec le contraste de la paire qu’il forme. Mode ${theme === "dark" ? "sombre" : "clair"} affiché.</p>${roles}</section>
@@ -2366,12 +2619,12 @@ html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 <div class="comp"><h3 class="t-h5">Étiquette et carte</h3><span class="tag t-label">Dossier</span><div class="card"><h4 class="t-h4">Carte de séjour</h4><p class="t-body">Les pièces à fournir et les délais, en une page.</p><a href="#" class="t-link link-arrow">Lire le dossier</a></div><ul><li>Texte sur la surface à ${fr(ratio(R["text/default"], R["background/subtle"]))}:1.</li><li>L’étiquette est un mot, jamais une couleur seule.</li></ul></div>
 </div></section>
 <hr class="hr"><section><p class="t-label layer">Données</p><h2 class="t-h2">Palette de graphiques</h2><p class="t-body mut measure">${ch.length} séries à 3:1 minimum sur le fond (1.4.11), choisies pour rester distinctes en vision typique, protanopie, deutéranopie et tritanopie. Écart minimal entre deux séries : ${fmt(mins * 100, 1)} (OKLab ×100). Nommez toujours les séries en clair, sur le graphique.</p><div class="bars" role="img" aria-label="Exemple de graphique en barres, six séries">${bars}</div></section>
-</main>`;
+</main>${gov}`;
   const js = `<script>document.addEventListener("click",e=>{if(e.target.closest("a"))e.preventDefault()});
-const chk=()=>{const W=document.documentElement.clientWidth,bad=[];document.querySelectorAll(".page *").forEach(el=>{const r=el.getBoundingClientRect();if(!r.width)return;const cs=getComputedStyle(el);if(r.right>W+1&&cs.position!=="absolute"&&!el.closest(".gridbox"))bad.push(el);else if(/hidden|clip/.test(cs.overflow+cs.overflowX+cs.overflowY)&&!el.closest(".sw")&&(el.scrollWidth>el.clientWidth+2||el.scrollHeight>el.clientHeight+2))bad.push(el)});const top=bad.filter(e=>!bad.includes(e.parentElement));return{n:top.length,list:top.slice(0,5).map(e=>(e.className&&typeof e.className==="string"?e.className.split(" ")[0]:e.tagName.toLowerCase())+(e.textContent?" « "+e.textContent.trim().slice(0,24)+" »":""))}};
+const chk=()=>{const W=document.documentElement.clientWidth,bad=[];document.querySelectorAll("body *").forEach(el=>{if(el.closest(".gov,script,style,.sr-only"))return;const r=el.getBoundingClientRect();if(!r.width)return;const cs=getComputedStyle(el);if(r.right>W+1&&cs.position!=="absolute"&&!el.closest(".gridbox"))bad.push(el);else if(/hidden|clip/.test(cs.overflow+cs.overflowX+cs.overflowY)&&!el.closest(".sw")&&(el.scrollWidth>el.clientWidth+2||el.scrollHeight>el.clientHeight+2))bad.push(el)});const top=bad.filter(e=>!bad.includes(e.parentElement));return{n:top.length,list:top.slice(0,5).map(e=>(e.className&&typeof e.className==="string"?e.className.split(" ")[0]:e.tagName.toLowerCase())+(e.textContent?" « "+e.textContent.trim().slice(0,24)+" »":""))}};
 const post=()=>parent.postMessage({lisioSysH:document.documentElement.scrollHeight,lisioChk:chk()},"*");new ResizeObserver(post).observe(document.body);addEventListener("load",post);document.fonts&&document.fonts.ready.then(post);<\/script>`;
   const spacing = S.sysSpacing ? `<style id="tsp">*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}</style>` : "";
-  return `<!doctype html><html lang="fr" data-theme="${theme}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">${fonts}<style>${css}</style>${spacing}</head><body>${body}${js}</body></html>`;
+  return `<!doctype html><html lang="fr" data-theme="${theme}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aperçu Lisio</title>${fonts}<style>${css}</style>${spacing}</head><body>${body}${js}</body></html>`;
 }
 let sysH = 1200;
 function sysScale() {
@@ -2387,6 +2640,8 @@ function renderSystem() {
   sysDirty = false; renderDsPanel();
   $("sysView").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === sysBp().id));
   $("sysTheme").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === (S.sysTheme === "dark" ? "dark" : "light"))));
+  const pg = sysPg(); $("sysPg").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === pg)));
+  $("sysGrid").setAttribute("aria-pressed", String(!!S.sysGrid)); $("sysFrame").title = pg === "ds" ? "Aperçu du design system" : `Aperçu : page ${SYS_PAGES.find(x => x[0] === pg)[1].toLowerCase()}, avec votre design system`; renderLaws();
   $("sysSpacing").setAttribute("aria-pressed", String(!!S.sysSpacing)); $("sysVision").value = S.sysVision || "normal"; $("sysChk").textContent = "";
   $("sysFrame").srcdoc = sysDoc(); sysScale();
 }
@@ -2399,6 +2654,8 @@ function sysReport(c) {
 $("sysTheme").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.sysTheme = dsMode = b.dataset.v; save(); renderSystem(); });
 $("sysVision").addEventListener("change", e => { S.sysVision = e.target.value; save(); renderSystem(); });
 $("sysSpacing").addEventListener("click", () => { S.sysSpacing = !S.sysSpacing; save(); renderSystem(); });
+$("sysGrid").addEventListener("click", () => { S.sysGrid = !S.sysGrid; save(); renderSystem(); });
+$("sysPg").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.sysPg = b.dataset.v; save(); renderSystem(); });
 addEventListener("resize", () => { if (!$("systeme").hidden) sysScale(); });
 $("sysView").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; if (b.dataset.v === "w320") { S.sys320 = true; save(); renderSystem(); return; } S.sys320 = false; S.ts.view = b.dataset.v; S.ts.vw = (BP.find(x => x.id === b.dataset.v) || BP[3]).w; tsVwTouched = true; save(); renderSystem(); });
 $("sysCss").addEventListener("click", () => copy(tsCss(), "CSS copié"));
@@ -2471,6 +2728,12 @@ function roleSay(k, R) {
   return `<span class="ds-say">${ROLE_JOB[k]} ${rel} : <b class="${ok ? "ok" : "no"}">${fmt(floor2(r))}:1, ${crWord(r, req)}</b>${ok ? "" : `. Il faut au moins ${seuil}`}.</span>`;
 }
 let dsMoreOpen = false;
+function renderGridPrev(L) {
+  L = L || dsLay(); const max = BP[BP.length - 1].w;
+  $("dsGridPrev").innerHTML = BP.map(b => { const x = L[b.id], cw = Math.min(b.w - 2 * x.margin, LAYOUT_MAX), side = (b.w - cw) / 2;
+    return `<div class="gp"><span class="gp-l">${b.label === "Desktop XL" ? "XL" : b.label}<small>${b.w} px</small></span><div class="gp-f" role="img" aria-label="${b.label}, ${b.w} px : ${x.columns} colonnes, gouttière ${x.gutter} px, marge ${x.margin} px" style="width:${(b.w / max * 100).toFixed(2)}%;padding-inline:${(side / b.w * 100).toFixed(2)}%"><div class="gp-c" style="grid-template-columns:repeat(${x.columns},minmax(0,1fr));column-gap:${(x.gutter / cw * 100).toFixed(2)}%">${"<span></span>".repeat(x.columns)}</div></div></div>`; }).join("")
+    + `<p class="gp-key"><span><i style="background:var(--gpc);box-shadow:inset 0 0 0 1px var(--gpe)"></i>Colonnes</span><span><i style="background:var(--surface);box-shadow:inset 0 0 0 1px var(--hair)"></i>Gouttières</span><span><i style="background:repeating-linear-gradient(135deg,var(--muted) 0 1px,transparent 1px 4px)"></i>Marges</span><span>Largeurs à l’échelle</span></p>`;
+}
 function renderDsPanel() {
   const ae = document.activeElement, keep = ae && ae.closest && ae.closest(".ds-panel") ? (ae.dataset.cpfor ? `.cp-btn[data-cpfor="${ae.dataset.cpfor}"]` : ae.dataset.role ? `[data-role="${ae.dataset.role}"]` : ae.dataset.fix ? `[data-role="${ae.dataset.fix}"]` : ae.dataset.st ? `[data-st="${ae.dataset.st}"]` : ae.dataset.bp ? `[data-bp="${ae.dataset.bp}"][data-k="${ae.dataset.k}"]` : null) : null;
   const m = dsMode, A = dsAuto(m), R = dsRoles(m), B = modeBase(m);
@@ -2491,6 +2754,7 @@ function renderDsPanel() {
   $("dsChart").innerHTML = `<div class="ds-chsw">${ch.map((h, i) => `<span style="background:${h}" title="chart/${i + 1} ${h}"><b>${i + 1}</b></span>`).join("")}</div><p class="note">${ch.length} séries, toutes à 3:1 au moins sur le fond ${MODE_FR[m]} (1.4.11), choisies dans vos gammes pour rester distinctes en vision typique et pour les trois daltonismes (écart minimal ${fmt(md * 100, 1)}, ${md >= 0.1 ? "confortable" : md >= 0.06 ? "correct" : "serré : nommez les séries directement sur le graphique"}). Dans Figma : <b>chart/1</b> à <b>chart/${ch.length}</b>.</p>`;
   [["dsShape", "shape"], ["dsSpace", "space"], ["dsBtn", "btn"], ["dsLink", "link"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(dsCfg(k)) === b.dataset.v)));
   const L = dsLay(), rows = [["margin", "Marge"], ["gutter", "Gouttière"], ["columns", "Colonnes"], ["section", "Entre sections"]];
+  renderGridPrev(L);
   $("dsGrid").innerHTML = `<thead><tr><td></td>${BP.map(b => `<th scope="col">${b.label === "Desktop XL" ? "XL" : b.label}</th>`).join("")}</tr></thead><tbody>` + rows.map(([k, l]) => `<tr><th scope="row">${l}${k === "columns" ? "" : ' <span class="muted">px</span>'}</th>${BP.map(b => `<td><input type="number" inputmode="numeric" data-bp="${b.id}" data-k="${k}" min="${k === "columns" ? 1 : 0}" max="${k === "columns" ? 16 : 240}" value="${L[b.id][k]}" aria-label="${l}, ${b.label}"></td>`).join("")}</tr>`).join("") + "</tbody>";
   const iss = roleIssues(R), fails = iss.length, all = allIssues(), other = all.filter(x => x.m !== m).length;
   $("dsFixAll").hidden = !fails;
@@ -2511,7 +2775,7 @@ $("dsModeSeg").addEventListener("click", e => { const b = e.target.closest("butt
 [["dsShape", "shape", String], ["dsSpace", "space", Number], ["dsBtn", "btn", Number], ["dsLink", "link", String]].forEach(([id, k, cast]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.ds[k] = cast(b.dataset.v); dsChanged(); }));
 $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset.bp) return; const k = i.dataset.k, v = Math.round(+i.value), lo = k === "columns" ? 1 : 0, hi = k === "columns" ? 16 : 240;
   if (!isFinite(v) || v < lo || v > hi) { i.value = dsLay()[i.dataset.bp][k]; return; }
-  S.ds.layout = S.ds.layout || {}; S.ds.layout[i.dataset.bp] = { ...(S.ds.layout[i.dataset.bp] || {}), [k]: v }; save(); renderTsExport();
+  S.ds.layout = S.ds.layout || {}; S.ds.layout[i.dataset.bp] = { ...(S.ds.layout[i.dataset.bp] || {}), [k]: v }; save(); renderTsExport(); renderGridPrev();
   if (!$("systeme").hidden) { $("sysFrame").srcdoc = sysDoc(); sysScale(); $("dsState").textContent = "Système personnalisé."; $("dsReset").disabled = false; } else sysDirty = true; });
 $("dsReset").addEventListener("click", () => { S.ds = JSON.parse(JSON.stringify(DS_BASE)); buildStatus(); dsChanged(); toast("Système de base rétabli"); });
 

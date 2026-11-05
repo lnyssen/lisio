@@ -3,7 +3,7 @@
 Plugin de développement, deux onglets.
 
 **Importer** `lisio-design-system.json` (bouton Exporter de Lisio) :
-variables Couleurs, Rôles (modes Light et Dark), Typo et Dimensions, styles de texte liés aux variables, planche de présentation,
+variables Couleurs, Rôles (modes Light et Dark), Typo et Dimensions, styles de texte liés aux variables, styles de grille par écran (Grid/Mobile 390 à Grid/Desktop XL 1440), planche de présentation,
 et en option les composants Bouton, Champ et Alerte (page « Lisio components »), dont les couleurs, hauteurs et arrondis sont reliés aux variables.
 
 **Vérifier les contrastes** d’une maquette existante (sélection, ou page entière) :

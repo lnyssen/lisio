@@ -72,6 +72,20 @@ async function lisioImport(data, opts) {
       famName[`{${t.path.join(".")}}`] = fam; setAll(v, col, fam);
     }
   }
+  // 1c. Layout grids: one grid style per breakpoint (columns, gutter, side margin)
+  const layT = tokens.filter(t => t.path[0] === "layout" && t.ext.breakpoints && typeof t.ext.breakpoints === "object");
+  if (layT.length) {
+    const lv = (k, id) => { const t = layT.find(x => x.path[1] === k), v = t && t.ext.breakpoints[id]; return typeof v === "number" ? v : null; };
+    const gs = await figma.getLocalGridStylesAsync();
+    for (const bp of LISIO_BP) {
+      const n = lv("columns", bp.id), g = lv("gutter", bp.id) || 0, m = lv("margin", bp.id) || 0; if (!n) continue;
+      const name = `Grid/${bp.name} ${bp.width}`; let st = gs.find(x => x.name === name);
+      if (!st) { st = figma.createGridStyle(); st.name = name; }
+      st.layoutGrids = [{ pattern: "COLUMNS", alignment: "STRETCH", count: n, gutterSize: g, offset: m, visible: true, color: { r: 0.93, g: 0.27, b: 0.27, a: 0.1 } }];
+      st.description = `${n} columns, ${g} px gutter, ${m} px side margin. Lisio layout tokens, ${bp.name} (${bp.width} px).`;
+      report.styles++;
+    }
+  }
   // 1b. Extra modes (semantic roles: Light and Dark)
   const modeId = (col, name) => {
     let m = col.modes.find(x => x.name === name);
