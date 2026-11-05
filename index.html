@@ -773,6 +773,78 @@ body{background:var(--bg)}
   .more-sheet .mi.acc{background:var(--accent);color:var(--accent-ink)}
   .more-sheet .mi small{font-size:13px;font-weight:400;color:var(--muted)}.more-sheet .mi.acc small,.more-sheet .mi[aria-current="page"] small{color:inherit}
 }
+
+/* ===== Matrice façon C : case colorée par verdict, ratio, pastille « Aa » ===== */
+.mwrap{background:var(--surface);border-radius:var(--tile);padding:clamp(12px,2vw,22px)}
+.mgrid{gap:6px}
+.mcorner{font-size:12px;line-height:1.3}
+.mcol{display:grid;grid-template-columns:12px minmax(0,1fr);column-gap:7px;row-gap:0;align-items:center;align-self:end}
+.mcol .bar{width:12px;height:12px;border-radius:50%;grid-row:1}
+.mcol b{grid-column:2;font-size:14px}.mcol code{grid-column:2}
+.mrow .disc{width:14px;height:14px}
+.mcell{flex-direction:row;align-items:center;justify-content:space-between;gap:8px;min-height:68px;padding:8px 8px 8px 12px;border-radius:16px;border:0;box-shadow:none}
+.mcell.b-aa{box-shadow:inset 0 0 0 1.5px var(--aa-bd)}
+.mcell:hover{box-shadow:0 0 0 2px var(--ink)}
+.mcell[aria-pressed="true"]{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
+.mcell .mv{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.mcell .mv .r{font-family:var(--mono);font-size:17px;font-weight:500;letter-spacing:-.02em}
+.mcell .mv .vl{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcell .mv .sm{display:none}
+.mlist .mcell .mv .sm{display:block;font-size:12px;font-weight:500;opacity:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcell .sample,.mlist .mcell .sample{flex:none;display:grid;place-items:center;min-width:40px;max-width:58%;height:40px;padding:0 8px;box-sizing:border-box;border-radius:11px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35);overflow:hidden;white-space:nowrap}
+.mcell .sample .big,.mlist .mcell .sample .big{font-size:18px;line-height:1;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+@container (max-width:110px){.mcell .sample{min-width:34px;height:34px}.mcell .mv .r{font-size:15px}}
+.mdiag{border-radius:16px;background:var(--hover);min-height:68px;border:0;font-size:13px}
+.mcell.b-aaa{background:var(--aaa-bg);color:var(--aaa-ink)}.mcell.b-aa{background:var(--aa-bg);color:var(--aa-ink)}.mcell.b-lg{background:var(--lg-bg);color:var(--lg-ink)}.mcell.b-no{background:var(--no-bg);color:var(--no-ink)}
+.mlist .mgroup-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+/* Détail de la paire : inspecteur à droite sur grand écran, Avant / Après */
+@media (min-width:1200px){
+  .mx-main:has(#pairDetail:not([hidden])){display:grid;grid-template-columns:minmax(0,1fr) clamp(300px,24vw,360px);gap:12px;align-items:start}
+  .mx-main:has(#pairDetail:not([hidden])) .mtools{grid-column:1/-1}
+  .mx-main #pairDetail{margin:0;position:sticky;top:92px;max-height:calc(100vh - 104px);overflow:auto}
+  .mx-main #pairDetail .pd-grid{grid-template-columns:minmax(0,1fr)}
+}
+.pairdetail{border-radius:var(--tile)!important;display:flex;flex-direction:column;gap:16px}
+.pd-ba{display:flex;flex-direction:column;gap:12px}
+.ba-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ba{display:flex;flex-direction:column;gap:2px;padding:14px;border-radius:20px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35);min-width:0;overflow-wrap:anywhere}
+.ba.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.ba .bt{font-size:13px;font-weight:600}.ba .bn{font-size:clamp(22px,2.2vw,30px);font-weight:700;letter-spacing:-.03em;line-height:1.1}.ba .br{font-family:var(--mono);font-size:14px;margin-top:4px}
+.pd-why{color:var(--muted);margin:0}
+.pd-apply{width:100%;justify-content:center;min-height:52px;border-radius:999px!important;font-size:16px}
+.pd-more summary{list-style:none;width:100%;justify-content:center;min-height:46px;border-radius:999px;background:var(--hover);border-color:transparent;box-sizing:border-box}
+.pd-more summary::-webkit-details-marker{display:none}
+/* ===== Menu façon C : tuile teal, page active orange, sans défilement ===== */
+:root{--rail:#0B3C3D;--rail-ink:#E3F3F0;--rail-muted:#A7D7D2;--rail-hover:#155152;--rail-on:#FF6A13;--rail-on-ink:#1A0B00}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--rail:#0D2324;--rail-hover:#173B3C;--rail-on:#FF7A1A}}
+:root[data-theme="dark"]{--rail:#0D2324;--rail-hover:#173B3C;--rail-on:#FF7A1A}
+@media (min-width:761px){
+  :root{--sbtn:clamp(36px,5vh,44px);--st:68px;--sf:calc(3 * var(--sbtn) + 30px)}
+  :root.side-c{--side:100px;--sbtn:clamp(38px,5.4vh,48px);--st:clamp(100px,13vh,116px)}
+  .side-top,nav.tabs,nav.tabs.has-ink,.side-foot{--primary:#FFFFFF;--primary-ink:#0B3C3D;--ink:var(--rail-ink);--muted:var(--rail-muted);--hover:var(--rail-hover);--surface:var(--rail);background:var(--rail)!important;color:var(--rail-ink)}
+  .side-top .logo-word{color:#FFFFFF}
+  .side-top{height:var(--st)}
+  .side-b{background:var(--rail-hover);color:var(--rail-ink)}.side-b:hover{background:#1D6263;color:#FFFFFF}
+  nav.tabs,nav.tabs.has-ink{padding:calc(var(--st) + 8px) 12px calc(var(--sf) + 6px)!important;overflow-y:auto;scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs button{height:var(--sbtn)!important;color:var(--rail-ink)}
+  nav.tabs.has-ink button[aria-selected="true"]{color:var(--rail-on-ink)}
+  nav.tabs.has-ink button[aria-selected="true"] svg{color:var(--rail-on-ink)}
+  .tab-ink{background:var(--rail-on)!important;border-radius:16px!important}
+  .tab-hov{background:var(--rail-hover)!important;border-radius:16px!important}
+  .tab-grp{color:var(--rail-muted);padding:clamp(8px,1.8vh,16px) 12px clamp(3px,.7vh,6px)}
+  .tab-grp.first{padding-top:0}
+  .side-foot{padding:8px 12px 14px}
+  .side-foot a{height:var(--sbtn);color:var(--rail-ink)}
+  .side-foot a:first-child{background:var(--rail-hover);font-weight:600}
+  .side-foot a:hover{background:#1D6263;color:#FFFFFF}
+  :root.side-c nav.tabs,:root.side-c nav.tabs.has-ink{padding:calc(var(--st) + 8px) 10px calc(var(--sf) + 6px)!important}
+  :root.side-c nav.tabs button{width:56px;height:var(--sbtn)!important;border-radius:16px!important}
+  :root.side-c .side-top{height:var(--st);gap:clamp(4px,1vh,10px)}
+  :root.side-c .tab-grp{padding:clamp(5px,1vh,10px) 0 clamp(3px,.6vh,6px);margin-top:clamp(3px,.8vh,8px);border-top-color:rgba(255,255,255,.18)}
+  :root.side-c .side-foot a{width:56px;height:var(--sbtn)}
+  .side-tip{background:#FFFFFF;color:#0B2B2C;box-shadow:var(--shadow)}
+}
 </style>
 </head>
 <body>
@@ -847,7 +919,7 @@ body{background:var(--bg)}
           </div>
         </div>
     </details>
-    <div>
+    <div class="mx-main">
         <div class="mtools">
           <button class="btn" type="button" data-pop="popFont" aria-expanded="false" aria-controls="popFont"><span id="mFontAa" style="font-weight:800">Aa</span> <span id="mFontName">Police</span></button>
           <label for="mSample" class="row" style="flex-direction:row;gap:6px">Échantillon<input type="text" id="mSample" value="Aa" maxlength="16" style="width:96px"></label>
@@ -1721,10 +1793,9 @@ function renderMx() {
   const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓<span class=\"w\"> Passe</span>" : "✕<span class=\"w\"> Échec</span>"}</span>`;
   const cell = (i, j, label) => {
     const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r), on = sel && sel[0] === i && sel[1] === j;
-    return `<button type="button" class="mcell" data-i="${i}" data-j="${j}" aria-pressed="${!!on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
-        <span class="sample" aria-hidden="true" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span><span class="sm">${label}</span></span>
-        <span class="foot" aria-hidden="true"><span class="rr"><span class="r">${f2(r)}<small>:1</small></span><span class="bd ${cls}">${lab}</span></span>
-          <span class="ck">Normal${pass(r >= tN)}</span><span class="ck">Grand${pass(r >= tL)}</span>${v21 ? `<span class="ck">Interface${pass(r >= 3)}</span>` : ""}</span></button>`;
+    return `<button type="button" class="mcell ${cls}" data-i="${i}" data-j="${j}" aria-pressed="${!!on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
+        <span class="mv" aria-hidden="true"><span class="r">${f2(r)}</span><span class="vl">${lab.replace("✕ ", "")}</span><span class="sm">${label}</span></span>
+        <span class="sample" aria-hidden="true" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span></span></button>`;
   };
   let h = "";
   if (useList) {
@@ -1735,7 +1806,7 @@ function renderMx() {
     });
   } else {
   g.className = "mgrid";
-  h = `<div class="mcorner">Texte ↓<br>Fond →</div>` + C.map(c => `<div class="mcol"><div class="bar" style="background:${c.hex}"></div><b title="${esc(c.name)}">${esc(c.name)}</b><code>${c.hex}</code></div>`).join("");
+  h = `<div class="mcorner">Texte ↓ Fond →</div>` + C.map(c => `<div class="mcol"><div class="bar" style="background:${c.hex}"></div><b title="${esc(c.name)}">${esc(c.name)}</b><code>${c.hex}</code></div>`).join("");
   C.forEach((t, i) => {
     h += `<div class="mrow"><span class="disc" style="background:${t.hex}"></span><div><b title="${esc(t.name)}">${esc(t.name)}</b><code>${t.hex}</code></div></div>`;
     C.forEach((b, j) => {
@@ -1789,8 +1860,23 @@ function renderDetail() {
     if (b) fixes.push(btn(`${bg.name} → ${b} (${l})`, () => { palette[j].hex = b; changed(); renderEditor(); toast(`${bg.name} remplacé par ${b}`); }, b));
   });
   const ff = esc(fontCss(S.font));
+  const lvA = S.level === "AAA", tN = lvA ? 7 : 4.5, crit = lvA ? "1.4.6" : "1.4.3";
+  let ba = "";
+  if (r < tN) {
+    let mv = i, nx = suggestFix(fg.hex, bg.hex, tN);
+    if (!nx) { mv = j; nx = suggestFix(bg.hex, fg.hex, tN); }
+    if (nx) {
+      const nf = mv === i ? nx : fg.hex, nb = mv === j ? nx : bg.hex, who = palette[mv], dk = lum(nx) < lum(who.hex), r2 = ratio(nf, nb);
+      const card = (t, f, b2, rr, on) => `<div class="ba${on ? " on" : ""}" style="background:${b2};color:${f};font-family:${ff}"><span class="bt">${t}</span><span class="bn">${esc(fg.name)}</span><span class="br">${f2(rr)}:1</span></div>`;
+      ba = `<div class="pd-ba"><div class="ba-row">${card("Avant", fg.hex, bg.hex, r, false)}${card("Après", nf, nb, r2, true)}</div>
+        <p class="pd-why">Une nuance plus ${dk ? "foncée" : "claire"} de ${esc(who.name)}, <code>${nx}</code>, passe le seuil de ${fmt(tN, 1).replace(",0", "")}:1 pour le texte courant (critère ${crit}). Appliquer remplace ${esc(who.name)} dans votre liste : toute la matrice est recalculée.</p>
+        ${btn("Appliquer la correction", () => { palette[mv].hex = nx; changed(); renderEditor(); toast(`${who.name} remplacé par ${nx}`); }, null, true).replace('class="btn sm primary"', 'class="btn primary pd-apply"')}
+        ${fixes.length > 1 ? `<details class="pd-more"><summary class="btn">Voir d’autres nuances</summary><div class="row" style="gap:6px;margin-top:10px">${fixes.join("")}</div></details>` : ""}</div>`;
+    }
+  }
   d.hidden = false;
   d.innerHTML = `<div class="row between"><h2 tabindex="-1" id="pdTitle">${esc(fg.name)} sur ${esc(bg.name)}</h2><span class="row" style="gap:8px"><span class="mono" style="font-size:22px;font-weight:700">${f2(r)}:1</span><span class="bd ${cls}">${lab}</span></span></div>
+    ${ba}
     <div class="pd-grid">
       <div class="pd-prev" style="background:${bg.hex};color:${fg.hex};font-family:${ff}">
         <div style="font-size:30px;font-weight:700;line-height:1.1">Titre de 30 px en ${esc(fg.name)}</div>
@@ -1800,7 +1886,7 @@ function renderDetail() {
       </div>
       <div class="checks">${rows.map(([t, ok]) => `<div class="check"><div>${t}</div><span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓ Passe" : "✕ Non"}</span></div>`).join("")}</div>
     </div>
-    ${fixes.length ? `<div style="display:flex;flex-direction:column;gap:8px"><h3>Corriger en gardant la teinte</h3><div class="row" style="gap:6px">${fixes.join("")}</div><p class="note">Le bouton remplace la couleur dans votre liste : toute la matrice est recalculée.</p></div>` : ""}
+    ${fixes.length && !ba ? `<div style="display:flex;flex-direction:column;gap:8px"><h3>Corriger en gardant la teinte</h3><div class="row" style="gap:6px">${fixes.join("")}</div><p class="note">Le bouton remplace la couleur dans votre liste : toute la matrice est recalculée.</p></div>` : ""}
     <div class="row">${btn("Ouvrir dans l’aperçu", () => { S.fg = fg.hex; S.bg = bg.hex; save(); location.hash = "tester"; show("tester"); render(); window.scrollTo(0, 0); }, null, true)}${btn("Inverser texte et fond", () => { sel = [j, i]; renderMx(); })}${btn("Fermer", () => { sel = null; renderMx(); })}</div>`;
 }
 $("pairDetail").addEventListener("click", e => { const b = e.target.closest("[data-dact]"); if (b && dActs[+b.dataset.dact]) dActs[+b.dataset.dact](); });
@@ -3098,8 +3184,8 @@ DARKQ.addEventListener("change", themeLabel); themeLabel();
 const TABS = document.querySelector("nav.tabs"), INK = TABS.querySelector(".tab-ink"), HOV = TABS.querySelector(".tab-hov");
 TABS.classList.add("has-ink");
 const SIDEQ = matchMedia("(min-width:761px)"), SIDEB = $("sideB"), TIP = $("sideTip");
-function sideSet(c, save) { document.documentElement.classList.toggle("side-c", c); SIDEB.setAttribute("aria-expanded", String(!c)); SIDEB.querySelector(".sr-only").textContent = c ? "Déplier le menu" : "Replier le menu"; SIDEB.title = (c ? "Déplier le menu" : "Replier le menu") + " (Ctrl ou ⌘ + \\)"; TIP.hidden = true; if (save) try { localStorage.setItem("lisio-side", c ? "c" : "o"); } catch (e) {} setTimeout(() => tabInk(true), 240); tabInk(true); }
-(() => { let v = null; try { v = localStorage.getItem("lisio-side"); } catch (e) {} const R = document.documentElement; R.style.transition = "none"; sideSet(v ? v === "c" : innerWidth <= 1100, false); requestAnimationFrame(() => requestAnimationFrame(() => { R.style.transition = ""; tabInk(true); })); })();
+function sideSet(c, save) { document.documentElement.classList.toggle("side-c", c); SIDEB.setAttribute("aria-expanded", String(!c)); SIDEB.querySelector(".sr-only").textContent = c ? "Déplier le menu" : "Replier le menu"; SIDEB.title = (c ? "Déplier le menu" : "Replier le menu") + " (Ctrl ou ⌘ + \\)"; TIP.hidden = true; if (save) try { localStorage.setItem("lisio-rail", c ? "c" : "o"); } catch (e) {} setTimeout(() => tabInk(true), 240); tabInk(true); }
+(() => { let v = null; try { v = localStorage.getItem("lisio-rail"); } catch (e) {} const R = document.documentElement; R.style.transition = "none"; sideSet(v ? v === "c" : true, false); requestAnimationFrame(() => requestAnimationFrame(() => { R.style.transition = ""; tabInk(true); })); })();
 document.documentElement.addEventListener("transitionend", e => { if (e.target === document.documentElement) tabInk(true); });
 SIDEB.addEventListener("click", () => sideSet(!document.documentElement.classList.contains("side-c"), true));
 addEventListener("keydown", e => { if (e.key === "\\" && (e.ctrlKey || e.metaKey) && SIDEQ.matches) { e.preventDefault(); sideSet(!document.documentElement.classList.contains("side-c"), true); } if (e.key === "Escape") TIP.hidden = true; });
