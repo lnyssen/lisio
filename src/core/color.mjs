@@ -1,6 +1,6 @@
 // Lisio, cœur couleur : conversions sRGB, luminance et contraste WCAG, OKLCH, nuances, simulation des daltonismes.
 // Fonctions pures, sans DOM ni état. Testées par tests/color.test.mjs.
-// Inliné tel quel dans la page par src/build.py (le mot export est retiré) : pas d'import ici.
+// Inliné tel quel dans la page par src/build.py (le mot export est retiré).
 export const clamp01 = v => Math.min(1, Math.max(0, v));
 export const normHex = h => { h = String(h).trim().replace(/^#/, ""); if (/^[0-9a-f]{3}$/i.test(h)) h = h.split("").map(c => c + c).join(""); return /^[0-9a-f]{6}$/i.test(h) ? "#" + h.toUpperCase() : null; };
 export const hex2rgb = h => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => v / 255); };

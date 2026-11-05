@@ -23,12 +23,9 @@ const SETUPS = [["desktop clair", 1440, 900, "light"], ["desktop sombre", 1440, 
 const ALLOW = [
   { id: "color-contrast", sel: /^\.b-(no|lg)\b.*\.sample\[aria-hidden="true"\]/, why: "matrice : l'échantillon montre exprès une paire qui échoue ; il est masqué aux lecteurs d'écran et le verdict est écrit en toutes lettres" }
 ];
-// Défauts connus, pas encore corrigés : signalés à chaque passage mais tolérés jusqu'à la borne indiquée.
-// Au-delà de la borne, c'est une régression et le contrôle échoue. Retirer l'entrée une fois corrigé.
-const KNOWN_320 = { maxWidth: 350, why: "barre du haut : les boutons de droite débordent de 30 px à 320 px de large (1.4.10), relevé le 2026-11-05, à corriger dans un chantier P0 suivant" };
 
 const browser = await chromium.launch();
-let fails = 0, known = 0; const allowed = new Map();
+let fails = 0; const allowed = new Map();
 for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
   const page = await browser.newPage({ viewport: { width: w, height: h }, colorScheme: scheme });
   await page.route(/^https?:/, r => r.abort());
@@ -44,19 +41,19 @@ for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
   if (left.length) { fails++; console.log(`ÉCHEC ${label} #${v}\n    ${left.join("\n    ")}`); } else console.log(`ok    ${label} #${v}`);
   await page.close();
 }
-// 1.4.10 (redistribution) : pas de défilement horizontal à 320 px de large.
-for (const v of VIEWS) {
-  const page = await browser.newPage({ viewport: { width: 320, height: 640 } });
+// 1.4.10 (redistribution) : pas de défilement horizontal, et la barre du haut ne chevauche pas le logo.
+for (const w of [320, 360, 375, 390, 430]) for (const v of VIEWS) {
+  if (w !== 320 && v !== "matrice") continue;
+  const page = await browser.newPage({ viewport: { width: w, height: 640 } });
   await page.route(/^https?:/, r => r.abort());
-  await page.goto("file://" + PAGE + "#" + v); await page.waitForTimeout(700);
-  const sw = await page.evaluate(() => document.documentElement.scrollWidth);
-  if (sw <= 320) console.log(`ok    320 px #${v}`);
-  else if (sw <= KNOWN_320.maxWidth) { known++; console.log(`CONNU 320 px #${v} : largeur ${sw} px`); }
-  else { fails++; console.log(`ÉCHEC 320 px #${v} : largeur ${sw} px (au-delà du défaut connu)`); }
+  await page.goto("file://" + PAGE + "#" + v); await page.waitForTimeout(600);
+  const r = await page.evaluate(() => { const lg = document.querySelector(".appbar .logo"), ap = document.querySelector(".appbar .appr");
+    return { sw: document.documentElement.scrollWidth, gap: lg && ap ? Math.round(ap.getBoundingClientRect().left - lg.getBoundingClientRect().right) : null }; });
+  const bad = [r.sw > w ? `largeur ${r.sw} px` : "", r.gap !== null && r.gap < 4 ? `barre du haut sur le logo (écart ${r.gap} px)` : ""].filter(Boolean);
+  if (bad.length) { fails++; console.log(`ÉCHEC ${w} px #${v} : ${bad.join(", ")}`); } else console.log(`ok    ${w} px #${v}`);
   await page.close();
 }
 await browser.close();
-if (known) console.log(`\ndéfaut connu, non corrigé (${known} vue(s)) : ${KNOWN_320.why}`);
 for (const [why, n] of allowed) console.log(`\nexception assumée (${n} élément(s)) : ${why}`);
 console.log(fails ? `\n${fails} contrôle(s) en échec` : "\nAucune violation détectée par axe (contrôle partiel, pas un audit).");
 process.exit(fails ? 1 : 0);

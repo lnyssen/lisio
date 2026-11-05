@@ -171,7 +171,7 @@ a{color:inherit;text-underline-offset:.18em}
 .ds-lvl{font-size:12px;font-weight:600;color:var(--ok);align-self:flex-end}.ds-lvl.no{color:var(--bad)}
 .ds-fixb{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 12px;border-radius:8px;border:1px solid var(--bad);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 .ds-fixb:hover{background:var(--bad-bg)}
-.prj-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin:16px 0 0;padding:16px 18px;border-radius:14px;background:var(--surface);border:2px solid var(--ink)}.prj-in h2{font-size:18px;margin:0 0 4px}.prj-in p{margin:0;font-size:14px;color:var(--muted);max-width:70ch}.prj-in[hidden]{display:none}
+.prj-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;margin:16px 0 0;padding:16px 18px;border-radius:14px;background:var(--surface);border:2px solid var(--ink)}.prj-notes{margin:6px 0 0;padding-left:1.2em;font-size:14px}.prj-notes li{margin:2px 0}.save-err,#bootErr{border-color:var(--bad,#B3261E)}.prj-in h2{font-size:18px;margin:0 0 4px}.prj-in p{margin:0;font-size:14px;color:var(--muted);max-width:70ch}.prj-in[hidden]{display:none}
 .ex-name{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;flex:1 1 260px}.ex-name input{font:inherit;font-weight:400;min-height:40px;padding:0 12px;border-radius:10px;border:1.5px solid var(--field);background:var(--surface);color:var(--ink)}
 .hist{list-style:none;margin:10px 0 0;padding:0;font-size:14px}.hist li{padding:6px 0;border-top:1px solid var(--hair);overflow-wrap:anywhere}.hist code{font-size:13px}.hist .add b,.hist .add{color:var(--ok)}.hist .del{color:var(--bad)}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
@@ -216,7 +216,7 @@ a{color:inherit;text-underline-offset:.18em}
 .ex-file{display:flex;align-items:center;gap:12px}.ex-file b{display:block;font-size:17px}.ex-file .muted{font-size:13px}
 .ex-ico{width:44px;height:44px;border-radius:10px;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-family:var(--code);font-weight:700;font-size:14px}
 .ex-hero .note{flex-basis:100%;margin:0}
-.ex-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.ex-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px}
 .ex-item{border:1px solid var(--hair);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .ex-item h3{margin:0;font-size:16px;display:flex;justify-content:space-between;gap:8px;align-items:baseline}.ex-item h3 span{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
 .ex-item p{margin:0;font-size:14px;color:var(--muted)}
@@ -393,7 +393,7 @@ textarea{width:100%;resize:vertical;line-height:1.55;font-size:16px}
 .fm-end h2{font-size:28px;margin:0}.fm-miss{display:flex;flex-direction:column;gap:10px;padding:0;list-style:none;margin:0}.fm-miss li{border-left:3px solid var(--bad);padding:4px 0 4px 12px}
 .g-train{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap;background:var(--hover);border-radius:12px;padding:16px 18px;margin-bottom:6px}.g-train h2{margin:0 0 2px}.g-train p{margin:0}
 .mn-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.seg button[aria-pressed="true"] .muted{color:inherit;opacity:.85}.mn-edit .ex-name{flex:0 1 360px}.mn-edit{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
-.mn-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px 24px}
+.mn-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:14px 24px}
 .mn-g{border:0;margin:0;padding:0;min-width:0}.mn-g legend{font-weight:800;font-size:15px;padding:0;margin-bottom:6px}
 .mn-i{display:grid;grid-template-columns:22px minmax(0,1fr);gap:4px 10px;align-items:start;padding:8px 0;border-top:1px solid var(--hair);font-size:14px;font-weight:600;color:var(--ink)}
 .mn-i input{margin-top:1px}.mn-i small{grid-column:2;font-weight:500;color:var(--muted);font-size:13px;line-height:1.45}.mn-i small a{color:inherit}
@@ -735,6 +735,9 @@ body{background:var(--bg)}
 .appr .expbtn{padding:0 18px 0 14px}
 @media (max-width:480px){.appr .expbtn{padding:0 9px}}
 @media (max-width:360px){.appr{gap:4px}}
+/* 1.4.10 : pas de chevauchement ni de défilement horizontal sur petit écran. Sous 390 px, la pastille de norme ne garde que le niveau (la version reste dans son nom accessible et dans le menu) */
+@media (max-width:479px){.appr{gap:4px}.appr .normchip{min-width:0;padding-left:10px}}
+@media (max-width:389px){.appr .normchip{padding-left:8px}.appr #normV{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}}
 /* mobile : barre du bas en tuile, 4 onglets et « Plus » */
 .more-b,.more-sheet{display:none}
 @media (max-width:760px){
@@ -1474,6 +1477,27 @@ body{background:var(--bg)}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
+// Filet de sécurité : si Lisio plante au démarrage (projet abîmé), on ne laisse pas une page vide.
+// Les données restent dans le navigateur ; on propose de revenir au projet précédent ou de les télécharger.
+window.addEventListener("error", function (ev) {
+  if (window.__lisioReady || document.getElementById("bootErr")) return;
+  var get = function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+  var P = get("lisio:projects"), prevId = null; try { prevId = localStorage.getItem("lisio-boot-prev"); } catch (e) {}
+  var list = P && Array.isArray(P.list) ? P.list : [], back = list.filter(function (x) { return x && x.id === prevId && x.id !== P.cur; })[0] || list.filter(function (x) { return x && x.id !== P.cur; })[0];
+  var box = document.createElement("div"); box.id = "bootErr"; box.className = "prj-in"; box.setAttribute("role", "alert");
+  box.innerHTML = '<div><h2>Lisio n’a pas pu ouvrir ce projet</h2><p>Une erreur empêche l’affichage. Vos données sont toujours dans ce navigateur, rien n’a été effacé.</p><p class="note"></p></div><div class="row">' + (back ? '<button class="btn primary" type="button" data-be="back"></button>' : "") + '<button class="btn" type="button" data-be="dl">Télécharger ce projet en fichier</button></div>';
+  box.querySelector(".note").textContent = "Détail technique : " + String(ev.message || "erreur inconnue").slice(0, 160);
+  if (back) box.querySelector("[data-be=back]").textContent = "Revenir à « " + String(back.name || "projet précédent").slice(0, 60) + " »";
+  box.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-be]"); if (!b) return;
+    if (b.dataset.be === "back") { try { P.cur = back.id; localStorage.setItem("lisio:projects", JSON.stringify(P)); localStorage.setItem("lisio:colors", JSON.stringify(back.colors || null)); var s = back.state || {}; s.projectName = back.name; localStorage.setItem("lisio:state", JSON.stringify(s)); location.reload(); } catch (er) { alert("Impossible d’écrire dans ce navigateur."); } return; }
+    var st = get("lisio:state") || {}, data = { lisio: "project", v: 1, name: st.projectName || "", savedAt: new Date().toISOString(), colors: get("lisio:colors") || [], state: st };
+    var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: "application/json" })); a.download = "lisio-projet-a-reparer.json"; document.body.appendChild(a); a.click();
+  });
+  var at = document.querySelector("main") || document.body; at.insertBefore(box, at.firstChild); box.querySelector("button").focus();
+});
+</script>
+<script>
 const GF_RAW = "__GF__";
 </script>
 <script>
@@ -1484,6 +1508,7 @@ const JOURNEY = [["matrice", "Contrastes", "Saisissez vos couleurs : la matrice
 // ---------- Couleur ----------
 /*@core:color*/
 /*@core:wcag*/
+/*@core:project*/
 
 // ---------- Utilitaires ----------
 const $ = id => document.getElementById(id);
@@ -1491,7 +1516,17 @@ const fmt = (n, d = 2) => n.toLocaleString("fr-FR", { minimumFractionDigits: d, 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const slug = s => (s || "couleur").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "couleur";
 const textOn = hex => ratio(hex, "#FFFFFF") >= ratio(hex, "#000000") ? "#FFFFFF" : "#000000";
-const store = { get(k, d) { try { const v = localStorage.getItem("lisio:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem("lisio:" + k, JSON.stringify(v)); } catch (e) {} } };
+const store = { get(k, d) { try { const v = localStorage.getItem("lisio:" + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem("lisio:" + k, JSON.stringify(v)); saveFail(false); return true; } catch (e) { saveFail(true); return false; } } };
+// Écriture impossible (espace plein, navigation privée stricte) : on le dit, en continu, tant que ça dure.
+function saveFail(on) {
+  let el = document.getElementById("saveErr");
+  if (!on) { if (el) el.hidden = true; return; }
+  if (!el) { el = document.createElement("div"); el.id = "saveErr"; el.className = "prj-in save-err"; el.setAttribute("role", "alert");
+    el.innerHTML = `<div><h2>Vos modifications ne sont plus enregistrées</h2><p>Ce navigateur refuse d’enregistrer (espace plein ou navigation privée). Tout ce que vous changez maintenant sera perdu à la fermeture de l’onglet. Enregistrez le projet en fichier, puis supprimez d’anciens projets pour libérer de la place.</p></div><div class="row"><button class="btn primary" type="button" data-se="file">Enregistrer en fichier</button><button class="btn" type="button" data-se="prj">Gérer les projets</button></div>`;
+    el.addEventListener("click", e => { const b = e.target.closest("[data-se]"); if (!b) return; const go = document.getElementById(b.dataset.se === "file" ? "prjSave" : "prjB"); if (go) go.click(); });
+    const at = document.getElementById("prjIn"); if (at && at.parentNode) at.parentNode.insertBefore(el, at); else document.body.prepend(el); }
+  el.hidden = false;
+}
 function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 1700); }
 function copy(text, label) {
   const done = () => toast(label || "Copié");
@@ -3277,7 +3312,7 @@ const moreIc = { formation: '<svg viewBox="0 0 24 24" fill="none" stroke="curren
 function moreRender() { const v = curView(), cur = n => n === v ? ' aria-current="page"' : "";
   $("moreG").innerHTML = MORE_T.map(n => { const t = $("tab-" + n), ic = t.querySelector("svg").outerHTML; return `<button type="button" class="mi" data-go="${n}"${cur(n)}>${ic}${esc(tabLabel(t))}</button>`; }).join("")
     + `<button type="button" class="mi" data-prj-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>Projets<small>${esc(S.projectName || "")}</small></button>`
-    + (figOk(S.figma || "") ? `<a class="mi" href="${esc(S.figma)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg>Page Figma<small>Nouvel onglet</small></a>` : "")
+    + (figmaUrlOk(S.figma || "") ? `<a class="mi" href="${esc(S.figma)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg>Page Figma<small>Nouvel onglet</small></a>` : "")
     + `<a class="mi acc" href="#exporter"${cur("exporter")}>${moreIc.exporter}Exporter<small>Pour Figma et le code</small></a>`
     + `<h3 class="mh3">Aide et formation</h3><ul class="mdoc">${[...$("helpPop").querySelectorAll("a")].map(a => `<li>${a.outerHTML.replace("data-help", (a.getAttribute("href") === "#" + v ? 'aria-current="page" ' : "") + "data-help")}</li>`).join("")}</ul>`; }
 function moreClose() { if (MORES.open) MORES.close(); }
@@ -3442,13 +3477,13 @@ function renderCmp(o) {
 }
 async function cmpFrom(text) {
   text = (text || "").trim(); if (!text) { toast("Collez d’abord un lien de partage"); return; }
-  try { const m = text.match(/[?&]p=([^&#\s]+)/), t = m ? m[1] : text, o = await unpackPrj(t); if (!prjValid(o)) throw 0; renderCmp(o); }
-  catch (e) { toast("Lien illisible : copiez le lien de partage en entier"); }
+  try { const m = text.match(/[?&]p=([^&#\s]+)/), t = m ? m[1] : text, o = await unpackPrj(t), r = prjCheck(o); if (r.ok) renderCmp(r.project); else toast(prjWhy(r)); }
+  catch (e) { toast(prjErr(e)); }
 }
 $("cmpGo").addEventListener("click", () => cmpFrom($("cmpLink").value));
 $("cmpLink").addEventListener("keydown", e => { if (e.key === "Enter") cmpFrom($("cmpLink").value); });
 $("cmpPick").addEventListener("click", () => $("cmpFile").click());
-$("cmpFile").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => { let o = null; try { o = JSON.parse(t); } catch (er) {} if (prjValid(o)) renderCmp(o); else toast("Ce fichier n’est pas un projet Lisio"); e.target.value = ""; }); });
+$("cmpFile").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; e.target.value = ""; if (f.size > IMPORT_MAX) { toast(PRJ_REASONS["too-big"]); return; } f.text().then(t => { let o = null; try { o = JSON.parse(t); } catch (er) {} const r = prjCheck(o); if (r.ok) renderCmp(r.project); else toast(prjWhy(r)); }); });
 $("cmpCopy").addEventListener("click", () => { const c = cmpLast; if (!c) return; copy([`Comparaison : « ${c.nm} » → version actuelle`, `Rôles sous le seuil : ${c.A.roles} → ${c.now.roles} ; styles sous le seuil : ${c.A.styles} → ${c.now.styles}`, ...c.C.map(([k, a, b]) => `- ${k} : ${prettyVal(a)} → ${prettyVal(b)}`), ...c.Ad.map(k => `- ${k} : ajoutée`), ...c.D.map(k => `- ${k} : retirée`)].join("\n"), "Résumé copié"); });
 
 // ---------- Rapport d’accessibilité ----------
@@ -3508,31 +3543,40 @@ async function packPrj(o) {
   return "j" + b64u(raw);
 }
 async function unpackPrj(t) {
+  if (t.length > IMPORT_MAX) throw new Error("too-big");
   const kind = t[0], bytes = unb64u(t.slice(1));
-  if (kind === "z") { const out = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer(); return JSON.parse(new TextDecoder().decode(out)); }
+  if (kind === "z") { const out = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer(); if (out.byteLength > IMPORT_MAX) throw new Error("too-big"); return JSON.parse(new TextDecoder().decode(out)); }
   return JSON.parse(new TextDecoder().decode(bytes));
 }
-const prjValid = o => o && o.lisio === "project" && Array.isArray(o.colors) && o.colors.every(c => c && normHex(c.hex)) && o.state && typeof o.state === "object";
-function prjOffer(o, from) {
-  const el = $("prjIn"), n = o.name ? `« ${esc(o.name)} »` : "sans nom", d = o.savedAt ? new Date(o.savedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "";
+// Tout projet reçu passe par checkProject (src/core/project.mjs) : refus explicite, ou réglages remis d'aplomb et signalés.
+const prjCheck = o => checkProject(o, { ...JSON.parse(JSON.stringify(DEF)), ts: tsDefault(), ds: JSON.parse(JSON.stringify(DS_BASE)) }, { level: ["AA", "AAA"], version: ["2.0", "2.1", "2.2"] });
+const prjWhy = r => PRJ_REASONS[r.reason] || PRJ_REASONS["not-project"];
+const prjErr = e => e && e.message === "too-big" ? PRJ_REASONS["too-big"] : "Lien illisible : copiez le lien de partage en entier.";
+function prjOffer(r, from) {
+  const o = r.project, el = $("prjIn"), n = o.name ? `« ${esc(o.name)} »` : "sans nom", d = o.savedAt && !isNaN(new Date(o.savedAt)) ? new Date(o.savedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "";
+  const fam = ((((o.state.ts || {}).fonts || {}).head) || {}).family;
   el.hidden = false;
-  el.innerHTML = `<div><h2>Ouvrir le projet ${n} ?</h2><p>${from === "link" ? "Un collègue vous a envoyé ce lien" : "Fichier de projet"}${d ? `, enregistré le ${d}` : ""} : ${o.colors.length} couleurs, polices ${esc(((o.state.ts || {}).fonts || {}).head ? o.state.ts.fonts.head.family : "")}. Il remplacera vos réglages actuels dans ce navigateur. Pensez à enregistrer les vôtres avant, si besoin.</p></div><div class="row"><button class="btn primary" type="button" data-prj="ok">Ouvrir ce projet</button><button class="btn" type="button" data-prj="no">Garder mes réglages</button></div>`;
+  el.innerHTML = `<div><h2>Ouvrir le projet ${n} ?</h2><p>${from === "link" ? "Lien de partage" : "Fichier de projet"}${d ? `, enregistré le ${d}` : ""} : ${o.colors.length} couleur${o.colors.length > 1 ? "s" : ""}${fam ? `, police ${esc(fam)}` : ""}. Il sera ajouté comme <b>nouveau projet</b> dans ce navigateur : votre projet actuel reste tel quel, vous le retrouvez dans Projets.</p>${r.notes.length ? `<p><b>${r.notes.length} réglage${r.notes.length > 1 ? "s" : ""} corrigé${r.notes.length > 1 ? "s" : ""} à l’ouverture :</b></p><ul class="prj-notes">${r.notes.slice(0, 8).map(x => `<li>${esc(x)}</li>`).join("")}${r.notes.length > 8 ? `<li>et ${r.notes.length - 8} autres</li>` : ""}</ul>` : ""}</div><div class="row"><button class="btn primary" type="button" data-prj="ok">Ouvrir comme nouveau projet</button><button class="btn" type="button" data-prj="no">Ne pas l’ouvrir</button></div>`;
   el.querySelector("[data-prj=ok]").focus();
   el.onclick = e => { const b = e.target.closest("[data-prj]"); if (!b) return;
-    if (b.dataset.prj === "ok") { prjSync(); prjLeaving = true; const P = prjAll(), id = prjId(), nm = o.name || o.state.projectName || "Projet partagé", cols = o.colors.map(c => ({ name: String(c.name || "Couleur").slice(0, 40), hex: normHex(c.hex) })); P.list.push({ id, name: nm, savedAt: new Date().toISOString(), colors: cols, state: o.state }); P.cur = id; store.set("projects", P); store.set("colors", cols); store.set("state", { ...o.state, projectName: nm }); }
+    if (b.dataset.prj === "ok") { prjSync(); const P = prjAll(), prev = P.cur, id = prjId(), nm = o.name || "Projet partagé";
+      P.list.push({ id, name: nm, savedAt: new Date().toISOString(), colors: o.colors, state: o.state }); P.cur = id;
+      if (!(store.set("projects", P) && store.set("colors", o.colors) && store.set("state", { ...o.state, projectName: nm }))) { toast("Projet non ouvert : ce navigateur refuse d’enregistrer"); return; }
+      try { localStorage.setItem("lisio-boot-prev", prev); } catch (er) {} prjLeaving = true; }
     try { const u = new URL(location.href); u.searchParams.delete("p"); history.replaceState(null, "", u.pathname + u.search + u.hash); } catch (er) {}
     if (b.dataset.prj === "ok") location.reload(); else { el.hidden = true; el.innerHTML = ""; } };
 }
-(async () => { try { const t = new URLSearchParams(location.search).get("p"); if (!t) return; const o = await unpackPrj(t); if (prjValid(o)) prjOffer(o, "link"); else toast("Lien de projet illisible"); } catch (e) { toast("Lien de projet illisible"); } })();
+(async () => { const t = new URLSearchParams(location.search).get("p"); if (!t) return; let o; try { o = await unpackPrj(t); } catch (e) { toast(prjErr(e)); return; } const r = prjCheck(o); if (r.ok) prjOffer(r, "link"); else toast(prjWhy(r)); })();
 $("prjName").value = S.projectName || "";
 $("prjName").addEventListener("input", e => { S.projectName = e.target.value.trim(); save(); });
-$("prjLink").addEventListener("click", async () => { try { const t = await packPrj(prjData()), url = PRJ_BASE + "?p=" + t + "#matrice"; copy(url, "Lien copié : envoyez-le à vos collègues"); $("prjNote").textContent = `Lien de ${url.length.toLocaleString("fr-FR")} caractères. Il contient tout le projet, rien n’est stocké sur un serveur. Le lien ouvre Lisio sur lisio-psi.vercel.app.`; } catch (e) { toast("Lien impossible : enregistrez le projet en fichier"); } });
+$("prjLink").addEventListener("click", async () => { try { const t = await packPrj(prjData()), url = PRJ_BASE + "?p=" + t + "#matrice", n = url.length.toLocaleString("fr-FR");
+  if (url.length > LINK_MAX) { $("prjNote").textContent = `Projet trop lourd pour un lien (${n} caractères, au-delà de ${LINK_MAX.toLocaleString("fr-FR")}) : certains navigateurs ou serveurs le couperaient. Utilisez « Enregistrer le projet » et envoyez le fichier.`; toast("Lien non créé : projet trop lourd, enregistrez-le en fichier"); return; }
+  copy(url, "Lien copié : toute personne qui l’a peut ouvrir le projet"); $("prjNote").textContent = `Lien de ${n} caractères. Il contient tout le projet (nom, couleurs, polices, réglages), rien n’est stocké sur un serveur. Toute personne qui a ce lien peut ouvrir le projet : ne le publiez pas si le projet est confidentiel. Il ouvre Lisio sur lisio-psi.vercel.app.`; } catch (e) { toast("Lien impossible : enregistrez le projet en fichier"); } });
 $("prjSave").addEventListener("click", () => { const nm = slug(S.projectName || "projet"); saveFile(`lisio-projet-${nm}.json`, JSON.stringify(prjData(), null, 1), "application/json", "Projet enregistré : envoyez le fichier à vos collègues"); });
 $("prjOpen").addEventListener("click", () => $("prjFile").click());
-$("prjFile").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => { let o = null; try { o = JSON.parse(t); } catch (er) {}
-  if (prjValid(o)) { prjOffer(o, "file"); window.scrollTo(0, 0); }
-  else if (o && o.color && o.typography) toast("C’est un export pour Figma, pas un projet Lisio");
-  else toast("Ce fichier n’est pas un projet Lisio"); e.target.value = ""; }); });
+$("prjFile").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; e.target.value = ""; if (f.size > IMPORT_MAX) { toast(PRJ_REASONS["too-big"]); return; }
+  f.text().then(t => { let o = null; try { o = JSON.parse(t); } catch (er) {} const r = prjCheck(o);
+  if (r.ok) { prjOffer(r, "file"); window.scrollTo(0, 0); } else toast(prjWhy(r)); }); });
 
 
 // ---------- Projets : plusieurs projets dans ce navigateur ----------
@@ -3549,9 +3593,10 @@ function prjAll() {
 }
 function prjSync() { const P = prjAll(), e = P.list.find(x => x.id === P.cur); e.name = S.projectName || e.name; e.colors = isExample ? null : palette; e.state = S; e.savedAt = new Date().toISOString(); store.set("projects", P); return P; }
 let prjLeaving = false;
-function prjGo(e) { const P = prjSync(); prjLeaving = true; P.cur = e.id; if (!P.list.some(x => x.id === e.id)) P.list.push(e); store.set("projects", P); store.set("colors", e.colors || null); store.set("state", { ...e.state, projectName: e.name }); location.reload(); }
-function figOk(u) { try { const x = new URL(u); return x.protocol === "https:" && /(^|\.)figma\.com$/.test(x.hostname); } catch (e) { return false; } }
-function prjLabel() { $("prjBN").textContent = S.projectName || "Projet"; const a = $("prjFig"), ok = figOk(S.figma || ""); a.hidden = !ok; if (ok) a.href = S.figma; else a.removeAttribute("href"); }
+function prjGo(e) { const P = prjSync(), prev = P.cur; P.cur = e.id; if (!P.list.some(x => x.id === e.id)) P.list.push(e);
+  if (!(store.set("projects", P) && store.set("colors", e.colors || null) && store.set("state", { ...e.state, projectName: e.name }))) { toast("Changement de projet impossible : ce navigateur refuse d’enregistrer"); return; }
+  try { localStorage.setItem("lisio-boot-prev", prev); } catch (er) {} prjLeaving = true; location.reload(); }
+function prjLabel() { $("prjBN").textContent = S.projectName || "Projet"; const a = $("prjFig"), ok = figmaUrlOk(S.figma || ""); a.hidden = !ok; if (ok) a.href = S.figma; else a.removeAttribute("href"); }
 function prjRender() {
   const P = prjSync(), cur = P.list.find(x => x.id === P.cur);
   $("prjCurName").value = S.projectName || ""; $("prjFigU").value = S.figma || "";
@@ -3563,7 +3608,7 @@ $("prjB").addEventListener("click", () => { prjRender(); $("prjDlg").showModal()
 $("prjX").addEventListener("click", () => $("prjDlg").close());
 $("prjDlg").addEventListener("click", e => { if (e.target === $("prjDlg")) $("prjDlg").close(); });
 $("prjDlg").addEventListener("close", () => ($("prjB").offsetParent ? $("prjB") : $("moreB")).focus());
-$("prjFigU").addEventListener("input", e => { const v = e.target.value.trim(), ok = !v || figOk(v); e.target.setAttribute("aria-invalid", String(!ok)); $("prjFigE").textContent = ok ? "Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier." : "Ce lien ne vient pas de figma.com. Copiez-le depuis Figma : Partager, puis Copier le lien."; if (ok) { S.figma = v; save(); prjLabel(); } });
+$("prjFigU").addEventListener("input", e => { const v = e.target.value.trim(), ok = !v || figmaUrlOk(v); e.target.setAttribute("aria-invalid", String(!ok)); $("prjFigE").textContent = ok ? "Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier." : "Ce lien ne vient pas de figma.com. Copiez-le depuis Figma : Partager, puis Copier le lien."; if (ok) { S.figma = v; save(); prjLabel(); } });
 $("prjCurName").addEventListener("input", e => { S.projectName = e.target.value.trim().slice(0, 60); save(); $("prjName").value = S.projectName; prjLabel(); });
 $("prjName").addEventListener("input", prjLabel);
 $("prjNew").addEventListener("click", () => { const P = prjAll(), n = P.list.length + 1; prjGo({ id: prjId(), name: `Projet ${n}`, savedAt: new Date().toISOString(), colors: null, state: {} }); });
@@ -3672,5 +3717,6 @@ show(location.hash.slice(1));
 requestAnimationFrame(() => window.scrollTo(0, 0)); setTimeout(() => window.scrollTo(0, 0), 60);
 document.fonts.ready.then(renderMetrics);
 document.fonts.load(`${S.weight} 40px ${fontCss(S.font)}`).then(renderMetrics, () => {});
+window.__lisioReady = true;
 })();
 </script>

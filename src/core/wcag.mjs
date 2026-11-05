@@ -1,6 +1,6 @@
 // Lisio, cœur WCAG : seuils, grand texte, arrondi d'affichage, verdicts.
 // Fonctions pures, sans DOM ni état. Testées par tests/wcag.test.mjs.
-// Inliné tel quel dans la page par src/build.py (le mot export est retiré) : pas d'import ici.
+// Inliné tel quel dans la page par src/build.py (le mot export est retiré).
 // Affichage tronqué, jamais arrondi au supérieur : 4,499 s'affiche 4,49 et échoue, comme le calcul.
 export const floor2 = n => Math.floor(n * 100) / 100;
 // Grand texte (WCAG 2.2, définition « large scale ») : 18 pt, ou 14 pt en gras ; 1 pt = 4/3 px.
