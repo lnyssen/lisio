@@ -1482,53 +1482,12 @@ const GF_RAW = "__GF__";
 const QHELP = {"ratio": ["C’est quoi, un ratio de contraste ?", "Il compare la clarté de deux couleurs, de 1:1 (aucune différence) à 21:1 (noir sur blanc). Plus le chiffre est haut, plus c’est lisible. Le calcul est celui des WCAG, à partir de la luminance relative."], "aa": ["AA ou AAA ?", "AA est le niveau visé par les lois, dont le RGAA en France et la norme européenne EN 301 549 : 4,5:1 pour le texte courant, 3:1 pour le grand texte (24 px, ou 18,66 px en gras) et les composants. AAA est plus exigeant : 7:1 pour le texte. Choisissez le niveau avec la pastille WCAG en haut à droite."], "pair": ["Que veut dire le petit disque ?", "C’est une paire : moitié couleur du texte, moitié couleur du fond. Le contraste se mesure toujours entre deux couleurs, jamais une seule. Une couleur n’est pas « accessible » en soi, une paire l’est."], "nuance": ["Pourquoi 11 nuances ?", "Chaque couleur est déclinée de 50 (très clair) à 950 (très foncé). Dans Lisio, les nuances de même numéro ont la même clarté d’une couleur à l’autre : si Gris 700 sur Gris 50 passe, Brand 700 sur Brand 50 passe aussi. On retient des numéros, pas des codes."], "taille": ["Quelle taille minimum ?", "Les WCAG ne fixent pas de taille minimum. 16 px est la taille par défaut des navigateurs et l’usage courant pour le texte courant. Sous 12 px, Lisio vous prévient."], "fluid": ["C’est quoi, une typo fluide ?", "La taille glisse en douceur entre le mobile (390 px) et le grand écran (1440 px), grâce à la fonction CSS clamp(). Vous réglez le desktop, Lisio calcule le mobile. Dans Figma, chaque style existe en 4 versions, une par écran."], "zoom": ["Pourquoi 2,5 fois maximum ?", "Le critère 1.4.4 demande que le texte reste lisible zoomé à 200 %. Avec une taille fluide, si le desktop dépasse 2,5 fois le mobile, le zoom peut ne plus atteindre 200 % (Barvian, Smashing Magazine, 7 novembre 2023). Lisio bloque donc les écarts trop grands."], "role": ["C’est quoi, un rôle ?", "Un rôle donne un métier à une nuance : text/default pour le texte, background/default pour le fond, action/default pour le bouton. Dans les maquettes et le code, on utilise le rôle, pas la nuance : pour changer de thème, on rebranche les rôles et tout suit."], "focus": ["Pourquoi un contour de focus ?", "Quand on navigue au clavier (touche Tab), ce contour montre où l’on est. Lisio l’exporte en 2 px avec au moins 3:1 de contraste, ce que demande le critère 2.4.13 (AAA) ; le critère 2.4.7 (AA) exige qu’il soit visible."], "cible": ["Pourquoi 44 px pour les boutons ?", "Une cible trop petite se rate au doigt ou avec une main qui tremble. Les WCAG demandent 24 px minimum (2.5.8, AA) et recommandent 44 px (2.5.5, AAA)."], "plugin": ["Comment marche le plugin ?", "Le plugin Lisio lit le fichier JSON exporté et crée dans Figma les collections de variables (Colors, Semantic, Typography, Layout, Dimensions) et les styles de texte. Il s’installe une fois, puis chaque import met à jour l’existant sans doublons."], "variable": ["Variable ou style, quelle différence ?", "Dans Figma, une variable stocke une valeur (une couleur, un nombre) et peut avoir plusieurs modes, ici un par écran. Un style de texte regroupe police, taille et interligne. Lisio crée les deux, reliés entre eux."], "lecture": ["À quoi sert le score de lecture ?", "Il estime la difficulté d’un texte à partir de la longueur des phrases et des mots. Le critère 3.1.5 (AAA) demande une version plus simple quand un texte dépasse le niveau de fin de collège."], "reflow": ["Pourquoi 320 px et l’espacement ?", "Le critère 1.4.10 demande qu’une page reste lisible sans défilement horizontal à 320 px de large, ce qui équivaut à un écran de 1280 px zoomé à 400 %. Le critère 1.4.12 demande que rien ne se perde quand l’utilisateur élargit l’interligne (1,5), l’espace après les paragraphes (2 fois la taille), entre les lettres (0,12) et entre les mots (0,16). Lisio applique ces valeurs à l’aperçu et cherche ce qui déborde."], "sombre": ["Comment marche le mode sombre ?", "Chaque rôle a deux valeurs : une en clair, une en sombre. Lisio part du clair, prend la nuance 950 de votre fond et la 50 de votre texte, puis recalcule et revérifie toutes les paires. Dans Figma, c’est un deuxième mode de la collection Semantic : on bascule une maquette entière d’un clic."], "etat": ["Pourquoi des couleurs d’état ?", "Erreur, succès, alerte et info ont chacune un texte, un fond et une bordure vérifiés. Mais la couleur ne doit jamais être le seul indice (1.4.1) : un message d’erreur a toujours une icône et un texte qui dit ce qui ne va pas et comment corriger (3.3.1, 3.3.3)."]};
 const JOURNEY = [["matrice", "Contrastes", "Saisissez vos couleurs : la matrice dit quel texte se lit sur quel fond.", ["ratio", "aa", "pair"]], ["palette", "Couleurs", "Chaque couleur devient une gamme de 11 nuances, de 50 à 950.", ["nuance", "ratio"]], ["tester", "Polices", "Choisissez votre police et testez-la sur un vrai texte, avec vos couleurs.", ["taille", "aa"]], ["styles", "Styles de texte", "Réglez le desktop, Lisio calcule le mobile et vérifie chaque style.", ["fluid", "zoom", "taille"]], ["systeme", "Design system", "Donnez un rôle à chaque couleur, puis réglez formes et grille.", ["role", "sombre", "etat", "focus", "cible"]], ["exporter", "Exporter", "Un fichier, un plugin, et tout arrive dans Figma.", ["plugin", "variable"]]];
 // ---------- Couleur ----------
-const clamp01 = v => Math.min(1, Math.max(0, v));
-const normHex = h => { h = String(h).trim().replace(/^#/, ""); if (/^[0-9a-f]{3}$/i.test(h)) h = h.split("").map(c => c + c).join(""); return /^[0-9a-f]{6}$/i.test(h) ? "#" + h.toUpperCase() : null; };
-const hex2rgb = h => { const n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => v / 255); };
-const rgb2hex = rgb => "#" + rgb.map(v => Math.round(clamp01(v) * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
-const toLin = c => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-const toGam = c => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
-const Yof = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
-const lum = hex => Yof(hex2rgb(hex).map(toLin));
-const ratio = (a, b) => { const la = lum(a), lb = lum(b); return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05); };
-function linToOklab([r, g, b]) {
-  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b), m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b), s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
-  return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
-}
-function oklchToLin(L, C, h) {
-  const a = C * Math.cos(h), b = C * Math.sin(h);
-  const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3, m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3, s = (L - 0.0894841775 * a - 1.2914855480 * b) ** 3;
-  return [4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s, -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s, -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s];
-}
-const hexToOklch = hex => { const [L, a, b] = linToOklab(hex2rgb(hex).map(toLin)); return { L, C: Math.hypot(a, b), h: Math.atan2(b, a) }; };
-const inGamut = c => c.every(v => v >= -1e-5 && v <= 1 + 1e-5);
-function maxChroma(L, h, want) { if (inGamut(oklchToLin(L, want, h))) return want; let lo = 0, hi = want; for (let i = 0; i < 22; i++) { const mid = (lo + hi) / 2; if (inGamut(oklchToLin(L, mid, h))) lo = mid; else hi = mid; } return lo; }
-const linToHex = lin => rgb2hex(lin.map(v => toGam(clamp01(v))));
-const chromaShape = (L, L0) => Math.max(0.08, L < L0 ? 1 - 0.45 * ((L0 - L) / Math.max(L0, 0.05)) ** 2 : 1 - 0.85 * ((L - L0) / Math.max(1 - L0, 0.05)) ** 2);
-function colorForY(base, targetY) {
-  const { L: L0, C: C0, h } = base; let lo = 0, hi = 1, lin = [0, 0, 0];
-  for (let i = 0; i < 32; i++) { const mid = (lo + hi) / 2; lin = oklchToLin(mid, maxChroma(mid, h, C0 * chromaShape(mid, L0)), h).map(clamp01); if (Yof(lin) < targetY) lo = mid; else hi = mid; }
-  return linToHex(lin);
-}
-const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-const TARGET = [1.06, 1.15, 1.4, 1.9, 3.1, 4.65, 6.1, 8.1, 11, 14.6, 17.6];
-const targetY = r => 1.05 / r - 0.05;
-const CVD = {
-  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
-  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]],
-  tritan: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.303900]]
-};
-function simulate(hex, mode) { if (mode === "normal") return hex; const lin = hex2rgb(hex).map(toLin); if (mode === "achro") { const y = Yof(lin); return linToHex([y, y, y]); } return linToHex(CVD[mode].map(r => r[0] * lin[0] + r[1] * lin[1] + r[2] * lin[2])); }
-function suggestFix(moveHex, otherHex, target) {
-  const { L: L0, C, h } = hexToOklch(moveHex); let best = null, bestD = Infinity;
-  for (let k = 0; k <= 400; k++) { const L = k / 400, hex = linToHex(oklchToLin(L, maxChroma(L, h, C), h).map(clamp01)); if (ratio(hex, otherHex) >= target) { const d = Math.abs(L - L0); if (d < bestD) { bestD = d; best = hex; } } }
-  return best;
-}
+/*@core:color*/
+/*@core:wcag*/
 
 // ---------- Utilitaires ----------
 const $ = id => document.getElementById(id);
 const fmt = (n, d = 2) => n.toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d });
-const floor2 = n => Math.floor(n * 100) / 100;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const slug = s => (s || "couleur").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "couleur";
 const textOn = hex => ratio(hex, "#FFFFFF") >= ratio(hex, "#000000") ? "#FFFFFF" : "#000000";
@@ -1699,9 +1658,9 @@ $("pcHex").addEventListener("change", e => { const h = normHex(e.target.value); 
 $("swap").addEventListener("click", () => setPair(S.bg, S.fg));
 
 // ---------- Règles WCAG ----------
-const isLarge = () => S.size >= 24 || (S.size >= 18.66 && S.weight >= 700);
+const isLarge = () => largeText(S.size, S.weight);
 const V = () => ({ "2.0": 20, "2.1": 21, "2.2": 22 })[S.version];
-const contrastNeed = () => { const L = isLarge(); return S.level === "AAA" ? (L ? 4.5 : 7) : (L ? 3 : 4.5); };
+const contrastNeed = () => needRatio(S.level, isLarge());
 function bestFix(need) {
   const f = suggestFix(S.fg, S.bg, need), b = suggestFix(S.bg, S.fg, need), out = [];
   if (f) out.push({ label: `Texte → ${f}`, dot: f, act: () => setPair(f, null) });
@@ -1877,7 +1836,6 @@ $("copyExport").addEventListener("click", () => copy($("exportOut").textContent,
 // ---------- Matrice ----------
 const mxNarrow = matchMedia("(max-width:760px)"); let mxMode = "";
 let sel = null, dActs = [];
-const grade = r => r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AA", "b-aa"] : r >= 3 ? ["AA grand", "b-lg"] : ["✕ Échec", "b-no"];
 const f1 = r => fmt(Math.floor(r * 10) / 10, 1);
 const f2 = r => fmt(Math.floor(r * 100) / 100, 2);
 function renderMx() {
@@ -2302,7 +2260,7 @@ function tsColorOptions(cur) {
   return h;
 }
 function tsVerdict(st) {
-  const lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max), r = ratio(S.ts.fg, S.ts.bg), large = lo >= 24 || (lo >= 18.66 && st.weight >= 700), need = S.level === "AAA" ? (large ? 4.5 : 7) : (large ? 3 : 4.5), ok = r >= need, warn = [];
+  const lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max), r = ratio(S.ts.fg, S.ts.bg), large = largeText(lo, st.weight), need = needRatio(S.level, large), ok = r >= need, warn = [];
   if (TS_PARA.includes(st.id) && st.lh < 1.5) warn.push("Interligne sous 1,5 : à éviter pour les paragraphes (1.4.8, AAA)");
   if (lo < 12) warn.push("Moins de 12 px sur mobile : difficile à lire");
   if (hi > 2.5 * lo) warn.push("Desktop plus de 2,5 fois plus grand que mobile : le zoom à 200 % risque de ne pas suffire (1.4.4)");
@@ -2336,11 +2294,11 @@ function renderStyles() {
   $("tsDerived").innerHTML = tsDerivedHtml(); $("tsBaseD").value = T.d.base; $("tsRatioD").value = T.d.ratio;
   $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
   $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
-  const tsNeed = S.level === "AAA" ? 7 : 4.5;
+  const tsNeed = needRatio(S.level);
   Object.assign($("tsFg").dataset, { pair: T.bg, pairname: "le fond (" + hexName(T.bg) + ")", need: tsNeed }); Object.assign($("tsBg").dataset, { pair: T.fg, pairname: "le texte (" + hexName(T.fg) + ")", need: tsNeed });
   cpEnhance($("tsFg")); cpEnhance($("tsBg"));
   $("tsFgDot").style.background = T.fg; $("tsBgDot").style.background = T.bg;
-  { const r = ratio(T.fg, T.bg), need = S.level === "AAA" ? 7 : 4.5, ok = r >= need, big = r >= (S.level === "AAA" ? 4.5 : 3); const el = $("tsCr"); el.className = "ts-cr " + (ok ? "ok" : big ? "lg" : "no"); el.innerHTML = `<span class="pair" style="--a:${T.fg};--b:${T.bg}" aria-hidden="true"></span><span class="ratio">${fmt(floor2(r))}:1</span><small>${ok ? "✓ " + S.level : big ? "◐ Titres seulement" : "✕ Échec"}</small>`;
+  { const r = ratio(T.fg, T.bg), need = needRatio(S.level), ok = r >= need, big = r >= needRatio(S.level, true); const el = $("tsCr"); el.className = "ts-cr " + (ok ? "ok" : big ? "lg" : "no"); el.innerHTML = `<span class="pair" style="--a:${T.fg};--b:${T.bg}" aria-hidden="true"></span><span class="ratio">${fmt(floor2(r))}:1</span><small>${ok ? "✓ " + S.level : big ? "◐ Titres seulement" : "✕ Échec"}</small>`;
     const F = $("tsCrFix"), fv = ok ? null : roleFix("text/default", dsRoles("light"), "light"); F.hidden = !fv;
     F.innerHTML = fv ? `<button type="button" class="ds-fixb" data-xfix="text/default" data-m="light" data-v="${fv}"><span class="sw" style="background:${fv}"></span>Texte : utiliser ${esc(hexName(fv))} (${fmt(floor2(ratio(fv, T.bg)))}:1)</button>` : ""; }
   tsVwPaint();
@@ -2409,10 +2367,10 @@ const hexA = (h, a) => h + Math.round(a * 255).toString(16).padStart(2, "0").toU
 const blendHex = (top, a, under) => { const u = hex2rgb(under); return rgb2hex(hex2rgb(top).map((v, i) => a * v + (1 - a) * u[i])); };
 const scrimInk = () => ratio("#FFFFFF", S.ts.fg) >= 12 ? S.ts.fg : "#000000";
 // Voile sur photo : la plus petite opacité qui garde un texte blanc lisible même sur une zone d’image blanche
-function scrimAlpha() { const need = S.level === "AAA" ? 7 : 4.5, c = scrimInk(); for (let i = 6; i <= 19; i++) { const a = i / 20; if (ratio("#FFFFFF", blendHex(c, a, "#FFFFFF")) >= need) return a; } return .95; }
+function scrimAlpha() { const need = needRatio(S.level), c = scrimInk(); for (let i = 6; i <= 19; i++) { const a = i / 20; if (ratio("#FFFFFF", blendHex(c, a, "#FFFFFF")) >= need) return a; } return .95; }
 // Contrôles 1.4.11 et lisibilité des effets, pour un mode
 function elevChecks(m) {
-  const R = dsRoles(m), bg = R["background/default"], need = S.level === "AAA" ? 7 : 4.5, fr = n => fmt(floor2(n)), out = [];
+  const R = dsRoles(m), bg = R["background/default"], need = needRatio(S.level), fr = n => fmt(floor2(n)), out = [];
   const rb = ratio(R["border/default"], bg); out.push([rb >= 3, `Bordure des champs à ${fr(rb)}:1 sur le fond : un composant reste visible sans son ombre (1.4.11).`]);
   const L = dsShadow(4, m), peak = L.reduce((t, l) => t + l.a, 0), rp = L.length ? ratio(blendHex(L[0].c, Math.min(1, peak), bg), bg) : 1;
   out.push([true, L.length ? `Une ombre ne délimite rien : même la plus forte (niveau 4) atteint au mieux ${fr(rp)}:1 face au fond. Une carte cliquable garde sa bordure.` : "Sans ombre : l’élévation passe par la surface et la bordure. C’est le choix le plus sûr."]);
@@ -2432,7 +2390,7 @@ function darkDefault() {
 }
 function modeBase(m) { m = m || dsMode; if (m === "dark") { const d = S.ds.dark || {}, D = darkDefault(); return { fg: d.fg || D.fg, bg: d.bg || D.bg, roles: d.roles || {} }; } return { fg: S.ts.fg, bg: S.ts.bg, roles: S.ds.roles || {} }; }
 function dsAuto(m) {
-  const B = modeBase(m), fg = B.fg, bg = B.bg, need = S.level === "AAA" ? 7 : 4.5, O = k => B.roles[k];
+  const B = modeBase(m), fg = B.fg, bg = B.bg, need = needRatio(S.level), O = k => B.roles[k];
   const scaleOf = h => allScales().find(s => s.hex === h || s.sw.includes(h)) || scales.slice().sort((a, b) => ratio(b.hex, bg) - ratio(a.hex, bg))[0];
   const stepsOf = h => { const sc = scaleOf(h); return sc ? sc.sw : [h]; };
   const steps = stepsOf(fg), weakest = (min, vs, list) => (list || steps).filter(h => ratio(h, vs) >= min).sort((a, b) => ratio(a, vs) - ratio(b, vs))[0];
@@ -2469,7 +2427,7 @@ function roleDesc(k, R, m) {
   const [, pair, kind] = ROLE_FR[k], en = ROLE_EN[k] || k;
   if (kind === "deco") return `${en}: ${enNum(floor2(ratio(R[k], R["background/default"])))}:1 on background`;
   if (kind === "off") return `${en}: exempt from contrast minimums (inactive component, SC 1.4.3)${pair ? `, ${enNum(floor2(ratio(R[k], R[pair])))}:1 on disabled fill` : ""}`;
-  const sc = kind === "ui" ? (k === "focus/ring" ? "SC 2.4.13, minimum 3:1" : "SC 1.4.11, minimum 3:1") : `SC 1.4.3, minimum ${S.level === "AAA" ? 7 : 4.5}:1`;
+  const sc = kind === "ui" ? (k === "focus/ring" ? "SC 2.4.13, minimum 3:1" : "SC 1.4.11, minimum 3:1") : `SC 1.4.3, minimum ${needRatio(S.level)}:1`;
   return `${en}: ${enNum(floor2(ratio(R[k], R[pair])))}:1 with ${(ROLE_EN[pair] || pair).toLowerCase()} (${sc})${m === "dark" ? " in dark mode" : ""}`;
 }
 function dsSemantic(m) {
@@ -2936,7 +2894,7 @@ ${it(`<div class="alert alert-error" role="alert" style="align-self:stretch"><p 
 }
 
 function sysPage() {
-  const theme = S.sysTheme === "dark" ? "dark" : "light", R = dsRoles(theme), need = S.level === "AAA" ? 7 : 4.5, fr = n => fmt(floor2(n));
+  const theme = S.sysTheme === "dark" ? "dark" : "light", R = dsRoles(theme), need = needRatio(S.level), fr = n => fmt(floor2(n));
   const bp = sysBp();
   const fonts = [S.ts.fonts.head, S.ts.fonts.body].filter(f => f.src === "google" && GFmap.get(f.family)).map(f => `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${gfQuery(GFmap.get(f.family), GFmap.get(f.family).weights)}&display=swap">`).join("");
   const badge = k => { const [, pair, kind] = ROLE_FR[k]; if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; if (kind === "off") return `<span class="bdg">Exempté : composant inactif${pair ? `, ${fr(ratio(R[k], R[pair]))}:1` : ""}</span>`; const r = ratio(R[k], R[pair]), req = roleNeed(k), ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "(3:1 requis)" : S.level) : `(${fmt(req, 1)}:1 requis)`}</span>`; };
@@ -3082,7 +3040,7 @@ function hexName(h) {
   for (const s of allScales()) { if (s.hex.toUpperCase() === u) return s.name; const i = s.sw.findIndex(x => x.toUpperCase() === u); if (i >= 0) return `${s.name} ${STEPS[i]}`; }
   return "Couleur personnalisée";
 }
-function roleNeed(k) { const kind = ROLE_FR[k][2]; return kind === "deco" || kind === "off" ? 0 : kind === "ui" ? 3 : (S.level === "AAA" ? 7 : 4.5); }
+function roleNeed(k) { const kind = ROLE_FR[k][2]; return kind === "deco" || kind === "off" ? 0 : kind === "ui" ? 3 : (needRatio(S.level)); }
 function roleFix(k, R, m) {
   R = R || dsRoles(m); const pair = ROLE_FR[k][1]; if (!pair || !roleNeed(k)) return null;
   const h = R[k], p = R[pair], req = roleNeed(k), L = lum(h);
@@ -3196,7 +3154,7 @@ function renderExport2() {
   const txt = tsJson(), o = JSON.parse(txt), n = obj => { let c = 0; (function w(x) { for (const k in x) { const v = x[k]; if (k[0] === "$" || !v || typeof v !== "object") continue; if ("$value" in v) c++; else w(v); } })(obj); return c; };
   const nCol = n(o.color), nSem = n(o.semantic), nTy = Object.keys(o.typography).length, nLay = n(o.layout) - 1, nDim = n({ s: o.spacing, r: o.radius, z: o.size, b: o["border-width"] }) + 1;
   $("exSize").textContent = `${fmt(txt.length / 1024, 1)} Ko, ${nCol + nSem + nTy * 2 + 2 + nLay + nDim} variables et ${nTy * BP.length} styles de texte dans Figma`;
-  const R = dsRoles(), need = S.level === "AAA" ? 7 : 4.5, failR = allIssues().length, failT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
+  const R = dsRoles(), need = needRatio(S.level), failR = allIssues().length, failT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
   $("exCheck").textContent = `Vérifié WCAG ${S.version}, niveau ${S.level} : ${failR ? `${failR} rôle${failR > 1 ? "s" : ""} sous le seuil` : "tous les rôles passent"}, ${failT ? `${failT} style${failT > 1 ? "s" : ""} de texte sous le seuil` : "tous les styles de texte passent"}. ${failR || failT ? "Corrigez-les avant d’exporter, ou exportez en connaissance de cause." : ""}`;
   const sw = scales.slice(0, 3).flatMap(s => [s.sw[1], s.sw[4], s.sw[7], s.sw[9]]).map(h => `<i style="background:${h}"></i>`).join("");
   const roles = Object.keys(ROLE_FR).map(k => `<i style="background:${R[k]}" title="${k}"></i>`).join("");
@@ -3350,7 +3308,7 @@ window.addEventListener("hashchange", () => { show(location.hash.slice(1)); wind
 
 
 // ---------- Mode formation ----------
-const FM_LV = () => S.level === "AAA" ? { t: 7, g: 4.5, n: "AAA" } : { t: 4.5, g: 3, n: "AA" };
+const FM_LV = () => ({ t: needRatio(S.level), g: needRatio(S.level, true), n: S.level === "AAA" ? "AAA" : "AA" });
 const FM_THR = [
   ["Un paragraphe de texte en 16 px", "t", "C’est du texte courant : il doit atteindre le seuil du texte (critère 1.4.3)."],
   ["Un titre de 32 px", "g", "À partir de 24 px, c’est du grand texte : le seuil est plus bas, car les lettres sont plus faciles à distinguer."],
@@ -3495,7 +3453,7 @@ $("cmpCopy").addEventListener("click", () => { const c = cmpLast; if (!c) return
 
 // ---------- Rapport d’accessibilité ----------
 function reportHtml() {
-  const lvl = S.level, need = lvl === "AAA" ? 7 : 4.5, needL = lvl === "AAA" ? 4.5 : 3, date = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  const lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), date = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
   const name = S.projectName || "Design system", C = palette, sw = h => `<span class="sw" style="background:${h}"></span>`;
   const verdict = (r, n) => r >= n ? `<b class="ok">Passe</b>` : `<b class="no">Échec</b>`;
   let pairs = 0, pairsOk = 0;

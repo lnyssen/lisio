@@ -1,0 +1,630 @@
+/* Lisio: accessible design system foundations, WCAG 2.2 level AA.
+   Four layers, each one only uses the layer below:
+   1. Primitives  2. Semantic roles  3. Layout and spacing  4. Typography (fluid from 390 to 1440 px).
+   Components should only use layers 2, 3 and 4: never a raw value, never a primitive. */
+
+/* ===== 1. Primitives ===== */
+:root {
+  --deep: #0E1B4D;
+  --deep-50: #F6F8FF;
+  --deep-100: #E9EFFF;
+  --deep-200: #D0DAF3;
+  --deep-300: #AEBCDF;
+  --deep-400: #8092BE;
+  --deep-500: #6173A5;
+  --deep-600: #4E6194;
+  --deep-700: #3B4E82;
+  --deep-800: #283A6D;
+  --deep-900: #162558;
+  --deep-950: #091445;
+
+  --brand: #2447D1;
+  --brand-50: #F5F8FF;
+  --brand-100: #E8EFFF;
+  --brand-200: #CADAFF;
+  --brand-300: #9FBBFF;
+  --brand-400: #628DFF;
+  --brand-500: #3F6AF0;
+  --brand-600: #2D54DE;
+  --brand-700: #1F3EC8;
+  --brand-800: #1225AE;
+  --brand-900: #0A0392;
+  --brand-950: #050065;
+
+  --node: #F5B800;
+  --node-50: #FFF8E9;
+  --node-100: #FFEDCA;
+  --node-200: #FFD47C;
+  --node-300: #EEB300;
+  --node-400: #BA8B00;
+  --node-500: #956E00;
+  --node-600: #7E5D00;
+  --node-700: #674B00;
+  --node-800: #4F3900;
+  --node-900: #362600;
+  --node-950: #231700;
+
+  --ink: #0D1535;
+  --ink-50: #F6F8FF;
+  --ink-100: #EBEFFA;
+  --ink-200: #D4DAEB;
+  --ink-300: #B3BCD3;
+  --ink-400: #8792B0;
+  --ink-500: #687495;
+  --ink-600: #566183;
+  --ink-700: #434F71;
+  --ink-800: #303B5D;
+  --ink-900: #1D2749;
+  --ink-950: #0E1737;
+
+  --canvas: #F1F4FB;
+  --canvas-50: #F5F8FF;
+  --canvas-100: #ECEFF6;
+  --canvas-200: #D7DAE1;
+  --canvas-300: #B9BCC3;
+  --canvas-400: #909298;
+  --canvas-500: #72747A;
+  --canvas-600: #606267;
+  --canvas-700: #4E5055;
+  --canvas-800: #3A3C41;
+  --canvas-900: #27292D;
+  --canvas-950: #17191C;
+
+  --surface: #FFFFFF;
+  --surface-50: #F8F8F8;
+  --surface-100: #EFEFEF;
+  --surface-200: #DADADA;
+  --surface-300: #BCBCBC;
+  --surface-400: #929292;
+  --surface-500: #747474;
+  --surface-600: #626262;
+  --surface-700: #505050;
+  --surface-800: #3C3C3C;
+  --surface-900: #292929;
+  --surface-950: #191919;
+
+  --error: #DC2626;
+  --error-50: #FFF6F5;
+  --error-100: #FFEBE8;
+  --error-200: #FFCFC8;
+  --error-300: #FFA499;
+  --error-400: #FF594F;
+  --error-500: #DF2A29;
+  --error-600: #C70012;
+  --error-700: #A4000D;
+  --error-800: #7F0007;
+  --error-900: #5A0004;
+  --error-950: #3C0002;
+
+  --success: #16A34A;
+  --success-50: #E5FFE9;
+  --success-100: #CFFAD6;
+  --success-200: #A4EAB1;
+  --success-300: #6CD183;
+  --success-400: #21A84F;
+  --success-500: #008739;
+  --success-600: #00722F;
+  --success-700: #005D25;
+  --success-800: #00471B;
+  --success-900: #003010;
+  --success-950: #001E07;
+
+  --warning: #D97706;
+  --warning-50: #FFF7F1;
+  --warning-100: #FFECDE;
+  --warning-200: #FFD1AF;
+  --warning-300: #FFA862;
+  --warning-400: #DB790D;
+  --warning-500: #B15F00;
+  --warning-600: #965000;
+  --warning-700: #7B4100;
+  --warning-800: #5F3000;
+  --warning-900: #422000;
+  --warning-950: #2B1300;
+
+  --info: #2563EB;
+  --info-50: #F5F8FF;
+  --info-100: #E7F0FF;
+  --info-200: #C7DBFF;
+  --info-300: #9ABDFF;
+  --info-400: #588FFF;
+  --info-500: #2D6BF3;
+  --info-600: #1A57DD;
+  --info-700: #0542C6;
+  --info-800: #002F9E;
+  --info-900: #001F71;
+  --info-950: #00124C;
+}
+
+/* ===== 2. Semantic roles (light mode) ===== */
+:root {
+  color-scheme: light;
+  --text-default: var(--ink); /* Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --text-muted: var(--ink-600); /* Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --text-on-action: var(--surface); /* Text on primary button: 17.86:1 with primary button fill (SC 1.4.3, minimum 4.5:1) */
+  --background-default: var(--canvas); /* Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --background-subtle: var(--deep-50); /* Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --action-default: var(--ink); /* Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
+  --action-hover: var(--ink-900); /* Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
+  --action-pressed: var(--ink-800); /* Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
+  --link-default: var(--ink); /* Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --link-subtle: var(--ink-600); /* Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --disabled-text: var(--ink-400); /* Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill */
+  --disabled-surface: var(--deep-50); /* Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3) */
+  --border-default: var(--ink-500); /* Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1) */
+  --border-subtle: var(--ink-200); /* Decorative divider, carries no information: 1.26:1 on background */
+  --focus-ring: var(--ink); /* Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1) */
+  --error-text: var(--error-600); /* Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1) */
+  --error-surface: var(--error-100); /* Error message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --error-border: var(--error-500); /* Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1) */
+  --success-text: var(--success-600); /* Success message text: 5.30:1 with success message background (SC 1.4.3, minimum 4.5:1) */
+  --success-surface: var(--success-100); /* Success message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --success-border: var(--success-500); /* Success border and icon: 4.21:1 with page background (SC 1.4.11, minimum 3:1) */
+  --warning-text: var(--warning-600); /* Warning message text: 5.31:1 with warning message background (SC 1.4.3, minimum 4.5:1) */
+  --warning-surface: var(--warning-100); /* Warning message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --warning-border: var(--warning-500); /* Warning border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1) */
+  --info-text: var(--info-600); /* Info message text: 5.30:1 with info message background (SC 1.4.3, minimum 4.5:1) */
+  --info-surface: var(--info-100); /* Info message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --info-border: var(--info-500); /* Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1) */
+  --chart-1: var(--error-500); /* Chart series 1: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+  --chart-2: var(--info-500); /* Chart series 2: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+  --chart-3: var(--deep-800); /* Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+  --chart-4: var(--warning-800); /* Chart series 4: 9.98:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+  --chart-5: var(--ink-600); /* Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+}
+
+/* Dark mode: follows the system setting. Force a theme with data-theme="light" or "dark" on <html>. Every pair is checked again in dark mode. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --text-default: var(--deep-50);
+    --text-muted: var(--deep-400);
+    --text-on-action: var(--neutral-black);
+    --background-default: var(--canvas-950);
+    --background-subtle: var(--deep-950);
+    --action-default: var(--deep-50);
+    --action-hover: var(--deep-100);
+    --action-pressed: var(--deep-200);
+    --link-default: var(--deep-50);
+    --link-subtle: var(--deep-400);
+    --disabled-text: var(--deep-600);
+    --disabled-surface: var(--deep-950);
+    --border-default: var(--deep-500);
+    --border-subtle: var(--deep-900);
+    --focus-ring: var(--deep-50);
+    --error-text: var(--error-400);
+    --error-surface: var(--error-900);
+    --error-border: var(--error-500);
+    --success-text: var(--success-400);
+    --success-surface: var(--success-900);
+    --success-border: var(--success-500);
+    --warning-text: var(--warning-400);
+    --warning-surface: var(--warning-900);
+    --warning-border: var(--warning-500);
+    --info-text: var(--info-400);
+    --info-surface: var(--info-900);
+    --info-border: var(--info-500);
+    --chart-1: var(--error-500);
+    --chart-2: var(--info-500);
+    --chart-3: var(--error-300);
+    --chart-4: var(--brand-300);
+    --shadow-1: 0px 1px 2px 0px rgb(0 0 0 / 0.18), 0px 1px 3px 0px rgb(0 0 0 / 0.3);
+    --shadow-2: 0px 2px 4px -1px rgb(0 0 0 / 0.18), 0px 4px 8px -2px rgb(0 0 0 / 0.3);
+    --shadow-3: 0px 4px 6px -2px rgb(0 0 0 / 0.15), 0px 10px 20px -4px rgb(0 0 0 / 0.36);
+    --shadow-4: 0px 8px 10px -6px rgb(0 0 0 / 0.18), 0px 20px 40px -8px rgb(0 0 0 / 0.54);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --text-default: var(--deep-50);
+  --text-muted: var(--deep-400);
+  --text-on-action: var(--neutral-black);
+  --background-default: var(--canvas-950);
+  --background-subtle: var(--deep-950);
+  --action-default: var(--deep-50);
+  --action-hover: var(--deep-100);
+  --action-pressed: var(--deep-200);
+  --link-default: var(--deep-50);
+  --link-subtle: var(--deep-400);
+  --disabled-text: var(--deep-600);
+  --disabled-surface: var(--deep-950);
+  --border-default: var(--deep-500);
+  --border-subtle: var(--deep-900);
+  --focus-ring: var(--deep-50);
+  --error-text: var(--error-400);
+  --error-surface: var(--error-900);
+  --error-border: var(--error-500);
+  --success-text: var(--success-400);
+  --success-surface: var(--success-900);
+  --success-border: var(--success-500);
+  --warning-text: var(--warning-400);
+  --warning-surface: var(--warning-900);
+  --warning-border: var(--warning-500);
+  --info-text: var(--info-400);
+  --info-surface: var(--info-900);
+  --info-border: var(--info-500);
+  --chart-1: var(--error-500);
+  --chart-2: var(--info-500);
+  --chart-3: var(--error-300);
+  --chart-4: var(--brand-300);
+  --shadow-1: 0px 1px 2px 0px rgb(0 0 0 / 0.18), 0px 1px 3px 0px rgb(0 0 0 / 0.3);
+  --shadow-2: 0px 2px 4px -1px rgb(0 0 0 / 0.18), 0px 4px 8px -2px rgb(0 0 0 / 0.3);
+  --shadow-3: 0px 4px 6px -2px rgb(0 0 0 / 0.15), 0px 10px 20px -4px rgb(0 0 0 / 0.36);
+  --shadow-4: 0px 8px 10px -6px rgb(0 0 0 / 0.18), 0px 20px 40px -8px rgb(0 0 0 / 0.54);
+}
+
+/* ===== 3. Layout and spacing ===== */
+:root {
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-control: 8px;
+  --radius-full: 999px;
+
+  --size-target-min: 24px; /* Minimum target 24 × 24 px (WCAG 2.2 SC 2.5.8, AA) */
+  --size-target-comfort: 44px; /* Button and input height 44 px, at least 44 × 44 px (SC 2.5.5, AAA) */
+
+  --border-width-default: 1px; /* Default border */
+  --border-width-focus: 2px; /* Focus outline at least 2 px thick (WCAG 2.2 SC 2.4.13, AAA) */
+  --border-width-focus-offset: 2px; /* Gap between focus outline and element */
+
+  --icon-sm: 16px; /* Small icon, inside dense text or tags */
+  --icon-md: 20px; /* Default icon, next to a label */
+  --icon-lg: 24px; /* Large icon, icon-only buttons (keep the 24 px target, SC 2.5.8) */
+
+  /* Mobile first (390 px) */
+  --layout-margin: 16px; --layout-gutter: 16px; --layout-columns: 4; --layout-section: 40px;
+  --layout-content-max: 1312px;
+  --layout-measure: 70ch; /* line length for running text, SC 1.4.8 asks for 80 or fewer */
+
+  /* Motion: everything drops to 0 with prefers-reduced-motion (SC 2.3.3) */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; }
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}
+@media (min-width: 768px) { :root { --layout-margin: 32px; --layout-gutter: 16px; --layout-columns: 8; --layout-section: 56px; } } /* Tablet */
+@media (min-width: 1024px) { :root { --layout-margin: 48px; --layout-gutter: 24px; --layout-columns: 12; --layout-section: 72px; } } /* Desktop */
+@media (min-width: 1440px) { :root { --layout-margin: 64px; --layout-gutter: 24px; --layout-columns: 12; --layout-section: 96px; } } /* Desktop XL */
+.measure, .prose > * { max-inline-size: var(--layout-measure); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));
+  column-gap: var(--layout-gutter);
+}
+.container {
+  padding-inline: var(--layout-margin);
+  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));
+  margin-inline: auto;
+}
+
+/* ===== Effects: elevation, opacity, blur, image ratios ===== */
+/* A shadow never replaces a border: inputs, buttons and clickable cards keep border/default at 3:1 (SC 1.4.11). */
+:root {
+  --shadow-1: 0px 1px 2px 0px rgb(13 21 53 / 0.06), 0px 1px 3px 0px rgb(13 21 53 / 0.1); /* Cards and panels resting on the page */
+  --shadow-2: 0px 2px 4px -1px rgb(13 21 53 / 0.06), 0px 4px 8px -2px rgb(13 21 53 / 0.1); /* Raised: hover, dragged item */
+  --shadow-3: 0px 4px 6px -2px rgb(13 21 53 / 0.05), 0px 10px 20px -4px rgb(13 21 53 / 0.12); /* Menus, dropdowns, popovers, tooltips */
+  --shadow-4: 0px 8px 10px -6px rgb(13 21 53 / 0.06), 0px 20px 40px -8px rgb(13 21 53 / 0.18); /* Dialogs and drawers */
+  --opacity-scrim: 0.6; /* white text on photos keeps AA even over white */
+  --scrim-color: rgb(13 21 53 / var(--opacity-scrim));
+  --opacity-glass: 0.9;
+  --blur-glass: 12px;
+  --ratio-wide: 16 / 9; /* Banner, video */
+  --ratio-photo: 3 / 2; /* Photo in content */
+  --ratio-square: 1 / 1; /* Thumbnail, avatar */
+  --ratio-portrait: 4 / 5; /* Portrait, product */
+}
+.elevation-1, .elevation-2, .elevation-3, .elevation-4 { outline: 1px solid transparent; /* becomes visible in forced colors mode, where shadows are removed */ }
+.elevation-1 { box-shadow: var(--shadow-1); }
+.elevation-2 { box-shadow: var(--shadow-2); }
+.elevation-3 { box-shadow: var(--shadow-3); }
+.elevation-4 { box-shadow: var(--shadow-4); }
+.scrim { background: var(--scrim-color); color: #FFFFFF; } /* behind any text set on a photo */
+.glass {
+  background: color-mix(in srgb, var(--background-default) 90%, transparent);
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  backdrop-filter: blur(var(--blur-glass));
+}
+@media (prefers-reduced-transparency: reduce) { .glass { background: var(--background-default); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+img, video { max-inline-size: 100%; block-size: auto; }
+.ratio-wide { aspect-ratio: var(--ratio-wide); } .ratio-photo { aspect-ratio: var(--ratio-photo); } .ratio-square { aspect-ratio: var(--ratio-square); } .ratio-portrait { aspect-ratio: var(--ratio-portrait); }
+.ratio-wide, .ratio-photo, .ratio-square, .ratio-portrait { object-fit: cover; inline-size: 100%; }
+
+/* ===== 4. Typography ===== */
+:root {
+  --font-heading: "Figtree", sans-serif;
+  --font-body: "Figtree", sans-serif;
+
+  --font-size-display: clamp(2.6875rem, 1.689rem + 4.095vw, 5.375rem); /* 43 → 86 px */
+  --line-height-display: 1.1;
+  --font-size-h1: clamp(2.3125rem, 1.57rem + 3.048vw, 4.3125rem); /* 37 → 69 px */
+  --line-height-h1: 1.1;
+  --font-size-h2: clamp(2rem, 1.466rem + 2.19vw, 3.4375rem); /* 32 → 55 px */
+  --line-height-h2: 1.15;
+  --font-size-h3: clamp(1.75rem, 1.379rem + 1.524vw, 2.75rem); /* 28 → 44 px */
+  --line-height-h3: 1.2;
+  --font-size-h4: clamp(1.5rem, 1.245rem + 1.048vw, 2.1875rem); /* 24 → 35 px */
+  --line-height-h4: 1.25;
+  --font-size-h5: clamp(1.3125rem, 1.15rem + 0.667vw, 1.75rem); /* 21 → 28 px */
+  --line-height-h5: 1.3;
+  --font-size-h6: clamp(1.125rem, 1.009rem + 0.476vw, 1.4375rem); /* 18 → 23 px */
+  --line-height-h6: 1.3;
+  --font-size-body: clamp(1rem, 0.954rem + 0.19vw, 1.125rem); /* 16 → 18 px */
+  --line-height-body: 1.5;
+  --font-size-body-strong: clamp(1rem, 0.954rem + 0.19vw, 1.125rem); /* 16 → 18 px */
+  --line-height-body-strong: 1.5;
+  --font-size-body-italic: clamp(1rem, 0.954rem + 0.19vw, 1.125rem); /* 16 → 18 px */
+  --line-height-body-italic: 1.5;
+  --font-size-small: clamp(0.875rem, 0.829rem + 0.19vw, 1rem); /* 14 → 16 px */
+  --line-height-small: 1.5;
+  --font-size-caption: clamp(0.8125rem, 0.789rem + 0.095vw, 0.875rem); /* 13 → 14 px */
+  --line-height-caption: 1.5;
+  --font-size-label: clamp(0.875rem, 0.829rem + 0.19vw, 1rem); /* 14 → 16 px */
+  --line-height-label: 1.5;
+  --font-size-button: clamp(1rem, 0.954rem + 0.19vw, 1.125rem); /* 16 → 18 px */
+  --line-height-button: 1.25;
+}
+
+.display, .t-display {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 700;
+  line-height: var(--line-height-display);
+  letter-spacing: -0.02em;
+}
+
+h1, .h1, .t-h1 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+  line-height: var(--line-height-h1);
+  letter-spacing: -0.015em;
+}
+
+h2, .h2, .t-h2 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  line-height: var(--line-height-h2);
+  letter-spacing: -0.01em;
+}
+
+h3, .h3, .t-h3 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  line-height: var(--line-height-h3);
+  letter-spacing: -0.005em;
+}
+
+h4, .h4, .t-h4 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h4);
+  font-weight: 700;
+  line-height: var(--line-height-h4);
+  letter-spacing: normal;
+}
+
+h5, .h5, .t-h5 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h5);
+  font-weight: 700;
+  line-height: var(--line-height-h5);
+  letter-spacing: normal;
+}
+
+h6, .h6, .t-h6 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h6);
+  font-weight: 700;
+  line-height: var(--line-height-h6);
+  letter-spacing: normal;
+}
+
+body, p, .body, .t-body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+  letter-spacing: normal;
+}
+
+strong, .body-strong, .t-body-strong {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-strong);
+  font-weight: 700;
+  line-height: var(--line-height-body-strong);
+  letter-spacing: normal;
+}
+
+em, .body-italic, .t-body-italic {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-italic);
+  font-weight: 400;
+  line-height: var(--line-height-body-italic);
+  letter-spacing: normal;
+  font-style: italic;
+}
+
+small, .small, .t-small {
+  font-family: var(--font-body);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  line-height: var(--line-height-small);
+  letter-spacing: normal;
+}
+
+figcaption, .caption, .t-caption {
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  letter-spacing: normal;
+}
+
+.label, .t-label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  line-height: var(--line-height-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-box: trim-both cap alphabetic; /* vertical trim, progressive enhancement */
+}
+
+button, .button, .t-button {
+  font-family: var(--font-body);
+  font-size: var(--font-size-button);
+  font-weight: 600;
+  line-height: var(--line-height-button);
+  letter-spacing: normal;
+  text-box: trim-both cap alphabetic; /* vertical trim, progressive enhancement */
+}
+
+/* ===== 5. Accessibility rules ===== */
+body {
+  color: var(--text-default);
+  background: var(--background-default);
+}
+
+/* Focus always visible: 2 px outline, 2 px offset (SC 2.4.7, 2.4.13) */
+:focus-visible {
+  outline: var(--border-width-focus) solid var(--focus-ring);
+  outline-offset: var(--border-width-focus-offset);
+}
+
+/* Links never rely on colour alone (SC 1.4.1): dotted 1 px underline, solid 2 px on hover and focus */
+a, .t-link {
+  color: var(--link-default);
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
+  text-decoration-style: solid;
+  text-decoration-thickness: 2px;
+}
+
+/* Isolated link: arrow and a target of at least 24 × 24 px (SC 2.5.8) */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--size-target-min);
+}
+.link-arrow::after {
+  content: "";
+  inline-size: 1em;
+  block-size: 1em;
+  margin-inline-start: 0.5em;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M2 8H14M9 3L14 8L9 13'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='M2 8H14M9 3L14 8L9 13'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Skip link: first focusable element of every page (SC 2.4.1) */
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--spacing-3);
+  inset-block-start: var(--spacing-3);
+  z-index: 1000;
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--background-default);
+  color: var(--link-default);
+  border-radius: var(--radius-control);
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+
+.link-subtle { color: var(--link-subtle); }
+
+/* ===== 6. Components and their states ===== */
+.icon { inline-size: var(--icon-md); block-size: var(--icon-md); flex: none; background: currentColor; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
+.icon-sm { inline-size: var(--icon-sm); block-size: var(--icon-sm); }
+.icon-lg { inline-size: var(--icon-lg); block-size: var(--icon-lg); }
+
+/* Buttons: hover, pressed, focus, disabled. The transparent border shows up in Windows high contrast mode. */
+.btn {
+  min-block-size: var(--size-target-comfort);
+  padding-inline: var(--spacing-5);
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--radius-control);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+.btn-primary { background: var(--action-default); color: var(--text-on-action); }
+.btn-primary:hover { background: var(--action-hover); }
+.btn-primary:active { background: var(--action-pressed); }
+.btn-secondary { background: transparent; color: var(--text-default); border-color: var(--border-default); }
+.btn-secondary:hover { background: var(--background-subtle); }
+.btn:disabled, .btn[aria-disabled="true"] { background: var(--disabled-surface); color: var(--disabled-text); border-color: transparent; cursor: not-allowed; } /* exempt from SC 1.4.3, never the only way to know why */
+
+/* Field: visible label, linked help, error in words and icon, not colour alone (SC 1.4.1, 3.3.1, 3.3.2) */
+.field { display: flex; flex-direction: column; gap: var(--spacing-1); }
+.field-help { color: var(--text-muted); }
+.field input, .field select, .field textarea {
+  font: inherit;
+  min-block-size: var(--size-target-comfort);
+  padding-inline: var(--spacing-3);
+  border: var(--border-width-default) solid var(--border-default);
+  border-radius: var(--radius-control);
+  background: var(--background-default);
+  color: var(--text-default);
+  box-sizing: border-box;
+  inline-size: 100%;
+}
+.field :is(input, select, textarea):disabled { background: var(--disabled-surface); color: var(--disabled-text); cursor: not-allowed; }
+.field [aria-invalid="true"] { border-color: var(--error-border); border-width: 2px; }
+.field-error { display: flex; gap: var(--spacing-2); align-items: flex-start; color: var(--error-text); }
+.field-error::before { content: ""; inline-size: var(--icon-sm); block-size: var(--icon-sm); margin-block-start: 0.2em; flex: none; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E") center / contain no-repeat; }
+
+/* Messages: an icon and a title in words, never colour alone (SC 1.4.1). Use role="alert" or role="status". */
+.alert {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-1) var(--spacing-3);
+  padding: var(--spacing-4);
+  border: var(--border-width-default) solid;
+  border-inline-start-width: 4px;
+  border-radius: var(--radius-md);
+  color: var(--text-default);
+}
+.alert::before { content: ""; inline-size: var(--icon-md); block-size: var(--icon-md); grid-row: span 2; background: currentColor; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.alert-title { font-weight: 700; }
+.alert-error { background: var(--error-surface); border-color: var(--error-border); }
+.alert-error::before, .alert-error .alert-title { color: var(--error-text); }
+.alert-success { background: var(--success-surface); border-color: var(--success-border); }
+.alert-success::before, .alert-success .alert-title { color: var(--success-text); }
+.alert-warning { background: var(--warning-surface); border-color: var(--warning-border); }
+.alert-warning::before, .alert-warning .alert-title { color: var(--warning-text); }
+.alert-info { background: var(--info-surface); border-color: var(--info-border); }
+.alert-info::before, .alert-info .alert-title { color: var(--info-text); }
+.alert-error::before, .icon-error { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E"); }
+.alert-success::before, .icon-success { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M5 8.2l2 2 4-4.4'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M5 8.2l2 2 4-4.4'/%3E%3C/svg%3E"); }
+.alert-warning::before, .icon-warning { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 1.8 15 14H1z'/%3E%3Cpath d='M8 6v3.8M8 11.6v.6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 1.8 15 14H1z'/%3E%3Cpath d='M8 6v3.8M8 11.6v.6'/%3E%3C/svg%3E"); }
+.alert-info::before, .icon-info { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 7.2v4.3M8 4.6v.6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 7.2v4.3M8 4.6v.6'/%3E%3C/svg%3E"); }
+
+/* Windows high contrast (forced colors): keep every control outlined and the focus visible */
+@media (forced-colors: active) {
+  .btn, .field :is(input, select, textarea), .alert, .tag { border-color: ButtonText; }
+  .btn:disabled, .btn[aria-disabled="true"] { color: GrayText; border-color: GrayText; }
+  .alert::before, .field-error::before, .icon, .link-arrow::after { background: CanvasText; }
+  :focus-visible { outline-color: Highlight; }
+}

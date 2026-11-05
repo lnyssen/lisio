@@ -1,0 +1,30 @@
+0,1 b-no 2,25ÉchecPetit texte Aa
+0,2 b-aaa 9,15AAAPetit texte Aa
+0,3 b-no 1,09ÉchecPetit texte Aa
+0,4 b-aaa 14,87AAAPetit texte Aa
+0,5 b-aaa 16,37AAAPetit texte Aa
+1,0 b-no 2,25ÉchecPetit texte Aa
+1,2 b-lg 4,05AA grandPetit texte Aa
+1,3 b-no 2,46ÉchecPetit texte Aa
+1,4 b-aa 6,58AAPetit texte Aa
+1,5 b-aaa 7,24AAAPetit texte Aa
+2,0 b-aaa 9,15AAAPetit texte Aa
+2,1 b-lg 4,05AA grandPetit texte Aa
+2,3 b-aaa 9,98AAAPetit texte Aa
+2,4 b-no 1,62ÉchecPetit texte Aa
+2,5 b-no 1,78ÉchecPetit texte Aa
+3,0 b-no 1,09ÉchecPetit texte Aa
+3,1 b-no 2,46ÉchecPetit texte Aa
+3,2 b-aaa 9,98AAAPetit texte Aa
+3,4 b-aaa 16,22AAAPetit texte Aa
+3,5 b-aaa 17,86AAAPetit texte Aa
+4,0 b-aaa 14,87AAAPetit texte Aa
+4,1 b-aa 6,58AAPetit texte Aa
+4,2 b-no 1,62ÉchecPetit texte Aa
+4,3 b-aaa 16,22AAAPetit texte Aa
+4,5 b-no 1,10ÉchecPetit texte Aa
+5,0 b-aaa 16,37AAAPetit texte Aa
+5,1 b-aaa 7,24AAAPetit texte Aa
+5,2 b-no 1,78ÉchecPetit texte Aa
+5,3 b-aaa 17,86AAAPetit texte Aa
+5,4 b-no 1,10ÉchecPetit texte Aa

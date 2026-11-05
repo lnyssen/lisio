@@ -1,0 +1,346 @@
+{
+  "color": {
+    "marine": {
+      "50": {
+        "$type": "color",
+        "$value": "#F5F8FF",
+        "$description": "Contraste 1,06:1 sur blanc"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#E9EFFD",
+        "$description": "Contraste 1,15:1 sur blanc"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#D0DAEF",
+        "$description": "Contraste 1,40:1 sur blanc"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#AFBDD9",
+        "$description": "Contraste 1,89:1 sur blanc"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#8193B7",
+        "$description": "Contraste 3,09:1 sur blanc"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#61749D",
+        "$description": "Contraste 4,67:1 sur blanc"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#4E628B",
+        "$description": "Contraste 6,09:1 sur blanc"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#3C4F79",
+        "$description": "Contraste 8,11:1 sur blanc"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#293B65",
+        "$description": "Contraste 11,00:1 sur blanc"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#162750",
+        "$description": "Contraste 14,58:1 sur blanc"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#07163D",
+        "$description": "Contraste 17,62:1 sur blanc"
+      }
+    },
+    "bleu": {
+      "50": {
+        "$type": "color",
+        "$value": "#F5F8FF",
+        "$description": "Contraste 1,06:1 sur blanc"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#E7EFFF",
+        "$description": "Contraste 1,15:1 sur blanc"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#C8DBFF",
+        "$description": "Contraste 1,39:1 sur blanc"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#9BBCFF",
+        "$description": "Contraste 1,90:1 sur blanc"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#5B8EFF",
+        "$description": "Contraste 3,10:1 sur blanc"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#2D68FC",
+        "$description": "Contraste 4,66:1 sur blanc"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#1C54E5",
+        "$description": "Contraste 6,08:1 sur blanc"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#0B3ECD",
+        "$description": "Contraste 8,12:1 sur blanc"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#0028AE",
+        "$description": "Contraste 10,96:1 sur blanc"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#00197D",
+        "$description": "Contraste 14,63:1 sur blanc"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#000E55",
+        "$description": "Contraste 17,58:1 sur blanc"
+      }
+    },
+    "turquoise": {
+      "50": {
+        "$type": "color",
+        "$value": "#DFFFFD",
+        "$description": "Contraste 1,05:1 sur blanc"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#C7F9F6",
+        "$description": "Contraste 1,14:1 sur blanc"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#94E9E5",
+        "$description": "Contraste 1,39:1 sur blanc"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#50CECB",
+        "$description": "Contraste 1,90:1 sur blanc"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#00A3A1",
+        "$description": "Contraste 3,10:1 sur blanc"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#008280",
+        "$description": "Contraste 4,66:1 sur blanc"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#006E6C",
+        "$description": "Contraste 6,09:1 sur blanc"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#005A58",
+        "$description": "Contraste 8,06:1 sur blanc"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#004443",
+        "$description": "Contraste 11,00:1 sur blanc"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#002F2E",
+        "$description": "Contraste 14,52:1 sur blanc"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#001D1C",
+        "$description": "Contraste 17,60:1 sur blanc"
+      }
+    },
+    "corail": {
+      "50": {
+        "$type": "color",
+        "$value": "#FFF6F5",
+        "$description": "Contraste 1,06:1 sur blanc"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#FFEBE8",
+        "$description": "Contraste 1,14:1 sur blanc"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#FFCFC8",
+        "$description": "Contraste 1,39:1 sur blanc"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#FFA499",
+        "$description": "Contraste 1,90:1 sur blanc"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#FE594D",
+        "$description": "Contraste 3,11:1 sur blanc"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#D9362F",
+        "$description": "Contraste 4,64:1 sur blanc"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#C11C1B",
+        "$description": "Contraste 6,08:1 sur blanc"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#A4000A",
+        "$description": "Contraste 8,13:1 sur blanc"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#7F0006",
+        "$description": "Contraste 11,02:1 sur blanc"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#5A0003",
+        "$description": "Contraste 14,62:1 sur blanc"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#3C0001",
+        "$description": "Contraste 17,60:1 sur blanc"
+      }
+    },
+    "orange": {
+      "50": {
+        "$type": "color",
+        "$value": "#FFF7F3",
+        "$description": "Contraste 1,05:1 sur blanc"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#FFEBE1",
+        "$description": "Contraste 1,15:1 sur blanc"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#FFD0B8",
+        "$description": "Contraste 1,40:1 sur blanc"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#FFA777",
+        "$description": "Contraste 1,90:1 sur blanc"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#ED6D00",
+        "$description": "Contraste 3,09:1 sur blanc"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#BE5600",
+        "$description": "Contraste 4,64:1 sur blanc"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#A14800",
+        "$description": "Contraste 6,10:1 sur blanc"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#853A00",
+        "$description": "Contraste 8,06:1 sur blanc"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#662B00",
+        "$description": "Contraste 10,99:1 sur blanc"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#481C00",
+        "$description": "Contraste 14,56:1 sur blanc"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#2F1000",
+        "$description": "Contraste 17,57:1 sur blanc"
+      }
+    },
+    "blanc": {
+      "50": {
+        "$type": "color",
+        "$value": "#F9F8F3",
+        "$description": "Contraste 1,06:1 sur blanc"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#F0EFEA",
+        "$description": "Contraste 1,15:1 sur blanc"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#DBDAD5",
+        "$description": "Contraste 1,39:1 sur blanc"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#BDBCB7",
+        "$description": "Contraste 1,90:1 sur blanc"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#93928E",
+        "$description": "Contraste 3,11:1 sur blanc"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#757470",
+        "$description": "Contraste 4,67:1 sur blanc"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#63625E",
+        "$description": "Contraste 6,10:1 sur blanc"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#51504C",
+        "$description": "Contraste 8,07:1 sur blanc"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#3D3C39",
+        "$description": "Contraste 11,03:1 sur blanc"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#292926",
+        "$description": "Contraste 14,58:1 sur blanc"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#191916",
+        "$description": "Contraste 17,61:1 sur blanc"
+      }
+    }
+  }
+}

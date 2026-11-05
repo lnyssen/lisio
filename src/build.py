@@ -4,7 +4,8 @@
 """
 import pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
-t = (root / "src/lisio.template.html").read_text()
+import sys; sys.path.insert(0, str(root / "src")); from core_inline import inline_core
+t = inline_core((root / "src/lisio.template.html").read_text())
 gf = (root / "src/gf.txt").read_text(); n = gf.count(";") + 1
 t = t.replace("__GF__", gf).replace("__GFCOUNT__", f"{n:,}".replace(",", " "))
 (root / "dist").mkdir(exist_ok=True)
@@ -24,4 +25,4 @@ with zipfile.ZipFile(root / "lisio-figma-plugin.zip", "w", zipfile.ZIP_DEFLATED)
     for f in ("manifest.json", "code.js", "ui.html"):
         z.write(pl / f, f"lisio-figma-plugin/{f}")
 
-import sys; sys.path.insert(0, str(root / "src")); import pages; pages.build()
+import pages; pages.build()
