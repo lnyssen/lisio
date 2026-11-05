@@ -153,6 +153,7 @@ a{color:inherit;text-underline-offset:.18em}
   #systeme>.mhead{grid-column:1/-1}
   #systeme .ds-grid{grid-template-columns:minmax(0,1fr)}
   #systeme>.sys-card{position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto;overscroll-behavior:contain}
+  #systeme>.sys-card>*{flex-shrink:0}
 }
 .ts-derived{font-size:14px;line-height:1.5;color:var(--muted);background:var(--bg);border-radius:12px;padding:14px 16px;margin:4px 0 0;max-width:640px;display:flex;flex-direction:column;gap:8px}
 .ts-dv{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.ts-dv>span:not(.arr){display:flex;flex-direction:column}.ts-dv small{font-size:12px;font-weight:600}.ts-dv b{font-size:22px;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}.ts-dv .arr{font-size:22px;color:var(--muted)}.ts-why{font-size:13px}
@@ -256,6 +257,32 @@ nav.tabs button svg{width:18px;height:18px;flex:none}
 @media (min-width:761px) and (max-width:1100px){#normV{display:none}#normChip{min-width:0}.expbtn span{display:none}.expbtn{padding:0 9px;min-width:var(--ctl);justify-content:center}.normchip{min-width:0}nav.tabs button{padding:7px 6px;font-size:13px}}
 nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
 @media (hover:hover){nav.tabs button[aria-selected="false"]:hover{color:var(--ink);background:var(--hover)}}
+/* ===== Menu en barre latérale (desktop) ===== */
+.tab-grp{display:none}
+@media (min-width:761px){
+  :root{--side:240px}
+  .wrap{margin:0 0 0 var(--side);max-width:1680px}
+  nav.tabs,nav.tabs.has-ink{position:fixed!important;z-index:30;top:0;left:0;bottom:0;width:var(--side);height:auto!important;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:2px;padding:76px 12px 20px!important;margin:0!important;border:0!important;border-right:1px solid var(--hair)!important;border-radius:0!important;background:var(--surface);overflow-y:auto;box-shadow:none;box-sizing:border-box}
+  nav.tabs button{height:40px!important;flex:none;justify-content:flex-start;gap:12px;padding:0 12px!important;border-radius:10px!important;font-size:14px!important}
+  nav.tabs button svg{display:block!important;width:20px;height:20px}
+  nav.tabs .dsk{display:inline!important}nav.tabs .mob{display:none!important}
+  .tab-grp{display:block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:18px 12px 6px;white-space:nowrap}
+  .tab-grp.first{padding-top:0}
+  .tab-ink,.tab-hov{border-radius:10px!important}
+  .logo{position:fixed;z-index:31;top:15px;left:22px}
+  .logo-word{display:inline!important}
+  .appbar{grid-template-columns:minmax(0,1fr) auto!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:var(--bg)!important} /* sinon le flou devient le repère du menu fixé */
+  .appr{grid-column:2}
+  #normV{display:inline!important}#normChip{min-width:152px!important}
+}
+@media (min-width:761px) and (max-width:1100px){
+  :root{--side:76px}
+  nav.tabs{padding:72px 10px 20px!important;align-items:center}
+  nav.tabs button{width:52px;justify-content:center;padding:0!important;height:44px!important}
+  nav.tabs button>span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .tab-grp{font-size:0;padding:10px 0 6px;width:28px;border-top:1px solid var(--hair);margin-top:8px}.tab-grp.first{border:0;margin:0;padding:0}
+  .logo{left:23px}.logo-word{display:none!important}
+}
 /* Pastille qui glisse d’un onglet à l’autre (desktop) */
 .tab-ink,.tab-hov{display:none}
 @media (min-width:761px){
@@ -395,6 +422,11 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
 .pass{background:var(--ok-bg);color:var(--ok)}
 .fail{background:var(--bad-bg);color:var(--bad)}
 .warnp{background:var(--warn-bg);color:var(--warn)}
+.appfoot{display:flex;flex-wrap:wrap;gap:4px 20px;align-items:center;margin-top:48px;padding:14px 0 6px;border-top:1px solid var(--hair);font-size:13px;color:var(--muted)}
+.appfoot p{margin:0}.appfoot b{color:var(--ink)}.appfoot p:last-child{margin-left:auto}
+.appfoot nav{display:flex;flex-wrap:wrap;gap:0 14px}.appfoot a{color:var(--muted);min-height:24px;display:inline-flex;align-items:center;text-underline-offset:3px}
+@media (hover:hover){.appfoot a:hover{color:var(--ink)}}
+@media (max-width:760px){.appfoot p:last-child{margin-left:0}}
 .card-surface{background:var(--surface);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
 
 /* toile */
@@ -648,12 +680,15 @@ a.btn{text-decoration:none}
     <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
     <nav class="tabs" role="tablist" aria-label="Sections">
       <span class="tab-hov" aria-hidden="true"></span><span class="tab-ink" aria-hidden="true"></span>
+      <span class="tab-grp first" aria-hidden="true">Couleurs</span>
       <button role="tab" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" fill="currentColor"/></svg><span><span class="dsk">Contrastes</span><span class="mob">Contraste</span></span></button>
       <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="4.5" rx="1.5"/><rect x="4" y="9.75" width="16" height="4.5" rx="1.5" fill="currentColor" fill-opacity=".35"/><rect x="4" y="16" width="16" height="4.5" rx="1.5" fill="currentColor"/></svg><span>Couleurs</span></button>
+      <span class="tab-grp" aria-hidden="true">Texte</span>
       <button role="tab" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19 8.5 5h1L15 19M5 14.5h8"/><path d="M21 19v-6.2a3 3 0 0 0-5.6-1.5M21 15.6c-2.4-.6-5.3 0-5.3 2 0 1.8 2.6 2.3 5.3.2"/></svg><span>Polices</span></button>
       <button role="tab" id="tab-styles" aria-controls="styles" data-view="styles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5v9M11 5v9M4 9.5h7"/><path d="M15 7h5M15 11h5M4 18.5h16"/></svg><span>Styles<span class="dsk"> de texte</span></span></button>
+      <span class="tab-grp" aria-hidden="true">Système</span>
       <button role="tab" id="tab-systeme" aria-controls="systeme" data-view="systeme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 3.5 3.5 8l8.5 4.5L20.5 8z"/><path d="m3.5 12 8.5 4.5 8.5-4.5"/><path d="m3.5 16 8.5 4.5 8.5-4.5"/></svg><span><span class="dsk">Design system</span><span class="mob">Système</span></span></button>
-      <span class="tab-sep" role="presentation"></span>
+      <span class="tab-grp" aria-hidden="true">Contenu et aide</span>
       <button role="tab" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 10.5h16M4 15h10M4 19.5h6"/><path d="m15.5 18 2 2 3.5-4" stroke-linejoin="round"/></svg><span>Rédaction</span></button>
       <button role="tab" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h10.5L19 8v11.5H5z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4" stroke-linecap="round"/></svg><span>Guide</span></button>
     </nav>
@@ -1069,6 +1104,7 @@ a.btn{text-decoration:none}
   </section>
   <div class="jnext" id="jNext" hidden></div>
   </main>
+  <footer class="appfoot"><p><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><nav aria-label="Liens utiles"><a href="#sources">Guide</a><a href="#formation">S’entraîner</a><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2 (W3C)<span class="sr-only">, nouvel onglet</span></a></nav><p>Sans compte ni serveur : vos réglages restent dans ce navigateur.</p></footer>
 </div>
 <div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
 <div class="pop" id="popFont" hidden>
@@ -2878,8 +2914,9 @@ DARKQ.addEventListener("change", themeLabel); themeLabel();
 // Pastille glissante : suit l’onglet actif, et une pastille claire suit le survol et le focus clavier
 const TABS = document.querySelector("nav.tabs"), INK = TABS.querySelector(".tab-ink"), HOV = TABS.querySelector(".tab-hov");
 TABS.classList.add("has-ink");
+TABS.querySelectorAll("button").forEach(b => { const l = b.querySelector(".dsk") || b.querySelector("span"); if (l) b.title = l.textContent.trim(); });
 const MOBQ = matchMedia("(max-width:760px)");
-function inkTo(el, b, first) { if (!b) { el.classList.remove("on"); return; } const t = MOBQ.matches ? (b.querySelector("svg") || b) : b, n = TABS.getBoundingClientRect(), r = t.getBoundingClientRect(), bl = TABS.clientLeft, bt = TABS.clientTop; if (first) el.classList.add("still"); el.style.width = r.width + "px"; el.style.height = r.height + "px"; el.style.transform = `translate(${r.left - n.left - bl + TABS.scrollLeft}px,${r.top - n.top - bt}px)`; el.classList.add("on"); if (first) { el.offsetWidth; el.classList.remove("still"); } }
+function inkTo(el, b, first) { if (!b) { el.classList.remove("on"); return; } const t = MOBQ.matches ? (b.querySelector("svg") || b) : b, n = TABS.getBoundingClientRect(), r = t.getBoundingClientRect(), bl = TABS.clientLeft, bt = TABS.clientTop; if (first) el.classList.add("still"); el.style.width = r.width + "px"; el.style.height = r.height + "px"; el.style.transform = `translate(${r.left - n.left - bl + TABS.scrollLeft}px,${r.top - n.top - bt + TABS.scrollTop}px)`; el.classList.add("on"); if (first) { el.offsetWidth; el.classList.remove("still"); } }
 MOBQ.addEventListener("change", () => tabInk(true));
 function tabInk(first) { const b = TABS.querySelector('button[aria-selected="true"]'); inkTo(INK, b, first || !INK.classList.contains("on")); }
 TABS.addEventListener("pointerover", e => { const b = e.target.closest("button"); if (!b || b.getAttribute("aria-selected") === "true") { HOV.classList.remove("on"); return; } inkTo(HOV, b, !HOV.classList.contains("on")); });
@@ -2889,7 +2926,7 @@ TABS.addEventListener("focusout", () => HOV.classList.remove("on"));
 addEventListener("resize", () => tabInk(true)); if (document.fonts) document.fonts.ready.then(() => tabInk(true));
 document.querySelectorAll("nav.tabs button").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
-  b.addEventListener("keydown", e => { if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
+  b.addEventListener("keydown", e => { if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) return; e.preventDefault(); const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
 });
 document.querySelector(".app-skip").addEventListener("click", e => { e.preventDefault(); const v = curView(), h = v && $(v).querySelector("h1"); $("main").focus(); if (h) h.scrollIntoView(); });
 $("undoB").addEventListener("click", undo); $("redoB").addEventListener("click", redo); snapPrev = JSON.stringify({ S, palette }); UNDO.length = 0; undoUi();
