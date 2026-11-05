@@ -1,7 +1,7 @@
 // Lisio for Figma: import core (shared by the plugin and tests)
 const LISIO_W = { 100: ["Thin", "Hairline"], 200: ["ExtraLight", "Extra Light", "UltraLight", "Ultra Light"], 300: ["Light"], 400: ["Regular", "Normal", "Book", "Roman"], 500: ["Medium"], 600: ["SemiBold", "Semi Bold", "DemiBold", "Demi Bold"], 700: ["Bold"], 800: ["ExtraBold", "Extra Bold", "UltraBold", "Ultra Bold"], 900: ["Black", "Heavy"] };
-const LISIO_COL = { color: "Colors", semantic: "Semantic", font: "Typography" };
-const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], font: ["FONT_FAMILY"] };
+const LISIO_COL = { color: "Colors", semantic: "Semantic", font: "Typography", duration: "Motion" };
+const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], icon: ["WIDTH_HEIGHT"], duration: [], font: ["FONT_FAMILY"] };
 const LISIO_BP = [{ id: "mobile", name: "Mobile", width: 390 }, { id: "tablet", name: "Tablet", width: 768 }, { id: "desktop", name: "Desktop", width: 1024 }, { id: "xl", name: "Desktop XL", width: 1440 }];
 function lisioHex(hex) { const h = hex.replace("#", ""); return { r: parseInt(h.slice(0, 2), 16) / 255, g: parseInt(h.slice(2, 4), 16) / 255, b: parseInt(h.slice(4, 6), 16) / 255 }; }
 function lisioWalk(obj, path, out) {
@@ -49,7 +49,7 @@ async function lisioImport(data, opts) {
   // 1. Variables: colors, semantic, dimensions, font families
   const tokens = lisioWalk(data, [], []).filter(t => t.path[0] !== "typography"), map = {}, famName = {};
   for (const t of tokens) {
-    const top = t.path[0], type = t.type === "color" ? "COLOR" : t.type === "fontFamily" ? "STRING" : (t.type === "dimension" || t.type === "number") ? "FLOAT" : null;
+    const top = t.path[0], type = t.type === "color" ? "COLOR" : t.type === "fontFamily" ? "STRING" : (t.type === "dimension" || t.type === "number" || t.type === "duration") ? "FLOAT" : null;
     if (!type) continue;
     const perBp = t.ext.breakpoints && typeof t.ext.breakpoints === "object";
     if (perBp && !cLay) { cLay = getCol("Layout"); layModes = bpModes(cLay, "Only the first breakpoint value is kept."); }
@@ -70,6 +70,22 @@ async function lisioImport(data, opts) {
       if (!fam) { fam = "Inter"; report.warnings.push(`Font "${list[0]}" is not available in Figma: Inter used instead. Install it and run the import again.`); }
       famName[`{${t.path.join(".")}}`] = fam; setAll(v, col, fam);
     }
+  }
+  // 1b. Extra modes (semantic roles: Light and Dark)
+  const modeId = (col, name) => {
+    let m = col.modes.find(x => x.name === name);
+    if (!m) { try { col.addMode(name); m = col.modes.find(x => x.name === name); } catch (e) { report.warnings.push(`${col.name}: mode "${name}" could not be added (${e.message}). Only the light values were imported.`); return null; } }
+    return m.modeId;
+  };
+  for (const { v, t, col } of Object.values(map)) {
+    const md = t.ext.modes; if (!md || typeof md !== "object") continue;
+    for (const [name, val] of Object.entries(md)) {
+      if (col.modes[0].name === "Default") col.renameMode(col.modes[0].modeId, "Light");
+      const id = modeId(col, name.charAt(0).toUpperCase() + name.slice(1)); if (!id) continue;
+      if (typeof val === "string" && val.startsWith("{")) { const ref = map[val]; if (ref) v.setValueForMode(id, figma.variables.createVariableAlias(ref.v)); else report.warnings.push(`Missing alias in ${name} mode: ${val}`); }
+      else if (v.resolvedType === "COLOR" && typeof val === "string") v.setValueForMode(id, lisioHex(val));
+    }
+    if (t.ext.darkDescription) v.description = `${t.desc || ""}\nDark: ${t.ext.darkDescription}`;
   }
   // 2. Text styles: one per style and breakpoint ("H1/Mobile"), size and line height in px
   const styles = await figma.getLocalTextStylesAsync(), made = [];
@@ -133,6 +149,7 @@ async function lisioBoards(data, map, made, cTypo, modes, famName) {
     txt("Semantic colors", 36, false, sem);
     txt("Collection Semantic · each role points to a palette step and states its WCAG contrast", 14, false, sem, true);
     for (const [g, items] of Object.entries(data.semantic)) {
+      if (g.startsWith("$") || !items || typeof items !== "object") continue;
       const row = lisioAuto("HORIZONTAL", { name: g, itemSpacing: 16 }); txt(g.charAt(0).toUpperCase() + g.slice(1), 16, true, row, false, 112);
       for (const [k, tok] of Object.entries(items)) { if (k.startsWith("$")) continue; const c = lisioAuto("VERTICAL", { name: k, itemSpacing: 6 }); const r = figma.createRectangle(); r.resize(180, 60); r.fills = [paint(`{semantic.${g}.${k}}`)]; r.strokes = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: .08 }]; c.appendChild(r); txt(k, 15, true, c, false, 180); txt(`${String(tok.$value).replace(/[{}]/g, "")}\n${tok.$description || ""}`, 11, false, c, true, 180); row.appendChild(c); }
       sem.appendChild(row);
@@ -171,13 +188,68 @@ async function lisioBoards(data, map, made, cTypo, modes, famName) {
   for (const [id, tok] of Object.entries(data.typography)) { const ext = (tok.$extensions && tok.$extensions["app.lisio"]) || {}, fl = ext.fluid; if (!fl) continue; trow([ext.name || id].concat(fl.breakpoints.map(b => `${b.fontSize}/${b.lineHeight}`), [fl.clamp, String(tok.$value.lineHeight)])); }
   return ids.join(",");
 }
-figma.showUI(__html__, { width: 380, height: 520, themeColors: true, title: "Lisio : importer le design system" });
+
+// Audit: text contrast of an existing file (selection, or the whole current page)
+function lisioLin(c) { return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+function lisioLum(c) { return 0.2126 * lisioLin(c.r) + 0.7152 * lisioLin(c.g) + 0.0722 * lisioLin(c.b); }
+function lisioRatio(a, b) { const x = lisioLum(a), y = lisioLum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+function lisioToHex(c) { return "#" + [c.r, c.g, c.b].map(v => Math.round(v * 255).toString(16).padStart(2, "0")).join("").toUpperCase(); }
+function lisioSolid(fills) {
+  if (!Array.isArray(fills)) return null;
+  for (let i = fills.length - 1; i >= 0; i--) { const f = fills[i]; if (f.visible === false) continue; if (f.type === "SOLID") return { c: f.color, a: f.opacity == null ? 1 : f.opacity }; return { c: null, a: 1, other: f.type }; }
+  return null;
+}
+function lisioInside(a, b) { return a && b && b.x <= a.x + 0.5 && b.y <= a.y + 0.5 && b.x + b.width >= a.x + a.width - 0.5 && b.y + b.height >= a.y + a.height - 0.5; }
+function lisioBackdrop(node) {
+  const box = node.absoluteBoundingBox; let child = node, p = node.parent, guess = false;
+  while (p && p.type !== "PAGE" && p.type !== "DOCUMENT") {
+    const kids = "children" in p ? p.children : [], idx = kids.indexOf(child);
+    for (let i = idx - 1; i >= 0; i--) { const k = kids[i]; if (k.visible === false || !("fills" in k)) continue; if (!lisioInside(box, k.absoluteBoundingBox)) continue; const f = lisioSolid(k.fills); if (!f) continue; if (!f.c) { guess = true; continue; } if (f.a >= 0.99 && (k.opacity == null || k.opacity >= 0.99)) return { c: f.c, guess }; guess = true; }
+    if ("fills" in p) { const f = lisioSolid(p.fills); if (f && f.c && f.a >= 0.99) return { c: f.c, guess }; if (f && (!f.c || f.a < 0.99)) guess = true; }
+    child = p; p = p.parent;
+  }
+  const pg = figma.currentPage.backgrounds && lisioSolid(figma.currentPage.backgrounds);
+  return { c: pg && pg.c ? pg.c : { r: 1, g: 1, b: 1 }, guess: true };
+}
+function lisioAudit(opts) {
+  opts = opts || {}; const aaa = opts.level === "AAA", out = [], sel = figma.currentPage.selection;
+  const roots = sel.length ? sel : [figma.currentPage];
+  let texts = []; for (const r of roots) { if (r.type === "TEXT") texts.push(r); if ("findAll" in r) texts = texts.concat(r.findAll(n => n.type === "TEXT")); }
+  const visible = n => { for (let x = n; x && x.type !== "PAGE"; x = x.parent) if (x.visible === false) return false; return true; };
+  texts = texts.filter(visible); const total = texts.length; texts = texts.slice(0, 800);
+  for (const t of texts) {
+    if (!t.characters.trim()) continue;
+    const bg = lisioBackdrop(t);
+    let segs = []; try { segs = t.getStyledTextSegments(["fills", "fontSize", "fontWeight"]); } catch (e) { segs = [{ fills: t.fills, fontSize: t.fontSize, fontWeight: 400, characters: t.characters }]; }
+    let worst = null;
+    for (const s of segs) {
+      const f = lisioSolid(s.fills); if (!f || !f.c) continue;
+      const a = f.a * (t.opacity == null ? 1 : t.opacity), c = { r: f.c.r * a + bg.c.r * (1 - a), g: f.c.g * a + bg.c.g * (1 - a), b: f.c.b * a + bg.c.b * (1 - a) };
+      const large = s.fontSize >= 24 || (s.fontSize >= 18.66 && s.fontWeight >= 700), need = aaa ? (large ? 4.5 : 7) : (large ? 3 : 4.5), r = lisioRatio(c, bg.c);
+      if (!worst || r / need < worst.r / worst.need) worst = { r, need, large, fg: lisioToHex(c), size: s.fontSize };
+    }
+    if (!worst) continue;
+    out.push({ id: t.id, name: t.name, text: t.characters.slice(0, 60), ratio: Math.floor(worst.r * 100) / 100, need: worst.need, large: worst.large, size: worst.size, fg: worst.fg, bg: lisioToHex(bg.c), guess: bg.guess, ok: worst.r >= worst.need });
+  }
+  out.sort((a, b) => (a.ok - b.ok) || (a.ratio / a.need - b.ratio / b.need));
+  return { total, checked: out.length, fails: out.filter(x => !x.ok).length, items: out.slice(0, 200), scope: sel.length ? "selection" : "page" };
+}
+figma.showUI(__html__, { width: 380, height: 560, themeColors: true, title: "Lisio : importer et vérifier" });
 figma.ui.onmessage = async msg => {
-  if (msg.type !== "import") return;
-  try {
-    const report = await lisioImport(msg.data, { board: msg.board });
-    if (report.board) { const n = await figma.getNodeByIdAsync(report.board); if (n) figma.viewport.scrollAndZoomIntoView([n]); }
-    figma.notify(`Lisio : ${report.variables} variables et ${report.styles} styles de texte importés`);
-    figma.ui.postMessage({ type: "done", report });
-  } catch (e) { figma.ui.postMessage({ type: "error", message: e && e.message ? e.message : String(e) }); }
+  if (msg.type === "import") {
+    try {
+      const report = await lisioImport(msg.data, { board: msg.board });
+      if (report.board) { const n = await figma.getNodeByIdAsync(report.board); if (n) figma.viewport.scrollAndZoomIntoView([n]); }
+      figma.notify(`Lisio : ${report.variables} variables et ${report.styles} styles de texte importés`);
+      figma.ui.postMessage({ type: "done", report });
+    } catch (e) { figma.ui.postMessage({ type: "error", message: e && e.message ? e.message : String(e) }); }
+  }
+  if (msg.type === "audit") {
+    try { figma.ui.postMessage({ type: "audit", result: lisioAudit({ level: msg.level }) }); }
+    catch (e) { figma.ui.postMessage({ type: "error", message: e && e.message ? e.message : String(e) }); }
+  }
+  if (msg.type === "select") {
+    const n = await figma.getNodeByIdAsync(msg.id);
+    if (n) { figma.currentPage.selection = [n]; figma.viewport.scrollAndZoomIntoView([n]); }
+  }
 };
