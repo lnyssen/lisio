@@ -13,5 +13,6 @@ step "Exports de référence" node tests/e2e/golden.mjs
 step "Projets : lien, import, enregistrement" node tests/e2e/projects.mjs
 step "Interface : axe, débordement, fenêtres" node tests/e2e/a11y.mjs
 step "Défauts de l'audit du 5 novembre 2026" node tests/e2e/audit.mjs
+step "Menu par intention" node tests/e2e/menu.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail

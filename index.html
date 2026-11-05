@@ -262,8 +262,8 @@ nav.tabs button svg{width:18px;height:18px;flex:none}
 @media (min-width:1001px){nav.tabs{justify-self:start}}@media (min-width:1261px){nav.tabs{margin-inline-start:16px}}
 @media (min-width:761px) and (max-width:840px){nav.tabs button{padding:6px 3px!important}}
 @media (min-width:761px) and (max-width:1100px){#normV{display:none}#normChip{min-width:0}.expbtn span{display:none}.expbtn{padding:0 9px;min-width:var(--ctl);justify-content:center}.normchip{min-width:0}nav.tabs button{padding:7px 6px;font-size:13px}}
-nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
-@media (hover:hover){nav.tabs button[aria-selected="false"]:hover{color:var(--ink);background:var(--hover)}}
+nav.tabs button[aria-current="page"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
+@media (hover:hover){nav.tabs button:not([aria-current="page"]):hover{color:var(--ink);background:var(--hover)}}
 /* ===== Menu en barre latérale (desktop) ===== */
 .tab-grp{display:none}
 @media (min-width:761px){
@@ -330,7 +330,7 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
 @media (max-width:760px){
   nav.tabs.has-ink{isolation:isolate}
   nav.tabs.has-ink button{position:relative;z-index:1}
-  nav.tabs.has-ink button[aria-selected="true"] svg{background:none;color:var(--primary-ink);transition:color .12s}
+  nav.tabs.has-ink button[aria-current="page"] svg{background:none;color:var(--primary-ink);transition:color .12s}
   nav.tabs.has-ink button svg{transition:color .12s}
   .tab-ink{display:block;position:absolute;left:0;top:0;border-radius:999px;pointer-events:none;background:var(--primary);z-index:0;opacity:0;transition:transform .24s cubic-bezier(.2,0,0,1),width .24s,height .24s,opacity .12s}
   .tab-ink.on{opacity:1}.tab-ink.still{transition:opacity .2s}
@@ -377,9 +377,9 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
   nav.tabs button{flex:1 1 0;flex-direction:column;justify-content:center;gap:3px;font-size:10.5px;font-weight:600;letter-spacing:-.01em;padding:6px 0 4px;border-radius:0;min-width:0;background:none!important;overflow:hidden}
   nav.tabs button>span{max-width:100%;overflow:hidden;text-overflow:ellipsis}
   nav.tabs button svg{width:24px;height:24px}
-  nav.tabs button[aria-selected="true"]{color:var(--ink);background:none;font-weight:700}
-  nav.tabs button[aria-selected="true"] svg{background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:3px 14px;width:52px;height:30px;box-sizing:border-box}
-  nav.tabs button[aria-selected="false"] svg{padding:3px 0;height:30px;box-sizing:border-box}
+  nav.tabs button[aria-current="page"]{color:var(--ink);background:none;font-weight:700}
+  nav.tabs button[aria-current="page"] svg{background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:3px 14px;width:52px;height:30px;box-sizing:border-box}
+  nav.tabs button:not([aria-current="page"]) svg{padding:3px 0;height:30px;box-sizing:border-box}
   .wrap{padding-bottom:calc(var(--navh) + 40px)!important}
   .dock{bottom:calc(var(--navh) + 10px)!important}
   .toast{bottom:calc(var(--navh) + 16px)!important}
@@ -503,8 +503,6 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
 .fontlist .grp{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 8px 4px}
 .fontlist button{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%;padding:9px 10px;border-radius:12px;cursor:pointer;font-size:20px;line-height:1.25;color:var(--ink)}
 .fontlist button:hover{background:var(--hover)}
-.fontlist button[aria-selected="true"]{background:var(--primary);color:var(--primary-ink)}
-.fontlist button[aria-selected="true"] .cat{color:var(--primary-ink)}
 .fontlist button:focus-visible{outline:3px solid var(--primary);outline-offset:-3px}
 .fontlist .cat{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--muted);white-space:nowrap}
 .chipgrid{display:flex;flex-direction:column;gap:5px}
@@ -748,8 +746,8 @@ body{background:var(--bg)}
   .side-foot a:first-child{background:var(--accent-soft);font-weight:700}
   .side-b{border-radius:12px;background:var(--hover);color:var(--ink)}
   nav.tabs button{height:44px!important;border-radius:14px!important;font-size:15px!important;font-weight:500;color:var(--ink)}
-  nav.tabs button[aria-selected="true"]{color:var(--nav-on-ink);font-weight:600}
-  nav.tabs.has-ink button[aria-selected="true"] svg{color:var(--nav-on-ic)}
+  nav.tabs button[aria-current="page"]{color:var(--nav-on-ink);font-weight:600}
+  nav.tabs.has-ink button[aria-current="page"] svg{color:var(--nav-on-ic)}
   .tab-ink{background:var(--nav-on)!important;border-radius:14px!important}
   .tab-hov{border-radius:14px!important}
   .tab-grp{font-size:12px;color:var(--muted);padding:16px 12px 6px}
@@ -773,12 +771,12 @@ body{background:var(--bg)}
   :root{--navh:calc(72px + env(safe-area-inset-bottom,0px))}
   .appbar{height:60px;border-bottom:0!important;margin-bottom:12px}
   nav.tabs{padding-right:20vw!important;background:var(--surface)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-top:0!important;border-radius:24px 24px 0 0;box-shadow:0 -6px 28px rgba(11,43,44,.10)}
-  #tab-styles,#tab-lisibilite,#tab-sources{display:none!important}
+  #tab-styles,#tab-lisibilite,#tab-sources,#tab-formation,#tab-exporter,#railPrj{display:none!important}
   nav.tabs button{font-size:11.5px;gap:4px;color:var(--muted)}
-  nav.tabs button[aria-selected="true"]{color:var(--ink)}
-  nav.tabs button svg,nav.tabs button[aria-selected="false"] svg{width:56px!important;height:32px!important;padding:4px 16px!important;box-sizing:border-box}
-  nav.tabs button[aria-selected="true"] svg{width:56px;height:32px;padding:4px 16px}
-  nav.tabs.has-ink button[aria-selected="true"] svg{color:var(--nav-on-ic)}
+  nav.tabs button[aria-current="page"]{color:var(--ink)}
+  nav.tabs button svg,nav.tabs button:not([aria-current="page"]) svg{width:56px!important;height:32px!important;padding:4px 16px!important;box-sizing:border-box}
+  nav.tabs button[aria-current="page"] svg{width:56px;height:32px;padding:4px 16px}
+  nav.tabs.has-ink button[aria-current="page"] svg{color:var(--nav-on-ic)}
   .tab-ink{background:var(--nav-on)!important}
   .more-b{display:flex;position:fixed;z-index:21;right:0;bottom:0;width:20vw;height:var(--navh);padding:0 0 calc(3px + env(safe-area-inset-bottom,0px));box-sizing:border-box;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;background:none;color:var(--muted);font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .more-b svg{width:56px;height:32px;padding:4px 16px;box-sizing:border-box;border-radius:999px}
@@ -852,8 +850,8 @@ body{background:var(--bg)}
   nav.tabs,nav.tabs.has-ink{padding:calc(var(--st) + 8px) 12px calc(var(--sf) + 6px)!important;overflow-y:auto;scrollbar-width:none}
   nav.tabs::-webkit-scrollbar{display:none}
   nav.tabs button{height:var(--sbtn)!important;color:var(--rail-ink)}
-  nav.tabs.has-ink button[aria-selected="true"]{color:var(--rail-on-ink)}
-  nav.tabs.has-ink button[aria-selected="true"] svg{color:var(--rail-on-ink)}
+  nav.tabs.has-ink button[aria-current="page"]{color:var(--rail-on-ink)}
+  nav.tabs.has-ink button[aria-current="page"] svg{color:var(--rail-on-ink)}
   .tab-ink{background:var(--rail-on)!important;border-radius:16px!important}
   .tab-hov{background:var(--rail-hover)!important;border-radius:16px!important}
   .tab-grp{color:var(--rail-muted);padding:clamp(8px,1.8vh,16px) 12px clamp(3px,.7vh,6px)}
@@ -937,7 +935,6 @@ body{background:var(--bg)}
 @media (max-width:560px){.pd-list li{grid-template-columns:auto minmax(0,1fr)}.pd-list li .btn{grid-column:span 1}}
 
 /* ===== Un seul menu Aide et formation ===== */
-#tab-sources{display:none!important}
 @media (min-width:761px){
   :root{--sf:calc(var(--sbtn) + 22px)}
   .help-b{display:flex;align-items:center;gap:12px;width:100%;height:var(--sbtn);padding:0 12px;border:0;border-radius:14px;background:var(--rail-hover);color:var(--rail-ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;overflow:hidden}
@@ -973,6 +970,15 @@ body{background:var(--bg)}
 .palbar .paledit{background:var(--primary);color:var(--primary-ink);border-color:var(--primary);min-height:44px;padding:0 18px;font-size:14px}
 .palbar[open] .paledit{background:var(--hover);color:var(--ink);border-color:transparent}
 @media (max-width:760px){.palchip i{width:32px;height:32px;border-radius:10px}.palchip{padding:4px 10px 4px 4px;font-size:14px}.palbar .paledit{width:100%;justify-content:center}}
+
+/* ===== Menu par intention (blueprint v2 § 3) : Projets, Créer, Vérifier, Apprendre, Livrer ===== */
+.tab-g{display:contents}
+.rail-prj{display:none}
+@media (min-width:761px){
+  .rail-prj{display:flex}
+  /* Replié : le nom du groupe reste écrit, en petit, au lieu d'un simple trait. */
+  :root.side-c .tab-grp,:root.side-c .tab-grp.first{font-size:10.5px!important;line-height:1.2;letter-spacing:0;text-transform:none;font-weight:600;width:auto;max-width:calc(var(--side) - 8px);text-align:center;overflow:hidden;padding:clamp(6px,1vh,10px) 4px clamp(3px,.6vh,6px)!important;margin-top:clamp(3px,.8vh,8px)!important;border-top:1px solid var(--hair)!important}
+}
 </style>
 </head>
 <body>
@@ -985,19 +991,26 @@ body{background:var(--bg)}
     <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--accent)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
     <button type="button" class="side-b" id="sideB" aria-controls="sideNav" aria-expanded="true" aria-keyshortcuts="Control+Backslash Meta+Backslash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M9 4.5v15"/><path class="chev" d="M15 10l-2 2 2 2"/></svg><span class="sr-only">Menu latéral</span></button>
     </div>
-    <nav class="tabs" id="sideNav" role="tablist" aria-label="Sections">
+    <nav class="tabs" id="sideNav" aria-label="Menu">
       <span class="tab-hov" aria-hidden="true"></span><span class="tab-ink" aria-hidden="true"></span>
-      <span class="tab-grp first" aria-hidden="true">Couleurs</span>
-      <button role="tab" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/></svg><span><span class="dsk">Contrastes</span><span class="mob">Contraste</span></span></button>
-      <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg><span>Couleurs</span></button>
-      <span class="tab-grp" aria-hidden="true">Texte</span>
-      <button role="tab" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18.5 8 5.5l5 13M4.8 14h6.4"/><path d="M15.5 11c.6-.6 1.4-1 2.3-1 1.6 0 2.7 1 2.7 2.6v5.9M20.5 15.1c-2.8 0-5 .5-5 2 0 1 .8 1.6 2 1.6 1.7 0 3-1.2 3-3"/></svg><span>Polices</span></button>
-      <button role="tab" id="tab-styles" aria-controls="styles" data-view="styles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16M4 10h11M4 14.5h16M4 19h8"/></svg><span>Styles<span class="dsk"> de texte</span></span></button>
-      <span class="tab-grp" aria-hidden="true">Système</span>
-      <button role="tab" id="tab-systeme" aria-controls="systeme" data-view="systeme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5l9 5-9 5-9-5z"/><path d="M3 14.5l9 5 9-5"/></svg><span><span class="dsk">Design system</span><span class="mob">Système</span></span></button>
-      <span class="tab-grp" aria-hidden="true">Contenu</span>
-      <button role="tab" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19l1.5-5L16 4.5a2.1 2.1 0 0 1 3 3L9.5 17z"/><path d="M13.5 19.5h6"/></svg><span>Rédaction</span></button>
-      <button role="tab" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><span>Guide</span></button>
+      <button type="button" id="railPrj" class="rail-prj" aria-haspopup="dialog" aria-controls="prjDlg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><span>Projets</span></button>
+      <div class="tab-g" role="group" aria-labelledby="grp-creer"><span class="tab-grp" id="grp-creer" aria-hidden="true">Créer</span>
+        <button type="button" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg><span>Couleurs</span></button>
+        <button type="button" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18.5 8 5.5l5 13M4.8 14h6.4"/><path d="M15.5 11c.6-.6 1.4-1 2.3-1 1.6 0 2.7 1 2.7 2.6v5.9M20.5 15.1c-2.8 0-5 .5-5 2 0 1 .8 1.6 2 1.6 1.7 0 3-1.2 3-3"/></svg><span>Polices</span></button>
+        <button type="button" id="tab-styles" aria-controls="styles" data-view="styles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16M4 10h11M4 14.5h16M4 19h8"/></svg><span>Styles<span class="dsk"> de texte</span></span></button>
+        <button type="button" id="tab-systeme" aria-controls="systeme" data-view="systeme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5l9 5-9 5-9-5z"/><path d="M3 14.5l9 5 9-5"/></svg><span><span class="dsk">Design system</span><span class="mob">Système</span></span></button>
+      </div>
+      <div class="tab-g" role="group" aria-labelledby="grp-verifier"><span class="tab-grp" id="grp-verifier" aria-hidden="true">Vérifier</span>
+        <button type="button" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/></svg><span><span class="dsk">Contrastes</span><span class="mob">Contraste</span></span></button>
+        <button type="button" id="tab-lisibilite" aria-controls="lisibilite" data-view="lisibilite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19l1.5-5L16 4.5a2.1 2.1 0 0 1 3 3L9.5 17z"/><path d="M13.5 19.5h6"/></svg><span>Rédaction</span></button>
+      </div>
+      <div class="tab-g" role="group" aria-labelledby="grp-apprendre"><span class="tab-grp" id="grp-apprendre" aria-hidden="true">Apprendre</span>
+        <button type="button" id="tab-sources" aria-controls="sources" data-view="sources"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><span>Guide</span></button>
+        <button type="button" id="tab-formation" aria-controls="formation" data-view="formation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg><span>S’entraîner</span></button>
+      </div>
+      <div class="tab-g" role="group" aria-labelledby="grp-livrer"><span class="tab-grp" id="grp-livrer" aria-hidden="true">Livrer</span>
+        <button type="button" id="tab-exporter" aria-controls="exporter" data-view="exporter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button>
+      </div>
     </nav>
     <button type="button" class="more-b" id="moreB" aria-haspopup="dialog" aria-expanded="false" aria-controls="moreSheet"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5.5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="18.5" cy="12" r="1.9"/></svg><span>Plus</span></button>
     <div class="side-foot"><button type="button" class="help-b" id="helpB" aria-expanded="false" aria-controls="helpPop" data-tip="Aide et formation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.5v.3M12 16.8h.01"/></svg><span>Aide et formation</span></button></div>
@@ -1011,7 +1024,7 @@ body{background:var(--bg)}
   <nav class="journey" id="journey" aria-label="Parcours en 6 étapes" hidden></nav>
 
   <!-- MATRICE -->
-  <section id="matrice" role="tabpanel" aria-labelledby="tab-matrice">
+  <section id="matrice" aria-labelledby="tab-matrice">
     <header class="mhead">
       <div>
         <h1>Contrastes</h1>
@@ -1074,7 +1087,7 @@ body{background:var(--bg)}
   </section>
 
   <!-- TESTER -->
-  <section id="tester" role="tabpanel" aria-labelledby="tab-tester" hidden>
+  <section id="tester" aria-labelledby="tab-tester" hidden>
     <h1 class="sr-only">Polices</h1>
     <div class="stage">
       <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
@@ -1125,7 +1138,7 @@ body{background:var(--bg)}
   </section>
 
   <!-- STYLES -->
-  <section id="styles" role="tabpanel" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="styles" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1>Styles de texte</h1><p class="lead">Vos styles web, de H1 à la légende, vérifiés sur vos couleurs. Exportez-les avec la palette pour Figma ou le CSS.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : Text styles et collection Typography</p></div></header>
     <div class="card-surface">
       <h2>Réglages</h2><p class="note" style="margin-top:-6px">Deux polices, une taille de texte et une échelle pour le desktop. Lisio fait le reste.</p>
@@ -1168,7 +1181,7 @@ body{background:var(--bg)}
   </section>
 
   <!-- SYSTÈME -->
-  <section id="systeme" role="tabpanel" aria-labelledby="tab-systeme" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="systeme" aria-labelledby="tab-systeme" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté. Passez du système à des pages types (accueil, formulaire, article, tableau de bord) avec les lois UX qui s’y appliquent, puis aux états des composants. Changez d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
     <div class="card-surface ds-panel">
       <div class="row between"><div><h2>Personnaliser</h2><p class="note" id="dsState"></p></div><button class="btn sm" type="button" id="dsReset">Revenir au système de base</button></div>
@@ -1212,7 +1225,7 @@ body{background:var(--bg)}
   </section>
 
   <!-- PALETTE -->
-  <section id="palette" role="tabpanel" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="palette" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
     <div class="card-surface">
       <div class="row between"><h2>Comment ça marche</h2>
@@ -1246,7 +1259,7 @@ body{background:var(--bg)}
   </section>
 
   <!-- TEXTE -->
-  <section id="lisibilite" role="tabpanel" aria-labelledby="tab-lisibilite" hidden>
+  <section id="lisibilite" aria-labelledby="tab-lisibilite" hidden>
     <header class="mhead phead"><div><h1>Rédaction</h1><p class="lead">Longueur des phrases et score de lecture de votre texte, en français ou en anglais. Critère WCAG 3.1.5, niveau AAA.</p><p class="qline"><button type="button" class="qchip" data-q="lecture" aria-expanded="false" aria-controls="qPop">À quoi sert le score de lecture ?</button></p></div></header>
     <div class="card-surface">
       <div class="row between">
@@ -1331,7 +1344,7 @@ body{background:var(--bg)}
     </div>
   </section>
 
-  <section id="sources" role="tabpanel" aria-labelledby="tab-sources" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="sources" aria-labelledby="tab-sources" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
     <div class="card-surface guide">
       <div class="g-train"><div><h2>S’entraîner en dix questions</h2><p>Avant de commencer, ou pour former l’équipe : des questions courtes avec vos couleurs, et la réponse expliquée.</p></div><a class="btn primary" href="#formation">Commencer</a></div>
@@ -3457,7 +3470,7 @@ $("tsCrFix").addEventListener("click", fixClick);
 $("journey").addEventListener("click", e => { if (!e.target.closest("[data-hello]")) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("journey").querySelector(".j-hello"); if (h) h.remove(); $("journey").querySelector("a[aria-current]").focus(); });
 // R2 · 2.4.2 : le titre de l'onglet du navigateur dit la page affichée.
 const VIEW_TITLE = { matrice: "Contrastes", palette: "Couleurs", tester: "Polices", styles: "Styles de texte", systeme: "Design system", lisibilite: "Rédaction", sources: "Guide", exporter: "Exporter", formation: "S’entraîner" };
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
+function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); VIEWS.forEach(n => { $(n).hidden = n !== v; }); document.querySelectorAll("nav.tabs button[data-view]").forEach(t => t.dataset.view === v ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
 // Mode clair ou sombre : suit le système, jusqu’à ce qu’on choisisse
 const DARKQ = matchMedia("(prefers-color-scheme: dark)"), themeNow = () => document.documentElement.getAttribute("data-theme") || (DARKQ.matches ? "dark" : "light");
 function themeLabel() { const d = themeNow() === "dark"; $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
@@ -3510,16 +3523,16 @@ MORES.addEventListener("click", e => { if (e.target === MORES) { moreClose(); re
 $("moreX").addEventListener("click", moreClose);
 MOBQ.addEventListener("change", () => { if (!MOBQ.matches) moreClose(); });
 MOBQ.addEventListener("change", () => tabInk(true));
-function tabInk(first) { const b = TABS.querySelector('button[aria-selected="true"]'); crumbSet(b); const vis = b && b.offsetParent !== null, mq = matchMedia("(max-width:760px)").matches; inkTo(INK, vis ? b : null, first || !INK.classList.contains("on")); const mb = $("moreB"); if (mb) mb.classList.toggle("on", mq && !vis); if (mq && b && !vis) $("tab-matrice").tabIndex = 0; }
-TABS.addEventListener("pointerover", e => { const b = e.target.closest("button"); if (!b || b.getAttribute("aria-selected") === "true") { HOV.classList.remove("on"); return; } inkTo(HOV, b, !HOV.classList.contains("on")); });
+function tabInk(first) { const b = TABS.querySelector('button[aria-current="page"]'); crumbSet(b); const vis = b && b.offsetParent !== null, mq = matchMedia("(max-width:760px)").matches; inkTo(INK, vis ? b : null, first || !INK.classList.contains("on")); const mb = $("moreB"); if (mb) mb.classList.toggle("on", mq && !vis); if (mq && b && !vis) $("tab-matrice").tabIndex = 0; }
+TABS.addEventListener("pointerover", e => { const b = e.target.closest("button"); if (!b || b.getAttribute("aria-current") === "page") { HOV.classList.remove("on"); return; } inkTo(HOV, b, !HOV.classList.contains("on")); });
 TABS.addEventListener("pointerleave", () => HOV.classList.remove("on"));
-TABS.addEventListener("focusin", e => { const b = e.target.closest("button"); if (b && b.matches(":focus-visible") && b.getAttribute("aria-selected") !== "true") inkTo(HOV, b, !HOV.classList.contains("on")); else HOV.classList.remove("on"); });
+TABS.addEventListener("focusin", e => { const b = e.target.closest("button"); if (b && b.matches(":focus-visible") && b.getAttribute("aria-current") !== "page") inkTo(HOV, b, !HOV.classList.contains("on")); else HOV.classList.remove("on"); });
 TABS.addEventListener("focusout", () => HOV.classList.remove("on"));
 addEventListener("resize", () => tabInk(true)); if (document.fonts) document.fonts.ready.then(() => tabInk(true));
-document.querySelectorAll("nav.tabs button").forEach(b => {
+document.querySelectorAll("nav.tabs button[data-view]").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; if (!same) history.pushState(null, "", "#" + b.dataset.view); show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
-  b.addEventListener("keydown", e => { if (!["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"].includes(e.key)) return; e.preventDefault(); const st = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : VIEWS.length - 1; let i = VIEWS.indexOf(b.dataset.view), n; do { i = (i + st) % VIEWS.length; n = VIEWS[i]; } while ($("tab-" + n).offsetParent === null && n !== b.dataset.view); $("tab-" + n).focus(); history.pushState(null, "", "#" + n); show(n); });
 });
+$("railPrj").addEventListener("click", () => $("prjB").click());
 document.querySelector(".app-skip").addEventListener("click", e => { e.preventDefault(); const v = curView(), h = v && $(v).querySelector("h1"); $("main").focus(); if (h) h.scrollIntoView(); });
 $("undoB").addEventListener("click", undo); $("redoB").addEventListener("click", redo); snapPrev = JSON.stringify({ S, palette }); UNDO.length = 0; undoUi();
 document.addEventListener("keydown", e => {
@@ -3795,7 +3808,8 @@ function prjRender() {
 $("prjB").addEventListener("click", () => { prjRender(); $("prjDlg").showModal(); });
 $("prjX").addEventListener("click", () => $("prjDlg").close());
 $("prjDlg").addEventListener("click", e => { if (e.target === $("prjDlg")) $("prjDlg").close(); });
-$("prjDlg").addEventListener("close", () => ($("prjB").offsetParent ? $("prjB") : $("moreB")).focus());
+$("prjDlg").addEventListener("close", () => { const o = $("prjDlg").opener; ((o && o.offsetParent) ? o : $("prjB").offsetParent ? $("prjB") : $("moreB")).focus(); });
+document.addEventListener("click", e => { const o = e.target.closest("#railPrj,#prjB"); if (o) $("prjDlg").opener = o; }, true);
 $("prjFigU").addEventListener("input", e => { const v = e.target.value.trim(), ok = !v || figmaUrlOk(v); e.target.setAttribute("aria-invalid", String(!ok)); $("prjFigE").textContent = ok ? "Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier." : "Ce lien ne vient pas de figma.com. Copiez-le depuis Figma : Partager, puis Copier le lien."; if (ok) { S.figma = v; save(); prjLabel(); } });
 $("prjCurName").addEventListener("input", e => { S.projectName = e.target.value.trim().slice(0, 60); save(); $("prjName").value = S.projectName; prjLabel(); });
 $("prjName").addEventListener("input", prjLabel);

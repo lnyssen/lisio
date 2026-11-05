@@ -31,6 +31,7 @@ node tests/e2e/golden.mjs           # exports identiques, octet pour octet, aux 
 node tests/e2e/projects.mjs         # partage par lien, import, écriture refusée, démarrage sur un projet abîmé
 AXE_PATH=…/axe.min.js node tests/e2e/a11y.mjs   # axe-core sur 8 vues et 6 fenêtres ouvertes, erreurs JS, débordement de 320 à 430 px
 node tests/e2e/audit.mjs            # un contrôle par défaut corrigé de l’audit WCAG du 5 novembre 2026 : focus masqué, focus des fenêtres, étiquettes, contrastes des champs, erreurs, titres, contraste forcé
+node tests/e2e/menu.mjs             # menu par intention : Projets, Créer, Vérifier, Apprendre, Livrer ; page active, clavier, mobile
 ```
 
 `golden.mjs --write` réécrit les références : seulement quand un changement d’export est voulu, et en le disant dans le commit. Les contrôles Playwright sont ignorés (code 0, message « IGNORÉ ») si Playwright ou axe-core manquent, sauf quand la variable `CI` est définie : ils échouent alors.
