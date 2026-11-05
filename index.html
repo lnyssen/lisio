@@ -20,8 +20,8 @@
 @font-face{font-family:"Switzer";font-style:normal;font-weight:800;font-display:swap;src:url(https://cdn.jsdelivr.net/npm/@carrot-kpi/switzer-font@0.1.0/files/switzer-latin-800-normal.woff2) format("woff2")}
 
 :root{
-  --bg:#E9EAEC; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#000000; --muted:#55565C; --hair:#D6D7DB; --field:#7B7C82;
-  --primary:#1E3A8A; --primary-ink:#FFFFFF; --hover:#EEEFF1; --link:#1E3A8A;
+  --bg:#E8EBF1; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#0F1B3D; --muted:#4C5674; --hair:#D4D9E3; --field:#77809B;
+  --primary:#0F1B3D; --primary-ink:#FFFFFF; --hover:#EEF1F6; --link:#0F1B3D;
   --aaa-bg:#14532D; --aaa-ink:#FFFFFF; --aa-bd:#DCFCE7; --aa-bg:#DCFCE7; --aa-ink:#166534; --lg-bg:#FEF3C7; --lg-ink:#92400E; --no-bg:#FEE2E2; --no-ink:#991B1B;
   --ok:#166534; --ok-bg:#DCFCE7; --warn:#92400E; --warn-bg:#FEF3C7; --bad:#991B1B; --bad-bg:#FEE2E2;
   --shadow:0 1px 2px rgba(0,0,0,.06), 0 10px 30px rgba(0,0,0,.12);
@@ -29,23 +29,23 @@
   --mono:"Switzer", "Helvetica Neue", system-ui, sans-serif; --code:"JetBrains Mono", ui-monospace, Menlo, monospace;
   --r:14px;
   --gut:clamp(16px,2.6vw,40px);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2355565C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%234C5674' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#000000; --surface:#151517; --raised:#1F1F22; --ink:#FFFFFF; --muted:#A8A9B0; --hair:#2B2C30; --field:#75767D;
-  --primary:#A5BEFF; --primary-ink:#0B1A4A; --hover:#232327; --link:#A5BEFF;
+  --bg:#0A1126; --surface:#111A33; --raised:#18223F; --ink:#F3F6FC; --muted:#A6B0C8; --hair:#24304E; --field:#6E7A99;
+  --primary:#E6ECF8; --primary-ink:#0F1B3D; --hover:#1C2846; --link:#F3F6FC;
   --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
   --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23A8A9B0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23A6B0C8' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#000000; --surface:#151517; --raised:#1F1F22; --ink:#FFFFFF; --muted:#A8A9B0; --hair:#2B2C30; --field:#75767D;
-  --primary:#A5BEFF; --primary-ink:#0B1A4A; --hover:#232327; --link:#A5BEFF;
+  --bg:#0A1126; --surface:#111A33; --raised:#18223F; --ink:#F3F6FC; --muted:#A6B0C8; --hair:#24304E; --field:#6E7A99;
+  --primary:#E6ECF8; --primary-ink:#0F1B3D; --hover:#1C2846; --link:#F3F6FC;
   --aaa-bg:#15803D; --aaa-ink:#FFFFFF; --aa-bg:transparent; --aa-bd:#22C55E; --aa-ink:#86EFAC; --lg-bg:#451A03; --lg-ink:#FCD34D; --no-bg:#450A0A; --no-ink:#FCA5A5;
   --ok:#4ADE80; --ok-bg:#14532D; --warn:#FCD34D; --warn-bg:#451A03; --bad:#FCA5A5; --bad-bg:#450A0A;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23A8A9B0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23A6B0C8' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark }
 /* image et pipette */
 .imgpanel{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--hair);padding-top:14px}
@@ -225,7 +225,7 @@ a{color:inherit;text-underline-offset:.18em}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:16;background:var(--bg)}
 .logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.03em;flex:none}
 .logo-mark{width:30px;height:30px;flex:none;display:block}
-.logo-word{font-weight:700;font-size:22px;letter-spacing:-.045em;line-height:1}
+.logo-word{color:var(--primary);font-weight:700;font-size:22px;letter-spacing:-.045em;line-height:1}
 nav.tabs{display:flex;justify-content:center;gap:2px;min-width:0}
 nav.tabs button{font:inherit;font-size:14px;font-weight:600;border:0;background:none;color:var(--muted);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;-webkit-tap-highlight-color:transparent;user-select:none}
 nav.tabs button svg{width:18px;height:18px;flex:none}
@@ -409,12 +409,15 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
   .dock-in{gap:2px;padding:6px;border-radius:18px;justify-content:center}.dk{padding:6px 8px;gap:6px}.dk .k small,.dk-sep{display:none}.dk .k span{max-width:92px}.stepper .sv{min-width:52px}.stepper button{width:32px;height:32px}
   .eyebrow{font-size:11px;letter-spacing:.04em}}
 .scales{overflow-x:auto;padding-bottom:4px}
-.scale-table{display:grid;grid-template-columns:100px repeat(11,minmax(64px,1fr));gap:4px;min-width:840px}
-.scale-head{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center}
-.scale-name{font-weight:800;font-size:15px;display:flex;align-items:center;min-width:0;overflow:hidden;text-overflow:ellipsis}
-.swt{height:76px;border-radius:12px;border:0;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:7px;font-family:var(--mono);font-size:11px;text-align:left;position:relative}
-.swt .r{display:flex;justify-content:space-between;gap:2px}
-.swt .base{position:absolute;top:7px;right:7px;width:8px;height:8px;border-radius:50%;background:currentColor}
+.scale-table{display:grid;grid-template-columns:110px repeat(11,minmax(64px,1fr));gap:22px 8px;min-width:900px}
+.scale-name{font-weight:700;font-size:15px;display:flex;align-items:flex-start;padding-top:2px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.swt{border:0;background:none;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;font:inherit;text-align:left;min-width:0;border-radius:6px}
+.swc{display:block;height:64px;border-radius:4px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent);position:relative;margin-bottom:10px}
+.swt b{font-size:15px;font-weight:700;line-height:1.2}
+.swt code{font-family:var(--code);font-size:11.5px;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+@media (hover:hover){.swt:hover .swc{transform:translateY(-2px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent),0 6px 14px -6px rgba(15,27,61,.35)}}.swc{transition:transform .12s,box-shadow .12s}
+@media (prefers-reduced-motion:reduce){.swc{transition:none}}
+.swt .base{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%}
 .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
 .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
 .nu-intro{display:flex;flex-direction:column;gap:14px;border-bottom:1px solid var(--hair);padding-bottom:18px}
@@ -785,7 +788,7 @@ a.btn{text-decoration:none}
         </ol>
         <div class="nu-demo-wrap"><p class="small muted" id="nuDemoLead"></p><div class="nu-demo" id="nuDemo"></div></div>
       </div>
-      <span class="legend"><span>Sous chaque code : contraste sur blanc / sur noir</span><span>● nuance la plus proche de votre couleur</span><span>Cliquez une nuance pour copier son code</span></span>
+      <span class="legend"><span>● nuance la plus proche de votre couleur</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
       <div class="scales"><div class="scale-table" id="scales"></div></div>
       <h3>Règles à retenir</h3>
       <div class="rules" id="rules"></div>
@@ -1392,10 +1395,10 @@ function renderEditor() {
 let raf = 0;
 function changed() { isExample = false; store.set("colors", palette); snapPush(); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); }
 function renderScales() {
-  let h = `<div></div>` + STEPS.map(s => `<div class="scale-head">${s}</div>`).join("");
+  let h = "";
   scales.forEach(sc => {
     h += `<div class="scale-name" title="${esc(sc.name)}">${esc(sc.name)}</div>`;
-    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = floor2(ratio(hex, "#FFFFFF")), rb = floor2(ratio(hex, "#000000")); h += `<button type="button" class="swt" style="background:${shown};color:${textOn(shown)}" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]}, ${hex}, ${fmt(rw)} sur blanc, ${fmt(rb)} sur noir. Copier.">${i === sc.nearest ? '<span class="base" aria-hidden="true"></span>' : ""}<span>${hex}</span><span class="r"><span>${fmt(rw, 1)}</span><span>${fmt(rb, 1)}</span></span></button>`; });
+    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = floor2(ratio(hex, "#FFFFFF")), rb = floor2(ratio(hex, "#000000")); h += `<button type="button" class="swt" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]}, ${hex}${i === sc.nearest ? ", votre couleur d’origine" : ""}, ${fmt(rw)} pour 1 sur blanc, ${fmt(rb)} pour 1 sur noir. Copier." title="${fmt(rw, 1)}:1 sur blanc · ${fmt(rb, 1)}:1 sur noir"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}</span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
   });
   $("scales").innerHTML = h;
   const iT = STEPS.indexOf(700), iB = STEPS.indexOf(100), rs = scales.map(sc => floor2(ratio(sc.sw[iT], sc.sw[iB])));
