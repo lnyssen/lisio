@@ -235,6 +235,18 @@ nav.tabs button svg{width:18px;height:18px;flex:none}
 @media (min-width:761px) and (max-width:1100px){.expbtn span{display:none}.expbtn{padding:7px 9px;min-width:34px;min-height:34px;justify-content:center}.normchip{min-width:0}nav.tabs button{padding:7px 6px;font-size:13px}}
 nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--primary);font-weight:700}
 @media (hover:hover){nav.tabs button[aria-selected="false"]:hover{color:var(--ink);background:var(--hover)}}
+/* Pastille qui glisse d’un onglet à l’autre (desktop) */
+.tab-ink,.tab-hov{display:none}
+@media (min-width:761px){
+  nav.tabs.has-ink{position:relative;isolation:isolate}
+  nav.tabs.has-ink button{position:relative;z-index:1;background:none!important;transition:color .3s .1s}
+  .tab-ink,.tab-hov{display:block;position:absolute;left:0;top:0;border-radius:999px;pointer-events:none;will-change:transform,width;transition:transform .42s cubic-bezier(.3,1.25,.4,1),width .42s cubic-bezier(.3,1.25,.4,1),height .3s,opacity .2s}
+  .tab-ink{background:var(--primary);z-index:0;opacity:0}
+  .tab-hov{background:var(--hover);z-index:0;opacity:0;transition-duration:.3s,.3s,.3s,.18s;transition-timing-function:cubic-bezier(.2,0,0,1)}
+  .tab-ink.on,.tab-hov.on{opacity:1}
+  .tab-ink.still,.tab-hov.still{transition:opacity .2s}
+}
+@media (prefers-reduced-motion:reduce){.tab-ink,.tab-hov{transition:opacity .15s!important}}
 .appr{display:flex;align-items:center;gap:8px;justify-self:end}
 .undobtn{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);cursor:pointer;padding:0;flex:none}.undobtn svg{width:18px;height:18px}.undobtn:disabled{opacity:.45;cursor:default}
 @media (hover:hover){.undobtn:not(:disabled):hover{background:var(--hover)}}
@@ -591,6 +603,7 @@ a.btn{text-decoration:none}
   <header class="appbar">
     <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
     <nav class="tabs" role="tablist" aria-label="Sections">
+      <span class="tab-hov" aria-hidden="true"></span><span class="tab-ink" aria-hidden="true"></span>
       <button role="tab" id="tab-matrice" aria-controls="matrice" data-view="matrice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" fill="currentColor"/></svg><span>Contrastes</span></button>
       <button role="tab" id="tab-palette" aria-controls="palette" data-view="palette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3.5" width="16" height="4.5" rx="1.5"/><rect x="4" y="9.75" width="16" height="4.5" rx="1.5" fill="currentColor" fill-opacity=".35"/><rect x="4" y="16" width="16" height="4.5" rx="1.5" fill="currentColor"/></svg><span>Couleurs</span></button>
       <button role="tab" id="tab-tester" aria-controls="tester" data-view="tester"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19 8.5 5h1L15 19M5 14.5h8"/><path d="M21 19v-6.2a3 3 0 0 0-5.6-1.5M21 15.6c-2.4-.6-5.3 0-5.3 2 0 1.8 2.6 2.3 5.3.2"/></svg><span>Polices</span></button>
@@ -2571,7 +2584,17 @@ $("exFix").addEventListener("click", fixClick);
 $("jNext").addEventListener("click", fixClick);
 $("tsCrFix").addEventListener("click", fixClick);
 $("journey").addEventListener("click", e => { if (!e.target.closest("[data-hello]")) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("journey").querySelector(".j-hello"); if (h) h.remove(); $("journey").querySelector("a[aria-current]").focus(); });
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); }
+function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); tabInk(); }
+// Pastille glissante : suit l’onglet actif, et une pastille claire suit le survol et le focus clavier
+const TABS = document.querySelector("nav.tabs"), INK = TABS.querySelector(".tab-ink"), HOV = TABS.querySelector(".tab-hov");
+TABS.classList.add("has-ink");
+function inkTo(el, b, first) { if (!b) { el.classList.remove("on"); return; } if (first) el.classList.add("still"); el.style.width = b.offsetWidth + "px"; el.style.height = b.offsetHeight + "px"; el.style.transform = `translate(${b.offsetLeft}px,${b.offsetTop}px)`; el.classList.add("on"); if (first) { el.offsetWidth; el.classList.remove("still"); } }
+function tabInk(first) { const b = TABS.querySelector('button[aria-selected="true"]'); inkTo(INK, b, first || !INK.classList.contains("on")); }
+TABS.addEventListener("pointerover", e => { const b = e.target.closest("button"); if (!b || b.getAttribute("aria-selected") === "true") { HOV.classList.remove("on"); return; } inkTo(HOV, b, !HOV.classList.contains("on")); });
+TABS.addEventListener("pointerleave", () => HOV.classList.remove("on"));
+TABS.addEventListener("focusin", e => { const b = e.target.closest("button"); if (b && b.matches(":focus-visible") && b.getAttribute("aria-selected") !== "true") inkTo(HOV, b, !HOV.classList.contains("on")); else HOV.classList.remove("on"); });
+TABS.addEventListener("focusout", () => HOV.classList.remove("on"));
+addEventListener("resize", () => tabInk(true)); if (document.fonts) document.fonts.ready.then(() => tabInk(true));
 document.querySelectorAll("nav.tabs button").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
   b.addEventListener("keydown", e => { if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
