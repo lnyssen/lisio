@@ -1,7 +1,7 @@
 // Tests des seuils WCAG. Lancer : node --test tests/
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { floor2, grade, largeText, needRatio } from "../src/core/wcag.mjs";
+import { floor2, grade, largeText, needRatio, ratioTxt } from "../src/core/wcag.mjs";
 import { ratio } from "../src/core/color.mjs";
 import { rng, randHex } from "./ref.mjs";
 
@@ -37,4 +37,17 @@ test("l'affichage ne dit jamais « passe » quand le calcul échoue (20 000 pair
   const r = rng(7);
   for (let i = 0; i < 20000; i++) { const x = ratio(randHex(r), randHex(r));
     for (const t of [3, 4.5, 7]) assert.equal(floor2(x) >= t, x >= t); }
+});
+
+test("ratioTxt : tronque à l'affichage, jamais vers le haut (audit F1)", () => {
+  assert.equal(ratioTxt(9.95, 1), "9,9"); assert.equal(ratioTxt(4.48, 1), "4,4"); assert.equal(ratioTxt(2.999, 1), "2,9");
+  assert.equal(ratioTxt(10.96, 1), "10,9"); assert.equal(ratioTxt(4.499), "4,49"); assert.equal(ratioTxt(21), "21,00"); assert.equal(ratioTxt(7, 1), "7,0");
+  const r = rng(11), back = t => Number(t.replace(",", "."));
+  for (let i = 0; i < 20000; i++) {
+    const x = ratio(randHex(r), randHex(r));
+    for (const d of [1, 2]) { const t = ratioTxt(x, d); assert.ok(back(t) <= x, `${x} affiché ${t}`); assert.ok(x - back(t) < 10 ** -d + 1e-9); }
+    assert.equal(ratioTxt(x), floor2(x).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    // Aux seuils, l'affichage ne dit jamais « atteint » quand le calcul échoue.
+    for (const s of [3, 4.5, 7]) if (x < s) assert.ok(back(ratioTxt(x, 1)) < s && back(ratioTxt(x)) < s);
+  }
 });

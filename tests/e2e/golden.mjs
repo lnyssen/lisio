@@ -17,7 +17,7 @@ const PAGE = process.env.LISIO_PAGE || join(ROOT, "index.html");
 
 let chromium;
 try { ({ chromium } = createRequire(import.meta.url)("playwright")); }
-catch (e) { console.log("IGNORÉ : Playwright introuvable, tests de référence non exécutés."); process.exit(0); }
+catch (e) { console.log("IGNORÉ : Playwright introuvable, tests de référence non exécutés."); process.exit(process.env.CI ? 1 : 0); }
 
 export const PROJECTS = {
   exemple: { colors: null, state: {} },

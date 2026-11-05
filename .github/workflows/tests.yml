@@ -1,0 +1,29 @@
+# Contrôles de Lisio à chaque envoi et à chaque demande de fusion.
+# Les tests n'ajoutent aucune dépendance au site : Playwright et axe-core sont installés ici, hors du dépôt.
+name: Tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      NODE_PATH: ${{ runner.temp }}/tools/node_modules
+      AXE_PATH: ${{ runner.temp }}/tools/node_modules/axe-core/axe.min.js
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Outils de test (hors du dépôt)
+        run: |
+          npm install --prefix "$RUNNER_TEMP/tools" --no-save --no-audit --no-fund playwright@1.63.0 axe-core@4.10.2
+          "$RUNNER_TEMP/tools/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Tous les contrôles
+        run: sh tests/run.sh

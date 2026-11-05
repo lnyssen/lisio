@@ -11,7 +11,7 @@ import { dirname, join } from "node:path";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const PAGE = "file://" + (process.env.LISIO_PAGE || join(ROOT, "index.html"));
 let chromium;
-try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(0); }
+try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
 
 const MEDIA = [{ name: "Marine", hex: "#0D1D45" }, { name: "Bleu", hex: "#2F6BFF" }, { name: "Turquoise", hex: "#00B3B0" }];
 const MINE = [{ name: "Mon rouge", hex: "#B42318" }, { name: "Mon fond", hex: "#FFFFFF" }];

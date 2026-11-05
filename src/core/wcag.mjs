@@ -10,3 +10,7 @@ export const largeText = (px, weight) => px >= 24 || (px >= 18.66 && weight >= 7
 export const needRatio = (level, large = false) => level === "AAA" ? (large ? 4.5 : 7) : (large ? 3 : 4.5);
 // Pastille d'une paire, indépendante du niveau choisi : elle dit le plus haut niveau atteint.
 export const grade = r => r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AA", "b-aa"] : r >= 3 ? ["AA grand", "b-lg"] : ["✕ Échec", "b-no"];
+// Ratio affiché avec d décimales, tronqué comme floor2 (jamais arrondi au supérieur), virgule française.
+// 9,95 s'affiche « 9,9 » avec 1 décimale (et non « 10,0 »), 4,48 s'affiche « 4,4 » (et non « 4,5 »).
+// Avec d = 2, le résultat est identique à l'ancien fmt(floor2(r)).
+export const ratioTxt = (r, d = 2) => { const k = 10 ** d; return (Math.floor(r * k) / k).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }); };

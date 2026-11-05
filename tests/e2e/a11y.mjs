@@ -13,9 +13,9 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const PAGE = process.env.LISIO_PAGE || join(ROOT, "index.html");
 const req = createRequire(import.meta.url);
 let chromium, AXE;
-try { ({ chromium } = req("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(0); }
+try { ({ chromium } = req("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
 try { AXE = readFileSync(process.env.AXE_PATH || req.resolve("axe-core/axe.min.js"), "utf8"); }
-catch (e) { console.log("IGNORÉ : axe-core introuvable (définir AXE_PATH vers axe.min.js)."); process.exit(0); }
+catch (e) { console.log("IGNORÉ : axe-core introuvable (définir AXE_PATH vers axe.min.js)."); process.exit(process.env.CI ? 1 : 0); }
 
 const VIEWS = ["matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources", "exporter"];
 const SETUPS = [["desktop clair", 1440, 900, "light"], ["desktop sombre", 1440, 900, "dark"], ["mobile clair", 390, 844, "light"]];
@@ -39,6 +39,22 @@ for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
     if (keep.length) left.push(`${x.id} (${keep.length}) : ${x.help}\n      ${keep.slice(0, 3).join("\n      ")}`); }
   if (errs.length) left.push("erreurs JavaScript : " + errs.join(" | "));
   if (left.length) { fails++; console.log(`ÉCHEC ${label} #${v}\n    ${left.join("\n    ")}`); } else console.log(`ok    ${label} #${v}`);
+  await page.close();
+}
+// Fenêtres ouvertes (police, couleur, réglages, norme, aide, recherche) : axe sur leur contenu, en clair et en sombre.
+const OPEN = [["tester", "#dFont", "#popFont"], ["tester", "#dFg", "#popColor"], ["tester", "#dMore", "#popMore"], ["matrice", "#normChip", "#popNorm"], ["matrice", "#helpB", "#helpPop"], ["matrice", "CMDK", "#cmdk"]];
+for (const scheme of ["light", "dark"]) for (const [v, trig, zone] of OPEN) {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, colorScheme: scheme });
+  await page.route(/^https?:/, r => r.abort());
+  const errs = []; page.on("pageerror", e => errs.push(String(e)));
+  await page.goto("file://" + PAGE + "#" + v); await page.waitForTimeout(700);
+  if (trig === "CMDK") { await page.keyboard.press("Control+k"); await page.keyboard.type("contraste"); } else { await page.focus(trig); await page.keyboard.press("Enter"); }
+  await page.waitForTimeout(300); await page.addScriptTag({ content: AXE });
+  const vio = await page.evaluate(async z => (await axe.run(document.querySelector(z), { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] }, resultTypes: ["violations"] }))
+    .violations.map(x => `${x.id} (${x.nodes.length}) : ${x.help}\n      ${x.nodes.slice(0, 3).map(n => n.target.join(" ")).join("\n      ")}`), zone);
+  if (errs.length) vio.push("erreurs JavaScript : " + errs.join(" | "));
+  const lab = `fenêtre ${zone} ${scheme === "dark" ? "sombre" : "clair"}`;
+  if (vio.length) { fails++; console.log(`ÉCHEC ${lab}\n    ${vio.join("\n    ")}`); } else console.log(`ok    ${lab}`);
   await page.close();
 }
 // 1.4.10 (redistribution) : pas de défilement horizontal, et la barre du haut ne chevauche pas le logo.
