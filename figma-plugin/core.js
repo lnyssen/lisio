@@ -211,12 +211,29 @@ function lisioBackdrop(node) {
   const pg = figma.currentPage.backgrounds && lisioSolid(figma.currentPage.backgrounds);
   return { c: pg && pg.c ? pg.c : { r: 1, g: 1, b: 1 }, guess: true };
 }
-function lisioAudit(opts) {
+async function lisioPalette() {
+  const cols = await figma.variables.getLocalVariableCollectionsAsync(), col = cols.find(c => c.name === "Colors"); if (!col) return [];
+  const vars = await figma.variables.getLocalVariablesAsync("COLOR"), m = col.modes[0].modeId;
+  return vars.filter(v => v.variableCollectionId === col.id).map(v => ({ id: v.id, name: v.name, c: v.valuesByMode[m] })).filter(x => x.c && typeof x.c.r === "number");
+}
+function lisioFix(fg, bg, need, pal, fam) {
+  // No bound variable: take the family of the closest palette colour, so a grey stays grey and an orange stays orange
+  if (!fam && pal.length) { const d = x => (x.c.r - fg.r) ** 2 + (x.c.g - fg.g) ** 2 + (x.c.b - fg.b) ** 2; fam = pal.slice().sort((a, b) => d(a) - d(b))[0].name.split("/")[0]; }
+  const L = lisioLum(fg), pass = pal.filter(x => lisioRatio(x.c, bg) >= need), near = l => l.sort((a, b) => Math.abs(lisioLum(a.c) - L) - Math.abs(lisioLum(b.c) - L))[0];
+  const best = (fam && near(pass.filter(x => x.name.split("/")[0] === fam))) || near(pass.slice());
+  if (best) return { varId: best.id, name: best.name, hex: lisioToHex(best.c) };
+  const bw = [{ r: 0, g: 0, b: 0 }, { r: 1, g: 1, b: 1 }].filter(c => lisioRatio(c, bg) >= need).sort((a, b) => Math.abs(lisioLum(a) - L) - Math.abs(lisioLum(b) - L))[0];
+  return bw ? { hex: lisioToHex(bw), name: lisioToHex(bw) === "#000000" ? "noir" : "blanc" } : null;
+}
+async function lisioAudit(opts) {
   opts = opts || {}; const aaa = opts.level === "AAA", out = [], sel = figma.currentPage.selection;
-  const roots = sel.length ? sel : [figma.currentPage];
-  let texts = []; for (const r of roots) { if (r.type === "TEXT") texts.push(r); if ("findAll" in r) texts = texts.concat(r.findAll(n => n.type === "TEXT")); }
+  const roots = sel.length ? sel : [figma.currentPage], pal = await lisioPalette(), palHex = new Set(pal.map(x => lisioToHex(x.c))), varById = {};
+  pal.forEach(x => { varById[x.id] = x; });
+  let texts = [], all = []; for (const r of roots) { if (r.type === "TEXT") texts.push(r); if ("findAll" in r) { texts = texts.concat(r.findAll(n => n.type === "TEXT")); all = all.concat(r.findAll(n => "fills" in n)); } else if ("fills" in r) all.push(r); }
   const visible = n => { for (let x = n; x && x.type !== "PAGE"; x = x.parent) if (x.visible === false) return false; return true; };
   texts = texts.filter(visible); const total = texts.length; texts = texts.slice(0, 800);
+  const used = {};
+  for (const n of all.slice(0, 4000)) { if (!visible(n) || n.fills === figma.mixed) continue; const f = lisioSolid(n.fills); if (!f || !f.c) continue; const h = lisioToHex(f.c), bound = n.fills.some(p => p.boundVariables && p.boundVariables.color); const u = used[h] = used[h] || { hex: h, n: 0, bound: 0 }; u.n++; if (bound) u.bound++; }
   for (const t of texts) {
     if (!t.characters.trim()) continue;
     const bg = lisioBackdrop(t);
@@ -224,13 +241,94 @@ function lisioAudit(opts) {
     let worst = null;
     for (const s of segs) {
       const f = lisioSolid(s.fills); if (!f || !f.c) continue;
+      const h0 = lisioToHex(f.c), u = used[h0] = used[h0] || { hex: h0, n: 0, bound: 0 }; u.n++;
+      const bv = s.fills.find(p => p.boundVariables && p.boundVariables.color), vid = bv && bv.boundVariables.color.id; if (vid) u.bound++;
       const a = f.a * (t.opacity == null ? 1 : t.opacity), c = { r: f.c.r * a + bg.c.r * (1 - a), g: f.c.g * a + bg.c.g * (1 - a), b: f.c.b * a + bg.c.b * (1 - a) };
       const large = s.fontSize >= 24 || (s.fontSize >= 18.66 && s.fontWeight >= 700), need = aaa ? (large ? 4.5 : 7) : (large ? 3 : 4.5), r = lisioRatio(c, bg.c);
-      if (!worst || r / need < worst.r / worst.need) worst = { r, need, large, fg: lisioToHex(c), size: s.fontSize };
+      if (!worst || r / need < worst.r / worst.need) worst = { r, need, large, fg: lisioToHex(c), c, size: s.fontSize, fam: vid && varById[vid] ? varById[vid].name.split("/")[0] : null };
     }
     if (!worst) continue;
-    out.push({ id: t.id, name: t.name, text: t.characters.slice(0, 60), ratio: Math.floor(worst.r * 100) / 100, need: worst.need, large: worst.large, size: worst.size, fg: worst.fg, bg: lisioToHex(bg.c), guess: bg.guess, ok: worst.r >= worst.need });
+    const ok = worst.r >= worst.need;
+    out.push({ id: t.id, name: t.name, text: t.characters.slice(0, 60), ratio: Math.floor(worst.r * 100) / 100, need: worst.need, large: worst.large, size: worst.size, fg: worst.fg, bg: lisioToHex(bg.c), guess: bg.guess, ok, fix: ok ? null : lisioFix(worst.c, bg.c, worst.need, pal, worst.fam) });
   }
   out.sort((a, b) => (a.ok - b.ok) || (a.ratio / a.need - b.ratio / b.need));
-  return { total, checked: out.length, fails: out.filter(x => !x.ok).length, items: out.slice(0, 200), scope: sel.length ? "selection" : "page" };
+  const colors = Object.values(used).map(u => ({ hex: u.hex, n: u.n, inSystem: pal.length ? palHex.has(u.hex) || u.bound === u.n : null, bound: u.bound })).sort((a, b) => b.n - a.n);
+  return { total, checked: out.length, fails: out.filter(x => !x.ok).length, items: out.slice(0, 200), scope: sel.length ? "selection" : "page", colors: colors.slice(0, 40), nColors: colors.length, offSystem: pal.length ? colors.filter(c => !c.inSystem).length : null, hasPalette: pal.length > 0 };
+}
+async function lisioApplyFix(id, fix) {
+  const n = await figma.getNodeByIdAsync(id); if (!n || n.type !== "TEXT" || !fix) return false;
+  const fonts = n.characters.length ? n.getRangeAllFontNames(0, n.characters.length) : [n.fontName]; for (const f of fonts) if (f && f !== figma.mixed) await figma.loadFontAsync(f);
+  let paint = { type: "SOLID", color: lisioHex(fix.hex) };
+  if (fix.varId) { const v = await figma.variables.getVariableByIdAsync(fix.varId); if (v) paint = figma.variables.setBoundVariableForPaint(paint, "color", v); }
+  n.fills = [paint]; return true;
+}
+
+// ---------- Components bound to the Semantic variables ----------
+async function lisioComponents() {
+  const cols = await figma.variables.getLocalVariableCollectionsAsync(), vars = await figma.variables.getLocalVariablesAsync();
+  const sem = cols.find(c => c.name === "Semantic"), dim = cols.find(c => c.name === "Dimensions");
+  if (!sem) throw new Error("Importez d’abord le design system : la collection Semantic est introuvable.");
+  const V = (col, name) => col ? vars.find(v => v.variableCollectionId === col.id && v.name === name) : null;
+  const resolve = v => { let x = v, g = 0; while (x && g++ < 6) { const col = cols.find(c => c.id === x.variableCollectionId), val = x.valuesByMode[col.modes[0].modeId]; if (val && val.type === "VARIABLE_ALIAS") { x = vars.find(y => y.id === val.id); continue; } return val; } return null; };
+  const paint = name => { const v = V(sem, name); if (!v) return []; const c = resolve(v) || { r: 0, g: 0, b: 0 }; return [figma.variables.setBoundVariableForPaint({ type: "SOLID", color: { r: c.r, g: c.g, b: c.b } }, "color", v)]; };
+  const bindNum = (node, field, name, fallback) => { const v = V(dim, name), val = v ? resolve(v) : null; node[field] = typeof val === "number" ? val : fallback; if (v) try { node.setBoundVariable(field, v); } catch (e) {} };
+  const radius = node => ["topLeftRadius", "topRightRadius", "bottomLeftRadius", "bottomRightRadius"].forEach(f => bindNum(node, f, "radius/control", 8));
+  const styles = await figma.getLocalTextStylesAsync(), st = base => styles.find(s => s.name === base + "/Desktop") || styles.find(s => s.name.startsWith(base + "/"));
+  const loaded = {};
+  const text = async (chars, styleBase, color, fb) => {
+    const t = figma.createText(), s = st(styleBase);
+    if (s) { const k = JSON.stringify(s.fontName); if (!loaded[k]) { await figma.loadFontAsync(s.fontName); loaded[k] = 1; } await t.setTextStyleIdAsync(s.id); }
+    else { const f = { family: "Inter", style: fb || "Regular" }; await figma.loadFontAsync(f); t.fontName = f; t.fontSize = 16; }
+    t.characters = chars; t.fills = paint(color); return t;
+  };
+  let page = figma.root.children.find(p => p.name === "Lisio components");
+  if (page && page.children.some(n => n.type === "COMPONENT_SET" && ["Button", "Field", "Alert"].includes(n.name))) return { skipped: true, page: page.id };
+  if (!page) { page = figma.createPage(); page.name = "Lisio components"; }
+  await figma.setCurrentPageAsync(page);
+  const auto = (dir, props) => { const f = figma.createComponent(); f.layoutMode = dir; f.primaryAxisSizingMode = "AUTO"; f.counterAxisSizingMode = "AUTO"; f.fills = []; Object.assign(f, props || {}); return f; };
+  const sets = [];
+  // Button
+  const btns = [];
+  for (const type of ["Primary", "Secondary"]) for (const state of ["Default", "Hover", "Pressed", "Disabled"]) {
+    const c = auto("HORIZONTAL", { name: `Type=${type}, State=${state}`, primaryAxisAlignItems: "CENTER", counterAxisAlignItems: "CENTER", paddingLeft: 20, paddingRight: 20, paddingTop: 10, paddingBottom: 10 });
+    bindNum(c, "minHeight", "size/target-comfort", 44); radius(c);
+    const off = state === "Disabled", key = state === "Default" ? "action/default" : state === "Hover" ? "action/hover" : "action/pressed";
+    if (type === "Primary") { c.fills = paint(off ? "disabled/surface" : key); c.appendChild(await text("Envoyer", "Button", off ? "disabled/text" : "text/on-action", "Semi Bold")); }
+    else { c.fills = paint(off ? "disabled/surface" : state === "Default" ? "background/default" : "background/subtle"); if (!off) { c.strokes = paint(key); c.strokeWeight = 1.5; } c.appendChild(await text("Annuler", "Button", off ? "disabled/text" : key, "Semi Bold")); }
+    btns.push(c);
+  }
+  // Field
+  const fields = [];
+  for (const state of ["Default", "Focus", "Error", "Disabled"]) {
+    const c = auto("VERTICAL", { name: `State=${state}`, itemSpacing: 6 }), off = state === "Disabled";
+    c.appendChild(await text("Adresse e-mail", "Label", "text/default", "Semi Bold"));
+    const box = figma.createFrame(); box.name = "Input"; box.layoutMode = "HORIZONTAL"; box.counterAxisAlignItems = "CENTER"; box.resize(320, 44); box.primaryAxisSizingMode = "FIXED"; box.counterAxisSizingMode = "AUTO"; box.paddingLeft = box.paddingRight = 12; box.paddingTop = box.paddingBottom = 10;
+    bindNum(box, "minHeight", "size/target-comfort", 44); radius(box);
+    box.fills = paint(off ? "disabled/surface" : "background/default");
+    box.strokes = paint(state === "Focus" ? "focus/ring" : state === "Error" ? "error/border" : off ? "border/subtle" : "border/default"); box.strokeWeight = state === "Focus" || state === "Error" ? 2 : 1;
+    box.appendChild(await text(state === "Default" ? "nom@exemple.fr" : state === "Error" ? "nom@exemple" : "camille@exemple.fr", "Body", off ? "disabled/text" : "text/default"));
+    c.appendChild(box);
+    c.appendChild(await text(state === "Error" ? "Erreur : indiquez une adresse complète, par exemple nom@exemple.fr." : off ? "Modifiable après validation de votre compte." : "Nous l’utilisons seulement pour vous répondre.", "Small", state === "Error" ? "error/text" : "text/muted"));
+    fields.push(c);
+  }
+  // Alert
+  const alerts = [];
+  for (const [k, title, body] of [["error", "Erreur", "Le paiement n’a pas abouti. Vérifiez la date d’expiration de la carte."], ["success", "Succès", "Votre demande est envoyée. Vous recevrez une réponse sous 48 heures."], ["warning", "Attention", "Votre session expire dans 5 minutes. Enregistrez votre travail."], ["info", "Information", "Le service sera interrompu dimanche de 2 h à 4 h."]]) {
+    const c = auto("HORIZONTAL", { name: `Status=${k[0].toUpperCase() + k.slice(1)}`, itemSpacing: 12, paddingLeft: 16, paddingRight: 16, paddingTop: 14, paddingBottom: 14 });
+    c.resize(440, c.height); c.primaryAxisSizingMode = "FIXED"; c.counterAxisSizingMode = "AUTO"; radius(c); c.fills = paint(k + "/surface"); c.strokes = paint(k + "/border"); c.strokeWeight = 1;
+    const bar = figma.createRectangle(); bar.name = "Accent"; bar.resize(4, 20); bar.fills = paint(k + "/border"); bar.cornerRadius = 2; c.appendChild(bar); bar.layoutAlign = "STRETCH";
+    const col = figma.createFrame(); col.name = "Content"; col.layoutMode = "VERTICAL"; col.itemSpacing = 4; col.fills = []; col.primaryAxisSizingMode = "AUTO"; c.appendChild(col); col.layoutGrow = 1;
+    col.appendChild(await text(title, "Label", k + "/text", "Semi Bold"));
+    const b = await text(body, "Body", "text/default"); col.appendChild(b); b.layoutAlign = "STRETCH"; b.textAutoResize = "HEIGHT";
+    alerts.push(c);
+  }
+  let y = 80;
+  for (const [name, list, desc] of [["Button", btns, "Lisio button. Colours bound to Semantic variables, minimum height 44 px (WCAG 2.5.8 needs 24 px). Disabled state is exempt from contrast (SC 1.4.3): explain why it is disabled."], ["Field", fields, "Lisio text field. Visible label, help text, 3:1 border (SC 1.4.11), 2 px focus ring, error stated in words (SC 3.3.1), not only in red (SC 1.4.1)."], ["Alert", alerts, "Lisio alert. The title word carries the meaning, the colour only reinforces it (SC 1.4.1). Text checked on its surface in Light and Dark."]]) {
+    const set = figma.combineAsVariants(list, page); set.name = name; set.description = desc;
+    set.layoutMode = "HORIZONTAL"; set.layoutWrap = "WRAP"; set.itemSpacing = 24; set.counterAxisSpacing = 24; set.paddingLeft = set.paddingRight = set.paddingTop = set.paddingBottom = 32;
+    set.resize(name === "Button" ? 560 : 1100, set.height); set.primaryAxisSizingMode = "FIXED"; set.counterAxisSizingMode = "AUTO"; set.fills = paint("background/default");
+    set.x = 80; set.y = y; y += set.height + 80; sets.push(set);
+  }
+  figma.viewport.scrollAndZoomIntoView(sets);
+  return { skipped: false, page: page.id, components: btns.length + fields.length + alerts.length };
 }

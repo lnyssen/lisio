@@ -265,6 +265,25 @@ nav.tabs button[aria-selected="true"]{color:var(--primary-ink);background:var(--
 /* contrôles génériques */
 input[type=text],input[type=number],input[type=search],select,textarea{font:inherit;font-weight:500;color:var(--ink);background:var(--surface);border:1.5px solid var(--field);border-radius:10px;padding:8px 10px;min-width:0}
 textarea{width:100%;resize:vertical;line-height:1.55;font-size:16px}
+.fm{gap:18px;max-width:860px}.fm-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.fm-prog{font-size:13px;font-weight:700;color:var(--muted)}
+.fm-bar{height:6px;border-radius:99px;background:var(--hover);overflow:hidden}.fm-bar i{display:block;height:100%;background:var(--primary);border-radius:99px}
+.fm-q{font-size:22px;font-weight:700;line-height:1.3;margin:0}.fm-kind{font-size:12px;font-weight:700;color:var(--muted);margin:0}
+.fm-smp{border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;gap:6px;box-shadow:inset 0 0 0 1px var(--hair)}.fm-smp b{font-size:26px;line-height:1.15}.fm-smp span{font-size:16px}
+.fm-as{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.fm-a{font:inherit;font-size:15px;font-weight:650;text-align:left;min-height:52px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--field);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px}
+@media (hover:hover){.fm-a:not(:disabled):hover{border-color:var(--ink);background:var(--hover)}}
+.fm-a:disabled{cursor:default}.fm-a.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ink)}.fm-a.no{border-color:var(--bad);background:var(--bad-bg);color:var(--ink)}.fm-a .m{margin-left:auto;font-weight:800}.fm-a.ok .m{color:var(--ok)}.fm-a.no .m{color:var(--bad)}
+.fm-fb{border-radius:12px;padding:14px 16px;background:var(--hover);margin:0;line-height:1.5}.fm-fb b{display:block;margin-bottom:2px}.fm-fb:empty{display:none}
+.fm-end h2{font-size:28px;margin:0}.fm-miss{display:flex;flex-direction:column;gap:10px;padding:0;list-style:none;margin:0}.fm-miss li{border-left:3px solid var(--bad);padding:4px 0 4px 12px}
+.g-train{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap;background:var(--hover);border-radius:12px;padding:16px 18px;margin-bottom:6px}.g-train h2{margin:0 0 2px}.g-train p{margin:0}
+.mn-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.seg button[aria-pressed="true"] .muted{color:inherit;opacity:.85}.mn-edit .ex-name{flex:0 1 360px}.mn-edit{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.mn-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px 24px}
+.mn-g{border:0;margin:0;padding:0;min-width:0}.mn-g legend{font-weight:800;font-size:15px;padding:0;margin-bottom:6px}
+.mn-i{display:grid;grid-template-columns:22px minmax(0,1fr);gap:4px 10px;align-items:start;padding:8px 0;border-top:1px solid var(--hair);font-size:14px;font-weight:600;color:var(--ink)}
+.mn-i input{margin-top:1px}.mn-i small{grid-column:2;font-weight:500;color:var(--muted);font-size:13px;line-height:1.45}.mn-i small a{color:inherit}
+.cmp-k{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 8px}.cmp-k div{border:1.5px solid var(--hair);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--muted)}.cmp-k b{display:block;font-size:18px;color:var(--ink)}
+.cmp-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;font-size:14px}.cmp-l li{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:6px 0;border-top:1px solid var(--hair)}.cmp-l code{font-family:var(--code);font-size:12.5px}
+.cmp-v{display:inline-flex;align-items:center;gap:6px;font-weight:600}.cmp-v i{width:14px;height:14px;border-radius:4px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 25%,transparent);display:inline-block}
 .app-skip{position:fixed;left:12px;top:-60px;z-index:100;background:var(--primary);color:var(--primary-ink);font-weight:700;padding:10px 16px;border-radius:999px;text-decoration:none}.app-skip:focus{top:calc(10px + env(safe-area-inset-top,0px))}
 main:focus{outline:none}
 select{-webkit-appearance:none;appearance:none;background-image:var(--chev);background-repeat:no-repeat;background-position:right 12px center;background-size:14px 14px;padding-right:36px}
@@ -814,6 +833,10 @@ a.btn{text-decoration:none}
 
   <!-- SOURCES -->
   <!-- EXPORTER -->
+  <section id="formation" role="region" aria-labelledby="fmH" hidden style="display:flex;flex-direction:column;gap:20px">
+    <header class="mhead phead"><div><h1 id="fmH">S’entraîner</h1><p class="lead">Dix questions courtes sur les contrastes, les seuils et les rôles, avec vos propres couleurs. Chaque réponse est expliquée. Pour démarrer seul, ou pour une séance de formation en équipe, écran partagé.</p></div></header>
+    <div class="card-surface fm" id="fmBox"></div>
+  </section>
   <section id="exporter" role="region" aria-labelledby="exH" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1 id="exH">Exporter le design system</h1><p class="lead">Un seul fichier, <code>lisio-design-system.json</code>, contient tout ce que vous avez réglé dans Lisio. Le plugin Lisio le transforme en variables et en styles Figma, avec les mêmes noms pour toute l’équipe.</p></div></header>
     <div class="card-surface ex-hero">
@@ -828,6 +851,13 @@ a.btn{text-decoration:none}
       <div class="row"><button class="btn primary" type="button" id="prjLink">Copier le lien de partage</button><button class="btn" type="button" id="prjSave">Enregistrer le projet</button><button class="btn" type="button" id="prjOpen">Ouvrir un projet</button><input type="file" id="prjFile" accept=".json,application/json" hidden></div>
       <p class="note" id="prjNote"></p>
     </div>
+    <div class="card-surface" id="exManual">
+      <div class="row between"><h2>À vérifier à la main, écran par écran</h2><p class="note" id="mnCount" style="margin:0"></p></div>
+      <p class="note">Lisio mesure les couleurs, la typographie et les composants de base. Le reste se vérifie sur les vrais écrans, au clavier et avec un lecteur d’écran. Ajoutez vos écrans, cochez au fur et à mesure : tout est repris dans le rapport.</p>
+      <div class="mn-bar"><div class="seg" role="group" aria-label="Écran vérifié" id="mnScreens"></div><button class="btn sm" type="button" id="mnAdd">Ajouter un écran</button></div>
+      <div class="mn-edit"><label class="ex-name">Nom de cet écran<input type="text" id="mnName" maxlength="40"></label><button class="btn sm" type="button" id="mnDel">Retirer cet écran</button></div>
+      <div id="mnList" class="mn-list"></div>
+    </div>
     <div class="card-surface" id="exReport">
       <h2>Rapport d’accessibilité</h2>
       <p class="note">Une page à imprimer ou à enregistrer en PDF : vos couleurs, chaque paire, chaque rôle en clair et en sombre, chaque style de texte, avec le ratio, le seuil et le verdict. Pratique pour une revue, un client ou un dossier de conformité. Il dit aussi ce que Lisio ne vérifie pas.</p>
@@ -836,6 +866,12 @@ a.btn{text-decoration:none}
     <div class="card-surface" id="exHist">
       <div class="row between"><h2>Depuis le dernier export</h2><button class="btn sm" type="button" id="histCopy" hidden>Copier le résumé pour l’équipe</button></div>
       <div id="histOut"></div>
+    </div>
+    <div class="card-surface" id="exCmp">
+      <div class="row between"><h2>Comparer deux versions</h2><button class="btn sm" type="button" id="cmpCopy" hidden>Copier le résumé</button></div>
+      <p class="note">Collez le lien de partage d’un collègue ou choisissez un fichier de projet : Lisio liste ce qui diffère de votre version actuelle, variable par variable, et ce que ça change pour les contrastes. Rien n’est remplacé.</p>
+      <div class="row" style="align-items:flex-end"><label class="ex-name" style="flex:1 1 280px">Lien de partage<input type="text" id="cmpLink" placeholder="https://lisio-psi.vercel.app/?p=…"></label><button class="btn primary" type="button" id="cmpGo">Comparer</button><button class="btn" type="button" id="cmpPick">Choisir un fichier</button><input type="file" id="cmpFile" accept=".json,application/json" hidden></div>
+      <div id="cmpOut" aria-live="polite"></div>
     </div>
     
     <div class="card-surface">
@@ -866,6 +902,7 @@ a.btn{text-decoration:none}
   <section id="sources" role="tabpanel" aria-labelledby="tab-sources" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
     <div class="card-surface guide">
+      <div class="g-train"><div><h2>S’entraîner en dix questions</h2><p>Avant de commencer, ou pour former l’équipe : des questions courtes avec vos couleurs, et la réponse expliquée.</p></div><a class="btn primary" href="#formation">Commencer</a></div>
       <h2>Lisio en six étapes</h2>
       <p>Le bandeau en haut de chaque page indique où vous en êtes, et le bouton du bas mène à l’étape suivante. Les pastilles « ? » expliquent chaque notion en deux phrases.</p>
       <ol class="g-steps">
@@ -2416,7 +2453,7 @@ function renderDsPanel() {
   $("dsReset").disabled = dsIsBase();
   if (keep) { const el = document.querySelector(".ds-panel " + keep); if (el) el.focus(); }
 }
-const curView = () => [...VIEWS, "exporter"].find(n => !$(n).hidden);
+const curView = () => [...VIEWS, "exporter", "formation"].find(n => !$(n).hidden);
 const dsChanged = () => { save(); renderStyles(); if ($("systeme").hidden) renderDsPanel(); renderJourney(curView()); };
 $("dsRoles").addEventListener("change", e => { const k = e.target.dataset.role; if (k) { roleApply(k, e.target.value); dsChanged(); } });
 let hueT = null;
@@ -2434,6 +2471,7 @@ $("dsReset").addEventListener("click", () => { S.ds = JSON.parse(JSON.stringify(
 
 // ---------- Page Exporter ----------
 function renderExport2() {
+  renderManual();
   const txt = tsJson(), o = JSON.parse(txt), n = obj => { let c = 0; (function w(x) { for (const k in x) { const v = x[k]; if (k[0] === "$" || !v || typeof v !== "object") continue; if ("$value" in v) c++; else w(v); } })(obj); return c; };
   const nCol = n(o.color), nSem = n(o.semantic), nTy = Object.keys(o.typography).length, nLay = n(o.layout) - 1, nDim = n({ s: o.spacing, r: o.radius, z: o.size, b: o["border-width"] }) + 1;
   $("exSize").textContent = `${fmt(txt.length / 1024, 1)} Ko, ${nCol + nSem + nTy * 2 + 2 + nLay + nDim} variables et ${nTy * BP.length} styles de texte dans Figma`;
@@ -2476,7 +2514,7 @@ function renderJourney(v) {
   J.hidden = X.hidden = i < 0; if (i < 0) return;
   const [, , say, qs] = JOURNEY[i];
   let seen = true; try { seen = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
-  const hello = !seen && i === 0 ? `<div class="j-hello"><p><b>Nouveau sur Lisio ?</b> Suivez les six étapes ci-dessus, dans l’ordre ou non. Chaque page vérifie votre travail, signale ce qui ne passe pas et propose la correction. Les pastilles « ? » expliquent le jargon.</p><button type="button" class="btn sm" data-hello>Compris</button></div>` : "";
+  const hello = !seen && i === 0 ? `<div class="j-hello"><p><b>Nouveau sur Lisio ?</b> Suivez les six étapes ci-dessus, dans l’ordre ou non. Chaque page vérifie votre travail, signale ce qui ne passe pas et propose la correction. Les pastilles « ? » expliquent le jargon. Pour vous échauffer : <a href="#formation">dix questions avec la réponse expliquée</a>.</p><button type="button" class="btn sm" data-hello>Compris</button></div>` : "";
   J.innerHTML = `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="${n < i ? "done" : ""}"><span class="j-n">${n + 1}</span><span class="j-l">${lab}</span>${iss ? `<span class="j-i" title="${iss} à corriger">${iss}<span class="sr"> à corriger</span></span>` : ""}</a></li>`; }).join("")}</ol>
   <div class="j-now"><p><b>Étape ${i + 1} sur ${JOURNEY.length}.</b> ${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p></div>${hello}`;
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
@@ -2521,7 +2559,7 @@ $("exFix").addEventListener("click", fixClick);
 $("jNext").addEventListener("click", fixClick);
 $("tsCrFix").addEventListener("click", fixClick);
 $("journey").addEventListener("click", e => { if (!e.target.closest("[data-hello]")) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("journey").querySelector(".j-hello"); if (h) h.remove(); $("journey").querySelector("a[aria-current]").focus(); });
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); }
+function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "matrice"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); const tv = VIEWS.includes(v) ? v : null; VIEWS.forEach(n => { $(n).hidden = n !== v; const t = $("tab-" + n); t.setAttribute("aria-selected", n === v); t.tabIndex = n === v || (!tv && n === VIEWS[0]) ? 0 : -1; }); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); renderJourney(v); }
 document.querySelectorAll("nav.tabs button").forEach(b => {
   b.addEventListener("click", () => { const same = location.hash.slice(1) === b.dataset.view; location.hash = b.dataset.view; show(b.dataset.view); window.scrollTo({ top: 0, behavior: same && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "auto" }); });
   b.addEventListener("keydown", e => { if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return; const i = VIEWS.indexOf(b.dataset.view), n = VIEWS[(i + (e.key === "ArrowRight" ? 1 : VIEWS.length - 1)) % VIEWS.length]; $("tab-" + n).focus(); location.hash = n; show(n); });
@@ -2535,6 +2573,150 @@ document.addEventListener("keydown", e => {
 });
 window.addEventListener("hashchange", () => { show(location.hash.slice(1)); window.scrollTo(0, 0); });
 
+
+// ---------- Mode formation ----------
+const FM_LV = () => S.level === "AAA" ? { t: 7, g: 4.5, n: "AAA" } : { t: 4.5, g: 3, n: "AA" };
+const FM_THR = [
+  ["Un paragraphe de texte en 16 px", "t", "C’est du texte courant : il doit atteindre le seuil du texte (critère 1.4.3)."],
+  ["Un titre de 32 px", "g", "À partir de 24 px, c’est du grand texte : le seuil est plus bas, car les lettres sont plus faciles à distinguer."],
+  ["Un intertitre de 20 px en gras (700)", "g", "Le gras compte : dès 18,67 px en gras (14 pt), c’est du grand texte."],
+  ["Un intertitre de 20 px en graisse normale", "t", "Sous 24 px et sans gras, c’est du texte courant, même si c’est un titre."],
+  ["Le contour d’un champ de formulaire", "ui", "Le contour permet de repérer le champ : c’est un composant d’interface, 3:1 (critère 1.4.11)."],
+  ["Une icône seule qui sert de bouton, comme une loupe", "ui", "Sans texte, l’icône est le seul moyen de comprendre le bouton : 3:1 (critère 1.4.11)."],
+  ["Le libellé d’un bouton désactivé", "none", "Un composant inactif est exempté (critère 1.4.3). Dites quand même pourquoi il est inactif."],
+  ["Le logo de l’entreprise", "none", "Les logos et noms de marque sont exemptés par le critère 1.4.3."],
+  ["Le texte indicatif d’un champ, par exemple « nom@exemple.fr »", "t", "C’est du texte : il doit être lisible. Beaucoup de maquettes l’oublient et le mettent trop pâle."],
+  ["Un filet décoratif entre deux blocs", "none", "Un élément purement décoratif n’a pas de seuil. S’il sert à délimiter un champ, ce n’est plus de la décoration."],
+  ["Le contour de focus autour d’un lien", "ui", "Le focus montre où l’on est au clavier : il doit se voir, 3:1 au moins (critères 1.4.11 et 2.4.13)."]
+];
+const FM_COL = [
+  ["Un champ en erreur signalé seulement par une bordure rouge", false, "Une personne daltonienne peut ne pas voir le rouge. Ajoutez un message en texte et une icône (critères 1.4.1 et 3.3.1)."],
+  ["Un statut « Payé » écrit en vert, avec le mot « Payé »", true, "Le mot porte l’information : la couleur n’est qu’un renfort."],
+  ["Les courbes d’un graphique repérées par leur couleur et par leur nom écrit au bout de chaque ligne", true, "Le nom écrit suffit à distinguer les courbes, même sans voir les couleurs."],
+  ["Un lien dans un paragraphe, distingué seulement par sa couleur, sans soulignement", false, "Il faut un autre indice : le soulignement, le plus simple. Sinon 3:1 avec le texte autour et un indice au survol et au focus (critère 1.4.1)."],
+  ["Les champs obligatoires marqués seulement en rouge", false, "Ajoutez « obligatoire » ou un astérisque expliqué en haut du formulaire (critères 1.4.1 et 3.3.2)."]
+];
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function fmPair() {
+  const L = FM_LV(), sw = scales.flatMap(s => s.sw.map((h, i) => ({ h, n: `${s.name} ${STEPS[i]}` }))).concat([{ h: "#FFFFFF", n: "Blanc" }]);
+  const want = pick(["t", "g", "no"]); let a, b, r, k = 0;
+  do { a = pick(sw); b = pick(sw); r = ratio(a.h, b.h); k++; } while (k < 400 && (a.h === b.h || (want === "t" ? r < L.t : want === "g" ? r < L.g || r >= L.t : r >= L.g || r < 1.4)));
+  const ans = r >= L.t ? 0 : r >= L.g ? 1 : 2;
+  return { kind: "Paire de couleurs", q: `Ce texte en ${b.n} sur ${a.n} passe-t-il au niveau ${L.n} ?`, smp: { bg: a.h, fg: b.h }, opts: ["Oui, pour tout texte", "Seulement en grand texte et pour l’interface", "Non, décoration seulement"], ans,
+    why: `Le ratio est de ${f2(r)}:1. Il faut ${fmt(L.t, L.t % 1 ? 1 : 0)}:1 pour tout texte et ${fmt(L.g, L.g % 1 ? 1 : 0)}:1 pour le grand texte et l’interface, au niveau ${L.n}.` };
+}
+function fmThr() {
+  const L = FM_LV(), [sit, key, why] = pick(FM_THR), opts = ["Aucun seuil", "3:1", fmt(L.g, L.g % 1 ? 1 : 0) + ":1", fmt(L.t, L.t % 1 ? 1 : 0) + ":1"].filter((v, i, a) => a.indexOf(v) === i);
+  const val = key === "none" ? "Aucun seuil" : key === "ui" ? "3:1" : key === "g" ? fmt(L.g, L.g % 1 ? 1 : 0) + ":1" : fmt(L.t, L.t % 1 ? 1 : 0) + ":1";
+  return { kind: "Quel seuil ?", q: `${sit} : quel contraste minimum, au niveau ${L.n} ?`, opts, ans: opts.indexOf(val), why };
+}
+function fmRole() {
+  const main = ["text/default", "text/muted", "text/on-action", "background/default", "background/subtle", "action/default", "action/hover", "link/default", "border/default", "focus/ring", "disabled/text", "error/text"].filter(k => ROLE_FR[k] && ROLE_JOB[k]);
+  const k = pick(main), others = shuffle(main.filter(x => x !== k && ROLE_FR[x][0] !== ROLE_FR[k][0])).slice(0, 2), opts = shuffle([k, ...others]);
+  const [, pair, kind] = ROLE_FR[k], need = roleNeed(k);
+  return { kind: "Quel rôle ?", q: `« ${ROLE_JOB[k].replace(/\.$/, "")} » : quel rôle du design system ?`, opts: opts.map(x => ROLE_FR[x][0]), ans: opts.indexOf(k),
+    why: `C’est « ${ROLE_FR[k][0]} ». ${pair ? `Lisio le vérifie avec « ${ROLE_FR[pair][0]} »${need ? ` : ${fmt(need, need % 1 ? 1 : 0)}:1 minimum` : ", sans seuil"}.` : "Il n’a pas de partenaire à vérifier."}${kind === "off" ? " Exempté, car inactif." : ""} Dans Figma, c’est la variable ${k}.` };
+}
+function fmNum() {
+  if (scales.length < 2) return fmThr();
+  const [s1, s2] = shuffle(scales).slice(0, 2), i = STEPS.indexOf(700), j = STEPS.indexOf(100), r1 = ratio(s1.sw[i], s1.sw[j]), r2 = ratio(s2.sw[i], s2.sw[j]), L = FM_LV(), ok = r2 >= L.t;
+  return { kind: "Les numéros", q: `En ${s1.name}, le texte 700 sur le fond 100 fait ${f2(r1)}:1. Et en ${s2.name}, le 700 sur le 100 passe-t-il au niveau ${L.n} ?`, smp: { bg: s2.sw[j], fg: s2.sw[i] }, opts: ["Oui", "Non", "Impossible à dire sans tester"], ans: ok ? 0 : 1,
+    why: `${f2(r2)}:1. Dans Lisio, un même numéro a la même clarté dans toutes les couleurs : les contrastes se retiennent par numéros, sans tout retester.` };
+}
+function fmCol() { const [sit, ok, why] = pick(FM_COL); return { kind: "La couleur seule", q: `${sit} : est-ce suffisant ?`, opts: ["Oui, c’est suffisant", "Non, il faut un autre indice"], ans: ok ? 0 : 1, why }; }
+let fmQ = null, fmI = 0, fmOk = 0, fmMiss = [];
+function fmStart() {
+  const gen = [fmPair, fmPair, fmPair, fmThr, fmThr, fmThr, fmRole, fmRole, fmNum, fmCol], seen = new Set();
+  fmQ = shuffle(gen).map(g => { let q, k = 0; do { q = g(); k++; } while (seen.has(q.q) && k < 20); seen.add(q.q); return q; });
+  fmI = 0; fmOk = 0; fmMiss = []; fmRender();
+}
+function fmRender(focus) {
+  const B = $("fmBox"), n = fmQ.length;
+  if (fmI >= n) {
+    const msg = fmOk === n ? "Sans faute. Vous pouvez former les autres." : fmOk >= n * 0.7 ? "Très bien. Relisez les explications ci-dessous." : "C’est un début : relisez les explications, puis recommencez.";
+    B.innerHTML = `<div class="fm-end"><p class="fm-kind">Résultat</p><h2 tabindex="-1" id="fmEnd">${fmOk} sur ${n}</h2><p>${msg}</p></div>${fmMiss.length ? `<h3>À revoir</h3><ul class="fm-miss">${fmMiss.map(x => `<li><b>${esc(x.q)}</b><br>Réponse : ${esc(x.opts[x.ans])}. ${esc(x.why)}</li>`).join("")}</ul>` : ""}<div class="row"><button class="btn primary" type="button" id="fmAgain">Dix nouvelles questions</button><a class="btn" href="#sources">Lire le guide</a></div>`;
+    $("fmAgain").onclick = () => { fmStart(); const a = B.querySelector(".fm-a"); if (a) a.focus(); };
+    if (focus) $("fmEnd").focus(); return;
+  }
+  const q = fmQ[fmI];
+  B.innerHTML = `<div class="fm-top"><p class="fm-prog">Question ${fmI + 1} sur ${n} · ${fmOk} bonne${fmOk > 1 ? "s" : ""} réponse${fmOk > 1 ? "s" : ""}</p><button class="btn sm" type="button" id="fmRestart">Recommencer</button></div><div class="fm-bar" aria-hidden="true"><i style="width:${fmI / n * 100}%"></i></div>
+    <p class="fm-kind">${q.kind}</p><h2 class="fm-q" id="fmQ" tabindex="-1">${esc(q.q)}</h2>
+    ${q.smp ? `<div class="fm-smp" style="background:${q.smp.bg};color:${q.smp.fg}" aria-hidden="true"><b>Votre attestation est prête</b><span>Téléchargez-la avant le 30 juin, depuis votre espace personnel.</span></div>` : ""}
+    <div class="fm-as" role="group" aria-labelledby="fmQ">${q.opts.map((o, i) => `<button type="button" class="fm-a" data-i="${i}">${esc(o)}<span class="m" aria-hidden="true"></span></button>`).join("")}</div>
+    <p class="fm-fb" id="fmFb" role="status"></p><div class="row" id="fmNav" hidden><button class="btn primary" type="button" id="fmNext">${fmI + 1 < n ? "Question suivante" : "Voir le résultat"}</button></div>`;
+  $("fmRestart").onclick = () => { fmStart(); $("fmQ").focus(); };
+  B.querySelectorAll(".fm-a").forEach(b => b.onclick = () => {
+    const i = +b.dataset.i, good = i === q.ans; if (good) fmOk++; else fmMiss.push(q);
+    B.querySelectorAll(".fm-a").forEach(x => { x.disabled = true; const j = +x.dataset.i; if (j === q.ans) { x.classList.add("ok"); x.querySelector(".m").textContent = "✓ Bonne réponse"; } else if (j === i) { x.classList.add("no"); x.querySelector(".m").textContent = "✕ Votre choix"; } });
+    $("fmFb").innerHTML = `<b>${good ? "Bonne réponse." : `Pas tout à fait : la réponse est « ${esc(q.opts[q.ans])} ».`}</b>${esc(q.why)}`;
+    $("fmNav").hidden = false; $("fmNext").focus();
+    $("fmNext").onclick = () => { fmI++; fmRender(true); };
+  });
+  if (focus) $("fmQ").focus();
+}
+
+// ---------- À vérifier à la main ----------
+const MANUAL = [
+  ["Clavier", [["kb", "Tout se fait au clavier", "Tab, Maj + Tab, Entrée, Espace, flèches : chaque lien, bouton, menu et champ s’atteint et s’utilise.", "2.1.1", "keyboard"], ["trap", "Aucun piège clavier", "On sort de chaque fenêtre, menu ou lecteur vidéo avec Tab ou Échap.", "2.1.2", "no-keyboard-trap"], ["order", "Ordre du focus logique", "Le focus suit l’ordre de lecture, sans saut d’un bout à l’autre de la page.", "2.4.3", "focus-order"], ["focus", "Focus toujours visible et non masqué", "Le contour de focus se voit partout, et aucun bandeau collant ne le cache.", "2.4.7", "focus-visible"]]],
+  ["Images et médias", [["alt", "Textes alternatifs", "Chaque image utile a une alternative qui dit ce qu’elle apporte ; les images décoratives ont alt=\"\".", "1.1.1", "non-text-content"], ["cc", "Sous-titres", "Chaque vidéo avec du son a des sous-titres synchronisés.", "1.2.2", "captions-prerecorded"], ["motion", "Mouvement maîtrisé", "Ce qui bouge plus de 5 secondes peut être mis en pause ; rien ne clignote plus de 3 fois par seconde.", "2.2.2", "pause-stop-hide"]]],
+  ["Formulaires", [["label", "Chaque champ a une étiquette visible", "Pas seulement un texte indicatif qui disparaît à la saisie.", "3.3.2", "labels-or-instructions"], ["err", "Erreurs décrites en texte", "Le message dit ce qui ne va pas et comment corriger, pas seulement une bordure rouge.", "3.3.1", "error-identification"], ["name", "Noms lus par le lecteur d’écran", "Les boutons-icônes et les champs ont un nom accessible, vérifié avec VoiceOver ou NVDA.", "4.1.2", "name-role-value"]]],
+  ["Structure et contenu", [["title", "Titre de page unique", "L’onglet du navigateur dit où l’on est : « Contact, Ma marque ».", "2.4.2", "page-titled"], ["head", "Titres dans l’ordre", "Un seul h1, puis h2, h3 sans sauter de niveau, qui décrivent vraiment les sections.", "1.3.1", "info-and-relationships"], ["lang", "Langue déclarée", "lang=\"fr\" sur la page, et sur les passages dans une autre langue.", "3.1.1", "language-of-page"], ["link", "Liens explicites", "Le texte du lien dit où il mène : pas de « cliquez ici ».", "2.4.4", "link-purpose-in-context"]]],
+  ["Zoom et petits écrans", [["zoom", "Lisible à 200 %", "Zoom du navigateur à 200 % : rien n’est coupé ni superposé.", "1.4.4", "resize-text"], ["reflow", "Lisible à 320 px de large", "Sans défilement horizontal, sauf pour les tableaux et les cartes.", "1.4.10", "reflow"], ["target", "Cibles assez grandes", "Au moins 24 × 24 px, ou assez espacées. 44 px est plus confortable sur mobile.", "2.5.8", "target-size-minimum"]]]
+];
+const MN_IDS = MANUAL.flatMap(([, it]) => it.map(x => x[0]));
+const mnState = () => { if (!S.manual || !Array.isArray(S.manual.screens) || !S.manual.screens.length) S.manual = { screens: [{ name: "Accueil", ok: {} }], cur: 0 }; if (S.manual.cur >= S.manual.screens.length) S.manual.cur = 0; return S.manual; };
+function renderManual(focusSel) {
+  const M = mnState(), sc = M.screens[M.cur];
+  $("mnScreens").innerHTML = M.screens.map((x, i) => { const n = MN_IDS.filter(id => x.ok[id]).length; return `<button type="button" data-i="${i}" aria-pressed="${i === M.cur}">${esc(x.name || "Sans nom")} <span class="muted">${n}/${MN_IDS.length}</span></button>`; }).join("");
+  $("mnName").value = sc.name; $("mnDel").disabled = M.screens.length < 2;
+  const done = M.screens.reduce((t, x) => t + MN_IDS.filter(id => x.ok[id]).length, 0), all = M.screens.length * MN_IDS.length;
+  $("mnCount").textContent = `${done} sur ${all} vérifiés, ${M.screens.length} écran${M.screens.length > 1 ? "s" : ""}`;
+  $("mnList").innerHTML = MANUAL.map(([g, it]) => `<fieldset class="mn-g"><legend>${g}</legend>${it.map(([id, t, how, c, u]) => `<label class="mn-i"><input type="checkbox" data-mn="${id}"${sc.ok[id] ? " checked" : ""}><span>${t}</span><small>${how} <a href="https://www.w3.org/WAI/WCAG22/Understanding/${u}.html" target="_blank" rel="noopener">Critère ${c}</a></small></label>`).join("")}</fieldset>`).join("");
+  if (focusSel) { const el = document.querySelector(focusSel); if (el) el.focus(); }
+}
+$("mnList").addEventListener("change", e => { const id = e.target.dataset.mn; if (!id) return; const M = mnState(), sc = M.screens[M.cur]; if (e.target.checked) sc.ok[id] = true; else delete sc.ok[id]; save(); renderManual(`[data-mn="${id}"]`); });
+$("mnScreens").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (!b) return; mnState().cur = +b.dataset.i; save(); renderManual(`#mnScreens button[data-i="${b.dataset.i}"]`); });
+$("mnAdd").addEventListener("click", () => { const M = mnState(); M.screens.push({ name: `Écran ${M.screens.length + 1}`, ok: {} }); M.cur = M.screens.length - 1; save(); renderManual("#mnName"); $("mnName").select(); });
+$("mnName").addEventListener("input", e => { const M = mnState(); M.screens[M.cur].name = e.target.value.trim().slice(0, 40); save(); const b = $("mnScreens").querySelector(`[data-i="${M.cur}"]`); if (b) b.firstChild.textContent = (M.screens[M.cur].name || "Sans nom") + " "; });
+$("mnDel").addEventListener("click", () => { const M = mnState(); if (M.screens.length < 2) return; const nm = M.screens[M.cur].name; M.screens.splice(M.cur, 1); M.cur = 0; save(); renderManual(`#mnScreens button[data-i="0"]`); toast(`« ${nm} » retiré. Annuler : Ctrl ou ⌘ + Z`); });
+function manualReport() {
+  const M = mnState(), cols = M.screens;
+  return `<h2>Vérifications manuelles</h2><p>Cochées par l’équipe, écran par écran. Une case vide veut dire « pas encore vérifié », pas « en échec ».</p><table><thead><tr><th scope="col">Point</th>${cols.map(c => `<th scope="col">${esc(c.name || "Sans nom")}</th>`).join("")}</tr></thead><tbody>${MANUAL.map(([g, it]) => `<tr><th scope="rowgroup" colspan="${cols.length + 1}" style="background:#f7f7f9">${g}</th></tr>` + it.map(([id, t, , c]) => `<tr><th scope="row">${t} <small>(${c})</small></th>${cols.map(x => `<td class="${x.ok[id] ? "ok" : ""}">${x.ok[id] ? "✓ Vérifié" : "–"}</td>`).join("")}</tr>`).join("")).join("")}</tbody></table>`;
+}
+
+// ---------- Comparer deux versions ----------
+function prjSnapshot(o) {
+  const keepS = JSON.stringify(S), keepP = palette;
+  try { Object.keys(S).forEach(k => delete S[k]); Object.assign(S, DEF, JSON.parse(JSON.stringify(o.state))); palette = o.colors.map(c => ({ name: String(c.name || "Couleur"), hex: normHex(c.hex) })); buildScales();
+    return { flat: flatTokens(tsJson()), roles: allIssues().length, styles: S.ts.styles.filter(st => !tsVerdict(st).ok).length, colors: palette.map(c => c.name + " " + c.hex) }; }
+  finally { Object.keys(S).forEach(k => delete S[k]); Object.assign(S, JSON.parse(keepS)); palette = keepP; buildScales(); }
+}
+let cmpLast = null;
+function renderCmp(o) {
+  const A = prjSnapshot(o), now = { flat: flatTokens(tsJson()), roles: allIssues().length, styles: S.ts.styles.filter(st => !tsVerdict(st).ok).length };
+  const C = [], Ad = [], D = [];
+  for (const k in now.flat) { if (!(k in A.flat)) Ad.push(k); else if (A.flat[k] !== now.flat[k]) C.push([k, A.flat[k], now.flat[k]]); }
+  for (const k in A.flat) if (!(k in now.flat)) D.push(k);
+  const nm = o.name ? `« ${esc(o.name)} »` : "le projet chargé", d = o.savedAt ? ` (${new Date(o.savedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long" })})` : "";
+  const v = x => { const t = prettyVal(x); return /^#[0-9A-F]{6}$/i.test(t) ? `<span class="cmp-v"><i style="background:${t}"></i>${t}</span>` : `<span class="cmp-v">${esc(t)}</span>`; };
+  const arrow = (a, b) => a === b ? `${a}` : `${a} → <b>${b}</b>`;
+  cmpLast = { nm: o.name || "projet chargé", C, Ad, D, A, now };
+  $("cmpOut").innerHTML = `<p class="note">De ${nm}${d} à votre version actuelle : <b>${C.length} modifiée${C.length > 1 ? "s" : ""}</b>, ${Ad.length} ajoutée${Ad.length > 1 ? "s" : ""}, ${D.length} retirée${D.length > 1 ? "s" : ""}.</p>
+    <div class="cmp-k"><div><b>${arrow(A.roles, now.roles)}</b>rôles sous le seuil</div><div><b>${arrow(A.styles, now.styles)}</b>styles de texte sous le seuil</div></div>
+    ${C.length + Ad.length + D.length ? `<ul class="cmp-l">${C.slice(0, 40).map(([k, a, b]) => `<li><code>${esc(k)}</code>${v(a)} → ${v(b)}</li>`).join("")}${Ad.slice(0, 12).map(k => `<li><code>${esc(k)}</code>ajoutée</li>`).join("")}${D.slice(0, 12).map(k => `<li><code>${esc(k)}</code>retirée</li>`).join("")}</ul>${C.length > 40 ? `<p class="note">Et ${C.length - 40} autres modifications : le résumé copié les contient toutes.</p>` : ""}` : `<p class="note">Les deux versions sont identiques.</p>`}`;
+  $("cmpCopy").hidden = false;
+}
+async function cmpFrom(text) {
+  text = (text || "").trim(); if (!text) { toast("Collez d’abord un lien de partage"); return; }
+  try { const m = text.match(/[?&]p=([^&#\s]+)/), t = m ? m[1] : text, o = await unpackPrj(t); if (!prjValid(o)) throw 0; renderCmp(o); }
+  catch (e) { toast("Lien illisible : copiez le lien de partage en entier"); }
+}
+$("cmpGo").addEventListener("click", () => cmpFrom($("cmpLink").value));
+$("cmpLink").addEventListener("keydown", e => { if (e.key === "Enter") cmpFrom($("cmpLink").value); });
+$("cmpPick").addEventListener("click", () => $("cmpFile").click());
+$("cmpFile").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => { let o = null; try { o = JSON.parse(t); } catch (er) {} if (prjValid(o)) renderCmp(o); else toast("Ce fichier n’est pas un projet Lisio"); e.target.value = ""; }); });
+$("cmpCopy").addEventListener("click", () => { const c = cmpLast; if (!c) return; copy([`Comparaison : « ${c.nm} » → version actuelle`, `Rôles sous le seuil : ${c.A.roles} → ${c.now.roles} ; styles sous le seuil : ${c.A.styles} → ${c.now.styles}`, ...c.C.map(([k, a, b]) => `- ${k} : ${prettyVal(a)} → ${prettyVal(b)}`), ...c.Ad.map(k => `- ${k} : ajoutée`), ...c.D.map(k => `- ${k} : retirée`)].join("\n"), "Résumé copié"); });
 
 // ---------- Rapport d’accessibilité ----------
 function reportHtml() {
@@ -2568,6 +2750,7 @@ ul{padding-left:20px}li{margin:3px 0}a{color:#1E3A8A}
 <h2>Rôles, mode clair</h2><table><thead><tr><th scope="col">Rôle</th><th scope="col">Couleur</th><th scope="col">Vérifié avec</th><th scope="col">Ratio</th><th scope="col">Seuil et verdict</th></tr></thead><tbody>${roleRows("light")}</tbody></table>
 <h2>Rôles, mode sombre</h2><table><thead><tr><th scope="col">Rôle</th><th scope="col">Couleur</th><th scope="col">Vérifié avec</th><th scope="col">Ratio</th><th scope="col">Seuil et verdict</th></tr></thead><tbody>${roleRows("dark")}</tbody></table>
 <h2>Styles de texte</h2><p>Texte ${esc(hexName(S.ts.fg))} <code>${S.ts.fg}</code> sur ${esc(hexName(S.ts.bg))} <code>${S.ts.bg}</code> : ${f2(ratio(S.ts.fg, S.ts.bg))} :1. Tailles de 390 à 1440 px.</p><table><thead><tr><th scope="col">Style</th><th scope="col">Taille</th><th scope="col">Graisse</th><th scope="col">Interligne</th><th scope="col">Catégorie et seuil</th><th scope="col">Verdict</th></tr></thead><tbody>${sty}</tbody></table>
+${manualReport()}
 <h2>Critères couverts par Lisio</h2><ul>${crit.map(([n, t, u]) => `<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/${u}.html">${n} ${t}</a></li>`).join("")}</ul>
 <h2>Ce que Lisio ne vérifie pas</h2><p>Ce rapport couvre les couleurs, la typographie et les composants de base. Il reste à vérifier sur les écrans réels : alternatives textuelles des images, navigation au clavier et ordre du focus, titres et repères, intitulés des champs et messages d’erreur, sous-titres des vidéos, compatibilité avec les lecteurs d’écran. Un audit complet suit le RGAA ou les WCAG critère par critère.</p>
 </body></html>`;

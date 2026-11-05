@@ -29,6 +29,14 @@
   .it small { display: block; color: var(--figma-color-text-secondary, #555); }
   .it button { padding: 4px 8px; }
   .list { max-height: 260px; overflow: auto; }
+  .it .acts { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .it button.fix { background: var(--figma-color-bg-brand, #0d99ff); color: var(--figma-color-text-onbrand, #fff); border-color: transparent; }
+  .row { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 8px; }
+  .inv { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .inv span { display: inline-flex; align-items: center; gap: 4px; font: 11px/1 ui-monospace, monospace; padding: 3px 6px 3px 3px; border-radius: 6px; border: 1px solid var(--figma-color-border, #ddd); }
+  .inv span.off { border-color: var(--figma-color-border-danger, #f24822); }
+  .inv i { width: 16px; height: 16px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  h2 { font-size: 13px; margin: 12px 0 0; }
 </style>
 <div class="tabs" role="tablist" aria-label="Lisio"><button role="tab" id="t-imp" aria-selected="true" aria-controls="p-imp">Importer</button><button role="tab" id="t-aud" aria-selected="false" aria-controls="p-aud" tabindex="-1">Vérifier les contrastes</button></div>
 <section id="p-imp" role="tabpanel" aria-labelledby="t-imp">
@@ -42,12 +50,14 @@
 <textarea id="paste" placeholder="…ou collez le contenu ici" aria-label="Contenu JSON exporté par Lisio"></textarea>
 <div class="sum" id="sum" hidden></div>
 <label class="chk"><input type="checkbox" id="board" checked> Créer aussi une planche de présentation</label>
+<label class="chk"><input type="checkbox" id="comps" checked> Créer aussi les composants Bouton, Champ et Alerte, reliés aux variables</label>
 <button class="primary" id="go" type="button" disabled>Importer dans ce fichier</button>
 <p>Relancer l’import met à jour les variables et styles existants, sans doublons. Les rôles arrivent avec deux modes, Light et Dark.</p>
+<p>Design system déjà importé ? <button type="button" id="compGo">Créer seulement les composants</button></p>
 </section>
 <section id="p-aud" role="tabpanel" aria-labelledby="t-aud" hidden>
 <h1>Vérifier les contrastes d’un fichier</h1>
-<p>Lisio mesure chaque texte de la sélection (ou de la page si rien n’est sélectionné) contre le fond qui est derrière lui.</p>
+<p>Lisio mesure chaque texte de la sélection (ou de la page si rien n’est sélectionné) contre le fond qui est derrière lui, propose une couleur de votre design system qui passe, et liste les couleurs utilisées.</p>
 <label class="chk">Niveau <select id="lvl"><option value="AA">AA</option><option value="AAA">AAA</option></select></label>
 <button class="primary" id="aud" type="button">Vérifier</button>
 <div class="sum" id="ares" hidden aria-live="polite"></div>
@@ -73,25 +83,35 @@
   ["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("on"); }));
   ["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove("on"); }));
   dz.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) f.text().then(load); });
-  $("go").onclick = () => { if (!data) return; $("go").disabled = true; $("go").textContent = "Import en cours…"; parent.postMessage({ pluginMessage: { type: "import", data, board: $("board").checked } }, "*"); };
+  $("go").onclick = () => { if (!data) return; $("go").disabled = true; $("go").textContent = "Import en cours…"; parent.postMessage({ pluginMessage: { type: "import", data, board: $("board").checked, components: $("comps").checked } }, "*"); };
+  $("compGo").onclick = () => { $("compGo").disabled = true; $("compGo").textContent = "Création…"; parent.postMessage({ pluginMessage: { type: "components" } }, "*"); };
   const tabs = [["t-imp", "p-imp"], ["t-aud", "p-aud"]];
   tabs.forEach(([t, p], i) => { $(t).onclick = () => tabs.forEach(([t2, p2]) => { const on = t2 === t; $(t2).setAttribute("aria-selected", on); $(t2).tabIndex = on ? 0 : -1; $(p2).hidden = !on; });
     $(t).onkeydown = e => { if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const n = tabs[(i + 1) % 2][0]; $(n).click(); $(n).focus(); } }; });
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const fr = n => String(n.toFixed(2)).replace(".", ",");
   $("aud").onclick = () => { $("aud").disabled = true; $("aud").textContent = "Vérification…"; parent.postMessage({ pluginMessage: { type: "audit", level: $("lvl").value } }, "*"); };
-  $("ares").addEventListener("click", e => { const b = e.target.closest("[data-id]"); if (b) parent.postMessage({ pluginMessage: { type: "select", id: b.dataset.id } }, "*"); });
+  $("ares").addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return; const lvl = $("lvl").value;
+    if (b.dataset.fix) { b.disabled = true; parent.postMessage({ pluginMessage: { type: "fix", id: b.dataset.fix, level: lvl } }, "*"); }
+    else if (b.id === "fixAll") { b.disabled = true; b.textContent = "Correction…"; parent.postMessage({ pluginMessage: { type: "fixAll", level: lvl } }, "*"); }
+    else if (b.dataset.id) parent.postMessage({ pluginMessage: { type: "select", id: b.dataset.id } }, "*");
+  });
   onmessage = e => {
     const m = e.data.pluginMessage; if (!m) return;
     if (m.type === "audit") {
       $("aud").disabled = false; $("aud").textContent = "Vérifier"; const r = m.result, a = $("ares"); a.hidden = false;
-      const bad = r.items.filter(x => !x.ok), unsure = r.items.filter(x => x.ok && x.guess);
-      const row = x => `<div class="it"><span class="sw" style="background:${x.bg};color:${x.fg}">Aa</span><div><b>${esc(x.text || x.name)}</b><small>${fr(x.ratio)}:1, il faut ${String(x.need).replace(".", ",")}:1${x.large ? " (grand texte)" : ""}${x.guess ? ", fond à vérifier" : ""}</small></div><button type="button" data-id="${x.id}">Voir</button></div>`;
-      a.innerHTML = `<b class="${r.fails ? "err" : "ok"}">${r.fails ? `${r.fails} texte${r.fails > 1 ? "s" : ""} sous le seuil` : "Tous les textes passent"}</b> <span>sur ${r.checked} vérifiés dans ${r.scope === "selection" ? "la sélection" : "la page"}${r.total > r.checked ? ` (${r.total} au total)` : ""}.</span>${bad.length ? `<div class="list">${bad.map(row).join("")}</div>` : ""}${unsure.length ? `<p style="margin-top:8px">${unsure.length} texte${unsure.length > 1 ? "s" : ""} sur un fond non uni : à vérifier à l’œil.</p><div class="list">${unsure.slice(0, 30).map(row).join("")}</div>` : ""}`;
+      const bad = r.items.filter(x => !x.ok), unsure = r.items.filter(x => x.ok && x.guess && !x.fixed), done = r.items.filter(x => x.fixed), fixable = bad.filter(x => x.fix);
+      const row = x => `<div class="it"><span class="sw" style="background:${x.bg};color:${x.fg}" aria-hidden="true">Aa</span><div><b>${esc(x.text || x.name)}</b><small>${fr(x.ratio)}:1, il faut ${String(x.need).replace(".", ",")}:1${x.large ? " (grand texte)" : ""}${x.guess ? ", fond à vérifier" : ""}${x.fixed ? `. Corrigé : ${esc(x.fixed)}` : ""}</small></div><div class="acts">${!x.ok && x.fix ? `<button type="button" class="fix" data-fix="${x.id}" title="Remplacer la couleur du texte par ${esc(x.fix.name)} (${x.fix.hex})">Corriger : ${esc(x.fix.name)}</button>` : ""}<button type="button" data-id="${x.id}">Voir</button></div></div>`;
+      const inv = r.colors && r.colors.length ? `<h2>${r.nColors} couleur${r.nColors > 1 ? "s" : ""} utilisée${r.nColors > 1 ? "s" : ""}${r.hasPalette ? `, dont ${r.offSystem} hors du design system` : ""}</h2>${r.hasPalette ? "" : "<p>Importez le design system Lisio dans ce fichier pour savoir lesquelles en sortent, et pour des corrections reliées aux variables.</p>"}<div class="inv">${r.colors.map(c => `<span class="${c.inSystem === false ? "off" : ""}" title="${c.n} utilisation${c.n > 1 ? "s" : ""}${c.inSystem === false ? ", hors du design system" : ""}"><i style="background:${c.hex}"></i>${c.hex}${c.inSystem === false ? " ✕" : ""}</span>`).join("")}</div>` : "";
+      a.innerHTML = `<b class="${r.fails ? "err" : "ok"}">${r.fails ? `${r.fails} texte${r.fails > 1 ? "s" : ""} sous le seuil` : "Tous les textes passent"}</b> <span>sur ${r.checked} vérifiés dans ${r.scope === "selection" ? "la sélection" : "la page"}${r.total > r.checked ? ` (${r.total} au total)` : ""}.</span>${r.fixedNow ? `<p class="ok" style="margin-top:6px">${r.fixedNow} correction${r.fixedNow > 1 ? "s" : ""} appliquée${r.fixedNow > 1 ? "s" : ""}. Ctrl ou Cmd + Z pour annuler.</p>` : ""}${fixable.length > 1 ? `<div class="row"><span>${fixable.length} corrections possibles</span><button type="button" id="fixAll">Tout corriger</button></div>` : ""}${bad.length ? `<div class="list">${bad.map(row).join("")}</div>` : ""}${done.length ? `<h2>Corrigés</h2><div class="list">${done.map(row).join("")}</div>` : ""}${unsure.length ? `<p style="margin-top:8px">${unsure.length} texte${unsure.length > 1 ? "s" : ""} sur un fond non uni : à vérifier à l’œil.</p><div class="list">${unsure.slice(0, 30).map(row).join("")}</div>` : ""}${inv}`;
+      r.fixedNow = 0;
       return;
     }
-    const s = $("sum"); $("go").disabled = false; $("go").textContent = "Importer dans ce fichier"; $("aud").disabled = false; $("aud").textContent = "Vérifier";
-    if (m.type === "done") { const r = m.report; s.innerHTML = `<b class="ok">Import terminé</b><ul><li>${r.variables} variables, dont ${r.created} créées et ${r.updated} mises à jour</li><li>${r.styles} styles de texte</li></ul>${r.warnings.length ? `<ul class="err">${r.warnings.map(w => `<li>${w}</li>`).join("")}</ul>` : ""}`; }
+    const s = $("sum"); $("go").disabled = !data; $("go").textContent = "Importer dans ce fichier"; $("aud").disabled = false; $("aud").textContent = "Vérifier"; $("compGo").disabled = false; $("compGo").textContent = "Créer seulement les composants"; s.hidden = false;
+    const compLine = c => c === "skipped" || (c && c.skipped) ? "<li>Composants déjà présents sur la page « Lisio components » : rien n’a été recréé</li>" : c ? `<li>${typeof c === "number" ? c : c.components} composants sur la page « Lisio components »</li>` : "";
+    if (m.type === "components") s.innerHTML = `<b class="ok">${m.result.skipped ? "Rien à créer" : "Composants créés"}</b><ul>${compLine(m.result)}</ul>`;
+    if (m.type === "done") { const r = m.report; s.innerHTML = `<b class="ok">Import terminé</b><ul><li>${r.variables} variables, dont ${r.created} créées et ${r.updated} mises à jour</li><li>${r.styles} styles de texte</li>${compLine(r.components)}</ul>${r.warnings.length ? `<ul class="err">${r.warnings.map(w => `<li>${w}</li>`).join("")}</ul>` : ""}`; }
     if (m.type === "error") s.innerHTML = `<b class="err">Échec</b> : ${m.message}`;
   };
 </script>
