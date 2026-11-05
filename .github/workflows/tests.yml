@@ -10,9 +10,6 @@ jobs:
   tests:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
-    env:
-      NODE_PATH: ${{ runner.temp }}/tools/node_modules
-      AXE_PATH: ${{ runner.temp }}/tools/node_modules/axe-core/axe.min.js
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -25,5 +22,7 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/tools" --no-save --no-audit --no-fund playwright@1.63.0 axe-core@4.10.2
           "$RUNNER_TEMP/tools/node_modules/.bin/playwright" install --with-deps chromium
+          echo "NODE_PATH=$RUNNER_TEMP/tools/node_modules" >> "$GITHUB_ENV"
+          echo "AXE_PATH=$RUNNER_TEMP/tools/node_modules/axe-core/axe.min.js" >> "$GITHUB_ENV"
       - name: Tous les contrôles
         run: sh tests/run.sh
