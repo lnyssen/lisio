@@ -1079,6 +1079,12 @@ body{background:var(--bg)}
 .cw-v{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700}
 @media (max-width:640px){.cw-list li{grid-template-columns:44px minmax(0,1fr)}.cw-a{grid-column:1/-1;justify-content:flex-start}}
 .shgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px 20px;margin-top:12px;align-items:end}
+.ok-badge{margin:0;padding:12px 16px;border-radius:14px;border:1px solid var(--hair);background:var(--surface);font-size:14px}.ok-badge[hidden]{display:none}
+.ok-note ul{margin:6px 0;padding-left:20px}.ok-note li{margin:2px 0}.ok-note p{margin:6px 0 0}
+.swt.clip .swc{outline:2px dashed var(--ink);outline-offset:-5px}
+.shcmp{margin-top:14px;min-width:0;max-width:100%}.shcmp .ds-tw{max-width:100%;position:relative}#shSet{min-width:0}.shcmp>summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.cmp-t{border-collapse:collapse;width:100%;min-width:640px}.cmp-t th,.cmp-t td{text-align:left;vertical-align:top;padding:8px 10px 8px 0;border-top:1px solid var(--hair)}.cmp-t thead th{border-top:0;font-size:13px}.cmp-t p{margin:6px 0 0}
+.cmp-row{display:grid;grid-template-columns:repeat(11,minmax(22px,1fr));gap:3px}.cmp-sw{display:block;height:32px;border-radius:5px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 12%,transparent)}.cmp-sw.clip{outline:2px dashed var(--ink);outline-offset:-5px}
 .shx{display:flex!important;flex-direction:row!important;gap:10px;align-items:flex-start;font-size:14px;grid-column:1/-1}.shx input{width:20px;height:20px;margin:0;flex:none;accent-color:var(--primary)}
 .j-sub{display:inline-flex;gap:4px;margin-left:8px;vertical-align:middle}.j-sub a{padding:4px 12px;border-radius:999px;background:var(--surface);color:var(--ink);text-decoration:none;font-size:13px;font-weight:600;box-shadow:inset 0 0 0 1px var(--hair)}.j-sub a[aria-current="page"]{background:var(--primary);color:var(--primary-ink);box-shadow:none}
 .pd-ds{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:18px;background:var(--bg)}.pd-ds h3{margin:0;font-size:15px}.pd-ds .row{gap:6px}
@@ -1336,13 +1342,20 @@ body{background:var(--bg)}
   <section id="palette" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
     <header class="mhead phead"><div><h1>Nuances</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
     <p class="adv-hint"><span>Mode Essentiel : Lisio règle les 11 nuances pour vous. Le réglage fin est masqué.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
-    <div class="card-surface shset adv" id="shSet"><div class="row between"><div><h2>Régler les nuances</h2><p class="note">Les mêmes réglages pour toutes vos gammes : un même numéro garde la même clarté d’une couleur à l’autre. Le 500 reste à 4,65:1 sur blanc, donc lisible en texte courant.</p></div><button class="btn sm" type="button" id="shReset">Réglages de base</button></div>
+    <p class="ok-badge" id="shOkBadge" hidden><b>Nuances perceptuelles (OKLCH).</b> <span>Clarté à pas réguliers, contrastes non garantis : chaque paire reste mesurée.</span></p>
+    <div class="card-surface shset adv" id="shSet"><div class="row between"><div><h2>Régler les nuances</h2><p class="note" id="shSetNote"></p></div><button class="btn sm" type="button" id="shReset">Réglages de base</button></div>
+      <div class="ds-f"><span class="ds-l" id="shMethL">Méthode</span><div class="seg" role="group" aria-labelledby="shMethL" id="shMeth"><button type="button" data-v="contrast">Par contraste (recommandée)</button><button type="button" data-v="oklch">Perceptuelle (OKLCH)</button></div></div>
+      <div class="note ok-note" id="shOkNote" hidden></div>
       <div class="shgrid">
         <div class="ds-f"><span class="ds-l" id="shLightL">Nuance 50, la plus claire</span><div class="seg" role="group" aria-labelledby="shLightL" id="shLight"><button type="button" data-v="1.03">Presque blanche</button><button type="button" data-v="1.06">Standard</button><button type="button" data-v="1.12">Teintée</button></div></div>
         <div class="ds-f"><span class="ds-l" id="shDarkL">Nuance 950, la plus foncée</span><div class="seg" role="group" aria-labelledby="shDarkL" id="shDark"><button type="button" data-v="15">Douce</button><button type="button" data-v="17.6">Standard</button><button type="button" data-v="19.5">Presque noire</button></div></div>
         <div class="ds-r"><label for="shSat">Saturation</label><input type="range" id="shSat" min="0.5" max="1.4" step="0.05"><output for="shSat" id="shSatO"></output></div>
         <label class="shx"><input type="checkbox" id="shExact"> Mettre la couleur exacte à la place de la nuance la plus proche <span class="muted">(elle peut alors s’écarter d’un cran de la règle des numéros)</span></label>
       </div>
+      <details class="shcmp" id="shCmp"><summary>Comparer les deux méthodes</summary>
+        <div class="row" style="flex-direction:row;gap:8px;align-items:center;margin:10px 0"><label for="shCmpC">Couleur</label><select id="shCmpC"></select></div>
+        <div id="shCmpBody"></div>
+      </details>
     </div>
     <div class="card-surface">
       <div class="row between"><h2>Comment ça marche</h2>
@@ -1353,8 +1366,8 @@ body{background:var(--bg)}
       <div class="nu-intro">
         <p class="nu-lead">Lisio décline chacune de vos couleurs en <b>11 nuances</b>, de la plus claire (50) à la plus foncée (950). Elles servent aux fonds, survols, bordures et textes secondaires.</p>
         <ol class="nu-steps">
-          <li><b>Un numéro = une clarté.</b> Le 700 de chaque couleur a la même clarté, quelle que soit la teinte.</li>
-          <li><b>Donc les contrastes se retiennent par numéros.</b> Si un texte 700 passe sur un fond 100 pour une couleur, il passe pour toutes.</li>
+          <li id="nuStep1"><b>Un numéro = une clarté.</b> Le 700 de chaque couleur a la même clarté, quelle que soit la teinte.</li>
+          <li id="nuStep2"><b>Donc les contrastes se retiennent par numéros.</b> Si un texte 700 passe sur un fond 100 pour une couleur, il passe pour toutes.</li>
           <li><b>Plus besoin de tout tester.</b> Les règles plus bas vous disent quels numéros associer.</li>
         </ol>
         <div class="nu-demo-wrap"><p class="small muted" id="nuDemoLead"></p><div class="nu-demo" id="nuDemo"></div></div>
@@ -1693,12 +1706,18 @@ const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur 
 /*@core:presets*/
 /*@core:report*/
 /*@core:css*/
+/*@core:ramps*/
 // Réglage des nuances (P0-4) : 50 et 950 réglables, 500 fixe, saturation ; mêmes réglages pour toutes les gammes.
-const SH_BASE = { light: TARGET[0], dark: TARGET[10], sat: 1, exact: false };
+const SH_BASE = { light: TARGET[0], dark: TARGET[10], sat: 1, exact: false, method: "contrast" };
 const shCfg = k => (S.sh && S.sh[k] != null) ? S.sh[k] : SH_BASE[k];
 let TGT = TARGET.slice();
 function shTargets() { TGT = shadeTargets(+shCfg("light"), +shCfg("dark")); }
 const shY = (base, y) => colorForY(base, y, +shCfg("sat") || 1);
+// F09 (P2) : méthode perceptuelle OKLCH, au choix. La méthode par contraste reste celle par défaut.
+const shOk = () => shCfg("method") === "oklch";
+const okRamp = (hex, sat = +shCfg("sat") || 1) => oklchRamp(hex, { ...okBounds(+shCfg("light"), +shCfg("dark")), sat });
+const ctRamp = hex => { const b = hexToOklch(hex); return TGT.map(r => shY(b, targetY(r))); };
+const rampFor = hex => { if (!shOk()) return { sw: ctRamp(hex), clip: null }; const R = okRamp(hex); return { sw: R.map(x => x.hex), clip: R.map(x => x.clipped) }; };
 
 // ---------- Utilitaires ----------
 const $ = id => document.getElementById(id);
@@ -1791,11 +1810,11 @@ const ensureFont = font => { if (font.src === "google") { const f = GFmap.get(fo
 function buildScales() {
   shTargets();
   scales = palette.map(c => {
-    const base = hexToOklch(c.hex), sw = TGT.map(r => shY(base, targetY(r))), by = lum(c.hex);
+    const { sw, clip } = rampFor(c.hex), by = lum(c.hex);
     let nearest = 0, best = Infinity;
     sw.forEach((h, i) => { const d = Math.abs(Math.log((lum(h) + 0.05) / (by + 0.05))); if (d < best) { best = d; nearest = i; } });
-    if (shCfg("exact")) sw[nearest] = c.hex;
-    return { name: c.name, hex: c.hex, slug: slug(c.name), sw, nearest };
+    if (shCfg("exact")) { sw[nearest] = c.hex; if (clip) clip[nearest] = false; }
+    return { name: c.name, hex: c.hex, slug: slug(c.name), sw, nearest, clip };
   });
   // Noms CSS et Figma uniques (F12) : un doublon (« Bleu » et « bleu ») ou un nom d’état reçoit -2, -3…
   uniqueSlugs(scales.map(x => x.slug), ["error", "success", "warning", "info"]).forEach((u, i) => { scales[i].slug = u; });
@@ -1805,7 +1824,7 @@ function buildScales() {
 const ST_DEF = { error: ["Erreur", "#DC2626", "d’erreur", "Error"], success: ["Succès", "#16A34A", "de succès", "Success"], warning: ["Alerte", "#D97706", "d’alerte", "Warning"], info: ["Info", "#2563EB", "d’info", "Info"] };
 const ST_KEYS = Object.keys(ST_DEF);
 let stScales = {};
-function buildStatus() { const st = (S.ds && S.ds.status) || {}; stScales = {}; ST_KEYS.forEach(k => { const hex = normHex(st[k]) || ST_DEF[k][1], base = hexToOklch(hex); stScales[k] = { name: ST_DEF[k][0], hex, slug: k, sw: TGT.map(r => shY(base, targetY(r))), status: true }; }); }
+function buildStatus() { const st = (S.ds && S.ds.status) || {}; stScales = {}; ST_KEYS.forEach(k => { const hex = normHex(st[k]) || ST_DEF[k][1], R = rampFor(hex); stScales[k] = { name: ST_DEF[k][0], hex, slug: k, sw: R.sw, clip: R.clip, status: true }; }); }
 const allScales = () => [...scales, ...Object.values(stScales)];
 
 // ---------- Popovers ----------
@@ -2076,7 +2095,7 @@ function renderScales() {
   scales.forEach(sc => {
     h += `<div class="scale-name" title="${esc(sc.name)}">${esc(sc.name)}</div>`;
     { const hex = sc.hex, shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); h += `<button type="button" class="swt main" data-hex="${hex}" aria-label="${esc(sc.name)} Main ${hex}, votre couleur principale, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="Couleur principale · ${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir"><span class="swc" style="background:${shown}"></span><b>Main</b><code>${hex}</code></button>`; }
-    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); h += `<button type="button" class="swt" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]} ${hex}${i === sc.nearest ? ", votre couleur d’origine" : ""}, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}</span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
+    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); const cl = sc.clip && sc.clip[i]; h += `<button type="button" class="swt${cl ? " clip" : ""}" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]} ${hex}${i === sc.nearest ? ", votre couleur d’origine" : ""}${cl ? ", chroma réduite (hors gamut sRGB)" : ""}, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir${cl ? " · chroma réduite, hors gamut sRGB" : ""}"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}</span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
   });
   $("scales").innerHTML = h;
   const iT = STEPS.indexOf(700), iB = STEPS.indexOf(100), rs = scales.map(sc => floor2(ratio(sc.sw[iT], sc.sw[iB])));
@@ -3018,7 +3037,37 @@ $("tsDl").addEventListener("click", () => { const css = $("tsFmt").value === "cs
 $("expAll").addEventListener("click", () => { const same = location.hash.slice(1) === "exporter"; location.hash = "exporter"; show("exporter"); window.scrollTo(0, 0); });
 
 // ---------- Réglages des nuances ----------
-function shRender() { [["shLight", "light"], ["shDark", "dark"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.v === +shCfg(k))))); const v = +shCfg("sat"); $("shSat").value = v; $("shSatO").textContent = Math.round(v * 100) + " %"; $("shSat").setAttribute("aria-valuetext", Math.round(v * 100) + " %"); $("shExact").checked = !!shCfg("exact"); $("shReset").disabled = !S.sh || !Object.keys(S.sh).length; }
+function shRender() { [["shLight", "light"], ["shDark", "dark"]].forEach(([id, k]) => $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.v === +shCfg(k))))); const v = +shCfg("sat"); $("shSat").value = v; $("shSatO").textContent = Math.round(v * 100) + " %"; $("shSat").setAttribute("aria-valuetext", Math.round(v * 100) + " %"); $("shExact").checked = !!shCfg("exact"); $("shReset").disabled = !S.sh || !Object.keys(S.sh).length; shOkRender(); }
+// F09 : méthode, règles OKLCH, mention en tête de page, textes de la page qui dépendent de la méthode.
+function shOkRender() {
+  const NU1 = ["<b>Un numéro = une clarté.</b> Le 700 de chaque couleur a la même clarté, quelle que soit la teinte.", "<b>Un numéro = une clarté perçue.</b> En OKLCH, le 700 de chaque couleur a la même clarté pour l’œil, pas le même contraste."];
+  const NU2 = ["<b>Donc les contrastes se retiennent par numéros.</b> Si un texte 700 passe sur un fond 100 pour une couleur, il passe pour toutes.", "<b>Les contrastes se vérifient paire par paire.</b> Les règles plus bas prennent la couleur la plus faible : elles restent vraies pour toutes."];
+  const ok = shOk();
+  $("shMeth").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === (ok ? "oklch" : "contrast"))));
+  $("shSetNote").textContent = ok ? "Les mêmes réglages pour toutes vos gammes. En OKLCH, la clarté descend à pas réguliers du 50 au 950 ; le 500 n’est plus réglé sur 4,65:1." : "Les mêmes réglages pour toutes vos gammes : un même numéro garde la même clarté d’une couleur à l’autre. Le 500 reste à 4,65:1 sur blanc, donc lisible en texte courant.";
+  $("shOkBadge").hidden = !ok; $("nuStep1").innerHTML = NU1[+ok]; $("nuStep2").innerHTML = NU2[+ok];
+  const n = $("shOkNote"); n.hidden = !ok; if (!ok) { n.innerHTML = ""; return; }
+  const all = allScales(), i5 = STEPS.indexOf(500), r5 = all.filter(s => !s.status).map(s => floor2(ratio(s.sw[i5], "#FFFFFF")));
+  const clipped = all.filter(s => s.clip && s.clip.some(Boolean)).map(s => `${esc(s.name)} (${s.clip.map((c, i) => c ? STEPS[i] : null).filter(x => x != null).join(", ")})`);
+  n.innerHTML = `<ul>${OKLCH_RULES.map(r => `<li>${esc(r)}</li>`).join("")}</ul><p>${r5.length ? `500 sur blanc : de ${fmt(Math.min(...r5), 2)}:1 à ${fmt(Math.max(...r5), 2)}:1 selon la couleur (4,5:1 demandé pour le texte courant).` : ""} ${clipped.length ? `Hors gamut sRGB, chroma réduite : ${clipped.join(" ; ")}.` : "Aucune nuance hors gamut sRGB."}</p>`;
+}
+// Comparer les deux méthodes pour une couleur, avant d'appliquer : contraste sur blanc, écart ΔE OK, hors gamut.
+function renderShCmp() {
+  const sel = $("shCmpC"), all = allScales().filter(s => !s.status); if (!all.length) { $("shCmpBody").innerHTML = ""; return; }
+  const keep = sel.value; sel.innerHTML = all.map((s, i) => `<option value="${i}">${esc(s.name)}</option>`).join(""); if (keep && +keep < all.length) sel.value = keep;
+  const s = all[+sel.value || 0], cur = shOk() ? "oklch" : "contrast";
+  const R = okRamp(s.hex), rows = [["contrast", "Par contraste", ctRamp(s.hex), null], ["oklch", "Perceptuelle (OKLCH)", R.map(x => x.hex), R.map(x => x.clipped)]];
+  const row = ([k, name, sw, clip]) => { const st = rampStats(sw), r5 = floor2(ratio(sw[STEPS.indexOf(500)], "#FFFFFF")), nc = clip ? clip.filter(Boolean).length : 0;
+    return `<tr><th scope="row">${name}${k === cur ? ` <span class="muted">(actuelle)</span>` : ""}</th><td><div class="cmp-row">${sw.map((h, i) => `<span class="cmp-sw${clip && clip[i] ? " clip" : ""}" style="background:${h}" title="${STEPS[i]} ${h} · ${ratioTxt(ratio(h, "#FFFFFF"), 1)}:1 sur blanc${clip && clip[i] ? " · hors gamut" : ""}"><span class="sr-only">${STEPS[i]} ${h}, ${ratioTxt(ratio(h, "#FFFFFF"))} pour 1 sur blanc${clip && clip[i] ? ", hors gamut" : ""}</span></span>`).join("")}</div>
+      <p class="small">500 sur blanc : ${fmt(r5, 2)}:1 · ΔE OK entre voisines : ${fmt(st.min, 1)} à ${fmt(st.max, 1)} · ${clip ? (nc ? `${nc} nuance${nc > 1 ? "s" : ""} hors gamut, chroma réduite` : "aucune nuance hors gamut") : "chroma ajustée pour atteindre chaque contraste"}</p></td>
+      <td>${k === cur ? `<span class="small muted">Méthode actuelle</span>` : `<button type="button" class="btn sm" data-use="${k}">Utiliser cette méthode<span class="sr-only"> : ${name}</span></button>`}</td></tr>`; };
+  $("shCmpBody").innerHTML = `<div class="ds-tw" tabindex="0" role="region" aria-label="Comparaison des deux méthodes"><table class="cmp-t"><caption class="sr-only">${esc(s.name)} : nuances 50 à 950 selon la méthode</caption><thead><tr><th scope="col">Méthode</th><th scope="col">Nuances 50 à 950</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead><tbody>${rows.map(row).join("")}</tbody></table></div>
+    <p class="small muted">La méthode s’applique à toutes vos couleurs, avec les mêmes réglages (50, 950, saturation). ΔE OK : écart perçu entre deux nuances voisines, indicateur exploratoire, pas un verdict d’accessibilité.</p>`;
+}
+$("shMeth").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (b) shSet("method", b.dataset.v); });
+$("shCmp").addEventListener("toggle", () => { if ($("shCmp").open) renderShCmp(); });
+$("shCmpC").addEventListener("change", renderShCmp);
+$("shCmpBody").addEventListener("click", e => { const b = e.target.closest("button[data-use]"); if (!b) return; const v = b.dataset.use; shSet("method", v); toast(v === "oklch" ? "Nuances perceptuelles (OKLCH) appliquées. Annuler revient en arrière." : "Nuances par contraste appliquées. Annuler revient en arrière."); requestAnimationFrame(() => { renderShCmp(); const s = $("shMeth").querySelector('[aria-pressed="true"]'); if (s) s.focus(); }); });
 const shSet = (k, v) => { S.sh = { ...(S.sh || {}), [k]: v }; save(); shRender(); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); };
 [["shLight", "light"], ["shDark", "dark"]].forEach(([id, k]) => $(id).addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (b) shSet(k, +b.dataset.v); }));
 let shT = null; $("shSat").addEventListener("input", e => { const v = +e.target.value; $("shSatO").textContent = Math.round(v * 100) + " %"; clearTimeout(shT); shT = setTimeout(() => shSet("sat", v), 120); });
@@ -3964,7 +4013,7 @@ function reportModel() {
     manual: { screens: Mn.screens.map(x => x.name || "Sans nom"), items: MANUAL.flatMap(([, it]) => it.map(([id, t, , c]) => ({ title: t, crit: c, results: Mn.screens.map(x => x.ok[id] ? "pass" : "untested") }))) },
     untested: [`Tous les critères WCAG ${S.version} absents du tableau des critères.`, `${mnAll - mnDone} point${mnAll - mnDone > 1 ? "s" : ""} de la check-list manuelle sur ${mnAll}, pas encore coché${mnAll - mnDone > 1 ? "s" : ""}.`, "Les écrans réels : images et alternatives, clavier, titres, formulaires, médias."],
     exceptions,
-    method: [`Ratio de contraste : formule de luminance relative de WCAG ${S.version} (W3C), arrondi au centième inférieur.`, `Seuils : texte courant ${nd(need)}, grand texte et composants ${nd(needL)} (niveau ${lvl}).`, "Grand texte : 24 px et plus, ou 18,67 px et plus en gras.", "Styles de texte vérifiés à leur taille mobile (390 px).", "Rôles vérifiés en mode clair et en mode sombre, chacun avec son partenaire (texte et fond, bouton et libellé).", "Check-list manuelle : cochée par l’équipe dans Lisio, écran par écran."],
+    method: [...(shOk() ? ["Nuances générées en OKLCH, clarté perçue à pas réguliers : un outil de génération, pas une validation. Chaque paire est mesurée par la formule ci-dessous."] : []), `Ratio de contraste : formule de luminance relative de WCAG ${S.version} (W3C), arrondi au centième inférieur.`, `Seuils : texte courant ${nd(need)}, grand texte et composants ${nd(needL)} (niveau ${lvl}).`, "Grand texte : 24 px et plus, ou 18,67 px et plus en gras.", "Styles de texte vérifiés à leur taille mobile (390 px).", "Rôles vérifiés en mode clair et en mode sombre, chacun avec son partenaire (texte et fond, bouton et libellé).", "Check-list manuelle : cochée par l’équipe dans Lisio, écran par écran."],
     limits: ["Ce rapport donne le résultat de tests précis. Il n’affirme pas la conformité du produit.", "Lisio teste des couleurs et des réglages, pas des pages : les écrans réels restent à vérifier.", "Les résultats valent pour la version de Lisio et l’empreinte du projet indiquées en tête."] };
 }
 function reportHtml() {
@@ -4214,7 +4263,7 @@ $("histCopy").addEventListener("click", () => copy(histText(), "Résumé copié"
 const histMark = txt => { store.set("lastExport", { date: new Date().toISOString(), flat: flatTokens(txt) }); setTimeout(renderHist, 50); };
 
 // ---------- Démarrage ----------
-function renderAll() { buildScales(); renderWatch(); renderScales(); renderMatrix(); renderRules(); renderExport(); renderStyles(); render(); sumSoon(); }
+function renderAll() { buildScales(); shRender(); if ($("shCmp").open) renderShCmp(); renderWatch(); renderScales(); renderMatrix(); renderRules(); renderExport(); renderStyles(); render(); sumSoon(); }
 $("showFail").checked = S.showFail;
 paintSrcTab(); ensureFont(S.font); renderEditor(); renderAll(); renderRead();
 show(location.hash.slice(1));
