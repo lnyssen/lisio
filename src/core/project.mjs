@@ -29,7 +29,7 @@ export const SETTING_FR = {
   "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system",
   sh: "Nuances", "sh.light": "Nuances, nuance 50", "sh.dark": "Nuances, nuance 950", "sh.sat": "Nuances, saturation", "sh.exact": "Nuances, couleur exacte",
   "ds.elevI": "Design system, intensité des ombres", "ds.elevB": "Design system, flou des ombres", "ds.elevY": "Design system, hauteur des ombres",
-  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile"
+  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile", decor: "Couleurs laissées pour le décor"
 };
 // Nom d'un chemin : le plus précis connu, sinon le premier niveau, sinon « Un réglage ».
 export const settingFr = path => { const parts = String(path || "").split("."); for (let i = parts.length; i > 0; i--) { const k = parts.slice(0, i).join("."); if (SETTING_FR[k]) return SETTING_FR[k]; } return "Un réglage"; };

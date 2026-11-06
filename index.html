@@ -1104,7 +1104,7 @@ body{background:var(--bg)}
 /* ===== Parcours : Couleurs, Nuances ===== */
 .palrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 14px 14px 18px;border-radius:var(--tile);background:var(--surface)}
 .palrow .paledit{text-decoration:none}
-.cwatch h2{margin:0 0 4px}.cw-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.cwatch h2{margin:0 0 4px}.cw-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}.cw-decor{margin-top:14px;border-top:1px solid var(--hair);padding-top:12px}.cw-decor summary{cursor:pointer;font-weight:700;min-height:24px}.cw-decor .note{margin:8px 0}.cw-decor ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}.cw-decor li{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.cw-decor li .cw-sw{width:28px;height:28px;border-radius:8px}.cw-decor li>span:not(.cw-sw){flex:1;min-width:0}
 .cw-list li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--bg)}
 .cw-sw{width:44px;height:44px;border-radius:12px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.45)}
 .cw-t b{display:block}.cw-t span{font-size:14px;color:var(--muted)}
@@ -1833,7 +1833,7 @@ const SETTING_FR = {
   "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system",
   sh: "Nuances", "sh.light": "Nuances, nuance 50", "sh.dark": "Nuances, nuance 950", "sh.sat": "Nuances, saturation", "sh.exact": "Nuances, couleur exacte",
   "ds.elevI": "Design system, intensité des ombres", "ds.elevB": "Design system, flou des ombres", "ds.elevY": "Design system, hauteur des ombres",
-  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile"
+  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile", decor: "Couleurs laissées pour le décor"
 };
 // Nom d'un chemin : le plus précis connu, sinon le premier niveau, sinon « Un réglage ».
 const settingFr = path => { const parts = String(path || "").split("."); for (let i = parts.length; i > 0; i--) { const k = parts.slice(0, i).join("."); if (SETTING_FR[k]) return SETTING_FR[k]; } return "Un réglage"; };
@@ -2734,20 +2734,34 @@ segInit("mView", () => S.mView, v => { S.mView = v; save(); renderMx(); });
 $("mVision").value = S.mVision;
 $("mVision").addEventListener("change", e => { S.mVision = e.target.value; save(); renderMx(); });
 // Couleurs : celles qui ne se lisent avec aucune autre, et la correction en un clic
-function cwIssues() { const tN = needRatio(S.level); return palette.map((c, i) => { let bj = -1, br = 0; palette.forEach((d, j) => { if (j !== i) { const r = ratio(c.hex, d.hex); if (r > br) { br = r; bj = j; } } }); return { i, c, bj, br }; }).filter(x => x.bj >= 0 && x.br < tN); }
+// Couleurs décoratives (S.decor) : une couleur ou une paire jumelle laissée telle quelle par choix. La clé porte la valeur exacte :
+// une couleur modifiée redevient à vérifier.
+const decorKey = (a, b) => b ? "t:" + [a, b].sort().join("|") : "c:" + a;
+const decorOn = k => Array.isArray(S.decor) && S.decor.includes(k);
+function decorSet(k, on) { const d = Array.isArray(S.decor) ? S.decor.filter(x => x !== k) : []; if (on) d.push(k); S.decor = d; save(); renderWatch(); sumSoon(); renderJourney(curView()); }
+function cwLoneAll() { const tN = needRatio(S.level); return palette.map((c, i) => { let bj = -1, br = 0; palette.forEach((d, j) => { if (j !== i) { const r = ratio(c.hex, d.hex); if (r > br) { br = r; bj = j; } } }); return { i, c, bj, br }; }).filter(x => x.bj >= 0 && x.br < tN); }
+const cwIssues = () => cwLoneAll().filter(x => !decorOn(decorKey(x.c.hex)));
+function cwTwinsAll() { const tw = []; for (let i = 0; i < palette.length; i++) for (let j = i + 1; j < palette.length; j++) { const r = ratio(palette[i].hex, palette[j].hex); if (r < 1.25) tw.push([i, j, r]); } return tw; }
+const cwTwins = () => cwTwinsAll().filter(([i, j]) => !decorOn(decorKey(palette[i].hex, palette[j].hex)));
 let cwActs = [];
 function renderWatch() {
   const el = $("cWatch"); if (!el) return; cwActs = [];
-  const tN = S.level === "AAA" ? 7 : 4.5, lst = cwIssues(), tw = [];
-  for (let i = 0; i < palette.length; i++) for (let j = i + 1; j < palette.length; j++) { const r = ratio(palette[i].hex, palette[j].hex); if (r < 1.25) tw.push([i, j, r]); }
+  const tN = S.level === "AAA" ? 7 : 4.5, lst = cwIssues(), tw = cwTwins();
+  const leave = (k, lab) => `<button type="button" class="btn sm" data-decor="${esc(k)}">${lab}</button>`;
   const act = (lab, fn, dot, pri) => { cwActs.push(fn); return `<button type="button" class="btn sm${pri ? " primary" : ""}" data-cw="${cwActs.length - 1}">${dot ? `<span class="dot" style="background:${dot}" aria-hidden="true"></span>` : ""}${lab}</button>`; };
   const look = (i, j) => act("Voir dans Contrastes", () => { sel = [i, j]; cmdGoView("matrice"); renderMx(); const t = $("pdTitle"); if (t) t.focus(); });
   let rows = lst.map(({ i, c, bj, br }) => { const p = palette[bj], fx = suggestFix(c.hex, p.hex, tN);
-    return `<li><span class="cw-sw" style="background:${c.hex}" aria-hidden="true"></span><span class="cw-t"><b>${esc(c.name)} <code>${c.hex}</code></b><span>Au mieux ${f2(br)}:1, avec ${esc(p.name)} : sous ${fmt(tN, 1).replace(",0", "")}:1, aucun texte courant possible.</span></span><span class="cw-a">${fx ? act(`Corriger : ${esc(c.name)} → ${fx}`, () => { palette[i].hex = fx; changed(); renderEditor(); toast(`${c.name} remplacé par ${fx}`); }, fx, true) : ""}${look(i, bj)}</span></li>`; }).join("");
-  rows += tw.map(([i, j, r]) => `<li><span class="cw-sw" style="background:linear-gradient(90deg,${palette[i].hex} 50%,${palette[j].hex} 50%)" aria-hidden="true"></span><span class="cw-t"><b>${esc(palette[i].name)} et ${esc(palette[j].name)}</b><span>Presque jumelles (${f2(r)}:1) : on ne les distingue pas l’une de l’autre. Gardez-en une, ou écartez-les.</span></span><span class="cw-a">${look(i, j)}</span></li>`).join("");
-  el.innerHTML = `<h2>À corriger avant d’aller plus loin</h2>` + (rows ? `<p class="note">« Corriger » garde la teinte et change seulement la clarté. Une couleur réservée au décor (illustration, fond coloré) peut rester telle quelle.</p><ul class="cw-list">${rows}</ul>` : `<p class="cw-ok">Rien à signaler : chaque couleur se lit en texte courant avec au moins une autre, et aucune paire n’est jumelle. Étape suivante : les nuances.</p>`);
+    return `<li><span class="cw-sw" style="background:${c.hex}" aria-hidden="true"></span><span class="cw-t"><b>${esc(c.name)} <code>${c.hex}</code></b><span>Au mieux ${f2(br)}:1, avec ${esc(p.name)} : sous ${fmt(tN, 1).replace(",0", "")}:1, aucun texte courant possible.</span></span><span class="cw-a">${fx ? act(`Corriger : ${esc(c.name)} → ${fx}`, () => { palette[i].hex = fx; changed(); renderEditor(); toast(`${c.name} remplacé par ${fx}`); }, fx, true) : ""}${look(i, bj)}${leave(decorKey(c.hex), "Décorative : laisser telle quelle")}</span></li>`; }).join("");
+  rows += tw.map(([i, j, r]) => `<li><span class="cw-sw" style="background:linear-gradient(90deg,${palette[i].hex} 50%,${palette[j].hex} 50%)" aria-hidden="true"></span><span class="cw-t"><b>${esc(palette[i].name)} et ${esc(palette[j].name)}</b><span>Presque jumelles (${f2(r)}:1) : on ne les distingue pas l’une de l’autre. Gardez-en une, ou écartez-les.</span></span><span class="cw-a">${look(i, j)}${leave(decorKey(palette[i].hex, palette[j].hex), "Laisser telles quelles")}</span></li>`).join("");
+  const kept = [...cwLoneAll().filter(x => decorOn(decorKey(x.c.hex))).map(x => [decorKey(x.c.hex), `${esc(x.c.name)} <code>${x.c.hex}</code>`, x.c.hex]),
+    ...cwTwinsAll().filter(([i, j]) => decorOn(decorKey(palette[i].hex, palette[j].hex))).map(([i, j]) => [decorKey(palette[i].hex, palette[j].hex), `${esc(palette[i].name)} et ${esc(palette[j].name)}`, `linear-gradient(90deg,${palette[i].hex} 50%,${palette[j].hex} 50%)`])];
+  const keptHtml = kept.length ? `<details class="cw-decor"><summary>Laissées telles quelles, pour le décor (${kept.length})</summary><p class="note">Ni texte ni élément d’interface : ces couleurs ne servent qu’au décor (illustration, fond coloré), où le contraste n’est pas exigé. Si l’une d’elles porte un jour du texte ou une information, annulez ce choix.</p><ul>${kept.map(([k, lab, bg]) => `<li><span class="cw-sw" style="background:${bg}" aria-hidden="true"></span><span>${lab}</span><button type="button" class="btn sm" data-undecor="${esc(k)}" aria-label="Annuler : remettre ${lab.replace(/<[^>]+>/g, "")} dans la liste à corriger">Annuler</button></li>`).join("")}</ul></details>` : "";
+  el.innerHTML = `<h2>À corriger avant d’aller plus loin</h2>` + (rows ? `<p class="note">« Corriger » garde la teinte et change seulement la clarté. Une couleur réservée au décor (illustration, fond coloré) peut rester telle quelle : elle sort alors de cette liste et du résumé, sans changer.</p><ul class="cw-list">${rows}</ul>` : kept.length ? `<p class="cw-ok">Rien d’autre à signaler. ${kept.length > 1 ? `${kept.length} couleurs ou paires sont laissées telles quelles` : "Une couleur ou une paire est laissée telle quelle"}, pour le décor.</p>` : `<p class="cw-ok">Rien à signaler : chaque couleur se lit en texte courant avec au moins une autre, et aucune paire n’est jumelle. Étape suivante : les nuances.</p>`) + keptHtml;
 }
 document.addEventListener("click", e => { const b = e.target.closest("[data-cw]"); if (b && cwActs[+b.dataset.cw]) cwActs[+b.dataset.cw](); });
+$("cWatch").addEventListener("click", e => { const a = e.target.closest("[data-decor]"), u = e.target.closest("[data-undecor]");
+  if (a) { decorSet(a.dataset.decor, true); toast("Laissée telle quelle, pour le décor"); const h = $("cWatch").querySelector(".cw-list button, .cw-decor summary"); if (h) h.focus(); }
+  if (u) { decorSet(u.dataset.undecor, false); toast("Remise dans la liste à corriger"); const h = $("cWatch").querySelector(".cw-list button"); if (h) h.focus(); } });
 function renderKeep() {
   const C = palette, P = [], out = [], v21 = V() >= 21, nm = c => `<b>${esc(c.name)}</b>`;
   for (let i = 0; i < C.length; i++) for (let j = i + 1; j < C.length; j++) P.push({ a: C[i], b: C[j], r: ratio(C[i].hex, C[j].hex) });
@@ -4209,7 +4223,7 @@ const SUM_FOCUS = { colors: "#couleurs h1", roles: "#dsRoles", type: "#styles h1
 function sumData() {
   let tokens = 0; try { const o = JSON.parse(tsJson()), w = x => { for (const k in x) { const v = x[k]; if (!v || typeof v !== "object") continue; if (v.$type === "color") tokens++; else w(v); } }; w(o.color || {}); w(o.semantic || {}); } catch (e) {}
   const roleKeys = Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && roleNeed(k)), M = mnState(), seen = jSeen();
-  let twins = 0; for (let i = 0; i < palette.length; i++) for (let j = i + 1; j < palette.length; j++) if (ratio(palette[i].hex, palette[j].hex) < 1.25) twins++;
+  const twins = cwTwins().length;
   const fonts = S.ts && S.ts.fonts ? [S.ts.fonts.head && S.ts.fonts.head.family, S.ts.fonts.body && S.ts.fonts.body.family] : [S.font.family];
   return { level: S.level, colors: palette.length, colorTokens: tokens, loneColors: cwIssues().length, twins,
     rolesChecked: roleKeys.length * 2, roleFails: allIssues().length, fonts, styles: S.ts.styles.length,
@@ -4523,7 +4537,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "152491d";
+const LISIO_BUILD = "4089139";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
