@@ -17,5 +17,6 @@ step "Menu par intention" node tests/e2e/menu.mjs
 step "Bandeau d'étapes (F01)" node tests/e2e/etapes.mjs
 step "Formulations et statuts (P0-3)" node tests/e2e/honnetete.mjs
 step "Page Couleurs, nuances, blocs à inclure (P0-4)" node tests/e2e/nuances.mjs
+step "Résumé permanent (P0-5)" node tests/e2e/resume.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail
