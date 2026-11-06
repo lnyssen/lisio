@@ -27,7 +27,7 @@ export const SETTING_FR = {
   projectName: "Nom du projet", figma: "Lien Figma", ts: "Styles de texte", "ts.d.base": "Styles de texte, taille de base desktop", "ts.m.base": "Styles de texte, taille de base mobile",
   "ts.styles[].min": "Styles de texte, taille mobile", "ts.styles[].max": "Styles de texte, taille desktop", "ts.styles[].lh": "Styles de texte, interligne",
   "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system",
-  sh: "Nuances", "sh.light": "Nuances, nuance 50", "sh.dark": "Nuances, nuance 950", "sh.sat": "Nuances, saturation", "sh.exact": "Nuances, couleur exacte",
+  sh: "Nuances", "sh.light": "Nuances, nuance 50", "sh.dark": "Nuances, nuance 950", "sh.sat": "Nuances, saturation", "sh.exact": "Nuances, couleur exacte", "sh.method": "Nuances, méthode",
   "ds.elevI": "Design system, intensité des ombres", "ds.elevB": "Design system, flou des ombres", "ds.elevY": "Design system, hauteur des ombres",
   "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile", "ds.scrimBlur": "Design system, flou sous le voile", decor: "Couleurs laissées pour le décor"
 };

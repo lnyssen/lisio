@@ -32,5 +32,6 @@ step "Une couleur par style de texte" node tests/e2e/style-couleurs.mjs
 step "Couleurs laissées telles quelles, pour le décor" node tests/e2e/decor.mjs
 step "Contrastes : toujours une grille texte sur fond" node tests/e2e/grille.mjs
 step "Images et voile sur photo : options" node tests/e2e/voile.mjs
+step "Rampes OKLCH (P2, F09)" node tests/e2e/oklch.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail
