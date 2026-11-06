@@ -3,7 +3,8 @@
 // Optionnel : nécessite Playwright (Chromium). Sans lui, ignoré (code 0) et dit.
 import { createRequire } from "node:module";
 import { deflateRawSync } from "node:zlib";
-import { writeFileSync } from "node:fs";
+import { randomBytes } from "node:crypto";
+import { writeFileSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -120,6 +121,49 @@ const proj = over => ({ lisio: "project", v: 1, name: "Reçu", savedAt: "2026-11
   check(await F.page.locator("#bootErr").count() === 0, "projet précédent rouvert sans erreur");
   check((await ls(F.page, "lisio:projects")).list.length === 2, "le projet abîmé n’est pas effacé");
   await F.ctx.close();
+}
+// 6. Partage par lien (P1, F05) : URL valide, limites dites, erreurs claires, anciens liens lisibles.
+{
+  const G = await open({ "lisio:colors": MEDIA, "lisio:state": { projectName: "Site Média", figma: "https://www.figma.com/design/abc/Site" } }, "#exporter");
+  await G.page.click("#prjLink"); await G.page.waitForTimeout(300);
+  const url = await G.page.evaluate(() => window.__copied), note = await G.page.locator("#prjNote").textContent();
+  let okUrl = false; try { const u = new URL(url); okUrl = u.protocol === "https:" && !!u.searchParams.get("p") && url.length <= 8000; } catch (e) {}
+  check(okUrl, "le lien copié est une URL https valide, sous 8 000 caractères", String(url).slice(0, 80));
+  check(/ne remplace pas une sauvegarde/i.test(note), "rappel : le lien ne remplace pas une sauvegarde", note);
+  check(/lien Figma/i.test(note), "le lien Figma du projet est signalé comme inclus", note);
+  await G.ctx.close();
+  // Projet trop lourd pour un lien : aucun lien copié, raison et solution dites.
+  const rnd = randomBytes(9000).toString("base64");
+  const H = await open({ "lisio:colors": MEDIA, "lisio:state": { projectName: "Lourd", notes: rnd } }, "#exporter");
+  await H.page.click("#prjLink"); await H.page.waitForTimeout(400);
+  const hn = await H.page.locator("#prjNote").textContent();
+  check(!(await H.page.evaluate(() => window.__copied)) && /trop lourd pour un lien/.test(hn) && /Enregistrer le projet/.test(hn), "projet trop lourd : pas de lien, solution proposée", hn);
+  await H.ctx.close();
+  // Liens reçus abîmés ou d’une version future : refus clair, rien d’écrit.
+  const I = await open({ "lisio:colors": MINE, "lisio:state": { projectName: "Mon site" } });
+  const names = () => I.page.evaluate(() => (JSON.parse(localStorage.getItem("lisio:projects") || "{}").list || []).map(x => x.name).join("|") + "/" + localStorage.getItem("lisio:colors"));
+  const before = await names();
+  const jlink = o => "j" + b64u(Buffer.from(JSON.stringify(o)));
+  for (const [t, re, label] of [
+    ["z%%%pas-un-lien", /Lien illisible/, "lien tronqué ou abîmé : message clair"],
+    [jlink(proj({ v: 99 })), /version plus récente/, "lien d’une version future refusé"],
+    [jlink(proj({ colors: [{ hex: "rouge" }] })), /couleur au moins est illisible/, "lien avec couleur invalide refusé"],
+    [jlink({ hello: "world" }), /pas un projet Lisio/, "lien sans projet refusé"]]) {
+    await I.page.goto(PAGE + "?p=" + t + "#matrice"); await I.page.waitForTimeout(500);
+    const tt = await toastText(I.page);
+    check(re.test(tt) && await I.page.locator("#prjIn").isHidden(), label, tt);
+  }
+  const after = await names();
+  check(before === after, "aucun projet ajouté ni couleur changée après un lien refusé", before + " → " + after);
+  // Anciens liens : le lien v1 de référence et le format non compressé (navigateurs sans CompressionStream) s’ouvrent.
+  const V1 = readFileSync(join(ROOT, "tests", "golden", "partage-v1.txt"), "utf8").trim();
+  for (const [t, label] of [[V1, "lien v1 de référence (2026-11-06) toujours ouvert"], [jlink(proj({ name: "Non compressé" })), "lien non compressé ouvert"]]) {
+    await I.page.goto(PAGE + "?p=" + t + "#matrice"); await I.page.waitForTimeout(500);
+    const offer = await I.page.locator("#prjIn").textContent();
+    check(await I.page.locator("#prjIn").isVisible() && /nouveau projet/.test(offer), label, offer.slice(0, 100));
+  }
+  check(!I.errors.length, "aucune erreur JavaScript", I.errors.join(" | "));
+  await I.ctx.close();
 }
 await browser.close();
 console.log(fails ? `\n${fails} échec(s)` : "\nTous les scénarios passent.");

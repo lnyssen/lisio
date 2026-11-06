@@ -124,3 +124,31 @@ test("nuances et ombres hors bornes ramenées, avec une note en français", () =
   assert.equal(r.notes.length, 5, r.notes.join(" | "));
   assert.ok(r.notes.every(n => /^(Nuances|Design system)/.test(n)), r.notes.join(" | "));
 });
+
+// F05 : un lien créé aujourd’hui (tests/golden/partage-v1.txt, produit par l’application le 2026-11-06)
+// doit rester lisible quand le format évoluera. Toute nouvelle version passe par migrateProject.
+import { readFileSync } from "node:fs";
+import { inflateRawSync } from "node:zlib";
+import { migrateProject } from "../src/core/project.mjs";
+const V1 = readFileSync(new URL("./golden/partage-v1.txt", import.meta.url), "utf8").trim();
+const unpack = t => JSON.parse(t[0] === "z" ? inflateRawSync(Buffer.from(t.slice(1).replace(/-/g, "+").replace(/_/g, "/"), "base64")) : Buffer.from(t.slice(1).replace(/-/g, "+").replace(/_/g, "/"), "base64"));
+
+test("lien v1 de référence : toujours lisible, mêmes couleurs, même nom", () => {
+  const o = unpack(V1);
+  assert.equal(o.v, 1);
+  const r = run(o);
+  assert.equal(r.ok, true);
+  assert.equal(r.project.name, "Lien v1 de référence");
+  assert.deepEqual(r.project.colors.map(c => c.hex), ["#0D1D45", "#00B3B0", "#FAF9F4"]);
+});
+
+test("migrateProject : sans effet sur la version courante, ne modifie pas l’objet reçu", () => {
+  const o = ok(), copy = JSON.parse(JSON.stringify(o)), m = migrateProject(o);
+  assert.deepEqual(o, copy);
+  assert.equal(m.v, PRJ_VERSION);
+  assert.deepEqual(m.colors, o.colors);
+});
+
+test("lien de partage : limite de 8 000 caractères (RFC 9110, § 4.1)", () => {
+  assert.equal(LINK_MAX, 8000);
+});

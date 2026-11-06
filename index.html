@@ -1829,6 +1829,15 @@ function conform(value, tpl, path, notes, depth = 0) {
   if (typeof value !== typeof tpl) return bad();
   return typeof value === "string" && value.length > STR_MAX ? value.slice(0, STR_MAX) : value;
 }
+// Évolution du format (F05) : quand PRJ_VERSION passera à 2, ajouter ici MIGRATIONS[1] = o => ({ ...o, v: 2, … }).
+// Chaque étape fait passer d'une version à la suivante ; un lien ancien remonte ainsi jusqu'à la version courante.
+// tests/golden/partage-v1.txt (un vrai lien v1) doit rester lisible : tests/project.test.mjs le vérifie.
+const MIGRATIONS = {};
+function migrateProject(o) {
+  let x = JSON.parse(JSON.stringify(o));
+  while (Number.isInteger(x.v) && x.v < PRJ_VERSION && MIGRATIONS[x.v]) x = MIGRATIONS[x.v](x);
+  return x;
+}
 // o : objet lu (JSON). tpl : état par défaut de Lisio. enums : valeurs permises pour certaines clés.
 function checkProject(o, tpl, enums = {}) {
   const no = reason => ({ ok: false, reason, notes: [] }), notes = [];
@@ -1837,6 +1846,7 @@ function checkProject(o, tpl, enums = {}) {
   if (!("v" in o)) notes.push("Projet sans numéro de version : lu comme version 1.");
   else if (!Number.isInteger(o.v) || o.v < 1) return no("bad-version");
   else if (o.v > PRJ_VERSION) return no("newer");
+  else if (o.v < PRJ_VERSION) { o = migrateProject(o); if (o.v !== PRJ_VERSION) return no("bad-version"); }
   if (!Array.isArray(o.colors)) return no("bad-color");
   if (o.colors.length > COLORS_MAX) return no("too-many-colors");
   if (!o.colors.every(c => isObj(c) && normHex(c.hex))) return no("bad-color");
@@ -4162,7 +4172,7 @@ $("prjName").value = S.projectName || "";
 $("prjName").addEventListener("input", e => { S.projectName = e.target.value.trim(); save(); });
 $("prjLink").addEventListener("click", async () => { try { const t = await packPrj(prjData()), url = PRJ_BASE + "?p=" + t + "#matrice", n = url.length.toLocaleString("fr-FR");
   if (url.length > LINK_MAX) { $("prjNote").textContent = `Projet trop lourd pour un lien (${n} caractères, au-delà de ${LINK_MAX.toLocaleString("fr-FR")}) : certains navigateurs ou serveurs le couperaient. Utilisez « Enregistrer le projet » et envoyez le fichier.`; toast("Lien non créé : projet trop lourd, enregistrez-le en fichier"); return; }
-  copy(url, "Lien copié : toute personne qui l’a peut ouvrir le projet"); $("prjNote").textContent = `Lien de ${n} caractères. Il contient tout le projet (nom, couleurs, polices, réglages), rien n’est stocké sur un serveur. Toute personne qui a ce lien peut ouvrir le projet : ne le publiez pas si le projet est confidentiel. Il ouvre Lisio sur lisio-psi.vercel.app.`; } catch (e) { toast("Lien impossible : enregistrez le projet en fichier"); } });
+  copy(url, "Lien copié : toute personne qui l’a peut ouvrir le projet"); $("prjNote").textContent = `Lien de ${n} caractères. Il contient tout le projet (nom, couleurs, polices, réglages${S.figma ? ", lien Figma" : ""}), rien n’est stocké sur un serveur. Toute personne qui a ce lien peut ouvrir le projet : ne le publiez pas si le projet est confidentiel. Il ouvre Lisio sur lisio-psi.vercel.app et y crée un nouveau projet. Le lien ne remplace pas une sauvegarde : gardez aussi le fichier (« Enregistrer le projet »).`; } catch (e) { toast("Lien impossible : enregistrez le projet en fichier"); } });
 $("prjSave").addEventListener("click", () => { const nm = slug(S.projectName || "projet"); saveFile(`lisio-projet-${nm}.json`, JSON.stringify(prjData(), null, 1), "application/json", "Projet enregistré : envoyez le fichier à vos collègues"); });
 $("prjOpen").addEventListener("click", () => $("prjFile").click());
 $("prjFile").addEventListener("change", e => { const f = e.target.files[0]; if (!f) return; e.target.value = ""; if (f.size > IMPORT_MAX) { toast(PRJ_REASONS["too-big"]); return; }

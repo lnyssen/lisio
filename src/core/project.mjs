@@ -89,6 +89,15 @@ export function conform(value, tpl, path, notes, depth = 0) {
   if (typeof value !== typeof tpl) return bad();
   return typeof value === "string" && value.length > STR_MAX ? value.slice(0, STR_MAX) : value;
 }
+// Évolution du format (F05) : quand PRJ_VERSION passera à 2, ajouter ici MIGRATIONS[1] = o => ({ ...o, v: 2, … }).
+// Chaque étape fait passer d'une version à la suivante ; un lien ancien remonte ainsi jusqu'à la version courante.
+// tests/golden/partage-v1.txt (un vrai lien v1) doit rester lisible : tests/project.test.mjs le vérifie.
+export const MIGRATIONS = {};
+export function migrateProject(o) {
+  let x = JSON.parse(JSON.stringify(o));
+  while (Number.isInteger(x.v) && x.v < PRJ_VERSION && MIGRATIONS[x.v]) x = MIGRATIONS[x.v](x);
+  return x;
+}
 // o : objet lu (JSON). tpl : état par défaut de Lisio. enums : valeurs permises pour certaines clés.
 export function checkProject(o, tpl, enums = {}) {
   const no = reason => ({ ok: false, reason, notes: [] }), notes = [];
@@ -97,6 +106,7 @@ export function checkProject(o, tpl, enums = {}) {
   if (!("v" in o)) notes.push("Projet sans numéro de version : lu comme version 1.");
   else if (!Number.isInteger(o.v) || o.v < 1) return no("bad-version");
   else if (o.v > PRJ_VERSION) return no("newer");
+  else if (o.v < PRJ_VERSION) { o = migrateProject(o); if (o.v !== PRJ_VERSION) return no("bad-version"); }
   if (!Array.isArray(o.colors)) return no("bad-color");
   if (o.colors.length > COLORS_MAX) return no("too-many-colors");
   if (!o.colors.every(c => isObj(c) && normHex(c.hex))) return no("bad-color");
