@@ -49,10 +49,11 @@
 </div>
 <textarea id="paste" placeholder="…ou collez le contenu ici" aria-label="Contenu JSON exporté par Lisio"></textarea>
 <div class="sum" id="sum" hidden></div>
+<div class="sum" id="plan" hidden aria-live="polite"></div>
 <label class="chk"><input type="checkbox" id="board" checked> Créer aussi une planche de présentation</label>
 <label class="chk"><input type="checkbox" id="comps" checked> Créer aussi les composants Bouton, Champ et Alerte, reliés aux variables</label>
 <button class="primary" id="go" type="button" disabled>Importer dans ce fichier</button>
-<p>Relancer l’import met à jour les variables et styles existants, sans doublons. Les rôles arrivent avec deux modes, Light et Dark.</p>
+<p>Avant d’écrire, Lisio compare avec ce fichier et montre ce qui sera ajouté, modifié ou supprimé. Rien n’est supprimé ni renommé sans votre accord. Les rôles arrivent avec deux modes, Light et Dark.</p>
 <p>Design system déjà importé ? <button type="button" id="compGo">Créer seulement les composants</button></p>
 </section>
 <section id="p-aud" role="tabpanel" aria-labelledby="t-aud" hidden>
@@ -72,7 +73,7 @@
       const d = JSON.parse(text); if (!d.color || !d.typography) throw new Error("ce contenu ne vient pas de Lisio");
       data = d; const meta = (d.$extensions && d.$extensions["app.lisio"]) || {};
       s.innerHTML = `<b class="ok">Prêt à importer</b><ul><li>${count(d.color, "color")} couleurs et nuances</li><li>${count(d.semantic || {}, "color")} rôles de couleur (texte, fond, bordure, focus…)</li><li>${count(d, "dimension") } dimensions (espacements, arrondis, cibles)</li><li>${Object.keys(d.typography).length} styles de texte</li></ul>${meta.wcag ? `<p style="margin-top:6px">Vérifié WCAG ${meta.wcag}, niveau ${meta.level}.</p>` : ""}`;
-      $("go").disabled = false;
+      $("go").disabled = true; askPlan();
     } catch (e) { data = null; $("go").disabled = true; s.innerHTML = `<b class="err">Lecture impossible</b> : ${e.message}.`; }
   }
   $("pick").onclick = () => $("file").click();
@@ -83,7 +84,27 @@
   ["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("on"); }));
   ["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove("on"); }));
   dz.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) f.text().then(load); });
-  $("go").onclick = () => { if (!data) return; $("go").disabled = true; $("go").textContent = "Import en cours…"; parent.postMessage({ pluginMessage: { type: "import", data, board: $("board").checked, components: $("comps").checked } }, "*"); };
+  // Aperçu : le plugin compare le fichier Figma et le design system, sans rien écrire, avant que l'on confirme.
+  let plan = null;
+  function askPlan() { if (!data) return; plan = null; $("go").disabled = true; $("go").textContent = "Comparaison avec ce fichier…"; parent.postMessage({ pluginMessage: { type: "plan", data, board: $("board").checked, components: $("comps").checked } }, "*"); }
+  ["board", "comps"].forEach(id => $(id).addEventListener("change", askPlan));
+  const lst = (l, f) => `<details><summary>Voir la liste</summary><ul>${l.slice(0, 300).map(x => `<li>${f(x)}</li>`).join("")}${l.length > 300 ? `<li>… et ${l.length - 300} autres</li>` : ""}</ul></details>`;
+  const kindName = x => `${esc(x.kind)} ${esc(x.name)}`;
+  function showPlan(p) {
+    plan = p; const el = $("plan"), n = (k, one, many) => `${k} ${k > 1 ? many : one}`;
+    const nothing = !p.add.length && !p.update.length && !p.remove.length && !p.rename.length;
+    el.hidden = false; el.innerHTML = `<b>${nothing ? "Ce fichier a déjà ce design system : rien ne changera" : "Ce que l’import fera dans ce fichier"}</b><ul>`
+      + (p.add.length ? `<li>${n(p.add.length, "ajout", "ajouts")}${lst(p.add, kindName)}</li>` : "")
+      + (p.update.length ? `<li><b>${n(p.update.length, "modification", "modifications")}</b> : la valeur de Figma est remplacée par celle de Lisio${lst(p.update, x => `${kindName(x)} : ${esc(x.from)} → ${esc(x.to)}`)}</li>` : "")
+      + (p.same ? `<li>${n(p.same, "élément identique, non modifié", "éléments identiques, non modifiés")}</li>` : "")
+      + `<li>Vos autres variables, styles et calques ne sont pas touchés.</li></ul>`
+      + (p.remove.length ? `<h2>${n(p.remove.length, "suppression proposée", "suppressions proposées")}</h2>${lst(p.remove, x => `${kindName(x)} (${esc(x.why)})`)}<label class="chk"><input type="checkbox" id="okDel"> Autoriser ces suppressions</label><p>Sans votre accord, rien n’est supprimé : une variable d’un autre type reste telle quelle et n’est pas importée ; l’ancienne planche reste, la nouvelle se place à sa droite.</p>` : "")
+      + (p.rename.length ? `<h2>${n(p.rename.length, "renommage proposé", "renommages proposés")}</h2>${lst(p.rename, x => `${esc(x.kind)} ${esc(x.from)} → ${esc(x.to)}`)}<label class="chk"><input type="checkbox" id="okRen"> Autoriser ces renommages</label><p>Sans votre accord, les noms restent : la variable Lisio est créée à côté, et le mode garde son nom.</p>` : "")
+      + (p.warnings.length ? `<ul class="err">${p.warnings.map(w => `<li>${esc(w)}</li>`).join("")}</ul>` : "");
+    $("go").disabled = false; $("go").textContent = p.update.length ? `Confirmer : importer, avec ${n(p.update.length, "modification", "modifications")}` : "Confirmer l’import";
+  }
+  $("go").onclick = () => { if (!data || !plan) return; $("go").disabled = true; $("go").textContent = "Import en cours…"; const ok = id => !!($(id) && $(id).checked);
+    parent.postMessage({ pluginMessage: { type: "import", data, board: $("board").checked, components: $("comps").checked, allowDelete: ok("okDel"), allowRename: ok("okRen") } }, "*"); };
   $("compGo").onclick = () => { $("compGo").disabled = true; $("compGo").textContent = "Création…"; parent.postMessage({ pluginMessage: { type: "components" } }, "*"); };
   const tabs = [["t-imp", "p-imp"], ["t-aud", "p-aud"]];
   tabs.forEach(([t, p], i) => { $(t).onclick = () => tabs.forEach(([t2, p2]) => { const on = t2 === t; $(t2).setAttribute("aria-selected", on); $(t2).tabIndex = on ? 0 : -1; $(p2).hidden = !on; });
@@ -108,10 +129,11 @@
       r.fixedNow = 0;
       return;
     }
+    if (m.type === "plan") { showPlan(m.plan); return; }
     const s = $("sum"); $("go").disabled = !data; $("go").textContent = "Importer dans ce fichier"; $("aud").disabled = false; $("aud").textContent = "Vérifier"; $("compGo").disabled = false; $("compGo").textContent = "Créer seulement les composants"; s.hidden = false;
     const compLine = c => c === "skipped" || (c && c.skipped) ? "<li>Composants déjà présents sur la page « Lisio components » : rien n’a été recréé</li>" : c ? `<li>${typeof c === "number" ? c : c.components} composants sur la page « Lisio components »</li>` : "";
     if (m.type === "components") s.innerHTML = `<b class="ok">${m.result.skipped ? "Rien à créer" : "Composants créés"}</b><ul>${compLine(m.result)}</ul>`;
-    if (m.type === "done") { const r = m.report; s.innerHTML = `<b class="ok">Import terminé</b><ul><li>${r.variables} variables, dont ${r.created} créées et ${r.updated} mises à jour</li><li>${r.styles} styles de texte</li>${compLine(r.components)}</ul>${r.warnings.length ? `<ul class="err">${r.warnings.map(w => `<li>${w}</li>`).join("")}</ul>` : ""}`; }
+    if (m.type === "done") { const r = m.report; s.innerHTML = `<b class="ok">Import terminé</b><ul><li>${r.variables} variables, dont ${r.created} créées et ${r.updated} mises à jour</li><li>${r.styles} styles (texte, grille, effets)</li>${r.skipped ? `<li>${r.skipped} non importée${r.skipped > 1 ? "s" : ""} : même nom, autre type, suppression non autorisée</li>` : ""}${compLine(r.components)}</ul>${r.warnings.length ? `<ul class="err">${r.warnings.map(w => `<li>${w}</li>`).join("")}</ul>` : ""}`;  askPlan(); }
     if (m.type === "error") s.innerHTML = `<b class="err">Échec</b> : ${m.message}`;
   };
 </script>

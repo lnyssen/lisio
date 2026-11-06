@@ -20,7 +20,8 @@ i = v.index("</style>") + len("</style>")
 # Plugin Figma : code.js = cœur + interface, puis archive servie par Vercel
 import zipfile
 pl = root / "figma-plugin"
-(pl / "code.js").write_text((pl / "core.js").read_text() + (pl / "main.js").read_text())
+# Le cœur de Lisio (contraste, seuils) est inliné dans core.js aux marqueurs /*@core:x*/ : même calcul que le site (P0-6).
+(pl / "code.js").write_text(inline_core((pl / "core.js").read_text() + (pl / "main.js").read_text()))
 with zipfile.ZipFile(root / "lisio-figma-plugin.zip", "w", zipfile.ZIP_DEFLATED) as z:
     for f in ("manifest.json", "code.js", "ui.html"):
         z.write(pl / f, f"lisio-figma-plugin/{f}")

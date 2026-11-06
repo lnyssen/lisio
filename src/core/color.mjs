@@ -9,7 +9,9 @@ export const toLin = c => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.05
 export const toGam = c => c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055;
 export const Yof = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
 export const lum = hex => Yof(hex2rgb(hex).map(toLin));
-export const ratio = (a, b) => { const la = lum(a), lb = lum(b); return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05); };
+// Ratio de deux luminances relatives : sert aussi au plugin Figma, qui reçoit des canaux de 0 à 1 et non un code hex.
+export const ratioLum = (la, lb) => (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+export const ratio = (a, b) => ratioLum(lum(a), lum(b));
 export function linToOklab([r, g, b]) {
   const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b), m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b), s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
   return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
