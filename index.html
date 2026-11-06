@@ -974,6 +974,7 @@ body{background:var(--bg)}
 .pd-cur{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:20px;background:var(--bg)}.pd-cur .ex-name{flex:none}
 .pd-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .pd-list li{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;box-shadow:inset 0 0 0 1px var(--hair)}
+.ex-cat{flex-wrap:wrap}.ex-vw{max-height:460px;overflow:auto}.ex-vars thead th{position:sticky;top:0;background:var(--surface);z-index:1}.ex-vars td.cp{white-space:nowrap;text-align:right}.ex-vars td.cp .btn{margin-left:4px}.ex-vars td.v code{word-break:break-all}
 .pd-tpl li{grid-template-columns:auto minmax(0,1fr) auto}.pd-tpl .pd-t small{display:block}.pd-tpl details{margin-top:6px;font-size:13px}.pd-tpl summary{cursor:pointer;font-weight:600}.pd-tpl details ul{margin:4px 0 0;padding-left:18px}.pd-tpl details li{display:list-item;padding:2px 0;box-shadow:none;border-radius:0}
 .pd-conf{grid-column:1 / -1;padding:10px 12px;border-radius:12px;background:var(--bg)}.pd-conf p{margin:0 0 8px}
 .pd-list li.pd-empty{display:block;color:var(--muted);box-shadow:none;background:var(--bg)}
@@ -1458,9 +1459,12 @@ body{background:var(--bg)}
       <h2>Lisio, Figma, code : les mêmes noms</h2>
       <div class="ex-tw"><table class="flu ex-gl" id="exGloss"></table></div>
     </div>
-    <div class="card-surface">
-      <div class="row between"><h2>Pour les développeurs : le CSS</h2><button class="btn sm" type="button" id="exCss">Copier le CSS</button></div>
-      <p class="note">Les mêmes valeurs en variables CSS, rangées en quatre couches : primitives, rôles, layout, typographie. Plus une classe <code>.t-</code> par style de texte et les règles de focus et de liens.</p>
+    <div class="card-surface" id="exCssCard">
+      <div class="row between"><h2>Pour les développeurs : le CSS</h2><div class="row"><button class="btn sm" type="button" id="exCss">Copier tout le CSS</button><button class="btn sm" type="button" id="exCssVars">Copier les variables seules</button><button class="btn sm" type="button" id="exCssDl">Télécharger lisio.css</button></div></div>
+      <p class="note">Les mêmes valeurs en variables CSS, rangées en quatre couches : primitives, rôles, layout, typographie. Plus une classe <code>.t-</code> par style de texte et les règles de focus et de liens. Choisissez une catégorie pour copier une variable, une ligne ou toute la catégorie.</p>
+      <div class="seg ex-cat" role="group" aria-label="Catégorie du CSS" id="exCat"></div>
+      <div class="row between"><p class="note" id="exCatN" style="margin:0"></p><button class="btn sm" type="button" id="exCatCopy">Copier la catégorie</button></div>
+      <div class="ex-tw ex-vw" tabindex="0" role="region" aria-label="Variables de la catégorie, défilables"><table class="flu ex-vars" id="exVars"></table></div>
       <details class="ts-code"><summary>Voir le CSS</summary><pre class="code" id="exCssOut" tabindex="0"></pre></details>
     </div>
   </section>
@@ -2152,6 +2156,50 @@ function reportMarkdown(m) {
 function reportJson(m) {
   return { schema: REPORT_SCHEMA, v: REPORT_V, statuses: Object.fromEntries(Object.entries(STATUS).map(([k, s]) => [k, s.word])), ...JSON.parse(JSON.stringify(m)) };
 }
+// Lisio, lecture du CSS exporté (F12) : catégories, variables une par une, variables seules.
+// Fonctions pures, pour le CSS que Lisio produit lui-même (pas un analyseur CSS général).
+// Testées par tests/css.test.mjs ; la validité réelle est vérifiée par le navigateur dans tests/e2e/export.mjs.
+const CSS_CAT_FR = [[/^Primitives/, "Couleurs (primitives)"], [/^Semantic roles/, "Rôles"], [/^Layout/, "Mise en page et espacements"], [/^Typography/, "Typographie"], [/^Accessibility/, "Règles d’accessibilité"], [/^Components/, "Composants et états"], [/^Effects/, "Effets et images"]];
+const CSS_MARK = /^\/\* ===== (.+?) ===== \*\/$/gm;
+// Découpe en catégories, dans l'ordre du fichier. L'en-tête (commentaire de tête) reste avec la première.
+function cssSections(css) {
+  const marks = [...css.matchAll(CSS_MARK)];
+  if (!marks.length) return [{ title: "Tout", label: "Tout", text: css }];
+  return marks.map((m, i) => { const start = i ? m.index : 0, end = i + 1 < marks.length ? marks[i + 1].index : css.length, raw = m[1].replace(/^\d+\.\s*/, "");
+    const fr = CSS_CAT_FR.find(([re]) => re.test(raw)); return { title: raw, label: fr ? fr[1] : raw, text: css.slice(start, end) }; });
+}
+const stripComments = css => css.replace(/\/\*[^]*?\*\//g, "");
+// Arbre de blocs : { sel, decls: [[prop, value]], kids: [] }.
+function cssTree(css) {
+  const src = stripComments(css), root = { sel: "", decls: [], kids: [] }, stack = [root]; let buf = "";
+  for (const ch of src) {
+    if (ch === "{") { const node = { sel: buf.trim().replace(/\s+/g, " "), decls: [], kids: [] }; stack[stack.length - 1].kids.push(node); stack.push(node); buf = ""; }
+    else if (ch === "}") { const t = buf.trim(); if (t) pushDecl(stack[stack.length - 1], t); if (stack.length < 2) throw new Error("accolade fermante en trop"); stack.pop(); buf = ""; }
+    else if (ch === ";" && stack.length > 1) { pushDecl(stack[stack.length - 1], buf.trim()); buf = ""; }
+    else buf += ch;
+  }
+  if (stack.length !== 1) throw new Error("accolade ouvrante non fermée");
+  return root.kids;
+}
+function pushDecl(node, t) { if (!t) return; const i = t.indexOf(":"); if (i < 1) return; node.decls.push([t.slice(0, i).trim(), t.slice(i + 1).trim()]); }
+// Variables CSS, avec leur contexte (bloc et média), dans l'ordre du fichier.
+function cssVars(css) {
+  const out = [], walk = (nodes, ctx) => nodes.forEach(n => { const c = [...ctx, n.sel]; n.decls.forEach(([p, v]) => { if (p.startsWith("--")) out.push({ name: p, value: v, ctx: c }); }); walk(n.kids, c); });
+  walk(cssTree(css), []); return out;
+}
+// Le même CSS réduit aux variables : blocs sans variable retirés, contexte (média, thème) gardé.
+function cssVarsOnly(css) {
+  const ser = (nodes, ind) => nodes.map(n => { const d = n.decls.filter(([p]) => p.startsWith("--")), kids = ser(n.kids, ind + "  ");
+    if (!d.length && !kids) return ""; return `${ind}${n.sel} {\n${d.map(([p, v]) => `${ind}  ${p}: ${v};\n`).join("")}${kids}${ind}}\n`; }).join("");
+  return ser(cssTree(css), "");
+}
+const cssIdentOk = name => /^--[a-z0-9]+(-[a-z0-9]+)*$/.test(name);
+// Noms uniques et stables : même liste de noms, mêmes identifiants ; un doublon reçoit -2, -3…
+function uniqueSlugs(slugs, reserved = []) {
+  const used = new Set(reserved), out = [];
+  for (const s of slugs) { let x = s, n = 2; while (used.has(x)) x = `${s}-${n++}`; used.add(x); out.push(x); }
+  return out;
+}
 // Réglage des nuances (P0-4) : 50 et 950 réglables, 500 fixe, saturation ; mêmes réglages pour toutes les gammes.
 const SH_BASE = { light: TARGET[0], dark: TARGET[10], sat: 1, exact: false };
 const shCfg = k => (S.sh && S.sh[k] != null) ? S.sh[k] : SH_BASE[k];
@@ -2248,6 +2296,8 @@ function buildScales() {
     if (shCfg("exact")) sw[nearest] = c.hex;
     return { name: c.name, hex: c.hex, slug: slug(c.name), sw, nearest };
   });
+  // Noms CSS et Figma uniques (F12) : un doublon (« Bleu » et « bleu ») ou un nom d’état reçoit -2, -3…
+  uniqueSlugs(scales.map(x => x.slug), ["error", "success", "warning", "info"]).forEach((u, i) => { scales[i].slug = u; });
   buildStatus();
 }
 // Couleurs d’état : une gamme par état, teinte réglable (S.ds.status)
@@ -4020,12 +4070,34 @@ function renderExport2() {
   $("exMap").innerHTML = items.map(([t, what, why, dest, viz, c]) => `<div class="ex-item"><h3>${t}<span>${c} ${c > 1 ? "éléments" : "élément"}</span></h3><div class="ex-viz">${viz}</div><b style="font-size:14px">${what}</b><p>${why}</p><div class="ex-dest">${dest.map(d => `<code>${d}</code>`).join("")}</div></div>`).join("");
   const gl = [["Couleurs", "Colors", "brand/500", "--brand-500"], ["Rôles (Design system)", "Semantic, modes Light et Dark", "text/default, action/hover…", "--text-default"], ["Couleurs d’état", "Semantic", "error/text, success/surface…", "--error-text, .alert-error"], ["Graphiques", "Semantic", "chart/1 à chart/" + chartPalette("light").length, "--chart-1"], ["Styles de texte", "Text styles", "H1/Mobile, Body/Desktop…", ".t-h1, .t-body"], ["Tailles par écran", "Typography (modes)", "font-size/h1, line-height/h1", "--font-size-h1"], ["Polices", "Typography", "font-family/heading", "--font-heading"], ["Grille", "Layout (modes)", "margin, gutter, columns", "--layout-margin"], ["Espacements, arrondis, icônes", "Dimensions", "spacing/4, radius/control, icon/md", "--spacing-4, --icon-md"], ["Animations", "Motion", "fast, base, slow", "--duration-fast"]];
   $("exGloss").innerHTML = `<thead><tr><th scope="col">Dans Lisio</th><th scope="col">Collection Figma</th><th scope="col">Nom dans Figma</th><th scope="col">Dans le code</th></tr></thead><tbody>${gl.map(r => `<tr><th scope="row">${r[0]}</th><td>${r[1]}</td><td><code>${r[2]}</code></td><td><code>${r[3]}</code></td></tr>`).join("")}</tbody>`;
-  $("exCssOut").textContent = tsCss();
+  renderExCss();
   renderExFix(); renderHist();
 }
 $("exDl").addEventListener("click", () => { const txt = tsJson(); histMark(txt); saveFile("lisio-design-system.json", txt, "application/json", "lisio-design-system.json enregistré : ouvrez-le dans le plugin Lisio"); });
 $("exCopy").addEventListener("click", () => { const txt = tsJson(); histMark(txt); copy(txt, "Copié : collez-le dans le plugin Lisio (Ctrl ou Cmd + V)"); });
 $("exCss").addEventListener("click", () => copy(tsCss(), "CSS copié"));
+// ---------- CSS par catégorie, copie par ligne (F12) ----------
+let exCatI = 0, exVarsCur = [], exSecs = [];
+const ctxFr = c => { const t = c.join(" "); if (/prefers-color-scheme: dark|data-theme="dark"/.test(t)) return "mode sombre"; const m = t.match(/min-width:\s*(\d+)px/); return m ? `écran de ${m[1]} px et plus` : ""; };
+function renderExCss() {
+  const css = tsCss(); exSecs = cssSections(css); exCatI = Math.min(exCatI, exSecs.length - 1);
+  $("exCssOut").textContent = css;
+  $("exCat").innerHTML = exSecs.map((x, i) => `<button type="button" data-i="${i}" aria-pressed="${i === exCatI}">${esc(x.label)}</button>`).join("");
+  const sec = exSecs[exCatI]; let vars = []; try { vars = cssVars(sec.text); } catch (e) {}
+  // Le mode sombre est écrit deux fois (réglage du système et data-theme) : une seule ligne par valeur.
+  const seenV = new Set(); vars = vars.filter(v => { const k = v.name + "|" + ctxFr(v.ctx) + "|" + v.value; if (seenV.has(k)) return false; seenV.add(k); return true; });
+  exVarsCur = vars;
+  $("exCatN").textContent = `${vars.length} variable${vars.length > 1 ? "s" : ""} dans « ${sec.label} »` + (vars.length ? "." : " : cette catégorie contient des règles, copiez-la en entier.");
+  $("exCatCopy").innerHTML = `Copier la catégorie<span class="sr-only"> ${esc(sec.label)}</span>`;
+  $("exVars").innerHTML = vars.length ? `<thead><tr><th scope="col">Variable</th><th scope="col">Valeur</th><th scope="col">Contexte</th><th scope="col"><span class="sr-only">Copier</span></th></tr></thead><tbody>${vars.map((v, i) => { const cx = ctxFr(v.ctx); return `<tr data-var="${esc(v.name)}" data-i="${i}"><th scope="row"><code>${esc(v.name)}</code></th><td class="v"><code>${esc(v.value)}</code></td><td>${cx || "–"}</td><td class="cp"><button type="button" class="btn sm" data-cpy="var" data-l="var()" aria-label="Copier var() pour ${esc(v.name)}${cx ? ", " + cx : ""}">var()</button><button type="button" class="btn sm" data-cpy="line" data-l="Ligne" aria-label="Copier la ligne ${esc(v.name)}${cx ? ", " + cx : ""}">Ligne</button></td></tr>`; }).join("")}</tbody>` : "";
+}
+$("exCat").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if (!b) return; exCatI = +b.dataset.i; renderExCss(); const nb = $("exCat").querySelector(`[data-i="${exCatI}"]`); if (nb) nb.focus(); });
+$("exCatCopy").addEventListener("click", () => { const x = exSecs[exCatI]; if (x) copy(x.text, `Catégorie « ${x.label} » copiée`); });
+$("exVars").addEventListener("click", e => { const b = e.target.closest("[data-cpy]"); if (!b) return; const v = exVarsCur[+b.closest("tr").dataset.i]; if (!v) return;
+  if (b.dataset.cpy === "line") copy(`${v.name}: ${v.value};`, `Ligne copiée : ${v.name}`); else copy(`var(${v.name})`, `Référence copiée : var(${v.name})`);
+  b.textContent = "Copié ✓"; clearTimeout(b._t); b._t = setTimeout(() => { b.textContent = b.dataset.l; }, 1600); });
+$("exCssVars").addEventListener("click", () => copy(cssVarsOnly(tsCss()), "Variables CSS copiées"));
+$("exCssDl").addEventListener("click", () => saveFile("lisio.css", tsCss(), "text/css", "lisio.css téléchargé"));
 
 // ---------- Onglets ----------
 const VIEWS = ["couleurs", "palette", "matrice", "tester", "styles", "systeme", "lisibilite", "sources"];
@@ -4367,7 +4439,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "2eb7482";
+const LISIO_BUILD = "0011d21";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

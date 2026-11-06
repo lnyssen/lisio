@@ -25,5 +25,6 @@ step "Comment tester ? (P1, F07)" node tests/e2e/aide.mjs
 step "Focus, cibles et états (P1, F08)" node tests/e2e/interaction.mjs
 step "Modèles de départ (P1, F10)" node tests/e2e/presets.mjs
 step "Rapport Markdown et JSON (P1, F11)" node tests/e2e/rapport.mjs
+step "Export CSS et copie par ligne (P1, F12)" node tests/e2e/export.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail
