@@ -21,5 +21,6 @@ step "Résumé permanent (P0-5)" node tests/e2e/resume.mjs
 step "Cinq statuts du blueprint (P0-3 bis)" node tests/e2e/statuts.mjs
 step "Plugin Figma : aperçu et accord (P0-6)" node tests/e2e/figma-ui.mjs
 step "Recherche dans les sélecteurs (P1, F04)" node tests/e2e/recherche.mjs
+step "Comment tester ? (P1, F07)" node tests/e2e/aide.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail
