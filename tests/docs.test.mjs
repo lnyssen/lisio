@@ -32,3 +32,21 @@ test("guide et slides : les cinq statuts, et le plugin qui montre avant d'écrir
 test("guide et slides : aucune formulation interdite", () => {
   for (const [n, t] of [["guide", guide], ["slides", slides]]) { const m = t.match(BAD); assert.equal(m, null, `${n} : « ${m && m[0]} »`); }
 });
+
+// P1 : les nouvelles fonctions figurent dans le guide et les slides, avec les mots de l'interface.
+test("guide : fonctions de la P1, avec les mots de l'interface", () => {
+  for (const w of ["Je débute, affichage Essentiel", "Je connais, tout afficher", "Partir d’un modèle", "Afficher les réglages avancés",
+    "Service public sobre", "Éditorial, longue lecture", "Lecture renforcée (AAA)", "Palette Média Animation",
+    "Comment tester ?", "Focus, cibles et états", "Télécharger en Markdown (.md)", "Télécharger en JSON",
+    "Copier les variables seules", "Télécharger lisio.css", "ne remplace pas une sauvegarde"])
+    assert.ok(guide.includes(w), "guide : " + w);
+  assert.match(guide, /Rechercher|recherche/);
+});
+
+test("slides : démarrer, export CSS et rapport de la P1", () => {
+  assert.ok(order.includes("demarrer"), "slide demarrer dans l'ordre");
+  const d = txt(read("slides/demarrer.html")), c = txt(read("slides/css.html")), e = txt(read("slides/equipe.html"));
+  for (const w of ["Essentiel", "Avancé", "modèle"]) assert.ok(d.includes(w), "demarrer : " + w);
+  for (const w of ["lisio.css", "catégorie", "variables seules"]) assert.ok(c.includes(w), "css : " + w);
+  for (const w of ["Markdown", "JSON"]) assert.ok(e.includes(w), "equipe : " + w);
+});
