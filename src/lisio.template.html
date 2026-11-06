@@ -1003,6 +1003,25 @@ body{background:var(--bg)}
   :root.side-c .tab-grp,:root.side-c .tab-grp.first{font-size:10.5px!important;line-height:1.2;letter-spacing:0;text-transform:none;font-weight:600;width:auto;max-width:calc(var(--side) - 8px);text-align:center;overflow:hidden;padding:clamp(6px,1vh,10px) 4px clamp(3px,.6vh,6px)!important;margin-top:clamp(3px,.8vh,8px)!important;border-top:1px solid var(--hair)!important}
 }
 
+/* ===== Menu replié en pilule (demande de Laurent, 6 novembre 2026) =====
+   Des ronds de même taille (--d) pour le logo, « Replier », Projets, chaque page et l'aide ; la page active dans un rond orange ;
+   la taille suit la hauteur de l'écran pour qu'il n'y ait jamais de défilement ; 8 px entre les ronds et le bord de la pilule.
+   Apprendre (Guide, S'entraîner) est dans « Aide et formation » : retiré du menu sur ordinateur, gardé dans « Plus » sur mobile. */
+@media (min-width:761px){
+  .tab-g[aria-labelledby="grp-apprendre"]{display:none}
+  :root.side-c{--d:clamp(28px,calc((100vh - 152px) / 13),44px);--pg:8px;--gp:4px;--side:calc(var(--d) + 2 * var(--pg) + 24px);--st:calc(2 * var(--d) + var(--gp) + var(--pg));--sf:calc(var(--d) + var(--pg));--sbtn:var(--d)}
+  :root.side-c .side-top{top:12px;left:12px;width:calc(var(--side) - 24px);height:var(--st)!important;padding:var(--pg) 0 0!important;gap:var(--gp)!important;justify-content:flex-start!important;border-radius:999px 999px 0 0}
+  :root.side-c .side-top .logo{width:var(--d);height:var(--d)}
+  :root.side-c .side-top .logo-mark{width:var(--d);height:var(--d);clip-path:circle(50%)}
+  :root.side-c .side-b{width:var(--d);height:var(--d);border-radius:50%}
+  :root.side-c nav.tabs,:root.side-c nav.tabs.has-ink{width:calc(var(--side) - 24px);border-radius:999px!important;padding:calc(var(--st) + var(--gp)) 0 calc(var(--sf) + var(--gp))!important;gap:var(--gp)!important;align-items:center!important;box-shadow:0 10px 28px rgba(4,32,30,.22)}
+  :root.side-c nav.tabs button{width:var(--d)!important;height:var(--d)!important;min-height:0;border-radius:50%!important;padding:0!important;margin:0!important;flex:none}
+  :root.side-c .tab-ink,:root.side-c .tab-hov{border-radius:50%!important}
+  :root.side-c .tab-grp,:root.side-c .tab-grp.first{font-size:0!important;width:calc(var(--d) * .5)!important;max-width:none;height:0;padding:0!important;margin:5px 0!important;border:0!important;border-top:1px solid rgba(255,255,255,.24)!important;flex:none;overflow:hidden}
+  :root.side-c .side-foot{left:12px;bottom:12px;width:calc(var(--side) - 24px);height:var(--sf);padding:0 0 var(--pg)!important;align-items:center;justify-content:flex-end;border-radius:0 0 999px 999px}
+  :root.side-c .help-b,:root.side-c .side-foot a{width:var(--d);height:var(--d);border-radius:50%;padding:0;justify-content:center}
+}
+
 /* ===== Personnalisation plus fine et blocs à inclure ===== */
 .ds-inc{border:0;margin:0 0 18px;padding:16px 18px;border-radius:20px;background:var(--bg)}
 .ds-inc legend{float:left;width:100%;padding:0;margin:0 0 4px;font-size:17px;font-weight:600}

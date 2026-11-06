@@ -1,4 +1,6 @@
-// Menu latéral organisé par intention (blueprint v2, § 3) : Projets, puis Créer, Vérifier, Apprendre, Livrer.
+// Menu latéral organisé par intention (blueprint v2, § 3) : Projets, puis Créer, Vérifier, Livrer.
+// Apprendre (Guide, S’entraîner) est dans « Aide et formation », en bas du menu (demande de Laurent, 6 novembre 2026) ; il reste dans « Plus » sur mobile.
+// Replié, le menu est une pilule : des ronds de même taille, sans défilement, les groupes séparés par un trait.
 // Choix de Laurent du 5 novembre 2026. Nuances ajoutées avec la page Couleurs (P0-4, 6 novembre 2026). Vérifie l'ordre, les noms des groupes (visibles et lus),
 // la page active, le menu replié, la barre mobile et le clavier.
 //   node tests/e2e/menu.mjs
@@ -11,7 +13,7 @@ const PAGE = "file://" + (process.env.LISIO_PAGE || join(ROOT, "index.html"));
 let chromium;
 try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
 
-const GROUPS = [["Créer", ["Couleurs", "Nuances", "Polices", "Styles de texte", "Design system"]], ["Vérifier", ["Contrastes", "Rédaction"]], ["Apprendre", ["Guide", "S’entraîner"]], ["Livrer", ["Exporter"]]];
+const GROUPS = [["Créer", ["Couleurs", "Nuances", "Polices", "Styles de texte", "Design system"]], ["Vérifier", ["Contrastes", "Rédaction"]], ["Livrer", ["Exporter"]]];
 const VIEW_OF = { "Couleurs": "couleurs", "Nuances": "palette", "Polices": "tester", "Styles de texte": "styles", "Design system": "systeme", "Contrastes": "matrice", "Rédaction": "lisibilite", "Guide": "sources", "S’entraîner": "formation", "Exporter": "exporter" };
 const browser = await chromium.launch();
 let fails = 0;
@@ -28,7 +30,7 @@ const readMenu = p => p.evaluate(() => {
   const nav = document.querySelector("nav.tabs"), vis = e => e.getClientRects().length && getComputedStyle(e).visibility !== "hidden";
   const name = el => { const ids = (el.getAttribute("aria-labelledby") || "").split(" ").filter(Boolean); return ids.length ? ids.map(i => document.getElementById(i).textContent.trim()).join(" ") : (el.getAttribute("aria-label") || ""); };
   const label = b => { const s = b.querySelector(":scope > span"); return (s ? [...s.childNodes].filter(n => n.nodeType === 3 || getComputedStyle(n).display !== "none").map(n => n.textContent).join("") : b.textContent).trim(); };
-  return { role: nav.getAttribute("role"), groups: [...nav.querySelectorAll("[role=group]")].map(g => ({ name: name(g), items: [...g.querySelectorAll("button")].filter(vis).map(label), shown: [...g.querySelectorAll(".tab-grp")].filter(vis).map(x => x.textContent.trim()) })) };
+  return { role: nav.getAttribute("role"), groups: [...nav.querySelectorAll("[role=group]")].filter(g => [...g.querySelectorAll("button")].some(vis)).map(g => ({ name: name(g), items: [...g.querySelectorAll("button")].filter(vis).map(label), shown: [...g.querySelectorAll(".tab-grp")].filter(vis).filter(x => parseFloat(getComputedStyle(x).fontSize) > 0).map(x => x.textContent.trim()) })) };
 });
 
 // 1. Ordinateur, menu déplié puis replié : groupes, ordre, noms visibles.
@@ -38,9 +40,10 @@ for (const [rail, lab] of [["o", "déplié"], ["c", "replié"]]) {
   const got = m.groups.map(g => g.name + " : " + g.items.join(", ")).join(" | "), want = GROUPS.map(([g, it]) => g + " : " + it.join(", ")).join(" | ");
   report(m.role !== "tablist" && got === want, `menu ${lab} : groupes et entrées dans l'ordre`, got === want ? "" : `reçu « ${got} »`);
   const shown = m.groups.map(g => g.shown.join("")).join(" | ");
-  report(shown === GROUPS.map(g => g[0]).join(" | "), `menu ${lab} : nom de chaque groupe affiché`, shown);
+  if (rail === "o") report(shown === GROUPS.map(g => g[0]).join(" | "), `menu ${lab} : nom de chaque groupe affiché`, shown);
+  else report(shown.replace(/[ |]/g, "") === "", `menu ${lab} : groupes marqués par un trait, sans nom tronqué`, shown);
   const fit = await p.evaluate(() => [...document.querySelectorAll("nav.tabs .tab-grp")].filter(e => e.getClientRects().length).map(e => { const cs = getComputedStyle(e), r = e.getBoundingClientRect(), n = document.querySelector("nav.tabs").getBoundingClientRect(); return { t: e.textContent, fs: parseFloat(cs.fontSize), inside: r.left >= n.left - 1 && r.right <= n.right + 1, cut: e.scrollWidth > e.clientWidth + 1 }; }).filter(x => x.fs < 10 || !x.inside || x.cut));
-  report(!fit.length, `menu ${lab} : noms de groupe lisibles (10 px et plus) et entiers`, JSON.stringify(fit));
+  if (rail === "o") report(!fit.length, `menu ${lab} : noms de groupe lisibles (10 px et plus) et entiers`, JSON.stringify(fit));
   // Aucun nom de groupe ne passe sous un bouton du menu (défaut vu le 6 novembre 2026 avec les ronds de la branche de travail).
   const over = await p.evaluate(() => { const bs = [...document.querySelectorAll("nav.tabs button, #railPrj")].filter(b => b.getClientRects().length).map(b => b.getBoundingClientRect());
     return [...document.querySelectorAll("nav.tabs .tab-grp")].filter(e => e.getClientRects().length).filter(e => { const r = e.getBoundingClientRect(), g = document.createRange(); g.selectNodeContents(e); const t = g.getBoundingClientRect();
@@ -54,6 +57,34 @@ for (const [rail, lab] of [["o", "déplié"], ["c", "replié"]]) {
   await p.ctx.close();
 }
 
+// 1 bis. Replié : une pilule, des ronds de même taille (logo, replier, Projets, pages, aide), rond orange pour la page active, aucun défilement.
+for (const h of [600, 680, 760, 900, 1080]) {
+  const p = await open({ width: 1280, height: h }, "c", "couleurs");
+  const r = await p.evaluate(() => { const n = document.querySelector("nav.tabs"), nr = n.getBoundingClientRect(), R = e => e.getBoundingClientRect();
+    const els = [document.querySelector(".side-top .logo-mark"), document.getElementById("sideB"), ...[...n.querySelectorAll("button")].filter(b => b.getClientRects().length), document.getElementById("helpB")];
+    const sz = els.map(e => { const b = R(e), cs = getComputedStyle(e), rad = parseFloat(cs.borderTopLeftRadius) || 0, clip = /circle/.test(cs.clipPath); return { id: e.id || e.className.baseVal || e.className, w: Math.round(b.width), h: Math.round(b.height), round: clip || rad >= b.width / 2 - 0.5 }; });
+    const ink = document.querySelector(".tab-ink"), ir = R(ink), icr = parseFloat(getComputedStyle(ink).borderTopLeftRadius);
+    const logo = R(els[0]), help = R(els[els.length - 1]), ov = [document.querySelector(".side-top"), n, document.querySelector(".side-foot")].map(x => getComputedStyle(x).overflowY);
+    return { sz, scroll: n.scrollHeight - n.clientHeight, pill: parseFloat(getComputedStyle(n).borderTopLeftRadius) >= nr.width / 2 - 0.5, w: Math.round(nr.width),
+      ink: [Math.round(ir.width), Math.round(ir.height), icr >= ir.width / 2 - 0.5], top: Math.round(logo.top - nr.top), bottom: Math.round(nr.bottom - help.bottom), sw: document.documentElement.scrollWidth }; });
+  const d = r.sz[0].w, same = r.sz.every(x => x.w === d && x.h === d), round = r.sz.every(x => x.round);
+  report(same && round, `replié ${h} px : ${r.sz.length} ronds de ${d} px (logo, replier, Projets, pages, aide)`, same && round ? "" : JSON.stringify(r.sz.filter(x => !(x.w === d && x.h === d && x.round))));
+  report(r.ink[0] === d && r.ink[1] === d && r.ink[2], `replié ${h} px : page active dans un rond de même taille`, JSON.stringify(r.ink));
+  report(r.scroll <= 0, `replié ${h} px : aucun défilement dans le menu`, `${r.scroll} px de trop`);
+  report(r.pill && r.w === d + 16, `replié ${h} px : pilule (arrondi entier, ${r.w} px de large)`, JSON.stringify({ pill: r.pill, w: r.w }));
+  report(r.top <= 8 && r.bottom <= 8 && r.top >= 4 && r.bottom >= 4, `replié ${h} px : logo et aide à 4 à 8 px des bords`, `haut ${r.top}, bas ${r.bottom}`);
+  report(!p.errs.length, `replié ${h} px : aucune erreur JavaScript`, p.errs.join(" | ")); await p.ctx.close();
+}
+
+// 1 ter. Guide et S’entraîner : dans « Aide et formation », en bas ; la page s'ouvre sans marquer une page du menu.
+for (const rail of ["o", "c"]) { const p = await open({ width: 1440, height: 900 }, rail);
+  await p.click("#helpB"); await p.waitForTimeout(150);
+  const links = await p.evaluate(() => [...document.querySelectorAll("#helpPop a[href^='#']")].map(a => a.getAttribute("href")));
+  await p.click("#helpPop a[href='#sources']"); await p.waitForTimeout(300);
+  const r = await p.evaluate(() => ({ shown: !document.getElementById("sources").hidden, cur: [...document.querySelectorAll('nav.tabs [aria-current="page"]')].filter(b => b.getClientRects().length).length, ink: getComputedStyle(document.querySelector(".tab-ink")).opacity }));
+  report(links.includes("#sources") && links.includes("#formation") && r.shown && r.cur === 0 && r.ink === "0", `menu ${rail === "o" ? "déplié" : "replié"} : Guide et S’entraîner dans l’aide, sans faux repère dans le menu`, JSON.stringify({ links, ...r }));
+  await p.ctx.close(); }
+
 // 2. Chaque entrée ouvre sa page, marquée comme page actuelle, une seule à la fois.
 { const p = await open({ width: 1440, height: 900 }, "o"); const bad = [];
   for (const [, items] of GROUPS) for (const it of items) {
@@ -65,10 +96,10 @@ for (const [rail, lab] of [["o", "déplié"], ["c", "replié"]]) {
   }
   report(!bad.length, "chaque entrée ouvre sa page et devient la page actuelle", bad.slice(0, 3).join(" ; ")); await p.ctx.close(); }
 
-// 3. Clavier : Tab parcourt le menu dans l'ordre (Projets puis les 10 entrées), Entrée ouvre la page.
+// 3. Clavier : Tab parcourt le menu dans l'ordre (Projets puis les 8 entrées), Entrée ouvre la page.
 { const p = await open({ width: 1440, height: 900 }, "c"); await p.focus("#railPrj");
   const seq = [await p.evaluate(() => document.activeElement.id || "?")];
-  for (let i = 0; i < 10; i++) { await p.keyboard.press("Tab"); seq.push(await p.evaluate(() => document.activeElement.dataset.view || document.activeElement.id)); }
+  for (let i = 0; i < 8; i++) { await p.keyboard.press("Tab"); seq.push(await p.evaluate(() => document.activeElement.dataset.view || document.activeElement.id)); }
   const want = ["railPrj", ...GROUPS.flatMap(g => g[1]).map(t => VIEW_OF[t])];
   await p.evaluate(() => { const l = document.querySelector('nav.tabs [data-view="lisibilite"]'); l.tabIndex = 0; l.focus(); }); await p.keyboard.press("Enter"); await p.waitForTimeout(150);
   const ent = await p.evaluate(() => !document.getElementById("lisibilite").hidden);
