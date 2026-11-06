@@ -23,5 +23,6 @@ step "Plugin Figma : aperçu et accord (P0-6)" node tests/e2e/figma-ui.mjs
 step "Recherche dans les sélecteurs (P1, F04)" node tests/e2e/recherche.mjs
 step "Comment tester ? (P1, F07)" node tests/e2e/aide.mjs
 step "Focus, cibles et états (P1, F08)" node tests/e2e/interaction.mjs
+step "Modèles de départ (P1, F10)" node tests/e2e/presets.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail

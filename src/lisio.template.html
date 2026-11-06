@@ -967,6 +967,8 @@ body{background:var(--bg)}
 .pd-cur{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:20px;background:var(--bg)}.pd-cur .ex-name{flex:none}
 .pd-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .pd-list li{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 14px;border-radius:18px;box-shadow:inset 0 0 0 1px var(--hair)}
+.pd-tpl li{grid-template-columns:auto minmax(0,1fr) auto}.pd-tpl .pd-t small{display:block}.pd-tpl details{margin-top:6px;font-size:13px}.pd-tpl summary{cursor:pointer;font-weight:600}.pd-tpl details ul{margin:4px 0 0;padding-left:18px}.pd-tpl details li{display:list-item;padding:2px 0;box-shadow:none;border-radius:0}
+.pd-conf{grid-column:1 / -1;padding:10px 12px;border-radius:12px;background:var(--bg)}.pd-conf p{margin:0 0 8px}
 .pd-list li.pd-empty{display:block;color:var(--muted);box-shadow:none;background:var(--bg)}
 .pd-sw{display:flex}.pd-sw i{width:16px;height:16px;border-radius:50%;margin-right:-5px;box-shadow:0 0 0 2px var(--surface),inset 0 0 0 1px rgba(127,127,127,.4)}
 .pd-t{min-width:0}.pd-t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pd-t small{color:var(--muted);font-size:13px}
@@ -1570,6 +1572,7 @@ body{background:var(--bg)}
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
 <div class="pd-cur"><label class="ex-name">Projet en cours<input type="text" id="prjCurName" maxlength="60"></label><label class="ex-name">Page Figma du projet<input type="url" id="prjFigU" inputmode="url" placeholder="https://www.figma.com/design/…" aria-describedby="prjFigE"></label><p class="note" id="prjFigE">Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier.</p><p class="note" id="prjCurMeta"></p>
 <div class="row"><button class="btn primary" type="button" id="prjNew">Nouveau projet</button><button class="btn" type="button" id="prjDup">Dupliquer</button><button class="btn" type="button" id="prjShare">Copier le lien de partage</button><button class="btn" type="button" id="prjImp">Importer un fichier</button><button class="btn" type="button" id="prjExp">Télécharger le fichier</button></div></div>
+<h3 id="prjTH">Démarrer depuis un modèle</h3><p class="note" id="prjTplNote"></p><ul class="pd-list pd-tpl" id="prjTpl" aria-labelledby="prjTH"></ul>
 <h3 id="prjLH">Autres projets</h3><ul class="pd-list" id="prjList" aria-labelledby="prjLH"></ul></dialog>
 <dialog class="more-sheet" id="moreSheet" aria-labelledby="moreH"><div class="mh"><h2 id="moreH">Plus de sections</h2><button type="button" class="mx" id="moreX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div><div class="mg" id="moreG"></div></dialog>
 <div class="side-tip" id="sideTip" role="tooltip" hidden></div>
@@ -1673,6 +1676,7 @@ const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur 
 /*@core:summary*/
 /*@core:criteria*/
 /*@core:interaction*/
+/*@core:presets*/
 // Réglage des nuances (P0-4) : 50 et 950 réglables, 500 fixe, saturation ; mêmes réglages pour toutes les gammes.
 const SH_BASE = { light: TARGET[0], dark: TARGET[10], sat: 1, exact: false };
 const shCfg = k => (S.sh && S.sh[k] != null) ? S.sh[k] : SH_BASE[k];
@@ -2420,13 +2424,15 @@ function tsDerivedHtml() {
   const m = S.ts.m, d = S.ts.d, lab = r => String(r).replace(".", ",");
   return `<span class="ts-dv"><span><small>Desktop 1440, votre choix</small><b>${d.base} px × ${lab(d.ratio)}</b></span><span class="arr" aria-hidden="true">→</span><span><small>Mobile 390, calculé par Lisio</small><b>${m.base} px × ${lab(m.ratio)}</b></span></span><span class="ts-why">Le texte courant reste à 16 px minimum, les titres rétrécissent plus que le texte, et aucun style ne dépasse 2,5 fois sa taille mobile (zoom 200 %, critère 1.4.4). Tablet et Desktop 1024 sont interpolés.</span>`;
 }
-function tsDefault(keep) {
-  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, T = { v: 2, vw: 1440, fonts: keep ? keep.fonts : { head: { ...font }, body: { ...font } }, m: { base: 16, ratio: "1.15" }, d: { base: 18, ratio: "1.25" }, view: "xl", fg: keep ? keep.fg : ((palette || []).map(c => c.hex).sort((a, b) => ratio(b, S.bg) - ratio(a, S.bg))[0] || S.fg), bg: keep ? keep.bg : S.bg };
+function tsDefault(keep, dk) {
+  const font = S.font.src === "upload" ? { ...DEF.font } : { ...S.font }, T = { v: 2, vw: 1440, fonts: keep ? keep.fonts : { head: { ...font }, body: { ...font } }, m: { base: 16, ratio: "1.15" }, d: dk ? { ...dk } : { base: 18, ratio: "1.25" }, view: "xl", fg: keep ? keep.fg : ((palette || []).map(c => c.hex).sort((a, b) => ratio(b, S.bg) - ratio(a, S.bg))[0] || S.fg), bg: keep ? keep.bg : S.bg };
   T.m = tsMobileFrom(T.d);
   T.styles = TS_DEF.map(d => ({ id: d.id, min: Math.round(tsSize(d, T.m.base, +T.m.ratio)), max: Math.round(tsSize(d, T.d.base, +T.d.ratio)), weight: snapW(d.w, T.fonts[d.role]), lh: d.lh, ls: d.ls }));
   return T;
 }
 if (!S.ts || S.ts.v !== 2 || !Array.isArray(S.ts.styles)) S.ts = tsDefault(S.ts && S.ts.fonts ? S.ts : null);
+// Projet créé depuis un modèle (F10) : l'échelle du modèle remplace celle par défaut, une seule fois.
+if (S.tsPreset) { const t = S.tsPreset; if (TS_RATIOS.includes(String(t.ratio)) && t.base >= 10 && t.base <= 32) S.ts = tsDefault(null, { base: +t.base, ratio: String(t.ratio) }); delete S.tsPreset; store.set("state", S); }
 ["head", "body"].forEach(k => { const f = S.ts.fonts[k]; if (!f || f.src === "upload" || (f.src === "google" && !GFmap.has(f.family))) S.ts.fonts[k] = { ...DEF.font }; ensureFont(S.ts.fonts[k]); });
 const tsDef = id => TS_DEF.find(d => d.id === id);
 const tsFont = st => S.ts.fonts[tsDef(st.id).role];
@@ -3995,7 +4001,8 @@ function prjLabel() { $("prjBN").textContent = S.projectName || "Projet"; const 
 function prjRender() {
   const P = prjSync(), cur = P.list.find(x => x.id === P.cur);
   $("prjCurName").value = S.projectName || ""; $("prjFigU").value = S.figma || "";
-  $("prjCurMeta").textContent = `${palette.length} couleurs · enregistré automatiquement`;
+  const fromP = S.fromPreset && preset(S.fromPreset);
+  $("prjCurMeta").textContent = `${palette.length} couleurs${fromP ? ` · créé depuis le modèle « ${fromP.name} »` : ""} · enregistré automatiquement`;
   const others = P.list.filter(x => x.id !== P.cur).sort((a, b) => (b.savedAt || "").localeCompare(a.savedAt || ""));
   $("prjList").innerHTML = others.length ? others.map(x => `<li><span class="pd-sw" aria-hidden="true">${(x.colors || EXAMPLE).slice(0, 6).map(c => `<i style="background:${normHex(c.hex)}"></i>`).join("")}</span><span class="pd-t"><b>${esc(x.name || "Sans nom")}</b><small>${(x.colors || EXAMPLE).length} couleurs · ${esc(prjDate(x.savedAt))}</small></span><button type="button" class="btn sm primary" data-po="${x.id}">Ouvrir<span class="sr-only"> ${esc(x.name || "")}</span></button><button type="button" class="btn sm" data-pd="${x.id}">Supprimer<span class="sr-only"> ${esc(x.name || "")}</span></button></li>`).join("") : `<li class="pd-empty">Aucun autre projet pour l’instant. « Nouveau projet » en crée un, sans toucher à celui-ci.</li>`;
 }
@@ -4007,6 +4014,17 @@ document.addEventListener("click", e => { const o = e.target.closest("#railPrj,#
 $("prjFigU").addEventListener("input", e => { const v = e.target.value.trim(), ok = !v || figmaUrlOk(v); e.target.setAttribute("aria-invalid", String(!ok)); $("prjFigE").textContent = ok ? "Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier." : "Ce lien ne vient pas de figma.com. Copiez-le depuis Figma : Partager, puis Copier le lien."; if (ok) { S.figma = v; save(); prjLabel(); } });
 $("prjCurName").addEventListener("input", e => { S.projectName = e.target.value.trim().slice(0, 60); save(); $("prjName").value = S.projectName; prjLabel(); });
 $("prjName").addEventListener("input", prjLabel);
+// ---------- Modèles de départ (F10) : un modèle crée un nouveau projet, après confirmation ----------
+$("prjTplNote").textContent = PRESET_LIMITS + " Un modèle crée un nouveau projet : votre projet en cours reste dans la liste.";
+$("prjTpl").innerHTML = PRESETS.map(p => `<li><span class="pd-sw" aria-hidden="true">${p.colors.slice(0, 6).map(c => `<i style="background:${c.hex}"></i>`).join("")}</span><div class="pd-t"><b>${esc(p.name)}</b><small>${esc(p.use)}</small><details><summary>Règles et sources</summary><ul>${p.rules.map(([r, src]) => `<li>${esc(r)} <span class="muted">(${esc(/^\d/.test(src) ? "critère " + src : src)})</span></li>`).join("")}</ul></details></div><button type="button" class="btn sm" data-tpl="${p.id}" aria-expanded="false" aria-controls="tplc-${p.id}">Partir de ce modèle<span class="sr-only"> ${esc(p.name)}</span></button><div class="pd-conf" id="tplc-${p.id}" data-tplc="${p.id}" hidden><p>Créer un nouveau projet « ${esc(p.name)} » ? Votre projet en cours reste tel quel dans la liste.</p><div class="row"><button type="button" class="btn primary sm" data-tplok="${p.id}">Créer le projet</button><button type="button" class="btn sm" data-tplno="${p.id}">Annuler</button></div></div></li>`).join("");
+$("prjTpl").addEventListener("click", e => {
+  const b = e.target.closest("[data-tpl],[data-tplok],[data-tplno]"); if (!b) return;
+  if (b.dataset.tpl) { const c = $("tplc-" + b.dataset.tpl), open = c.hidden; c.hidden = !open; b.setAttribute("aria-expanded", String(open)); if (open) c.querySelector("[data-tplok]").focus(); return; }
+  if (b.dataset.tplno) { const id = b.dataset.tplno, t = $("prjTpl").querySelector(`[data-tpl="${id}"]`); $("tplc-" + id).hidden = true; t.setAttribute("aria-expanded", "false"); t.focus(); return; }
+  const p = preset(b.dataset.tplok); if (!p) return;
+  const st = JSON.parse(JSON.stringify(p.state)); st.ds = { ...JSON.parse(JSON.stringify(DS_BASE)), ...st.ds };
+  prjGo({ id: prjId(), name: p.name, savedAt: new Date().toISOString(), colors: JSON.parse(JSON.stringify(p.colors)), state: { ...st, projectName: p.name, fromPreset: p.id } });
+});
 $("prjNew").addEventListener("click", () => { const P = prjAll(), n = P.list.length + 1; prjGo({ id: prjId(), name: `Projet ${n}`, savedAt: new Date().toISOString(), colors: null, state: {} }); });
 $("prjDup").addEventListener("click", () => { prjSync(); prjGo({ id: prjId(), name: `${S.projectName || "Projet"} (copie)`, savedAt: new Date().toISOString(), colors: isExample ? null : JSON.parse(JSON.stringify(palette)), state: JSON.parse(JSON.stringify(S)) }); });
 $("prjShare").addEventListener("click", () => $("prjLink").click());
