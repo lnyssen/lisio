@@ -1,7 +1,7 @@
 // Tests de l'import de projet (fichier ou lien). Lancer : node --test tests/*.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { checkProject, conform, PRJ_VERSION, LINK_MAX, COLORS_MAX } from "../src/core/project.mjs";
+import { checkProject, conform, PRJ_VERSION, LINK_MAX, COLORS_MAX, LIMITS } from "../src/core/project.mjs";
 
 const TPL = { font: { src: "google", family: "Figtree" }, size: 18, level: "AA", version: "2.2", showFail: false,
   ts: { v: 2, fonts: { head: { family: "Figtree" } }, styles: [{ id: "h1", min: 32, max: 48 }] }, ds: { roles: {}, shape: "soft", layout: null } };
@@ -93,3 +93,25 @@ test("conform ne modifie jamais l'objet reçu", () => {
 });
 
 test("LINK_MAX suit la recommandation de 8 000 octets (RFC 9110, § 4.1)", () => assert.equal(LINK_MAX, 8000));
+
+// P0-3 · Notes d'import dans les mots de l'interface, jamais les noms techniques des réglages.
+test("notes d'import en français, sans nom technique", () => {
+  const r = run(ok({ state: { size: "grand", level: "AAAA", showFail: 1, ts: { styles: [{ id: "h1", min: "x", max: 48 }] } } }));
+  assert.equal(r.ok, true);
+  for (const n of r.notes) assert.doesNotMatch(n, /«\s?(size|level|version|ts|ds|font|showFail|min|max|lh|ls)[\s.»[]/, n);
+  assert.ok(r.notes.some(n => n.includes("Taille du texte")), r.notes.join(" | "));
+  assert.ok(r.notes.some(n => n.includes("Niveau WCAG")), r.notes.join(" | "));
+  assert.ok(r.notes.some(n => n.includes("Styles de texte")), r.notes.join(" | "));
+});
+
+// P0-3 · Valeurs absurdes : ramenées dans les bornes de l'interface, et c'est dit.
+test("valeurs hors bornes ramenées aux limites de l'interface, avec une note", () => {
+  const r = run(ok({ state: { size: 0, lh: 9, ts: { styles: [{ id: "h1", min: 0, max: 48 }] } } }));
+  assert.equal(r.ok, true);
+  assert.equal(r.project.state.size, LIMITS.size[0]); assert.equal(r.project.state.lh, LIMITS.lh[1]);
+  assert.equal(r.project.state.ts.styles[0].min, LIMITS["ts.styles[].min"][0]); assert.equal(r.project.state.ts.styles[0].max, 48);
+  assert.equal(r.notes.length, 3, r.notes.join(" | "));
+  assert.ok(r.notes.some(n => /Taille du texte.*0.*10/.test(n)), r.notes.join(" | "));
+  // Une valeur dans les bornes ne bouge pas et ne produit pas de note.
+  const s = run(ok({ state: { size: 72, lh: 1 } })); assert.deepEqual(s.notes, []); assert.equal(s.project.state.size, 72);
+});

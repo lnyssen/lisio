@@ -1072,10 +1072,7 @@ body{background:var(--bg)}
       <aside class="maside">
         <div style="display:flex;flex-direction:column;gap:12px">
           <h2>Seuils</h2>
-          <div class="legendrow"><span class="bd b-aaa">AAA</span><span class="small">≥ 7:1. Tout le texte, sans réserve (1.4.6).</span></div>
-          <div class="legendrow"><span class="bd b-aa">AA</span><span class="small">≥ 4,5:1. Texte courant au niveau AA (1.4.3).</span></div>
-          <div class="legendrow"><span class="bd b-lg">AA grand</span><span class="small" id="lgLegend"></span></div>
-          <div class="legendrow"><span class="bd b-no">✕ Échec</span><span class="small">&lt; 3:1. Décoratif uniquement.</span></div>
+          <div id="mLegend" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <p class="small muted">Ratios calculés sur les valeurs hexadécimales, selon la formule de luminance relative du W3C. Cliquez une case pour voir la paire en détail et la corriger. Source : W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</p>
       </aside>
@@ -1935,15 +1932,23 @@ const mxNarrow = matchMedia("(max-width:760px)"); let mxMode = "";
 let sel = null, dActs = [];
 const f1 = r => ratioTxt(r, 1);
 const f2 = r => fmt(Math.floor(r * 100) / 100, 2);
+function mLegend(v21) {
+  const row = (c, l, t) => `<div class="legendrow"><span class="bd ${c}">${l}</span><span class="small">${t}</span></div>`;
+  $("mLegend").innerHTML = S.level === "AAA"
+    ? row("b-aaa", "AAA", "≥ 7:1. Tout le texte, au niveau AAA (1.4.6).") + row("b-lg", "AAA grand", "≥ 4,5:1. Grands textes seulement (24 px, ou 18,67 px gras), au niveau AAA (1.4.6).") + row("b-no", "✕ Échec", "&lt; 4,5:1. Sous le niveau AAA, même en grand texte.")
+    : row("b-aaa", "AAA", "≥ 7:1. Tout le texte, sans réserve (1.4.6).") + row("b-aa", "AA", "≥ 4,5:1. Texte courant au niveau AA (1.4.3).") + row("b-lg", "AA grand", v21 ? "≥ 3:1. Grands textes (24 px, ou 18,67 px gras) et éléments d’interface (1.4.11)." : "≥ 3:1. Grands textes (24 px, ou 18,67 px gras).") + row("b-no", "✕ Échec", "&lt; 3:1. Décoratif uniquement.");
+}
 function renderMx() {
   const C = palette, n = C.length, v21 = V() >= 21;
   $("mLead").textContent = `${n} couleurs, ${n * (n - 1) / 2} paires. Ligne = couleur du texte, colonne = couleur du fond. Le ratio est le même dans les deux sens.`;
-  $("lgLegend").textContent = v21 ? "≥ 3:1. Grands textes (24 px, ou 18,67 px gras) et éléments d’interface (1.4.11)." : "≥ 3:1. Grands textes (24 px, ou 18,67 px gras).";
   $("mFontName").textContent = S.font.family; $("mFontAa").style.fontFamily = fontCss(S.font);
   if ($("mSample").value !== S.mSample) $("mSample").value = S.mSample;
-  const cnt = { AAA: 0, AA: 0, "AA grand": 0, "✕ Échec": 0 };
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) cnt[grade(ratio(C[i].hex, C[j].hex))[0]]++;
-  $("counts").innerHTML = [["AAA", "b-aaa", "AAA"], ["AA", "b-aa", "AA"], ["AA grand", "b-lg", "AA grand"], ["✕ Échec", "b-no", "Échecs"]]
+  // P0-3 : pastilles, compteurs et légende suivent le niveau visé.
+  const GR = S.level === "AAA" ? [["AAA", "b-aaa", "AAA"], ["AAA grand", "b-lg", "AAA grand"], ["✕ Échec", "b-no", "Échecs"]] : [["AAA", "b-aaa", "AAA"], ["AA", "b-aa", "AA"], ["AA grand", "b-lg", "AA grand"], ["✕ Échec", "b-no", "Échecs"]];
+  const cnt = Object.fromEntries(GR.map(g => [g[0], 0]));
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) cnt[grade(ratio(C[i].hex, C[j].hex), S.level)[0]]++;
+  mLegend(v21);
+  $("counts").innerHTML = GR
     .map(([k, c, l]) => `<div class="count ${c}"><b>${cnt[k]}</b><span>${l}</span></div>`).join("");
   const ws = fontWeights(S.font), w = ws.includes(700) ? 700 : ws[ws.length - 1], ff = esc(fontCss(S.font)), sample = esc(S.mSample || "Aa");
   $("palChips").innerHTML = `<span class="palh">Palette · ${palette.length}</span>` + palette.map(c => `<span class="palchip"><i style="background:${c.hex}"></i><span><b>${esc(c.name)}</b><code>${c.hex}</code></span></span>`).join("");
@@ -1953,7 +1958,7 @@ function renderMx() {
   g.style.gridTemplateColumns = `${rh}px repeat(${n}, minmax(0, 1fr))`; g.style.minWidth = "";
   const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓<span class=\"w\"> Passe</span>" : "✕<span class=\"w\"> Échec</span>"}</span>`;
   const cell = (i, j, label) => {
-    const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r), on = sel && sel[0] === i && sel[1] === j;
+    const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r, S.level), on = sel && sel[0] === i && sel[1] === j;
     return `<button type="button" class="mcell ${cls}" data-i="${i}" data-j="${j}" aria-pressed="${!!on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
         <span class="mv" aria-hidden="true"><span class="r">${f2(r)}</span><span class="vl">${lab.replace("✕ ", "")}</span><span class="sm">${label}</span></span>
         <span class="sample" aria-hidden="true" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span></span></button>`;
@@ -2009,7 +2014,7 @@ function renderDetail() {
   const d = $("pairDetail");
   if (!sel || sel[0] >= palette.length || sel[1] >= palette.length) { sel = null; d.hidden = true; return; }
   dActs = [];
-  const [i, j] = sel, fg = palette[i], bg = palette[j], r = ratio(fg.hex, bg.hex), [lab, cls] = grade(r), v21 = V() >= 21;
+  const [i, j] = sel, fg = palette[i], bg = palette[j], r = ratio(fg.hex, bg.hex), [lab, cls] = grade(r, S.level), v21 = V() >= 21;
   const rows = [["Texte courant, AA (1.4.3)", r >= 4.5], ["Texte courant, AAA (1.4.6)", r >= 7], ["Grand texte, AA (1.4.3)", r >= 3], ["Grand texte, AAA (1.4.6)", r >= 4.5]];
   if (v21) rows.push(["Composants et graphiques (1.4.11)", r >= 3]);
   const btn = (label, act, dot, primary) => { dActs.push(act); return `<button type="button" class="btn sm ${primary ? "primary" : ""}" data-dact="${dActs.length - 1}">${dot ? `<span class="dot" style="background:${dot}"></span>` : ""}${esc(label)}</button>`; };

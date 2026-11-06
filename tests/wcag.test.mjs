@@ -51,3 +51,22 @@ test("ratioTxt : tronque à l'affichage, jamais vers le haut (audit F1)", () => 
     for (const s of [3, 4.5, 7]) if (x < s) assert.ok(back(ratioTxt(x, 1)) < s && back(ratioTxt(x)) < s);
   }
 });
+
+// P0-3 · floor2 et ratioTxt ne retirent plus 0,01 aux centièmes exacts (4,53 * 100 = 452,999… en virgule flottante).
+test("floor2 et ratioTxt : un centième exact s'affiche tel quel (P0-3)", () => {
+  const bad = [];
+  for (let k = 100; k <= 2100; k++) { const x = k / 100; if (floor2(x) !== x) bad.push(`${x} → ${floor2(x)}`); if (ratioTxt(x) !== x.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })) bad.push(`ratioTxt ${x} → ${ratioTxt(x)}`); }
+  for (let k = 10; k <= 210; k++) { const x = k / 10; if (ratioTxt(x, 1) !== x.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })) bad.push(`ratioTxt1 ${x} → ${ratioTxt(x, 1)}`); }
+  assert.deepEqual(bad, []);
+  // Juste sous un seuil, on reste dessous : la correction ne vaut que pour un centième exact.
+  for (const t of [3, 4.5, 7]) { const x = t - 1e-12; assert.ok(floor2(x) < t, `${x}`); assert.ok(Number(ratioTxt(x).replace(",", ".")) < t); }
+});
+
+// P0-3 · La pastille suit le niveau visé : au niveau AAA, 5:1 ne doit pas ressembler à une réussite du texte courant.
+test("grade suit le niveau : AA inchangé, AAA exige 7:1 (ou 4,5:1 en grand texte)", () => {
+  const g = (r, l) => grade(r, l)[0];
+  assert.equal(g(5), "AA"); assert.equal(g(5, "AA"), "AA"); assert.equal(g(3.2, "AA"), "AA grand");
+  assert.equal(g(7, "AAA"), "AAA"); assert.equal(g(6.99, "AAA"), "AAA grand"); assert.equal(g(4.5, "AAA"), "AAA grand");
+  assert.equal(g(4.49, "AAA"), "✕ Échec"); assert.equal(g(3.5, "AAA"), "✕ Échec");
+  assert.equal(grade(5, "AAA")[1], "b-lg"); assert.equal(grade(4, "AAA")[1], "b-no");
+});

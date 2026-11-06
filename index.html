@@ -1082,10 +1082,7 @@ body{background:var(--bg)}
       <aside class="maside">
         <div style="display:flex;flex-direction:column;gap:12px">
           <h2>Seuils</h2>
-          <div class="legendrow"><span class="bd b-aaa">AAA</span><span class="small">≥ 7:1. Tout le texte, sans réserve (1.4.6).</span></div>
-          <div class="legendrow"><span class="bd b-aa">AA</span><span class="small">≥ 4,5:1. Texte courant au niveau AA (1.4.3).</span></div>
-          <div class="legendrow"><span class="bd b-lg">AA grand</span><span class="small" id="lgLegend"></span></div>
-          <div class="legendrow"><span class="bd b-no">✕ Échec</span><span class="small">&lt; 3:1. Décoratif uniquement.</span></div>
+          <div id="mLegend" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <p class="small muted">Ratios calculés sur les valeurs hexadécimales, selon la formule de luminance relative du W3C. Cliquez une case pour voir la paire en détail et la corriger. Source : W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</p>
       </aside>
@@ -1609,18 +1606,26 @@ function suggestFix(moveHex, otherHex, target) {
 // Fonctions pures, sans DOM ni état. Testées par tests/wcag.test.mjs.
 // Inliné tel quel dans la page par src/build.py (le mot export est retiré).
 // Affichage tronqué, jamais arrondi au supérieur : 4,499 s'affiche 4,49 et échoue, comme le calcul.
-const floor2 = n => Math.floor(n * 100) / 100;
+// Tronque à d décimales. Un nombre déjà exact à d décimales reste tel quel : 4,53 * 100 vaut 452,999… en virgule
+// flottante, et Math.floor seul affichait 4,52 (P0-3). La tolérance (quelques ulp) ne fait jamais passer un seuil :
+// un ratio calculé juste sous 4,5 reste sous 4,5.
+const floorTo = (n, d) => { const k = 10 ** d, m = Math.round(n * k); return Math.abs(m / k - n) <= Number.EPSILON * Math.max(1, Math.abs(n)) * 4 ? m / k : Math.floor(n * k) / k; };
+const floor2 = n => floorTo(n, 2);
 // Grand texte (WCAG 2.2, définition « large scale ») : 18 pt, ou 14 pt en gras ; 1 pt = 4/3 px.
 // 18 pt = 24 px ; 14 pt = 18,666… px, arrondi par Lisio à 18,66 px (tolérance de 0,007 px, voulue).
 const largeText = (px, weight) => px >= 24 || (px >= 18.66 && weight >= 700);
 // Contraste minimum du texte : 1.4.3 (AA) 4,5:1 ou 3:1 en grand texte ; 1.4.6 (AAA) 7:1 ou 4,5:1.
 const needRatio = (level, large = false) => level === "AAA" ? (large ? 4.5 : 7) : (large ? 3 : 4.5);
-// Pastille d'une paire, indépendante du niveau choisi : elle dit le plus haut niveau atteint.
-const grade = r => r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AA", "b-aa"] : r >= 3 ? ["AA grand", "b-lg"] : ["✕ Échec", "b-no"];
+// Pastille d'une paire, selon le niveau visé.
+// Au niveau AA : le plus haut niveau atteint. Au niveau AAA (P0-3) : seuls 7:1 (tout texte) et 4,5:1 (grand texte)
+// comptent, pour qu'une paire à 5:1 ne ressemble pas à une réussite du texte courant.
+const grade = (r, level = "AA") => level === "AAA"
+  ? (r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AAA grand", "b-lg"] : ["✕ Échec", "b-no"])
+  : (r >= 7 ? ["AAA", "b-aaa"] : r >= 4.5 ? ["AA", "b-aa"] : r >= 3 ? ["AA grand", "b-lg"] : ["✕ Échec", "b-no"]);
 // Ratio affiché avec d décimales, tronqué comme floor2 (jamais arrondi au supérieur), virgule française.
 // 9,95 s'affiche « 9,9 » avec 1 décimale (et non « 10,0 »), 4,48 s'affiche « 4,4 » (et non « 4,5 »).
 // Avec d = 2, le résultat est identique à l'ancien fmt(floor2(r)).
-const ratioTxt = (r, d = 2) => { const k = 10 ** d; return (Math.floor(r * k) / k).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }); };
+const ratioTxt = (r, d = 2) => { return floorTo(r, d).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }); };
 // Lisio, cœur projet : vérification d'un projet reçu (fichier ou lien) avant de l'enregistrer.
 // Fonctions pures, sans DOM ni état. Testées par tests/project.test.mjs.
 // Règle : rien n'est accepté en silence. Un défaut grave refuse tout ; un réglage illisible
@@ -1641,6 +1646,37 @@ const PRJ_REASONS = {
   "bad-state": "Réglages illisibles. Rien n’a été importé.",
   "too-big": "Trop lourd pour un projet Lisio (plus de 2 Mo). Rien n’a été importé."
 };
+// Noms des réglages tels que l'interface les montre. Une note d'import ne cite jamais un nom technique (P0-3).
+const SETTING_FR = {
+  font: "Police", "font.src": "Police", "font.family": "Police", size: "Taille du texte", weight: "Graisse", lh: "Interligne", ls: "Espacement des lettres",
+  measure: "Longueur de ligne", align: "Alignement", fg: "Couleur du texte", bg: "Couleur du fond", version: "Version WCAG", level: "Niveau WCAG",
+  sheet: "Affichage", showFail: "Affichage de la matrice", mView: "Affichage de la matrice", mSample: "Affichage de la matrice", mVision: "Affichage de la matrice",
+  projectName: "Nom du projet", figma: "Lien Figma", ts: "Styles de texte", "ts.d.base": "Styles de texte, taille de base desktop", "ts.m.base": "Styles de texte, taille de base mobile",
+  "ts.styles[].min": "Styles de texte, taille mobile", "ts.styles[].max": "Styles de texte, taille desktop", "ts.styles[].lh": "Styles de texte, interligne",
+  "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system"
+};
+// Nom d'un chemin : le plus précis connu, sinon le premier niveau, sinon « Un réglage ».
+const settingFr = path => { const parts = String(path || "").split("."); for (let i = parts.length; i > 0; i--) { const k = parts.slice(0, i).join("."); if (SETTING_FR[k]) return SETTING_FR[k]; } return "Un réglage"; };
+// Bornes des réglages chiffrés, celles des curseurs et des champs de l'interface. Hors bornes : ramené à la borne, et dit.
+const LIMITS = {
+  size: [10, 72, " px"], weight: [100, 1000, ""], lh: [1, 2.2, ""], ls: [-0.05, 0.2, " em"], measure: [30, 120, " caractères"],
+  "ts.d.base": [10, 32, " px"], "ts.m.base": [8, 32, " px"], "ts.styles[].min": [8, 200, " px"], "ts.styles[].max": [8, 200, " px"],
+  "ts.styles[].lh": [0.8, 3, ""], "ts.styles[].ls": [-10, 20, " %"], "ts.styles[].weight": [100, 1000, ""]
+};
+const numFr = n => String(n).replace(".", ",");
+function bound(state, notes) {
+  for (const [path, [lo, hi, unit]] of Object.entries(LIMITS)) {
+    const [head, tail] = path.split("[].");
+    const get = (o, p) => p.split(".").reduce((a, k) => (a && typeof a === "object" ? a[k] : undefined), o);
+    const holders = tail ? (Array.isArray(get(state, head)) ? get(state, head) : []).map(o => [o, tail]) : [[state, path]];
+    for (const [o, p] of holders) {
+      const ks = p.split("."), last = ks.pop(), box = ks.reduce((a, k) => (a && typeof a === "object" ? a[k] : undefined), o);
+      if (!box || typeof box !== "object" || typeof box[last] !== "number") continue;
+      const v = box[last], c = Math.min(hi, Math.max(lo, v));
+      if (c !== v) { box[last] = c; notes.push(`${settingFr(path)} hors limites (${numFr(v)}${unit}) : valeur ramenée à ${numFr(c)}${unit}.`); }
+    }
+  }
+}
 const isObj = v => v !== null && typeof v === "object" && !Array.isArray(v);
 const copyOf = v => v === undefined ? undefined : JSON.parse(JSON.stringify(v));
 const figmaUrlOk = u => { try { const x = new URL(u); return x.protocol === "https:" && /(^|\.)figma\.com$/.test(x.hostname); } catch (e) { return false; } };
@@ -1655,7 +1691,7 @@ function clean(v, depth) {
 // Rend value conforme au modèle tpl : même type à chaque clé connue, sinon valeur du modèle et une note.
 // Les clés absentes du modèle sont gardées (nettoyées) : ce sont des réglages plus récents que le modèle.
 function conform(value, tpl, path, notes, depth = 0) {
-  const bad = () => { notes.push(`Réglage « ${path || "état"} » illisible : valeur par défaut reprise.`); return copyOf(tpl); };
+  const bad = () => { notes.push(`${path ? settingFr(path.replace(/\[\]/g, "[]")) : "Réglages"} : valeur illisible, valeur par défaut reprise.`); return copyOf(tpl); };
   if (tpl === undefined || tpl === null) return clean(value, depth);
   if (Array.isArray(tpl)) {
     if (!Array.isArray(value)) return bad();
@@ -1689,7 +1725,8 @@ function checkProject(o, tpl, enums = {}) {
   if (!isObj(o.state)) return no("bad-state");
   const colors = o.colors.map(c => ({ name: (c.name == null || c.name === "" ? "Couleur" : String(c.name)).slice(0, 40), hex: normHex(c.hex) }));
   const state = conform(o.state, tpl, "", notes);
-  for (const [k, list] of Object.entries(enums)) if (k in state && !list.includes(state[k])) { notes.push(`Réglage « ${k} » inconnu (${String(state[k]).slice(0, 20)}) : ${tpl[k]} repris.`); state[k] = tpl[k]; }
+  for (const [k, list] of Object.entries(enums)) if (k in state && !list.includes(state[k])) { notes.push(`${settingFr(k)} inconnu (${String(state[k]).slice(0, 20)}) : ${tpl[k]} repris.`); state[k] = tpl[k]; }
+  bound(state, notes);
   if ("figma" in state && !(typeof state.figma === "string" && figmaUrlOk(state.figma))) { delete state.figma; notes.push("Lien Figma retiré : seuls les liens https vers figma.com sont gardés."); }
   const raw = typeof o.name === "string" && o.name.trim() ? o.name : typeof state.projectName === "string" ? state.projectName : "";
   return { ok: true, notes, project: { name: raw.trim().slice(0, 80), savedAt: typeof o.savedAt === "string" ? o.savedAt.slice(0, 40) : "", colors, state } };
@@ -2076,15 +2113,23 @@ const mxNarrow = matchMedia("(max-width:760px)"); let mxMode = "";
 let sel = null, dActs = [];
 const f1 = r => ratioTxt(r, 1);
 const f2 = r => fmt(Math.floor(r * 100) / 100, 2);
+function mLegend(v21) {
+  const row = (c, l, t) => `<div class="legendrow"><span class="bd ${c}">${l}</span><span class="small">${t}</span></div>`;
+  $("mLegend").innerHTML = S.level === "AAA"
+    ? row("b-aaa", "AAA", "≥ 7:1. Tout le texte, au niveau AAA (1.4.6).") + row("b-lg", "AAA grand", "≥ 4,5:1. Grands textes seulement (24 px, ou 18,67 px gras), au niveau AAA (1.4.6).") + row("b-no", "✕ Échec", "&lt; 4,5:1. Sous le niveau AAA, même en grand texte.")
+    : row("b-aaa", "AAA", "≥ 7:1. Tout le texte, sans réserve (1.4.6).") + row("b-aa", "AA", "≥ 4,5:1. Texte courant au niveau AA (1.4.3).") + row("b-lg", "AA grand", v21 ? "≥ 3:1. Grands textes (24 px, ou 18,67 px gras) et éléments d’interface (1.4.11)." : "≥ 3:1. Grands textes (24 px, ou 18,67 px gras).") + row("b-no", "✕ Échec", "&lt; 3:1. Décoratif uniquement.");
+}
 function renderMx() {
   const C = palette, n = C.length, v21 = V() >= 21;
   $("mLead").textContent = `${n} couleurs, ${n * (n - 1) / 2} paires. Ligne = couleur du texte, colonne = couleur du fond. Le ratio est le même dans les deux sens.`;
-  $("lgLegend").textContent = v21 ? "≥ 3:1. Grands textes (24 px, ou 18,67 px gras) et éléments d’interface (1.4.11)." : "≥ 3:1. Grands textes (24 px, ou 18,67 px gras).";
   $("mFontName").textContent = S.font.family; $("mFontAa").style.fontFamily = fontCss(S.font);
   if ($("mSample").value !== S.mSample) $("mSample").value = S.mSample;
-  const cnt = { AAA: 0, AA: 0, "AA grand": 0, "✕ Échec": 0 };
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) cnt[grade(ratio(C[i].hex, C[j].hex))[0]]++;
-  $("counts").innerHTML = [["AAA", "b-aaa", "AAA"], ["AA", "b-aa", "AA"], ["AA grand", "b-lg", "AA grand"], ["✕ Échec", "b-no", "Échecs"]]
+  // P0-3 : pastilles, compteurs et légende suivent le niveau visé.
+  const GR = S.level === "AAA" ? [["AAA", "b-aaa", "AAA"], ["AAA grand", "b-lg", "AAA grand"], ["✕ Échec", "b-no", "Échecs"]] : [["AAA", "b-aaa", "AAA"], ["AA", "b-aa", "AA"], ["AA grand", "b-lg", "AA grand"], ["✕ Échec", "b-no", "Échecs"]];
+  const cnt = Object.fromEntries(GR.map(g => [g[0], 0]));
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) cnt[grade(ratio(C[i].hex, C[j].hex), S.level)[0]]++;
+  mLegend(v21);
+  $("counts").innerHTML = GR
     .map(([k, c, l]) => `<div class="count ${c}"><b>${cnt[k]}</b><span>${l}</span></div>`).join("");
   const ws = fontWeights(S.font), w = ws.includes(700) ? 700 : ws[ws.length - 1], ff = esc(fontCss(S.font)), sample = esc(S.mSample || "Aa");
   $("palChips").innerHTML = `<span class="palh">Palette · ${palette.length}</span>` + palette.map(c => `<span class="palchip"><i style="background:${c.hex}"></i><span><b>${esc(c.name)}</b><code>${c.hex}</code></span></span>`).join("");
@@ -2094,7 +2139,7 @@ function renderMx() {
   g.style.gridTemplateColumns = `${rh}px repeat(${n}, minmax(0, 1fr))`; g.style.minWidth = "";
   const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓<span class=\"w\"> Passe</span>" : "✕<span class=\"w\"> Échec</span>"}</span>`;
   const cell = (i, j, label) => {
-    const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r), on = sel && sel[0] === i && sel[1] === j;
+    const t = C[i], b = C[j], r = ratio(t.hex, b.hex), [lab, cls] = grade(r, S.level), on = sel && sel[0] === i && sel[1] === j;
     return `<button type="button" class="mcell ${cls}" data-i="${i}" data-j="${j}" aria-pressed="${!!on}" aria-label="${esc(t.name)} sur ${esc(b.name)} : ${f2(r)} pour 1, ${lab}. Au niveau ${S.level} : texte normal ${r >= tN ? "passe" : "échoue"}, grand texte ${r >= tL ? "passe" : "échoue"}${v21 ? `, interface ${r >= 3 ? "passe" : "échoue"}` : ""}">
         <span class="mv" aria-hidden="true"><span class="r">${f2(r)}</span><span class="vl">${lab.replace("✕ ", "")}</span><span class="sm">${label}</span></span>
         <span class="sample" aria-hidden="true" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span></span></button>`;
@@ -2150,7 +2195,7 @@ function renderDetail() {
   const d = $("pairDetail");
   if (!sel || sel[0] >= palette.length || sel[1] >= palette.length) { sel = null; d.hidden = true; return; }
   dActs = [];
-  const [i, j] = sel, fg = palette[i], bg = palette[j], r = ratio(fg.hex, bg.hex), [lab, cls] = grade(r), v21 = V() >= 21;
+  const [i, j] = sel, fg = palette[i], bg = palette[j], r = ratio(fg.hex, bg.hex), [lab, cls] = grade(r, S.level), v21 = V() >= 21;
   const rows = [["Texte courant, AA (1.4.3)", r >= 4.5], ["Texte courant, AAA (1.4.6)", r >= 7], ["Grand texte, AA (1.4.3)", r >= 3], ["Grand texte, AAA (1.4.6)", r >= 4.5]];
   if (v21) rows.push(["Composants et graphiques (1.4.11)", r >= 3]);
   const btn = (label, act, dot, primary) => { dActs.push(act); return `<button type="button" class="btn sm ${primary ? "primary" : ""}" data-dact="${dActs.length - 1}">${dot ? `<span class="dot" style="background:${dot}"></span>` : ""}${esc(label)}</button>`; };
