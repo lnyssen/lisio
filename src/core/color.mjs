@@ -24,13 +24,20 @@ export const inGamut = c => c.every(v => v >= -1e-5 && v <= 1 + 1e-5);
 export function maxChroma(L, h, want) { if (inGamut(oklchToLin(L, want, h))) return want; let lo = 0, hi = want; for (let i = 0; i < 22; i++) { const mid = (lo + hi) / 2; if (inGamut(oklchToLin(L, mid, h))) lo = mid; else hi = mid; } return lo; }
 export const linToHex = lin => rgb2hex(lin.map(v => toGam(clamp01(v))));
 export const chromaShape = (L, L0) => Math.max(0.08, L < L0 ? 1 - 0.45 * ((L0 - L) / Math.max(L0, 0.05)) ** 2 : 1 - 0.85 * ((L - L0) / Math.max(1 - L0, 0.05)) ** 2);
-export function colorForY(base, targetY) {
-  const { L: L0, C: C0, h } = base; let lo = 0, hi = 1, lin = [0, 0, 0];
+// sat : multiplie la chroma de départ (réglage « Saturation » des nuances, 1 = inchangé).
+export function colorForY(base, targetY, sat = 1) {
+  const { L: L0, h } = base, C0 = base.C * sat; let lo = 0, hi = 1, lin = [0, 0, 0];
   for (let i = 0; i < 32; i++) { const mid = (lo + hi) / 2; lin = oklchToLin(mid, maxChroma(mid, h, C0 * chromaShape(mid, L0)), h).map(clamp01); if (Yof(lin) < targetY) lo = mid; else hi = mid; }
   return linToHex(lin);
 }
 export const STEPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 export const TARGET = [1.06, 1.15, 1.4, 1.9, 3.1, 4.65, 6.1, 8.1, 11, 14.6, 17.6];
+// Cibles des 11 nuances quand on règle la plus claire (50) et la plus foncée (950) : le 500 reste à 4,65:1,
+// chaque côté est interpolé en logarithme. Un côté laissé par défaut garde exactement les valeurs de TARGET.
+export function shadeTargets(light = TARGET[0], dark = TARGET[10]) {
+  const M = Math.log(TARGET[5]), L0 = Math.log(TARGET[0]), D0 = Math.log(TARGET[10]), L = Math.log(light), D = Math.log(dark);
+  return TARGET.map((t, i) => i < 5 ? (light === TARGET[0] ? t : Math.exp(M + (Math.log(t) - M) * (L - M) / (L0 - M))) : i > 5 ? (dark === TARGET[10] ? t : Math.exp(M + (Math.log(t) - M) * (D - M) / (D0 - M))) : t);
+}
 export const targetY = r => 1.05 / r - 0.05;
 export const CVD = {
   protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],

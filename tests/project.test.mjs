@@ -115,3 +115,12 @@ test("valeurs hors bornes ramenées aux limites de l'interface, avec une note", 
   // Une valeur dans les bornes ne bouge pas et ne produit pas de note.
   const s = run(ok({ state: { size: 72, lh: 1 } })); assert.deepEqual(s.notes, []); assert.equal(s.project.state.size, 72);
 });
+
+// P0-4 · Réglages des nuances et du design system venus de la branche de travail : bornés aussi.
+test("nuances et ombres hors bornes ramenées, avec une note en français", () => {
+  const r = checkProject(ok({ state: { sh: { light: 1, dark: 40, sat: 3, exact: false }, ds: { elevI: 9, glassBlur: -4 } } }), { ...TPL, sh: { light: 1.06, dark: 17.6, sat: 1, exact: false }, ds: { ...TPL.ds, elevI: 1, glassBlur: 12 } }, ENUMS);
+  assert.deepEqual([r.project.state.sh.light, r.project.state.sh.dark, r.project.state.sh.sat], [1.03, 19.5, 1.4]);
+  assert.deepEqual([r.project.state.ds.elevI, r.project.state.ds.glassBlur], [2.5, 0]);
+  assert.equal(r.notes.length, 5, r.notes.join(" | "));
+  assert.ok(r.notes.every(n => /^(Nuances|Design system)/.test(n)), r.notes.join(" | "));
+});

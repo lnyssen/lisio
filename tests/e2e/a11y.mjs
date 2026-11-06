@@ -17,7 +17,7 @@ try { ({ chromium } = req("playwright")); } catch (e) { console.log("IGNORÉ : P
 try { AXE = readFileSync(process.env.AXE_PATH || req.resolve("axe-core/axe.min.js"), "utf8"); }
 catch (e) { console.log("IGNORÉ : axe-core introuvable (définir AXE_PATH vers axe.min.js)."); process.exit(process.env.CI ? 1 : 0); }
 
-const VIEWS = ["matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources", "exporter"];
+const VIEWS = ["couleurs", "matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources", "exporter"];
 const SETUPS = [["desktop clair", 1440, 900, "light"], ["desktop sombre", 1440, 900, "dark"], ["mobile clair", 390, 844, "light"]];
 // Exceptions assumées, chacune avec sa raison. Toute autre violation fait échouer le contrôle.
 const ALLOW = [

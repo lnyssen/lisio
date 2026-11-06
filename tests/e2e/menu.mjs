@@ -1,5 +1,5 @@
 // Menu latéral organisé par intention (blueprint v2, § 3) : Projets, puis Créer, Vérifier, Apprendre, Livrer.
-// Choix de Laurent du 5 novembre 2026. Vérifie l'ordre, les noms des groupes (visibles et lus),
+// Choix de Laurent du 5 novembre 2026. Nuances ajoutées avec la page Couleurs (P0-4, 6 novembre 2026). Vérifie l'ordre, les noms des groupes (visibles et lus),
 // la page active, le menu replié, la barre mobile et le clavier.
 //   node tests/e2e/menu.mjs
 import { createRequire } from "node:module";
@@ -11,8 +11,8 @@ const PAGE = "file://" + (process.env.LISIO_PAGE || join(ROOT, "index.html"));
 let chromium;
 try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
 
-const GROUPS = [["Créer", ["Couleurs", "Polices", "Styles de texte", "Design system"]], ["Vérifier", ["Contrastes", "Rédaction"]], ["Apprendre", ["Guide", "S’entraîner"]], ["Livrer", ["Exporter"]]];
-const VIEW_OF = { "Couleurs": "palette", "Polices": "tester", "Styles de texte": "styles", "Design system": "systeme", "Contrastes": "matrice", "Rédaction": "lisibilite", "Guide": "sources", "S’entraîner": "formation", "Exporter": "exporter" };
+const GROUPS = [["Créer", ["Couleurs", "Nuances", "Polices", "Styles de texte", "Design system"]], ["Vérifier", ["Contrastes", "Rédaction"]], ["Apprendre", ["Guide", "S’entraîner"]], ["Livrer", ["Exporter"]]];
+const VIEW_OF = { "Couleurs": "couleurs", "Nuances": "palette", "Polices": "tester", "Styles de texte": "styles", "Design system": "systeme", "Contrastes": "matrice", "Rédaction": "lisibilite", "Guide": "sources", "S’entraîner": "formation", "Exporter": "exporter" };
 const browser = await chromium.launch();
 let fails = 0;
 const report = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok ? "ok   " : "ÉCHEC"} ${label}${detail ? " : " + detail : ""}`); };
@@ -41,6 +41,11 @@ for (const [rail, lab] of [["o", "déplié"], ["c", "replié"]]) {
   report(shown === GROUPS.map(g => g[0]).join(" | "), `menu ${lab} : nom de chaque groupe affiché`, shown);
   const fit = await p.evaluate(() => [...document.querySelectorAll("nav.tabs .tab-grp")].filter(e => e.getClientRects().length).map(e => { const cs = getComputedStyle(e), r = e.getBoundingClientRect(), n = document.querySelector("nav.tabs").getBoundingClientRect(); return { t: e.textContent, fs: parseFloat(cs.fontSize), inside: r.left >= n.left - 1 && r.right <= n.right + 1, cut: e.scrollWidth > e.clientWidth + 1 }; }).filter(x => x.fs < 10 || !x.inside || x.cut));
   report(!fit.length, `menu ${lab} : noms de groupe lisibles (10 px et plus) et entiers`, JSON.stringify(fit));
+  // Aucun nom de groupe ne passe sous un bouton du menu (défaut vu le 6 novembre 2026 avec les ronds de la branche de travail).
+  const over = await p.evaluate(() => { const bs = [...document.querySelectorAll("nav.tabs button, #railPrj")].filter(b => b.getClientRects().length).map(b => b.getBoundingClientRect());
+    return [...document.querySelectorAll("nav.tabs .tab-grp")].filter(e => e.getClientRects().length).filter(e => { const r = e.getBoundingClientRect(), g = document.createRange(); g.selectNodeContents(e); const t = g.getBoundingClientRect();
+      return t.top < r.top - 1 || t.bottom > r.bottom + 1 || bs.some(b => t.left < b.right - 1 && t.right > b.left + 1 && t.top < b.bottom - 1 && t.bottom > b.top + 1); }).map(e => e.textContent); });
+  report(!over.length, `menu ${lab} : chaque nom de groupe entier en hauteur, et sous aucun bouton`, over.join(", "));
   // Projets en haut du menu, qui ouvre la liste des projets.
   const pr = await p.evaluate(() => { const b = document.getElementById("railPrj"); if (!b) return null; const r = b.getBoundingClientRect(), f = document.querySelector("nav.tabs button:not(#railPrj)").getBoundingClientRect(); return { above: r.bottom <= f.top + 1, vis: !!b.getClientRects().length, name: b.textContent.trim() || b.getAttribute("aria-label") }; });
   let opened = false; if (pr) { await p.click("#railPrj"); await p.waitForTimeout(200); opened = await p.evaluate(() => document.getElementById("prjDlg").open); }
@@ -60,10 +65,10 @@ for (const [rail, lab] of [["o", "déplié"], ["c", "replié"]]) {
   }
   report(!bad.length, "chaque entrée ouvre sa page et devient la page actuelle", bad.slice(0, 3).join(" ; ")); await p.ctx.close(); }
 
-// 3. Clavier : Tab parcourt le menu dans l'ordre (Projets puis les 9 entrées), Entrée ouvre la page.
+// 3. Clavier : Tab parcourt le menu dans l'ordre (Projets puis les 10 entrées), Entrée ouvre la page.
 { const p = await open({ width: 1440, height: 900 }, "c"); await p.focus("#railPrj");
   const seq = [await p.evaluate(() => document.activeElement.id || "?")];
-  for (let i = 0; i < 9; i++) { await p.keyboard.press("Tab"); seq.push(await p.evaluate(() => document.activeElement.dataset.view || document.activeElement.id)); }
+  for (let i = 0; i < 10; i++) { await p.keyboard.press("Tab"); seq.push(await p.evaluate(() => document.activeElement.dataset.view || document.activeElement.id)); }
   const want = ["railPrj", ...GROUPS.flatMap(g => g[1]).map(t => VIEW_OF[t])];
   await p.evaluate(() => { const l = document.querySelector('nav.tabs [data-view="lisibilite"]'); l.tabIndex = 0; l.focus(); }); await p.keyboard.press("Enter"); await p.waitForTimeout(150);
   const ent = await p.evaluate(() => !document.getElementById("lisibilite").hidden);
@@ -75,7 +80,7 @@ for (const w of [320, 390]) { const p = await open({ width: w, height: 800 });
     return { n: vis.length, names: vis.map(b => b.textContent.trim().replace(/\s+/g, " ")), sw: document.documentElement.scrollWidth }; });
   await p.click("#moreB"); await p.waitForTimeout(250);
   const sheet = await p.evaluate(() => document.getElementById("moreG").textContent);
-  const missing = ["Styles", "Rédaction", "Guide", "S’entraîner", "Exporter", "Projets"].filter(t => !sheet.includes(t));
+  const missing = ["Nuances", "Styles", "Rédaction", "Guide", "S’entraîner", "Exporter", "Projets"].filter(t => !sheet.includes(t));
   report(bar.n === 5 && bar.sw <= w && !missing.length, `mobile ${w} px : barre du bas et feuille « Plus »`, `${bar.names.join(", ")} ; largeur ${bar.sw}${missing.length ? " ; manque " + missing.join(", ") : ""}`);
   await p.ctx.close(); }
 

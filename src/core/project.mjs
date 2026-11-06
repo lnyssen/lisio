@@ -26,7 +26,10 @@ export const SETTING_FR = {
   sheet: "Affichage", showFail: "Affichage de la matrice", mView: "Affichage de la matrice", mSample: "Affichage de la matrice", mVision: "Affichage de la matrice",
   projectName: "Nom du projet", figma: "Lien Figma", ts: "Styles de texte", "ts.d.base": "Styles de texte, taille de base desktop", "ts.m.base": "Styles de texte, taille de base mobile",
   "ts.styles[].min": "Styles de texte, taille mobile", "ts.styles[].max": "Styles de texte, taille desktop", "ts.styles[].lh": "Styles de texte, interligne",
-  "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system"
+  "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system",
+  sh: "Nuances", "sh.light": "Nuances, nuance 50", "sh.dark": "Nuances, nuance 950", "sh.sat": "Nuances, saturation", "sh.exact": "Nuances, couleur exacte",
+  "ds.elevI": "Design system, intensité des ombres", "ds.elevB": "Design system, flou des ombres", "ds.elevY": "Design system, hauteur des ombres",
+  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile"
 };
 // Nom d'un chemin : le plus précis connu, sinon le premier niveau, sinon « Un réglage ».
 export const settingFr = path => { const parts = String(path || "").split("."); for (let i = parts.length; i > 0; i--) { const k = parts.slice(0, i).join("."); if (SETTING_FR[k]) return SETTING_FR[k]; } return "Un réglage"; };
@@ -34,7 +37,9 @@ export const settingFr = path => { const parts = String(path || "").split("."); 
 export const LIMITS = {
   size: [10, 72, " px"], weight: [100, 1000, ""], lh: [1, 2.2, ""], ls: [-0.05, 0.2, " em"], measure: [30, 120, " caractères"],
   "ts.d.base": [10, 32, " px"], "ts.m.base": [8, 32, " px"], "ts.styles[].min": [8, 200, " px"], "ts.styles[].max": [8, 200, " px"],
-  "ts.styles[].lh": [0.8, 3, ""], "ts.styles[].ls": [-10, 20, " %"], "ts.styles[].weight": [100, 1000, ""]
+  "ts.styles[].lh": [0.8, 3, ""], "ts.styles[].ls": [-10, 20, " %"], "ts.styles[].weight": [100, 1000, ""],
+  "sh.light": [1.03, 1.12, ":1"], "sh.dark": [15, 19.5, ":1"], "sh.sat": [0.5, 1.4, ""],
+  "ds.elevI": [0.5, 2.5, ""], "ds.elevB": [0.5, 2, ""], "ds.elevY": [0.5, 2, ""], "ds.glassBlur": [0, 24, " px"], "ds.scrimPlus": [0, 0.2, ""]
 };
 const numFr = n => String(n).replace(".", ",");
 function bound(state, notes) {

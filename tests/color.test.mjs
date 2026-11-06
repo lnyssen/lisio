@@ -88,3 +88,25 @@ test("simulate : normal inchangé, achromatopsie en gris", () => {
   const g = C.simulate("#2F6BFF", "achro"); assert.ok(g.slice(1, 3) === g.slice(3, 5) && g.slice(3, 5) === g.slice(5, 7));
   for (const m of ["protan", "deutan", "tritan"]) assert.ok(C.normHex(C.simulate("#FF5A4E", m)));
 });
+
+// P0-4 · Réglage des nuances (branche wip/parcours-nuances) : extrémités réglables, 500 fixe, saturation.
+test("shadeTargets : par défaut identique à TARGET ; 50 et 950 suivent le réglage ; 500 reste à 4,65:1", () => {
+  assert.deepEqual(C.shadeTargets(), C.TARGET);
+  assert.deepEqual(C.shadeTargets(1.06, 17.6), C.TARGET);
+  for (const [l, d] of [[1.03, 15], [1.1, 19], [1.2, 12]]) {
+    const t = C.shadeTargets(l, d);
+    assert.ok(Math.abs(t[0] - l) < 1e-9 && Math.abs(t[10] - d) < 1e-9, `${l}/${d} → ${t[0]}/${t[10]}`);
+    assert.equal(t[5], 4.65);
+    for (let i = 1; i < 11; i++) assert.ok(t[i] > t[i - 1], `croissant ${l}/${d} à ${i}`);
+  }
+});
+test("colorForY : saturation 1 = résultat d'avant ; la clarté visée tient quelle que soit la saturation", () => {
+  const r = rng(21);
+  for (let i = 0; i < 300; i++) { const base = C.hexToOklch(randHex(r)), y = C.targetY(C.TARGET[i % 11]);
+    assert.equal(C.colorForY(base, y, 1), C.colorForY(base, y));
+    for (const s of [0.5, 1.4]) { const h = C.colorForY(base, y, s); assert.ok(Math.abs(C.lum(h) - y) < 0.01, `${h} ${C.lum(h)} vs ${y}`); } }
+});
+test("colorForY : saturation 0,5 donne une nuance moins colorée", () => {
+  for (const hex of ["#FF5A4E", "#2F6BFF", "#00B3B0"]) { const b = C.hexToOklch(hex), y = C.targetY(4.65);
+    assert.ok(C.hexToOklch(C.colorForY(b, y, 0.5)).C < C.hexToOklch(C.colorForY(b, y, 1)).C - 0.02, hex); }
+});

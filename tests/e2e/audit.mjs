@@ -13,8 +13,8 @@ const req = createRequire(import.meta.url);
 let chromium;
 try { ({ chromium } = req("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
 
-const VIEWS = ["matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources", "exporter"];
-const TITLES = { matrice: "Contrastes", palette: "Couleurs", tester: "Polices", styles: "Styles de texte", systeme: "Design system", lisibilite: "Rédaction", sources: "Guide", exporter: "Exporter", formation: "S’entraîner" };
+const VIEWS = ["couleurs", "matrice", "palette", "tester", "styles", "systeme", "lisibilite", "sources", "exporter"];
+const TITLES = { couleurs: "Couleurs", matrice: "Contrastes", palette: "Nuances", tester: "Polices", styles: "Styles de texte", systeme: "Design system", lisibilite: "Rédaction", sources: "Guide", exporter: "Exporter", formation: "S’entraîner" };
 const DESK = { width: 1440, height: 900 }, MOB = { width: 390, height: 844 };
 const browser = await chromium.launch();
 let fails = 0;
@@ -153,7 +153,7 @@ for (const scheme of ["light", "dark"]) {
   report(!bad.length, "F1 info-bulles des nuances tronquées", bad.slice(0, 3).join(" ; ")); await p.ctx.close(); }
 
 // ---------- R1 : erreur de saisie liée au champ, messages lisibles au moins 5 s ----------
-{ const p = await open("matrice"); await p.evaluate(() => { document.getElementById("palBar").open = true; });
+{ const p = await open("couleurs"); // P0-4 : la saisie des couleurs a sa page, Couleurs.
   await p.fill("#ph0", "#12"); await p.press("#ph0", "Tab"); await p.waitForTimeout(150);
   const e1 = await p.evaluate(() => { const f = document.getElementById("ph0"), d = document.getElementById(f.getAttribute("aria-describedby") || "-");
     return { inv: f.getAttribute("aria-invalid"), msg: d && d.offsetParent ? d.textContent.trim() : "", val: f.value }; });
@@ -175,7 +175,7 @@ for (const v of [...VIEWS, "formation"]) {
 }
 
 // ---------- R4 : en contraste forcé (Windows), les échantillons gardent leur couleur ----------
-for (const v of ["matrice", "palette", "tester", "systeme"]) {
+for (const v of ["couleurs", "matrice", "palette", "tester", "systeme"]) {
   const p = await open(v, DESK, { forcedColors: "active" });
   const bad = await p.evaluate(() => [...document.querySelectorAll("main [style*='background:#'], main [style*='background: #'], main .swc, main .disc, main .sw, #palChips i")]
     .filter(e => e.getClientRects().length && !e.closest("iframe"))

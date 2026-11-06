@@ -10,8 +10,8 @@ const PAGE = "file://" + (process.env.LISIO_PAGE || join(ROOT, "index.html"));
 let chromium;
 try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
 
-// Ordre du blueprint (Couleurs, Typographie, Interaction, Vérification, Export) posé sur les pages de Lisio.
-const ORDER = [["palette", "Couleurs"], ["tester", "Polices"], ["styles", "Styles de texte"], ["systeme", "Design system"], ["matrice", "Contrastes"], ["exporter", "Exporter"]];
+// Ordre du blueprint (Couleurs, Typographie, Interaction, Vérification, Export) posé sur les pages de Lisio, dans l'ordre du menu (Nuances ajoutées par P0-4).
+const ORDER = [["couleurs", "Couleurs"], ["palette", "Nuances"], ["tester", "Polices"], ["styles", "Styles de texte"], ["systeme", "Design system"], ["matrice", "Contrastes"], ["exporter", "Exporter"]];
 const STATES = ["À commencer", "En cours", "Complété", "Attention requise", "Non applicable"];
 const browser = await chromium.launch();
 let fails = 0;
@@ -35,7 +35,7 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
 { const p = await open({ width: 1440, height: 900 });
   const S = await steps(p);
   const got = S.map(s => s.id + ":" + s.label).join(" "), want = ORDER.map(([v, l]) => v + ":" + l).join(" ");
-  report(got === want, "ordre du parcours : Couleurs, Polices, Styles, Design system, Contrastes, Exporter", got === want ? "" : got);
+  report(got === want, "ordre du parcours : Couleurs, Nuances, Polices, Styles, Design system, Contrastes, Exporter", got === want ? "" : got);
   const bad = S.filter(s => !STATES.some(t => s.state.startsWith(t)) || !s.stateShown || !s.name.includes(s.state));
   report(!bad.length, "chaque étape affiche son état en toutes lettres, lu avec son nom", JSON.stringify(bad.slice(0, 2)));
   const cur = S.filter(s => s.cur === "step");
@@ -44,23 +44,23 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   const gap = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => { const n = a.querySelector(".j-n").getBoundingClientRect(), t = a.querySelector(".j-t").getBoundingClientRect(); return Math.round(t.left - n.right); }));
   report(gap.every(g => g >= 0 && g <= 12), "nom et état à côté du numéro, sur chaque étape", gap.join(", "));
   // Projet neuf : couleurs d'exemple, rien d'ouvert.
-  report(stOf(S, "palette") === "À commencer" && stOf(S, "tester") === "À commencer", "projet neuf : Couleurs et Polices « À commencer »", `${stOf(S, "palette")} / ${stOf(S, "tester")}`);
+  report(stOf(S, "couleurs") === "À commencer" && stOf(S, "tester") === "À commencer", "projet neuf : Couleurs et Polices « À commencer »", `${stOf(S, "couleurs")} / ${stOf(S, "tester")}`);
   const help = await p.evaluate(() => { const b = document.querySelector('#journey [data-q="etape"]'); if (!b) return null; b.click(); return document.getElementById("qPop").textContent; });
   report(!!help && /pas (la|une) conformité/i.test(help) && STATES.every(t => help.includes(t)), "aide « ? » des états : les 5 états, et ce n'est pas la conformité", help ? "" : "pastille absente");
   report(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | ")); await p.ctx.close(); }
 
 // 2. Les états suivent le travail réel, pas la position dans le parcours.
 { const p = await open({ width: 1440, height: 900 });
-  await go(p, "tester"); await go(p, "palette"); let S = await steps(p);
+  await go(p, "tester"); await go(p, "couleurs"); let S = await steps(p);
   report(stOf(S, "tester") === "Complété" && stOf(S, "styles") === "À commencer", "étape ouverte puis quittée : « Complété » ; étape suivante jamais ouverte : « À commencer »", `${stOf(S, "tester")} / ${stOf(S, "styles")}`);
   await go(p, "matrice"); S = await steps(p);
-  report(stOf(S, "palette") === "À commencer", "Couleurs reste « À commencer » tant que la palette est celle de l'exemple", stOf(S, "palette"));
+  report(stOf(S, "couleurs") === "À commencer", "Couleurs reste « À commencer » tant que la palette est celle de l'exemple", stOf(S, "couleurs"));
   await p.ctx.close(); }
 
 // 2 bis. Couleurs saisies, puis un défaut réel : contour de focus blanc sur fond de page clair.
-{ const p = await open({ width: 1440, height: 900 }, "palette", { "lisio:colors": JSON.stringify([{ name: "Encre", hex: "#0E1B4D" }, { name: "Corail", hex: "#F4A261" }]) });
+{ const p = await open({ width: 1440, height: 900 }, "couleurs", { "lisio:colors": JSON.stringify([{ name: "Encre", hex: "#0E1B4D" }, { name: "Corail", hex: "#F4A261" }]) });
   await go(p, "matrice"); let S = await steps(p);
-  report(stOf(S, "palette") === "Complété", "Couleurs « Complété » une fois ses propres couleurs saisies", stOf(S, "palette"));
+  report(stOf(S, "couleurs") === "Complété", "Couleurs « Complété » une fois ses propres couleurs saisies", stOf(S, "couleurs"));
   await go(p, "systeme");
   const sel = 'select[data-role="focus/ring"]';
   const ok = await p.locator(sel).count();
@@ -74,7 +74,7 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
 { const p = await open({ width: 1440, height: 900 }); await go(p, "tester"); let S;
   // Retour en arrière puis saut direct.
   await go(p, "tester"); const back = await p.evaluate(() => [...document.querySelectorAll("#jNext .jn-row a")].map(a => a.getAttribute("href")));
-  report(back.join() === "#palette,#styles", "page Polices : retour vers Couleurs, suite vers Styles de texte", back.join());
+  report(back.join() === "#palette,#styles", "page Polices : retour vers Nuances, suite vers Styles de texte", back.join());
   await p.click('#journey a[href="#exporter"]'); await p.waitForTimeout(200);
   report(await p.evaluate(() => !document.getElementById("exporter").hidden), "saut direct vers Exporter depuis le bandeau, rien ne bloque");
   // Après rechargement, les états restent (enregistrés pour ce projet).
@@ -94,12 +94,12 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   const snap = () => p.evaluate(() => JSON.stringify({ c: localStorage.getItem("lisio:colors"), s: JSON.parse(localStorage.getItem("lisio:state") || "{}") }));
   const a = await snap(); for (const [v] of ORDER) await go(p, v); for (const [v] of [...ORDER].reverse()) await go(p, v);
   const b = await snap();
-  report(a === b, "aller-retour dans les 6 étapes : couleurs et réglages inchangés", a === b ? "" : "données modifiées"); await p.ctx.close(); }
+  report(a === b, "aller-retour dans les 7 étapes : couleurs et réglages inchangés", a === b ? "" : "données modifiées"); await p.ctx.close(); }
 
-// 5. Clavier : Tab parcourt les 6 étapes dans l'ordre, Entrée ouvre la page.
+// 5. Clavier : Tab parcourt les 7 étapes dans l'ordre, Entrée ouvre la page.
 { const p = await open({ width: 1440, height: 900 }, "styles");
-  await p.focus('#journey a[href="#palette"]'); const seq = [];
-  for (let i = 0; i < 6; i++) { seq.push(await p.evaluate(() => (document.activeElement.getAttribute("href") || "?").slice(1))); await p.keyboard.press("Tab"); }
+  await p.focus('#journey a[href="#couleurs"]'); const seq = [];
+  for (let i = 0; i < 7; i++) { seq.push(await p.evaluate(() => (document.activeElement.getAttribute("href") || "?").slice(1))); await p.keyboard.press("Tab"); }
   await p.focus('#journey a[href="#systeme"]'); await p.keyboard.press("Enter"); await p.waitForTimeout(200);
   const ok = await p.evaluate(() => !document.getElementById("systeme").hidden && document.querySelector('#journey a[aria-current="step"]').getAttribute("href") === "#systeme");
   report(seq.join() === ORDER.map(o => o[0]).join() && ok, "clavier : Tab dans l'ordre des étapes, Entrée ouvre l'étape", seq.join(" → ")); await p.ctx.close(); }

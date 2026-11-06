@@ -179,7 +179,7 @@
     color-scheme: dark;
     --text-default: var(--deep-50);
     --text-muted: var(--deep-400);
-    --text-on-action: var(--neutral-black);
+    --text-on-action: #000000;
     --background-default: var(--canvas-950);
     --background-subtle: var(--deep-950);
     --action-default: var(--deep-50);
@@ -218,7 +218,7 @@
   color-scheme: dark;
   --text-default: var(--deep-50);
   --text-muted: var(--deep-400);
-  --text-on-action: var(--neutral-black);
+  --text-on-action: #000000;
   --background-default: var(--canvas-950);
   --background-subtle: var(--deep-950);
   --action-default: var(--deep-50);

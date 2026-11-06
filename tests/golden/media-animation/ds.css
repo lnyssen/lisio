@@ -141,7 +141,7 @@
   color-scheme: light;
   --text-default: var(--marine); /* Primary text: 14.91:1 with page background (SC 1.4.3, minimum 4.5:1) */
   --text-muted: var(--marine-600); /* Secondary text: 5.53:1 with page background (SC 1.4.3, minimum 4.5:1) */
-  --text-on-action: var(--neutral-white); /* Text on primary button: 16.42:1 with primary button fill (SC 1.4.3, minimum 4.5:1) */
+  --text-on-action: #FFFFFF; /* Text on primary button: 16.42:1 with primary button fill (SC 1.4.3, minimum 4.5:1) */
   --background-default: #F1F4FB; /* Page background: 14.91:1 with primary text (SC 1.4.3, minimum 4.5:1) */
   --background-subtle: var(--marine-50); /* Secondary surface (cards, panels): 15.44:1 with primary text (SC 1.4.3, minimum 4.5:1) */
   --action-default: var(--marine); /* Primary button fill: 16.42:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
@@ -178,7 +178,7 @@
     color-scheme: dark;
     --text-default: var(--marine-50);
     --text-muted: var(--marine-400);
-    --text-on-action: var(--neutral-black);
+    --text-on-action: #000000;
     --background-default: var(--marine-950);
     --background-subtle: var(--marine-900);
     --action-default: var(--marine-50);
@@ -218,7 +218,7 @@
   color-scheme: dark;
   --text-default: var(--marine-50);
   --text-muted: var(--marine-400);
-  --text-on-action: var(--neutral-black);
+  --text-on-action: #000000;
   --background-default: var(--marine-950);
   --background-subtle: var(--marine-900);
   --action-default: var(--marine-50);
