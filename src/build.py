@@ -6,6 +6,8 @@ import pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
 import sys; sys.path.insert(0, str(root / "src")); from core_inline import inline_core
 t = inline_core((root / "src/lisio.template.html").read_text())
+# Version de Lisio pour les rapports (F11) : empreinte du code de la page, stable d'un build à l'autre tant que rien ne change.
+import hashlib; t = t.replace("__LISIO_BUILD__", hashlib.sha256(t.encode()).hexdigest()[:7])
 gf = (root / "src/gf.txt").read_text(); n = gf.count(";") + 1
 t = t.replace("__GF__", gf).replace("__GFCOUNT__", f"{n:,}".replace(",", " "))
 (root / "dist").mkdir(exist_ok=True)

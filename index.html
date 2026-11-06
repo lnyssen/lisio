@@ -1426,7 +1426,8 @@ body{background:var(--bg)}
     <div class="card-surface" id="exReport">
       <h2>Rapport d’accessibilité</h2>
       <p class="note">Une page à imprimer ou à enregistrer en PDF : vos couleurs, chaque paire, chaque rôle en clair et en sombre, chaque style de texte, avec le ratio, le seuil et le verdict. Pratique pour une revue, un client ou un dossier de conformité. Il dit aussi ce que Lisio ne vérifie pas.</p>
-      <div class="row"><button class="btn primary" type="button" id="repOpen">Ouvrir le rapport</button><button class="btn" type="button" id="repDl">Télécharger le rapport (.html)</button></div>
+      <div class="row"><button class="btn primary" type="button" id="repOpen">Ouvrir le rapport</button><button class="btn" type="button" id="repDl">Télécharger le rapport (.html)</button><button class="btn" type="button" id="repMd">Télécharger en Markdown (.md)</button><button class="btn" type="button" id="repJson">Télécharger en JSON</button></div>
+      <p class="note">Le Markdown se colle dans un ticket, un wiki ou un dépôt de code. Le JSON se relit par un outil. Les trois formats donnent les mêmes résultats, avec la version de Lisio et l’empreinte du projet : mêmes réglages, même rapport.</p>
     </div>
     <div class="card-surface" id="exHist">
       <div class="row between"><h2>Depuis le dernier export</h2><button class="btn sm" type="button" id="histCopy" hidden>Copier le résumé pour l’équipe</button></div>
@@ -2107,6 +2108,50 @@ const PRESETS = [
     rules: [["Niveau AA visé", "WCAG 2.2"], ["Texte Marine sur fond Blanc", "Choix de l’équipe"], ["Boutons et champs de 48 px", "2.5.8"], ["Les couleurs vives (Corail, Orange, Ambre, Turquoise) servent au décor ou aux grands textes : Lisio dit lesquelles passent", "1.4.3"]] }
 ];
 const preset = id => PRESETS.find(p => p.id === id) || null;
+// Lisio, rapport de validation (F11) : Markdown et JSON, à partir d'un modèle construit par la page.
+// Fonctions pures. Testées par tests/report.test.mjs.
+// Règles : jamais d'affirmation de conformité du produit ; ce qui n'est pas testé reste visible ;
+// même modèle, même texte (rapport reproductible pour une version de Lisio et une empreinte de projet).
+const REPORT_SCHEMA = "lisio-report";
+const REPORT_V = 1;
+// Empreinte FNV-1a 32 bits : deux projets aux mêmes réglages ont la même empreinte.
+function fingerprint(text) {
+  let h = 0x811c9dc5;
+  for (const ch of String(text)) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
+  return h.toString(16).padStart(8, "0");
+}
+const mdCell = v => String(v == null ? "" : v).replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ").trim();
+const mdRow = a => "| " + a.map(mdCell).join(" | ") + " |";
+const mdTable = (head, rows) => [mdRow(head), mdRow(head.map(() => "---")), ...rows.map(mdRow)].join("\n");
+const mdList = a => a.map(x => "- " + mdCell(x)).join("\n");
+const STATUS_HELP = {
+  pass: "le test a été fait et il passe.",
+  fail: "le test a été fait et il ne passe pas.",
+  manual: "Lisio ne peut pas trancher seul : une personne doit regarder.",
+  untested: "le test n’a pas été fait. Ce n’est pas un échec.",
+  na: "le critère ne s’applique pas ici."
+};
+function reportMarkdown(m) {
+  const out = [];
+  out.push("# Rapport de validation : " + mdCell(m.project), "");
+  out.push(mdList(["Projet : " + m.project, "Date : " + m.date, "Version de Lisio : " + m.lisio, "Empreinte du projet : " + m.fingerprint + " (mêmes réglages, même empreinte)", "Référence : WCAG " + m.wcag + ", niveau " + m.level]), "");
+  out.push("## Périmètre", "", m.scope, "");
+  out.push("## Statuts utilisés", "", mdList(Object.keys(STATUS).map(k => statusTxt(k) + " : " + STATUS_HELP[k])), "");
+  out.push("## Synthèse", "", mdList(m.counts.map(([label, ok, total]) => `${ok} sur ${total} : ${label}`)), "");
+  out.push("## Critères vérifiés et résultats", "", mdTable(["Critère", "Niveau", "Ce qui a été testé", "Statut", "Remarque"], m.criteria.map(c => [c.id || "–", c.level || "–", c.what, statusTxt(c.status), c.note || ""])), "");
+  for (const [mode, rows] of m.roles) out.push("## Rôles, " + mode, "", mdTable(["Rôle", "Couleur", "Vérifié avec", "Ratio", "Seuil", "Statut"], rows.map(r => [r.role, r.color, r.pair || "–", r.ratio || "–", r.need || "–", statusTxt(r.status) + (r.note ? " (" + r.note + ")" : "")])), "");
+  out.push("## Styles de texte", "", mdTable(["Style", "Taille (mobile → desktop)", "Ratio", "Seuil", "Statut"], m.styles.map(s => [s.name, s.size, s.ratio, s.need, statusTxt(s.status)])), "");
+  out.push("## Contrôles manuels requis", "", "Cochés par l’équipe, écran par écran. « " + STATUS.untested.word + " » veut dire « pas encore vérifié », pas « en échec ».", "",
+    mdTable(["Point", "Critère", ...m.manual.screens], m.manual.items.map(i => [i.title, i.crit, ...i.results.map(statusTxt)])), "");
+  out.push("## Points non testés", "", mdList(m.untested), "");
+  out.push("## Exceptions", "", mdList(m.exceptions.length ? m.exceptions : ["Aucune exception utilisée dans ce projet."]), "");
+  out.push("## Méthodologie et version WCAG", "", mdList(m.method), "");
+  out.push("## Limites du rapport", "", mdList(m.limits), "");
+  return out.join("\n");
+}
+function reportJson(m) {
+  return { schema: REPORT_SCHEMA, v: REPORT_V, statuses: Object.fromEntries(Object.entries(STATUS).map(([k, s]) => [k, s.word])), ...JSON.parse(JSON.stringify(m)) };
+}
 // Réglage des nuances (P0-4) : 50 et 950 réglables, 500 fixe, saturation ; mêmes réglages pour toutes les gammes.
 const SH_BASE = { light: TARGET[0], dark: TARGET[10], sat: 1, exact: false };
 const shCfg = k => (S.sh && S.sh[k] != null) ? S.sh[k] : SH_BASE[k];
@@ -4304,16 +4349,9 @@ $("cmpFile").addEventListener("change", e => { const f = e.target.files[0]; if (
 $("cmpCopy").addEventListener("click", () => { const c = cmpLast; if (!c) return; copy([`Comparaison : « ${c.nm} » → version actuelle`, `Rôles sous le seuil : ${c.A.roles} → ${c.now.roles} ; styles sous le seuil : ${c.A.styles} → ${c.now.styles}`, ...c.C.map(([k, a, b]) => `- ${k} : ${prettyVal(a)} → ${prettyVal(b)}`), ...c.Ad.map(k => `- ${k} : ajoutée`), ...c.D.map(k => `- ${k} : retirée`)].join("\n"), "Résumé copié"); });
 
 // ---------- Rapport d’accessibilité ----------
-function reportHtml() {
-  const lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), date = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-  const name = S.projectName || "Design system", C = palette, sw = h => `<span class="sw" style="background:${h}"></span>`;
-  const verdict = (r, n) => r >= n ? `<b class="ok">${statusTxt("pass")}</b>` : `<b class="no">${statusTxt("fail")}</b>`, tc = textCrit(lvl), critOf = k => ROLE_FR[k][2] === "ui" ? critLabel("1.4.11", "AA", S.version) : critLabel(tc[0], tc[1], S.version);
-  let pairs = 0, pairsOk = 0;
-  const mx = `<table><thead><tr><th scope="col">Texte ↓ / Fond →</th>${C.map(b => `<th scope="col">${sw(b.hex)}${esc(b.name)}</th>`).join("")}</tr></thead><tbody>${C.map((t, i) => `<tr><th scope="row">${sw(t.hex)}${esc(t.name)}</th>${C.map((b, j) => { if (i === j) return `<td class="na">–</td>`; const r = ratio(t.hex, b.hex); if (i < j) { pairs++; if (r >= need) pairsOk++; } return `<td class="${r >= need ? "ok" : r >= needL ? "lg" : "no"}">${f2(r)} :1<br><small>${grade(r)[0]}</small></td>`; }).join("")}</tr>`).join("")}</tbody></table>`;
-  const roleRows = m => { const R = dsRoles(m); return Object.keys(ROLE_FR).map(k => { const [fr, pair, kind] = ROLE_FR[k], n = roleNeed(k); const na = `${statusTxt("na")}<br><small>${kind === "off" ? "Composant inactif : exempté par le critère 1.4.3" : "Élément décoratif"}</small>`;
-    if (!pair) return `<tr><th scope="row">${esc(fr)}</th><td>${sw(R[k])}${esc(hexName(R[k]))} <code>${R[k]}</code></td><td>–</td><td>–</td><td>${na}</td></tr>`; const r = ratio(R[k], R[pair]); return `<tr><th scope="row">${esc(fr)}</th><td>${sw(R[k])}${esc(hexName(R[k]))} <code>${R[k]}</code></td><td>${esc(ROLE_FR[pair][0])}</td><td>${f2(r)} :1</td><td>${n ? `${verdict(r, n)}<br><small>${fmt(n, n % 1 ? 1 : 0)} :1 minimum, ${critOf(k)}</small>` : na}</td></tr>`; }).join(""); };
-  const totR = 2 * Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && roleNeed(k)).length, iss = allIssues(), stOk = S.ts.styles.filter(st => tsVerdict(st).ok).length;
-  const sty = S.ts.styles.map(st => { const d = tsDef(st.id) || { name: st.id }, v = tsVerdict(st); return `<tr><th scope="row">${esc(d.name)}</th><td>${st.min} → ${st.max} px</td><td>${st.weight}</td><td>${fmt(st.lh, 2)}</td><td>${v.large ? "Grand texte" : "Texte courant"}, ${fmt(v.need, v.need % 1 ? 1 : 0)} :1<br><small>${critLabel(tc[0], tc[1], S.version)}</small></td><td>${verdict(v.r, v.need)}${v.warn.length ? `<br><small>${v.warn.map(esc).join(" ; ")}</small>` : ""}</td></tr>`; }).join("");
+// Critères du rapport, partagés par le rapport HTML et le rapport Markdown / JSON (F11).
+function reportCrit() {
+  const tc = textCrit(S.level), stOk = S.ts.styles.filter(st => tsVerdict(st).ok).length;
   // Critères et statuts (P0-3 bis) : ce qui est testé par Lisio, ce qui reste à la main, et ce qui n'est pas testé du tout.
   const roleOk = kind => ["light", "dark"].flatMap(m => { const R = dsRoles(m); return Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && ROLE_FR[k][2] === kind && roleNeed(k)).map(k => ratio(R[k], R[ROLE_FR[k][1]]) >= roleNeed(k)); });
   const tOk = roleOk("text"), uOk = roleOk("ui"), stFail = S.ts.styles.length - stOk, Mn = mnState(), mnAll = MN_IDS.length * Mn.screens.length, mnDone = Mn.screens.reduce((t, x) => t + MN_IDS.filter(id => x.ok[id]).length, 0);
@@ -4325,6 +4363,46 @@ function reportHtml() {
     [["1.4.12", "AA"], "text-spacing", "Espacements imposés par le lecteur : testables sur l’aperçu de la page Polices, pas sur vos écrans", "manual", ""],
     [null, null, `Check-list manuelle : ${MN_IDS.length} points, ${Mn.screens.length} écran${Mn.screens.length > 1 ? "s" : ""}`, mnDone === mnAll ? "pass" : "untested", mnDone === mnAll ? "tous cochés par l’équipe" : `${mnAll - mnDone} sur ${mnAll} pas encore vérifiés`],
     [null, null, "Tous les autres critères WCAG " + S.version, "untested", "Lisio ne les teste pas"]];
+  const ix = interactionChecks({ version: S.version, btnH: +dsCfg("btn"), ringW: 2, offset: 2, roles: dsOn("dark") ? { light: dsRoles("light"), dark: dsRoles("dark") } : { light: dsRoles("light") } });
+  crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
+  return { crit, tc, stOk, Mn, mnAll, mnDone };
+}
+const LISIO_BUILD = "2eb7482";
+const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
+function reportModel() {
+  const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
+  let pairs = 0, pairsOk = 0; C.forEach((t, i) => C.forEach((b, j) => { if (i < j) { pairs++; if (ratio(t.hex, b.hex) >= need) pairsOk++; } }));
+  const totR = 2 * Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && roleNeed(k)).length, iss = allIssues(), kinds = new Set();
+  const roles = m => { const R = dsRoles(m); return Object.keys(ROLE_FR).map(k => { const [fr, pair, kind] = ROLE_FR[k], n = roleNeed(k), col = hexName(R[k]) + " " + R[k];
+    if (!pair || !n) { kinds.add(kind); return { role: fr, color: col, pair: pair ? ROLE_FR[pair][0] : "", ratio: pair ? rt(ratio(R[k], R[pair])) : "", need: "", status: "na", note: kind === "off" ? "composant inactif, exempté" : "élément décoratif" }; }
+    const r = ratio(R[k], R[pair]); return { role: fr, color: col, pair: ROLE_FR[pair][0], ratio: rt(r), need: nd(n), status: r >= n ? "pass" : "fail" }; }); };
+  const roleSets = [["mode clair", roles("light")], ["mode sombre", roles("dark")]];
+  const exceptions = [];
+  if (kinds.has("off")) exceptions.push("Composants inactifs (texte et fond désactivés) : exemptés de contraste par les critères 1.4.3 et 1.4.11.");
+  if (kinds.has("deco")) exceptions.push("Éléments décoratifs (filet décoratif) : sans exigence de contraste, ils ne portent aucune information.");
+  return { project: S.projectName || "Sans nom", date: new Date().toISOString().slice(0, 10), lisio: LISIO_BUILD, fingerprint: prjPrint(), wcag: S.version, level: lvl,
+    scope: `Couleurs, paires, rôles du design system (clair et sombre), styles de texte, focus et cibles du projet « ${S.projectName || "Sans nom"} », plus la check-list manuelle cochée par l’équipe. Lisio ne teste pas les écrans réels.`,
+    counts: [["paires lisibles en texte courant", pairsOk, pairs], ["rôles conformes au test, clair et sombre", totR - iss.length, totR], ["styles de texte conformes au test", stOk, S.ts.styles.length]],
+    criteria: crit.map(([c, , what, st, note]) => ({ id: c ? c[0] : "", level: c ? c[1] : "", what, status: st, note: note || "" })),
+    roles: roleSets,
+    styles: S.ts.styles.map(st => { const d = tsDef(st.id) || { name: st.id }, v = tsVerdict(st); return { name: d.name, size: `${st.min} → ${st.max} px`, ratio: rt(v.r), need: nd(v.need), status: v.r >= v.need ? "pass" : "fail" }; }),
+    manual: { screens: Mn.screens.map(x => x.name || "Sans nom"), items: MANUAL.flatMap(([, it]) => it.map(([id, t, , c]) => ({ title: t, crit: c, results: Mn.screens.map(x => x.ok[id] ? "pass" : "untested") }))) },
+    untested: [`Tous les critères WCAG ${S.version} absents du tableau des critères.`, `${mnAll - mnDone} point${mnAll - mnDone > 1 ? "s" : ""} de la check-list manuelle sur ${mnAll}, pas encore coché${mnAll - mnDone > 1 ? "s" : ""}.`, "Les écrans réels : images et alternatives, clavier, titres, formulaires, médias."],
+    exceptions,
+    method: [`Ratio de contraste : formule de luminance relative de WCAG ${S.version} (W3C), arrondi au centième inférieur.`, `Seuils : texte courant ${nd(need)}, grand texte et composants ${nd(needL)} (niveau ${lvl}).`, "Grand texte : 24 px et plus, ou 18,67 px et plus en gras.", "Styles de texte vérifiés à leur taille mobile (390 px).", "Rôles vérifiés en mode clair et en mode sombre, chacun avec son partenaire (texte et fond, bouton et libellé).", "Check-list manuelle : cochée par l’équipe dans Lisio, écran par écran."],
+    limits: ["Ce rapport donne le résultat de tests précis. Il n’affirme pas la conformité du produit.", "Lisio teste des couleurs et des réglages, pas des pages : les écrans réels restent à vérifier.", "Les résultats valent pour la version de Lisio et l’empreinte du projet indiquées en tête."] };
+}
+function reportHtml() {
+  const lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), date = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  const name = S.projectName || "Design system", C = palette, sw = h => `<span class="sw" style="background:${h}"></span>`;
+  const verdict = (r, n) => r >= n ? `<b class="ok">${statusTxt("pass")}</b>` : `<b class="no">${statusTxt("fail")}</b>`, tc = textCrit(lvl), critOf = k => ROLE_FR[k][2] === "ui" ? critLabel("1.4.11", "AA", S.version) : critLabel(tc[0], tc[1], S.version);
+  let pairs = 0, pairsOk = 0;
+  const mx = `<table><thead><tr><th scope="col">Texte ↓ / Fond →</th>${C.map(b => `<th scope="col">${sw(b.hex)}${esc(b.name)}</th>`).join("")}</tr></thead><tbody>${C.map((t, i) => `<tr><th scope="row">${sw(t.hex)}${esc(t.name)}</th>${C.map((b, j) => { if (i === j) return `<td class="na">–</td>`; const r = ratio(t.hex, b.hex); if (i < j) { pairs++; if (r >= need) pairsOk++; } return `<td class="${r >= need ? "ok" : r >= needL ? "lg" : "no"}">${f2(r)} :1<br><small>${grade(r)[0]}</small></td>`; }).join("")}</tr>`).join("")}</tbody></table>`;
+  const roleRows = m => { const R = dsRoles(m); return Object.keys(ROLE_FR).map(k => { const [fr, pair, kind] = ROLE_FR[k], n = roleNeed(k); const na = `${statusTxt("na")}<br><small>${kind === "off" ? "Composant inactif : exempté par le critère 1.4.3" : "Élément décoratif"}</small>`;
+    if (!pair) return `<tr><th scope="row">${esc(fr)}</th><td>${sw(R[k])}${esc(hexName(R[k]))} <code>${R[k]}</code></td><td>–</td><td>–</td><td>${na}</td></tr>`; const r = ratio(R[k], R[pair]); return `<tr><th scope="row">${esc(fr)}</th><td>${sw(R[k])}${esc(hexName(R[k]))} <code>${R[k]}</code></td><td>${esc(ROLE_FR[pair][0])}</td><td>${f2(r)} :1</td><td>${n ? `${verdict(r, n)}<br><small>${fmt(n, n % 1 ? 1 : 0)} :1 minimum, ${critOf(k)}</small>` : na}</td></tr>`; }).join(""); };
+  const totR = 2 * Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && roleNeed(k)).length, iss = allIssues(), stOk = S.ts.styles.filter(st => tsVerdict(st).ok).length;
+  const sty = S.ts.styles.map(st => { const d = tsDef(st.id) || { name: st.id }, v = tsVerdict(st); return `<tr><th scope="row">${esc(d.name)}</th><td>${st.min} → ${st.max} px</td><td>${st.weight}</td><td>${fmt(st.lh, 2)}</td><td>${v.large ? "Grand texte" : "Texte courant"}, ${fmt(v.need, v.need % 1 ? 1 : 0)} :1<br><small>${critLabel(tc[0], tc[1], S.version)}</small></td><td>${verdict(v.r, v.need)}${v.warn.length ? `<br><small>${v.warn.map(esc).join(" ; ")}</small>` : ""}</td></tr>`; }).join("");
+  const { crit } = reportCrit(), u = id => `https://www.w3.org/WAI/WCAG22/Understanding/${id}.html`;
   const critRows = crit.map(([c, slug, what, st, note]) => `<tr><th scope="row">${c ? `<a href="${u(slug)}">${critLabel(c[0], c[1], S.version)}</a>` : "–"}</th><td>${what}</td><td class="${st === "pass" ? "ok" : st === "fail" ? "no" : st === "manual" ? "lg" : ""}">${statusTxt(st)}${note ? `<br><small>${note}</small>` : ""}</td></tr>`).join("");
   return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Rapport d’accessibilité, ${esc(name)}</title><style>
 :root{color-scheme:light}body{font:15px/1.5 "Helvetica Neue",system-ui,sans-serif;color:#111;background:#fff;margin:0;padding:32px max(16px,4vw)}
@@ -4340,7 +4418,7 @@ ul{padding-left:20px}li{margin:3px 0}a{color:#1E3A8A}
 @media print{.bar{display:none}body{padding:0}h2{break-after:avoid}tr{break-inside:avoid}td.ok,td.lg,td.no{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style></head><body>
 <div class="bar"><button type="button" onclick="print()">Imprimer ou enregistrer en PDF</button><span>Fait avec Lisio</span></div>
-<h1>Rapport d’accessibilité : ${esc(name)}</h1><p class="meta">${date} · Référence WCAG ${S.version}, niveau ${lvl} · Texte courant ${fmt(need, need % 1 ? 1 : 0)} :1, grand texte et interface ${fmt(needL, needL % 1 ? 1 : 0)} :1</p>
+<h1>Rapport d’accessibilité : ${esc(name)}</h1><p class="meta">${date} · Référence WCAG ${S.version}, niveau ${lvl} · Lisio ${LISIO_BUILD} · empreinte du projet ${prjPrint()} · Texte courant ${fmt(need, need % 1 ? 1 : 0)} :1, grand texte et interface ${fmt(needL, needL % 1 ? 1 : 0)} :1</p>
 <div class="kpi"><div><b>${pairsOk}/${pairs}</b>paires lisibles en texte courant</div><div><b>${totR - iss.length}/${totR}</b>rôles conformes au test, clair et sombre</div><div><b>${stOk}/${S.ts.styles.length}</b>styles de texte conformes au test</div></div>
 <h2>Périmètre</h2><p>Ce rapport donne le résultat de tests précis, sur les couleurs, les rôles et les styles de texte de ce projet. Il n’affirme pas la conformité du produit : les écrans réels restent à vérifier.</p>
 <h2>Statuts utilisés</h2><ul><li><b>${statusTxt("pass")}</b> : le test a été fait et il passe.</li><li><b>${statusTxt("fail")}</b> : le test a été fait et il ne passe pas.</li><li><b>${statusTxt("manual")}</b> : Lisio ne peut pas trancher seul, une personne doit regarder.</li><li><b>${statusTxt("untested")}</b> : le test n’a pas encore été fait.</li><li><b>${statusTxt("na")}</b> : le critère ne s’applique pas à cet élément.</li></ul>
@@ -4362,6 +4440,8 @@ function reportOpen() {
 }
 $("repOpen").addEventListener("click", reportOpen);
 $("repDl").addEventListener("click", () => saveFile("lisio-rapport-accessibilite.html", reportHtml(), "text/html", "Rapport téléchargé"));
+$("repMd").addEventListener("click", () => saveFile(`lisio-rapport-${slug(S.projectName || "projet")}.md`, reportMarkdown(reportModel()), "text/markdown", "Rapport Markdown téléchargé"));
+$("repJson").addEventListener("click", () => saveFile(`lisio-rapport-${slug(S.projectName || "projet")}.json`, JSON.stringify(reportJson(reportModel()), null, 1), "application/json", "Rapport JSON téléchargé"));
 
 // ---------- Projet partageable ----------
 const PRJ_BASE = "https://lisio-psi.vercel.app/";
