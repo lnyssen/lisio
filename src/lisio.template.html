@@ -417,6 +417,11 @@ select{-webkit-appearance:none;appearance:none;background-image:var(--chev);back
 .cp-ctx{margin:0;font-size:13px;line-height:1.4;color:var(--muted);flex:1 1 180px}.cp-ctx b{color:var(--ink)}
 .cp-only{font:inherit;font-size:12px;font-weight:700;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 10px;min-height:32px;cursor:pointer}
 .cp-only[aria-pressed="true"]{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.cp-q{display:flex;align-items:center;gap:8px;margin:8px 10px 4px;padding:0 12px;min-height:44px;border:1.5px solid var(--hair);border-radius:12px;background:var(--surface)}
+.cp-q:focus-within{border-color:var(--ink);box-shadow:0 0 0 2px var(--focus, var(--ink))}
+.cp-q svg{width:18px;height:18px;flex:none;color:var(--muted)}
+.cp-q input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:15px;color:var(--ink);min-height:40px}
+.cp-q input::placeholder{color:var(--muted);opacity:1}
 .cp-list{list-style:none;margin:0;padding:0 6px 8px;overflow-y:auto;overscroll-behavior:contain;flex:1 1 auto;min-height:0}
 .cp-list:focus{outline:none}.cp-list:focus-visible{box-shadow:inset 0 0 0 2px var(--ink)}
 .cp-list ul{list-style:none;margin:0;padding:0}
@@ -2398,6 +2403,14 @@ const CP_CHEV = `<svg class="cp-chev" viewBox="0 0 16 16" aria-hidden="true"><pa
 const cpHex = o => (o.dataset.hex || o.value || "").toUpperCase();
 const cpName = o => o.textContent.replace(/\s*#[0-9A-F]{6}\s*$/i, "").trim();
 let cpSel = null, cpOnlyOk = false;
+const cpNorm = t => String(t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+// Un nombre de 1 à 3 chiffres cherche une nuance (« 50 » ne trouve ni 500 ni 950) ; un code hexa se cherche avec « # », une lettre a-f ou 4 caractères et plus.
+function cpMatch(o, h, q, qh) {
+  const name = cpNorm(cpName(o) + " " + (o.parentElement.label || ""));
+  if (/^\d{1,3}$/.test(q)) return new RegExp(`(^|\\D)${q}(\\D|$)`).test(name);
+  if (name.includes(q) || cpNorm(o.value) === q) return true;
+  return /^[0-9a-f]+$/.test(qh) && (q.startsWith("#") || /[a-f]/.test(qh) || qh.length >= 4) && h.toLowerCase().replace("#", "").includes(qh);
+}
 function cpEnhance(sel, key) {
   if (!sel) return;
   let b = sel._cp;
@@ -2417,13 +2430,14 @@ function cpEnhance(sel, key) {
 function cpPop() {
   let p = $("cpPop"); if (p) return p;
   p = document.createElement("div"); p.id = "cpPop"; p.className = "cp-pop"; p.hidden = true;
-  p.innerHTML = `<div class="cp-head"><p class="cp-ctx" id="cpCtx"></p><button type="button" class="cp-only" id="cpOnly" aria-pressed="false">Seulement celles qui passent</button><button type="button" class="cp-x" id="cpX" aria-label="Fermer la liste">✕</button></div><ul class="cp-list" id="cpList" role="listbox" tabindex="0"></ul>`;
+  p.innerHTML = `<div class="cp-head"><p class="cp-ctx" id="cpCtx"></p><button type="button" class="cp-only" id="cpOnly" aria-pressed="false">Seulement celles qui passent</button><button type="button" class="cp-x" id="cpX" aria-label="Fermer la liste">✕</button></div><div class="cp-q"><label class="sr-only" for="cpQ">Rechercher une couleur</label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><input id="cpQ" type="search" role="combobox" aria-autocomplete="list" aria-controls="cpList" aria-expanded="true" autocomplete="off" spellcheck="false" placeholder="Nom, nuance ou code, ex. 700 ou #2F6BFF"></div><p class="sr-only" id="cpN" role="status" aria-live="polite"></p><div class="cp-list" id="cpList" role="listbox" tabindex="-1"></div><p class="cp-none" id="cpNone" hidden></p>`;
   document.body.appendChild(p);
   const L = $("cpList");
   L.addEventListener("click", e => { const li = e.target.closest("[role=option]"); if (li) cpPick(li); });
   L.addEventListener("keydown", cpKey);
+  const Q = $("cpQ"); Q.addEventListener("input", () => cpFill()); Q.addEventListener("keydown", cpKey);
   $("cpX").addEventListener("click", () => cpClose(true));
-  $("cpOnly").addEventListener("click", () => { cpOnlyOk = !cpOnlyOk; cpFill(); L.focus(); });
+  $("cpOnly").addEventListener("click", () => { cpOnlyOk = !cpOnlyOk; cpFill(); $("cpQ").focus(); });
   p.addEventListener("keydown", e => { if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); cpClose(true); } else if (e.key === "Tab") cpClose(false); });
   document.addEventListener("pointerdown", e => { if (cpSel && !p.contains(e.target) && !e.target.closest(".cp-btn")) cpClose(false); });
   addEventListener("resize", () => { if (cpSel) cpPlace(); });
@@ -2432,30 +2446,35 @@ function cpPop() {
 }
 function cpFill() {
   const sel = cpSel, L = $("cpList"), pair = sel.dataset.pair, need = +sel.dataset.need || 0, cur = sel.value;
+  const raw = $("cpQ").value.trim(), q = cpNorm(raw), qh = q.replace(/^#/, "");
   let i = 0, html = "", shown = 0;
   const opt = o => {
     const h = cpHex(o), r = pair && h ? ratio(h, pair) : 0, ok = !need || r >= need;
     if (cpOnlyOk && need && !ok && o.value !== cur) return "";
+    if (q && !cpMatch(o, h, q, qh)) return "";
     shown++;
     const badge = pair && need ? `<span class="cp-r ${ok ? "ok" : "no"}">${ratioTxt(r, r < 10 ? 2 : 1)}:1 ${ok ? "✓" : "✕"}</span>` : pair ? `<span class="cp-r">${ratioTxt(r, 1)}:1</span>` : "";
-    return `<li role="option" id="cpo${i++}" data-v="${esc(o.value)}" aria-selected="${o.value === cur}"><span class="cp-sw" style="background:${h}"></span><span class="cp-tx">${esc(cpName(o))}<span class="cp-hx"> ${h}</span></span>${badge}</li>`;
+    return `<div role="option" id="cpo${i++}" data-v="${esc(o.value)}" aria-selected="${o.value === cur}"><span class="cp-sw" style="background:${h}"></span><span class="cp-tx">${esc(cpName(o))}<span class="cp-hx"> ${h}</span></span>${badge}</div>`;
   };
   [...sel.children].forEach((c, gi) => {
-    if (c.tagName === "OPTGROUP") { const items = [...c.children].map(opt).join(""); if (items) html += `<li role="presentation"><span class="cp-gh" id="cpg${gi}">${esc(c.label)}</span><ul role="group" aria-labelledby="cpg${gi}">${items}</ul></li>`; }
+    if (c.tagName === "OPTGROUP") { const items = [...c.children].map(opt).join(""); if (items) html += `<div role="group" aria-labelledby="cpg${gi}"><span class="cp-gh" id="cpg${gi}">${esc(c.label)}</span>${items}</div>`; }
     else html += opt(c);
   });
-  L.innerHTML = html || `<li class="cp-none" role="presentation">Aucune nuance ne passe sur ce partenaire. Changez plutôt le partenaire.</li>`;
+  const isHex = /^#?[0-9a-f]{6}$/i.test(raw);
+  L.innerHTML = html; L.hidden = !html; $("cpNone").hidden = !!html; $("cpNone").innerHTML = html ? "" : `${!q ? "Aucune nuance ne passe sur ce partenaire. Changez plutôt le partenaire." : isHex ? `« ${esc(("#" + raw.replace("#", "")).toUpperCase())} » n’est pas dans la palette. Ajoutez-la dans la page Couleurs pour la proposer ici.` : `Aucune couleur ne correspond à « ${esc(raw)} ». Essayez un nom (Bleu), une nuance (700) ou un code (#2F6BFF).`}`;
+  $("cpN").textContent = shown ? `${shown} couleur${shown > 1 ? "s" : ""}${q ? ` pour « ${raw} »` : ""}` : (q ? `Aucune couleur pour « ${raw} »` : "0 couleur");
   const lab = sel.getAttribute("aria-label") || (sel.labels && sel.labels[0] ? sel.labels[0].textContent : "Couleur");
   L.setAttribute("aria-label", lab);
   $("cpCtx").innerHTML = pair && need ? `<span class="cp-sw sm" style="background:${pair}"></span>Vérifié avec ${esc(sel.dataset.pairname || pair)} : il faut <b>${fmt(need, need % 1 ? 1 : 0)}:1</b>.` : pair ? `Décoratif : aucun seuil, ratio donné pour info.` : "";
   $("cpOnly").hidden = !(pair && need); $("cpOnly").setAttribute("aria-pressed", String(cpOnlyOk));
-  const s = L.querySelector('[aria-selected="true"]') || L.querySelector("[role=option]");
+  const s = (!q && L.querySelector('[aria-selected="true"]')) || L.querySelector("[role=option]");
   cpActive(s);
 }
 function cpActive(li) {
   const L = $("cpList"); L.querySelectorAll(".is-act").forEach(x => x.classList.remove("is-act"));
-  if (!li) { L.removeAttribute("aria-activedescendant"); return; }
-  li.classList.add("is-act"); L.setAttribute("aria-activedescendant", li.id);
+  const Q = $("cpQ");
+  if (!li) { L.removeAttribute("aria-activedescendant"); Q.removeAttribute("aria-activedescendant"); return; }
+  li.classList.add("is-act"); L.setAttribute("aria-activedescendant", li.id); Q.setAttribute("aria-activedescendant", li.id);
   const r = li.getBoundingClientRect(), lr = L.getBoundingClientRect();
   if (r.top < lr.top + 28 || r.bottom > lr.bottom) li.scrollIntoView({ block: "nearest" });
 }
@@ -2463,10 +2482,10 @@ function cpKey(e) {
   const L = $("cpList"), all = [...L.querySelectorAll("[role=option]")], cur = L.querySelector(".is-act"), i = all.indexOf(cur);
   const go = j => { e.preventDefault(); cpActive(all[Math.max(0, Math.min(all.length - 1, j))]); };
   if (e.key === "ArrowDown") go(i + 1); else if (e.key === "ArrowUp") go(i - 1);
-  else if (e.key === "Home") go(0); else if (e.key === "End") go(all.length - 1);
+  else if (e.target.id !== "cpQ" && e.key === "Home") go(0); else if (e.target.id !== "cpQ" && e.key === "End") go(all.length - 1);
   else if (e.key === "PageDown") go(i + 8); else if (e.key === "PageUp") go(i - 8);
   else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (cur) cpPick(cur); }
-  else if (e.key.length === 1 && /\S/.test(e.key)) { const q = e.key.toLowerCase(), n = all.slice(i + 1).concat(all.slice(0, i + 1)).find(li => li.textContent.trim().toLowerCase().startsWith(q)); if (n) go(all.indexOf(n)); }
+  else if (e.target.id !== "cpQ" && e.key.length === 1 && /\S/.test(e.key)) { const q = e.key.toLowerCase(), n = all.slice(i + 1).concat(all.slice(0, i + 1)).find(li => li.textContent.trim().toLowerCase().startsWith(q)); if (n) go(all.indexOf(n)); }
 }
 function cpPlace() {
   const p = $("cpPop"), b = cpSel && cpSel._cp; if (!b) return;
@@ -2479,7 +2498,7 @@ function cpPlace() {
 function cpOpen(sel) {
   if (cpSel) cpClose(false);
   const p = cpPop(); cpSel = sel; sel._cp.setAttribute("aria-expanded", "true"); sel._cp.setAttribute("aria-controls", "cpList");
-  p.hidden = false; cpFill(); cpPlace(); $("cpList").focus();
+  $("cpQ").value = ""; p.hidden = false; cpFill(); cpPlace(); $("cpQ").focus();
 }
 function cpClose(focus) {
   const sel = cpSel; if (!sel) return; cpSel = null; $("cpPop").hidden = true;
