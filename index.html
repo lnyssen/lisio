@@ -626,7 +626,7 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .ts-list{gap:0!important;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
 .ts-row{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--hair)}
 .ts-row:first-child{border-top:0}
-.ts-side{display:flex;flex-direction:row;gap:12px;align-items:center;padding:10px 16px;background:var(--surface);min-width:0}.ts-side .ts-meta{flex:1;min-width:0}.ts-ok{font-size:13px;font-weight:700;color:var(--ok)}
+.ts-side{display:flex;flex-direction:row;gap:12px;align-items:center;padding:10px 16px;background:var(--surface);min-width:0}.ts-side .ts-meta{flex:1;min-width:0}.ts-col{flex:0 0 210px;display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--muted);min-width:0}.ts-col .cp-btn{font-size:13px;min-height:40px}.ts-ok{font-size:13px;font-weight:700;color:var(--ok)}
 .ts-spec{padding:20px 24px;min-width:0;overflow-wrap:break-word;hyphens:auto;display:flex;align-items:center;transition:font-size .25s ease}
 @media (prefers-reduced-motion:reduce){.ts-spec{transition:none}}
 .ts-meta{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
@@ -655,7 +655,7 @@ table.flu td.mono{font-family:var(--code);font-size:12.5px;word-break:break-word
 .ts-in input,.ts-in select{width:100%;padding:6px 8px}
 #tsFmt{max-width:100%}
 .ts-warn{font-size:13px;color:var(--muted)}
-@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-side{flex-direction:row;align-items:flex-start;padding:12px}.ts-side .ts-meta{flex:1;min-width:0}.ts-adj{flex:none}.ts-px{width:auto;font-size:18px}.ts-adj{margin:0}.ts-slide{top:60px}.ts-in{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-side{flex-direction:row;flex-wrap:wrap;align-items:flex-start;padding:12px}.ts-col{flex:1 1 100%;order:3}.ts-col .cp-btn{min-height:44px}.ts-side .ts-meta{flex:1;min-width:0}.ts-adj{flex:none}.ts-px{width:auto;font-size:18px}.ts-adj{margin:0}.ts-slide{top:60px}.ts-in{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .guide p,.guide li{max-width:78ch;line-height:1.55}
 .guide ul,.guide ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 .guide h2{margin-top:6px}
@@ -3137,8 +3137,10 @@ function tsColorOptions(cur) {
   if (!found) h = `<option value="${esc(cur)}">Personnalisée ${esc(cur)}</option>` + h;
   return h;
 }
+// Couleur propre d’un style (facultative) : sinon le texte principal.
+const tsInk = st => normHex(st.color) || S.ts.fg;
 function tsVerdict(st) {
-  const lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max), r = ratio(S.ts.fg, S.ts.bg), large = largeText(lo, st.weight), need = needRatio(S.level, large), ok = r >= need, warn = [];
+  const lo = Math.min(st.min, st.max), hi = Math.max(st.min, st.max), r = ratio(tsInk(st), S.ts.bg), large = largeText(lo, st.weight), need = needRatio(S.level, large), ok = r >= need, warn = [];
   if (TS_PARA.includes(st.id) && st.lh < 1.5) warn.push("Interligne sous 1,5 : à éviter pour les paragraphes (1.4.8, AAA)");
   if (lo < 12) warn.push("Moins de 12 px sur mobile : difficile à lire");
   if (hi > 2.5 * lo) warn.push("Desktop plus de 2,5 fois plus grand que mobile : le zoom à 200 % risque de ne pas suffire (1.4.4)");
@@ -3149,7 +3151,7 @@ const tsVw = () => { if (!tsVwTouched && matchMedia("(max-width:760px)").matches
 const bpName = w => { const b = BP.find(x => x.w === w); return b ? b.label : w < 768 ? "entre Mobile et Tablet" : w < 1024 ? "entre Tablet et Desktop" : "entre Desktop et XL"; };
 function tsSpecimen(st) {
   const d = tsDef(st.id), f = tsFont(st), w = tsVw();
-  return `font-family:${esc(fontCss(f))};font-size:${r1(sizeAt(st, w))}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;${d.italic ? "font-style:italic;" : ""}${d.upper ? "text-transform:uppercase;" : ""}color:${S.ts.fg};background:${S.ts.bg}`;
+  return `font-family:${esc(fontCss(f))};font-size:${r1(sizeAt(st, w))}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;${d.italic ? "font-style:italic;" : ""}${d.upper ? "text-transform:uppercase;" : ""}color:${tsInk(st)};background:${S.ts.bg}`;
 }
 const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste consultable douze mois dans votre espace.", button: "Télécharger le PDF", label: "Dossier thématique" };
 const tsSample = d => d.id === "button" ? TS_SAMPLE.button : d.id === "label" ? TS_SAMPLE.label : TS_SAMPLE[d.role];
@@ -3183,14 +3185,26 @@ function renderStyles() {
   $("tsSummary").textContent = `Texte sur fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, WCAG ${S.version} ${S.level}. Verdict calculé sur la taille mobile.`;
   $("tsList").innerHTML = T.styles.map(st => {
     const d = tsDef(st.id), ws = fontWeights(tsFont(st));
-    return `<div class="ts-row" data-id="${st.id}"><div class="ts-side"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><button type="button" class="ts-adj adv" aria-expanded="false" aria-controls="tsi-${st.id}">Ajuster</button></div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${tsSample(d)}</div>
+    return `<div class="ts-row" data-id="${st.id}"><div class="ts-side"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><label class="ts-col"><span>Couleur</span><select data-k="color" aria-label="Couleur du style ${esc(d.name)}">${tsColorOptions(tsInk(st))}</select></label><button type="button" class="ts-adj adv" aria-expanded="false" aria-controls="tsi-${st.id}">Ajuster</button></div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${tsSample(d)}</div>
       <div class="ts-in" id="tsi-${st.id}" hidden><label>Desktop<input type="number" data-k="max" min="8" max="200" step="1" value="${st.max}"></label><label>Mobile<input type="number" data-k="min" min="8" max="200" step="1" value="${st.min}"></label><label>Graisse<select data-k="weight">${ws.map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join("")}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
   }).join("");
+  T.styles.forEach(st => tsColEnhance(st));
   renderFluidTable(); renderTsExport(); sysTouch();
   renderJourney(curView());
 }
+function tsColEnhance(st) {
+  const sel = document.querySelector(`#tsList .ts-row[data-id="${st.id}"] select[data-k=color]`); if (!sel) return;
+  sel.value = tsInk(st); Object.assign(sel.dataset, { pair: S.ts.bg, pairname: "le fond (" + hexName(S.ts.bg) + ")", need: tsVerdict(st).need });
+  cpEnhance(sel, "tsc-" + st.id);
+}
+$("tsList").addEventListener("change", e => {
+  if (e.target.dataset.k !== "color") return;
+  const row = e.target.closest(".ts-row"), st = row && S.ts.styles.find(s => s.id === row.dataset.id), v = normHex(e.target.value); if (!st || !v) return;
+  if (v === normHex(S.ts.fg)) delete st.color; else st.color = v;
+  save(); $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); tsColEnhance(st); renderTsExport(); sysDirty = true;
+});
 $("tsList").addEventListener("input", e => {
-  const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || !row) return;
+  const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || k === "color" || !row) return;
   const st = S.ts.styles.find(s => s.id === row.dataset.id), v = parseFloat(String(e.target.value).replace(",", ".")); if (!st || !isFinite(v)) return;
   st[k] = k === "min" || k === "max" ? Math.max(1, Math.round(v)) : v; save();
   $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); renderFluidTable(); renderTsExport(); sysDirty = true;
@@ -3418,7 +3432,7 @@ function tsCss(full) {
   c += "}\n";
   const SEL = { display: ".display", body: "body, p, .body", "body-strong": "strong, .body-strong", "body-italic": "em, .body-italic", small: "small, .small", caption: "figcaption, .caption", label: ".label", button: "button, .button" };
   S.ts.styles.forEach(st => { const d = tsDef(st.id), sel = `${SEL[d.id] || `${d.id}, .${d.id}`}, .t-${st.id}`;
-    c += `\n${sel} {\n  font-family: var(--font-${d.role === "head" ? "heading" : "body"});\n  font-size: var(--font-size-${st.id});\n  font-weight: ${st.weight};\n  line-height: var(--line-height-${st.id});\n  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n${d.italic ? "  font-style: italic;\n" : ""}${d.upper ? "  text-transform: uppercase;\n" : ""}${d.id === "label" || d.id === "button" ? "  text-box: trim-both cap alphabetic; /* vertical trim, progressive enhancement */\n" : ""}}\n`; });
+    c += `\n${sel} {\n  font-family: var(--font-${d.role === "head" ? "heading" : "body"});\n  font-size: var(--font-size-${st.id});\n  font-weight: ${st.weight};\n  line-height: var(--line-height-${st.id});\n${st.color ? `  color: ${cssRef(normHex(st.color))};\n` : ""}  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n${d.italic ? "  font-style: italic;\n" : ""}${d.upper ? "  text-transform: uppercase;\n" : ""}${d.id === "label" || d.id === "button" ? "  text-box: trim-both cap alphabetic; /* vertical trim, progressive enhancement */\n" : ""}}\n`; });
   c += `
 /* ===== 5. Accessibility rules ===== */
 body {
@@ -4509,7 +4523,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "9bd7b23";
+const LISIO_BUILD = "152491d";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
