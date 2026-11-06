@@ -37,6 +37,7 @@ async function lisioFontKit() {
   };
   return { byFam, pickStyle };
 }
+const lisioFontMsg = f => `Police « ${f} » absente de Figma : Inter à la place. Installez-la, puis relancez l’import.`;
 function lisioFamily(val, byFam) { const list = Array.isArray(val) ? val : [val], fam = list.find(f => byFam[f]); return { fam: fam || "Inter", missing: fam ? null : list[0] }; }
 // Text styles: one per style and breakpoint ("H1/Mobile"), size and line height in px
 function lisioTextSpecs(data, famName, kit) {
@@ -90,7 +91,7 @@ async function lisioPlan(data, opts) {
   const tokens = lisioWalk(data, [], []).filter(t => t.path[0] !== "typography"), specs = [], idx = {}, famName = {};
   for (const t of tokens) { const tg = lisioVarTarget(t); if (tg) { specs.push({ t, tg }); if (!tg.perBp) idx[`{${t.path.join(".")}}`] = `${tg.colName}/${tg.name}`; } }
   const newVal = (tg, val) => typeof val === "string" && val.startsWith("{") ? "→ " + (idx[val] || "variable introuvable") : tg.type === "COLOR" ? lisioToHex(lisioHex(val)) : tg.type === "FLOAT" ? Math.round((typeof val === "object" ? val.value : val) * 1e4) / 1e4 : val;
-  for (const { t, tg } of specs) if (t.type === "fontFamily") { const f = lisioFamily(t.value, kit.byFam); famName[`{${t.path.join(".")}}`] = f.fam; if (f.missing && !plan.warnings.some(w => w.includes(f.missing))) plan.warnings.push(`Police « ${f.missing} » absente de Figma : Inter à la place. Installez-la, puis relancez l’import.`); }
+  for (const { t, tg } of specs) if (t.type === "fontFamily") { const f = lisioFamily(t.value, kit.byFam); famName[`{${t.path.join(".")}}`] = f.fam; if (f.missing && !plan.warnings.some(w => w.includes(f.missing))) plan.warnings.push(lisioFontMsg(f.missing)); }
   // Collections and modes
   const modesSeen = new Set(), addMode = (c, name) => { const k = `${c.name} : ${name}`; if (!modesSeen.has(k)) { modesSeen.add(k); plan.add.push({ kind: "mode", name: k }); } };
   const colsSeen = new Set(), useCol = name => { const c = colBy(name); if (!c && !colsSeen.has(name)) { colsSeen.add(name); plan.add.push({ kind: "collection", name }); } return c; };
@@ -185,12 +186,12 @@ async function lisioImport(data, opts) {
     }
     for (const bp of LISIO_BP) {
       let m = col.modes.find(m => m.name === bp.name) || (bp === LISIO_BP[0] ? col.modes[0] : null);
-      if (!m) { try { col.addMode(bp.name); m = col.modes.find(m => m.name === bp.name); } catch (e) { report.warnings.push(`${col.name}: mode "${bp.name}" could not be added (${e.message}). ${what}`); } }
+      if (!m) { try { col.addMode(bp.name); m = col.modes.find(m => m.name === bp.name); } catch (e) { report.warnings.push(`${col.name} : le mode « ${bp.name} » ne peut pas être ajouté (Figma : ${e.message}). ${what}`); } }
       if (m) out[bp.id] = m.modeId;
     }
     return out;
   };
-  const cTypo = getCol("Typography"), modes = bpModes(cTypo, "Breakpoint values stay in the text styles.");
+  const cTypo = getCol("Typography"), modes = bpModes(cTypo, "Les valeurs par écran restent dans les styles de texte.");
   let cLay = null, layModes = {};
   const setAll = (v, col, val) => col.modes.forEach(m => v.setValueForMode(m.modeId, val));
   // 1. Variables: colors, semantic, dimensions, font families
@@ -198,7 +199,7 @@ async function lisioImport(data, opts) {
   for (const t of tokens) {
     const tg = lisioVarTarget(t); if (!tg) continue;
     const perBp = tg.perBp;
-    if (perBp && !cLay) { cLay = getCol("Layout"); layModes = bpModes(cLay, "Only the first breakpoint value is kept."); }
+    if (perBp && !cLay) { cLay = getCol("Layout"); layModes = bpModes(cLay, "Seule la valeur du premier écran est gardée."); }
     const col = perBp ? cLay : getCol(tg.colName), name = tg.name;
     const v = getVar(col, name, tg.type); if (!v) continue;
     v.scopes = t.ext.scopes || LISIO_SCOPES[t.path[0]] || ["ALL_SCOPES"];
@@ -209,12 +210,12 @@ async function lisioImport(data, opts) {
   }
   for (const { v, t, col } of Object.values(map)) {
     const val = t.value;
-    if (typeof val === "string" && val.startsWith("{")) { const ref = map[val]; if (ref) { setAll(v, col, figma.variables.createVariableAlias(ref.v)); continue; } report.warnings.push(`Missing alias: ${val}`); continue; }
+    if (typeof val === "string" && val.startsWith("{")) { const ref = map[val]; if (ref) { setAll(v, col, figma.variables.createVariableAlias(ref.v)); continue; } report.warnings.push(`Alias introuvable : ${val}`); continue; }
     if (v.resolvedType === "COLOR") setAll(v, col, lisioHex(val));
     else if (v.resolvedType === "FLOAT") setAll(v, col, typeof val === "object" ? val.value : val);
     else if (t.type === "fontFamily") {
       const f = lisioFamily(val, byFam);
-      if (f.missing) report.warnings.push(`Font "${f.missing}" is not available in Figma: Inter used instead. Install it and run the import again.`);
+      if (f.missing && !report.warnings.includes(lisioFontMsg(f.missing))) report.warnings.push(lisioFontMsg(f.missing));
       famName[`{${t.path.join(".")}}`] = f.fam; setAll(v, col, f.fam);
     }
   }
@@ -233,7 +234,7 @@ async function lisioImport(data, opts) {
   // 1b. Extra modes (semantic roles: Light and Dark). An existing "Default" mode keeps its name unless renaming is allowed.
   const modeId = (col, name) => {
     let m = col.modes.find(x => x.name === name);
-    if (!m) { try { col.addMode(name); m = col.modes.find(x => x.name === name); } catch (e) { report.warnings.push(`${col.name}: mode "${name}" could not be added (${e.message}). Only the light values were imported.`); return null; } }
+    if (!m) { try { col.addMode(name); m = col.modes.find(x => x.name === name); } catch (e) { report.warnings.push(`${col.name} : le mode « ${name} » ne peut pas être ajouté (Figma : ${e.message}). Seules les valeurs claires (Light) sont importées.`); return null; } }
     return m.modeId;
   };
   const keptDefault = new Set();
@@ -245,7 +246,7 @@ async function lisioImport(data, opts) {
         else if (!keptDefault.has(col.id)) { keptDefault.add(col.id); report.warnings.push(`${col.name} : le mode « Default » garde son nom et porte les valeurs claires (Light).`); }
       }
       const id = modeId(col, lisioCap(name)); if (!id) continue;
-      if (typeof val === "string" && val.startsWith("{")) { const ref = map[val]; if (ref) v.setValueForMode(id, figma.variables.createVariableAlias(ref.v)); else report.warnings.push(`Missing alias in ${name} mode: ${val}`); }
+      if (typeof val === "string" && val.startsWith("{")) { const ref = map[val]; if (ref) v.setValueForMode(id, figma.variables.createVariableAlias(ref.v)); else report.warnings.push(`Alias introuvable en mode ${name} : ${val}`); }
       else if (v.resolvedType === "COLOR" && typeof val === "string") v.setValueForMode(id, lisioHex(val));
     }
     if (t.ext.darkDescription) v.description = `${t.desc || ""}\nDark: ${t.ext.darkDescription}`;
@@ -254,7 +255,7 @@ async function lisioImport(data, opts) {
   const styles = await figma.getLocalTextStylesAsync(), made = [];
   for (const sp of lisioTextSpecs(data, famName, kit)) {
     const { id, tok, t, ext, en, fl, bps } = sp, fontName = { family: sp.fam, style: sp.style };
-    if (ext.italic && !/Italic/.test(sp.style)) report.warnings.push(`${en}: no italic style found for ${sp.fam}.`);
+    if (ext.italic && !/Italic/.test(sp.style)) report.warnings.push(`${en} : aucun style italique pour ${sp.fam}.`);
     await figma.loadFontAsync(fontName);
     const vSize = getVar(cTypo, `font-size/${id}`, "FLOAT"), vLh = getVar(cTypo, `line-height/${id}`, "FLOAT");
     if (vSize) { vSize.scopes = ["FONT_SIZE"]; report.variables++; } if (vLh) { vLh.scopes = ["LINE_HEIGHT"]; report.variables++; }
@@ -267,7 +268,7 @@ async function lisioImport(data, opts) {
       if (!s) { s = figma.createTextStyle(); styles.push(s); }
       s.name = name; s.fontName = fontName; s.fontSize = p.fontSize; s.lineHeight = p.lineHeight;
       s.letterSpacing = p.letterSpacing; s.textCase = p.textCase; s.description = p.description;
-      try { const fv = map[t.fontFamily]; if (fv) s.setBoundVariable("fontFamily", fv.v); } catch (e) { report.warnings.push(`Could not bind ${name} to its font variable: ${e.message}`); }
+      try { const fv = map[t.fontFamily]; if (fv) s.setBoundVariable("fontFamily", fv.v); } catch (e) { report.warnings.push(`${name} : le style n’a pas pu être relié à sa variable de police (Figma : ${e.message}).`); }
       made.push({ id, en, bp: bp.id, s, ext }); report.styles++;
     }
   }
@@ -304,8 +305,8 @@ async function lisioBoards(data, map, made, cTypo, modes, famName, allowDelete) 
   // Semantic colors
   if (data.semantic) {
     const sem = board("Semantic colors"); ids.push(sem.id);
-    txt("Semantic colors", 36, false, sem);
-    txt("Collection Semantic · each role points to a palette step and states its WCAG contrast", 14, false, sem, true);
+    txt("Couleurs par rôle", 36, false, sem);
+    txt("Collection Semantic · chaque rôle pointe vers une nuance de la palette et donne son contraste WCAG", 14, false, sem, true);
     for (const [g, items] of Object.entries(data.semantic)) {
       if (g.startsWith("$") || !items || typeof items !== "object") continue;
       const row = lisioAuto("HORIZONTAL", { name: g, itemSpacing: 16 }); txt(g.charAt(0).toUpperCase() + g.slice(1), 16, true, row, false, 112);
@@ -317,10 +318,10 @@ async function lisioBoards(data, map, made, cTypo, modes, famName, allowDelete) 
   // Fluid typography
   const ty = board("Fluid typography"); ids.push(ty.id);
   const head = famName["{font.family.heading}"] || "Inter", body = famName["{font.family.body}"] || "Inter";
-  txt("Fluid typography", 36, false, ty);
-  txt(`H1–H6 = document outline (one H1 per page) · Display = visual style · ${head} (headings) · ${body} (body) · clamp() 390 → 1440 px`, 14, false, ty, true);
+  txt("Typographie fluide", 36, false, ty);
+  txt(`H1 à H6 = plan du document (un seul H1 par page) · Display = style visuel · ${head} (titres) · ${body} (texte) · clamp() 390 → 1440 px`, 14, false, ty, true);
   const cards = lisioAuto("HORIZONTAL", { name: "Breakpoints", itemSpacing: 32 }); cards.counterAxisAlignItems = "MIN"; ty.appendChild(cards);
-  const SAMPLE = { head: "Accessible by design", body: "Good contrast and a calm rhythm help everyone read, on every screen.", label: "Design system", button: "Get started" };
+  const SAMPLE = { head: "Lisible sur chaque écran", body: "Un bon contraste et un rythme calme aident chacun à lire, sur tous les écrans.", label: "Design system", button: "Commencer" };
   for (const bp of LISIO_BP) {
     const card = lisioAuto("VERTICAL", { name: `${bp.name} · ${bp.width}`, itemSpacing: 14, paddingTop: 32, paddingBottom: 32, paddingLeft: 32, paddingRight: 32 });
     card.counterAxisSizingMode = "FIXED"; card.resize(bp.width, 100); card.primaryAxisSizingMode = "AUTO";
@@ -339,7 +340,7 @@ async function lisioBoards(data, map, made, cTypo, modes, famName, allowDelete) 
     }
   }
   // clamp() table
-  txt("clamp() values · 390 → 1440 px", 20, false, ty);
+  txt("Valeurs clamp() · 390 → 1440 px", 20, false, ty);
   const W = [140, 110, 110, 110, 120, 360, 100], tbl = lisioAuto("VERTICAL", { name: "clamp() table", itemSpacing: 0 }); ty.appendChild(tbl);
   const trow = (cells, bold) => { const r = lisioAuto("HORIZONTAL", { itemSpacing: 0, paddingTop: 8, paddingBottom: 8 }); r.strokes = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: .08 }]; r.strokeBottomWeight = 1; r.strokeTopWeight = 0; r.strokeLeftWeight = 0; r.strokeRightWeight = 0; cells.forEach((c, i) => txt(c, 13, bold, r, false, W[i])); tbl.appendChild(r); };
   trow(["Style"].concat(LISIO_BP.map(b => `${b.name} ${b.width}`), ["CSS font-size", "Line height"]), true);

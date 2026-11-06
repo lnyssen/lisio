@@ -134,3 +134,24 @@ test("audit : grand texte, seuil et ratio affiché comme dans Lisio", async () =
     assert.ok(page.children.includes(fr));
   }
 });
+
+// Messages du plugin : en français, typographie française (espace insécable), une fois par cause.
+const OLD_EN = /could not be added|Missing alias|is not available|no italic style|Could not bind|Inter used instead|Accessible by design|Good contrast and a calm|document outline|each role points|clamp\(\) values|Get started/;
+const frOk = w => !/ [:;!?»]|« |\b(could|not|available|missing|found|bind|used|instead|only|the|and|values)\b/i.test(w);
+test("messages : en français, sans doublon, avec la typographie française", async () => {
+  assert.ok(!OLD_EN.test(readFileSync(CODE, "utf8")), `texte anglais restant : ${(readFileSync(CODE, "utf8").match(OLD_EN) || [])[0]}`);
+  { const { plan, imp } = setup(), d = dsJson();
+    const pl = await plan(d, { board: true }), r = await imp(d, { board: true });
+    assert.equal(r.warnings.length, 1, r.warnings.join(" | "));
+    assert.match(r.warnings[0], /^Police «\u00a0Figtree\u00a0» absente de Figma\u00a0: Inter à la place/); assert.equal(r.warnings[0], pl.warnings[0], "l'aperçu et le bilan disent la même chose");
+    for (const w of [...r.warnings, ...pl.warnings]) assert.ok(frOk(w), w); }
+  { const { imp } = setup({ maxModes: 1 }), r = await imp(dsJson(), { board: false });
+    const modes = r.warnings.filter(w => /mode/.test(w));
+    assert.ok(modes.length >= 2 && modes.every(w => /ne peut pas être ajouté/.test(w)), r.warnings.join(" | "));
+    for (const w of r.warnings) assert.ok(frOk(w), w); }
+  { const { imp } = setup(), d = dsJson(); let hit = null;
+    const walk = o => { for (const [k, v] of Object.entries(o)) { if (hit) return; if (v && typeof v === "object") { if (typeof v.$value === "string" && v.$value.startsWith("{") && !k.startsWith("$")) { v.$value = "{color.inexistante.main}"; hit = k; return; } walk(v); } } };
+    walk(d.semantic); assert.ok(hit, "aucun alias trouvé dans l'exemple");
+    const r = await imp(d, { board: false }), w = r.warnings.find(x => /inexistante/.test(x));
+    assert.ok(w && /^Alias introuvable/.test(w) && frOk(w), r.warnings.join(" | ")); }
+});
