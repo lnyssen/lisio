@@ -805,7 +805,35 @@ body{background:var(--bg)}
 @media (max-width:479px){.appr{gap:4px}.appr .normchip{min-width:0;padding-left:10px}}
 @media (max-width:389px){.appr .normchip{padding-left:8px}.appr #normV{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}}
 /* mobile : barre du bas en tuile, 4 onglets et « Plus » */
-.more-b,.more-sheet{display:none}
+.more-b,.sheet-grab{display:none}.dk-gear{display:none}
+@media (max-width:760px){
+  .sheet-grab{display:block;flex:none;width:44px;height:5px;border-radius:3px;background:var(--field);opacity:.55;margin:0 auto 6px}
+  .more-sheet[open],.prj-dlg[open],.pop,.qpop{transition:translate .2s ease}.dragging{transition:none!important}
+  dialog.more-sheet .mh,dialog.more-sheet .sheet-grab,.prj-dlg .pd-h,.prj-dlg .sheet-grab,.pop>h3,.pop>.sheet-grab,.qpop-h,.qpop>.sheet-grab{touch-action:none}
+  dialog.more-sheet[open]{max-height:none;overflow:visible;padding-top:8px;gap:6px;touch-action:none}
+  dialog.more-sheet .mh{padding:0 4px 2px}
+  dialog.more-sheet .mg{gap:6px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  dialog.more-sheet .mi{flex-direction:row;align-items:center;gap:10px;min-height:52px;padding:10px 12px;border-radius:16px}
+  dialog.more-sheet .mi small{display:none}
+  dialog.more-sheet .mi.acc{grid-column:1/-1}
+  dialog.more-sheet .mmode .seg{flex-wrap:nowrap}dialog.more-sheet .mmode{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 6px;font-weight:600}
+  dialog.more-sheet .mh3{margin:4px 6px 0;font-size:15px}
+  dialog.more-sheet .mdoc{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:4px}
+  dialog.more-sheet .mdoc a{grid-template-columns:20px minmax(0,1fr) auto;column-gap:8px;padding:8px;min-height:44px;font-size:15px;line-height:1.25}
+  dialog.more-sheet .mdoc a small{display:none}dialog.more-sheet .mdoc a .hi{grid-row:auto;width:20px;height:20px}dialog.more-sheet .mdoc a .ext{grid-row:auto}
+  .prj-dlg{position:fixed;inset:auto 0 0 0;margin:0;width:auto;max-width:none;max-height:92dvh;overflow:auto;border-radius:28px 28px 0 0;padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+  .prj-dlg .pd-h{position:sticky;top:-8px;z-index:2;background:var(--surface);padding:4px 0}
+  .pop{top:auto;bottom:0;left:0;right:0;transform:none;width:auto;max-height:88dvh;border-radius:24px 24px 0 0;padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+  .qpop{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;border-radius:24px 24px 0 0;padding:8px 18px calc(20px + env(safe-area-inset-bottom,0px))}
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea{font-size:16px!important}
+  .dock{position:static!important;margin-top:10px}
+  .dock-in{flex-wrap:nowrap;max-width:100%;padding:4px}.dock-in .stepper .sv{min-width:44px}.dock-in .dk{padding:6px}
+  .dk-gear{display:block;width:22px;height:22px}#dMore .dk-lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .dk .k{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.dk .k small{display:inline}
+}
+@media (max-width:359px){.dock-in{flex-wrap:wrap}
+}
+.more-sheet{display:none}
 @media (max-width:760px){
   :root{--navh:calc(72px + env(safe-area-inset-bottom,0px))}
   .appbar{height:60px;border-bottom:0!important;margin-bottom:12px}
@@ -1217,7 +1245,7 @@ body{background:var(--bg)}
         <button class="dk" id="swap" type="button" aria-label="Inverser texte et fond">⇄</button>
         <button class="dk" id="dBg" type="button" data-pop="popColor" data-mode="bg" aria-expanded="false" aria-controls="popColor"><span class="sw" id="dBgSw"></span><span class="k"><small>Fond</small><span class="mono" id="dBgHex"></span></span></button>
         <span class="dk-sep" aria-hidden="true"></span>
-        <button class="dk" id="dMore" type="button" data-pop="popMore" aria-expanded="false" aria-controls="popMore">Réglages</button>
+        <button class="dk" id="dMore" type="button" data-pop="popMore" aria-expanded="false" aria-controls="popMore"><svg class="dk-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span class="dk-lbl">Réglages</span></button>
 
       </div>
     </div>
@@ -1575,23 +1603,24 @@ body{background:var(--bg)}
   </main>
   <footer class="appfoot"><p><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><p>Sans compte : vos projets restent dans ce navigateur, sauf ceux que vous rangez dans l’espace d’équipe.</p></footer>
 </div>
-<div class="help-pop" id="helpPop" role="region" aria-labelledby="helpH" hidden><h2 id="helpH">Aide et formation</h2><div class="mode-row"><span id="modeL">Affichage</span><div class="seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div><ul>
+<div class="help-pop" id="helpPop" role="region" aria-labelledby="helpH" hidden><h2 id="helpH">Aide et formation</h2><div class="mode-row"><span id="modeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div><ul>
 <li><a href="#sources" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><b>Guide de Lisio</b><small>Chaque page expliquée, l’export vers Figma, les sources</small></a></li>
 <li><a href="#formation" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg><b>S’entraîner</b><small>Dix questions avec la réponse expliquée</small></a></li>
 <li><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><b>Guide de formation</b><small>Le support complet pour l’équipe</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 <li><a href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M12 16.5V20M8.5 20h7"/></svg><b>Slides</b><small>Pour animer une session</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 <li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5z"/><path d="M9 12l2 2 4-4"/></svg><b>WCAG 2.2 (W3C)</b><small>Le texte officiel des règles</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 </ul></div>
-<dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
+<dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
 <div class="pd-cur"><label class="ex-name">Projet en cours<input type="text" id="prjCurName" maxlength="60"></label><label class="ex-name">Page Figma du projet<input type="url" id="prjFigU" inputmode="url" placeholder="https://www.figma.com/design/…" aria-describedby="prjFigE"></label><p class="note" id="prjFigE">Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier.</p><p class="note" id="prjCurMeta"></p>
 <div class="row"><button class="btn primary" type="button" id="prjNew">Nouveau projet</button><button class="btn" type="button" id="prjDup">Dupliquer</button><button class="btn" type="button" id="prjShare">Copier le lien de partage</button><button class="btn" type="button" id="prjImp">Importer un fichier</button><button class="btn" type="button" id="prjExp">Télécharger le fichier</button></div></div>
 <h3 id="prjTH">Démarrer depuis un modèle</h3><p class="note" id="prjTplNote"></p><ul class="pd-list pd-tpl" id="prjTpl" aria-labelledby="prjTH"></ul>
 <h3 id="prjLH">Autres projets</h3><ul class="pd-list" id="prjList" aria-labelledby="prjLH"></ul></dialog>
-<dialog class="more-sheet" id="moreSheet" aria-labelledby="moreH"><div class="mh"><h2 id="moreH">Plus de sections</h2><button type="button" class="mx" id="moreX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div><div class="mg" id="moreG"></div></dialog>
+<dialog class="more-sheet" id="moreSheet" aria-labelledby="moreH"><span class="sheet-grab" aria-hidden="true"></span><div class="mh"><h2 id="moreH">Plus de sections</h2><button type="button" class="mx" id="moreX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div><div class="mg" id="moreG"></div></dialog>
 <div class="side-tip" id="sideTip" role="tooltip" hidden></div>
-<div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
+<div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><span class="sheet-grab" aria-hidden="true"></span><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
 <div class="pop" id="popFont" hidden role="dialog" aria-modal="true" aria-label="Police" tabindex="-1">
+          <span class="sheet-grab" aria-hidden="true"></span>
           <h3>Police <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
           <div class="seg" role="group" aria-label="Source">
             <button type="button" data-src="google" aria-pressed="true">Google Fonts</button>
@@ -1620,6 +1649,7 @@ body{background:var(--bg)}
         </div>
 
         <div class="pop" id="popColor" hidden role="dialog" aria-modal="true" aria-labelledby="popColorTitle" tabindex="-1">
+          <span class="sheet-grab" aria-hidden="true"></span>
           <h3><span id="popColorTitle">Couleur du texte</span> <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
           <div class="row" style="flex-wrap:nowrap">
             <input type="color" id="pcPicker" aria-label="Sélecteur de couleur">
@@ -1630,6 +1660,7 @@ body{background:var(--bg)}
         </div>
 
         <div class="pop" id="popMore" hidden role="dialog" aria-modal="true" aria-label="Réglages" tabindex="-1">
+          <span class="sheet-grab" aria-hidden="true"></span>
           <h3>Réglages <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
           <div class="sliders">
             <div class="sl"><div class="top"><label for="sSize">Taille</label><b id="vSize"></b></div><input type="range" id="sSize" min="10" max="72" step="0.5"></div>
@@ -1642,6 +1673,7 @@ body{background:var(--bg)}
           <button class="btn" id="spacingTest" type="button" aria-pressed="false">Tester l’espacement imposé (1.4.12)</button>
         </div>
 <div class="pop" id="popNorm" hidden role="dialog" aria-modal="true" aria-label="Norme de référence" tabindex="-1">
+          <span class="sheet-grab" aria-hidden="true"></span>
   <h3>Norme de référence <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
   <div class="normopt"><span class="lbl">Version des WCAG</span><div class="seg" role="group" aria-label="Version des WCAG" id="verSeg"><button type="button" data-v="2.0">2.0</button><button type="button" data-v="2.1">2.1</button><button type="button" data-v="2.2">2.2</button></div>
   <p class="small muted">2.1 ajoute le contraste des composants (1.4.11) et l’espacement du texte (1.4.12). 2.2 ajoute l’apparence du focus (2.4.13, AAA).</p></div>
@@ -1762,9 +1794,10 @@ const save = () => { store.set("state", S); snapPush(); };
 let uiMode = (() => { try { const m = localStorage.getItem("lisio-mode"); if (m === "ess" || m === "adv") return m; return localStorage.getItem("lisio-welcome") === "1" ? "adv" : "ess"; } catch (e) { return "adv"; } })();
 document.documentElement.classList.toggle("mode-ess", uiMode === "ess");
 function setMode(m, say) { uiMode = m; try { localStorage.setItem("lisio-mode", m); } catch (e) {} document.documentElement.classList.toggle("mode-ess", m === "ess");
-  document.querySelectorAll("#modeSeg [data-mode]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+  document.querySelectorAll(".mode-seg [data-mode]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
   if (say) toast(m === "ess" ? "Affichage Essentiel : réglages fins masqués" : "Affichage Avancé : tous les réglages affichés"); }
-document.addEventListener("click", e => { const b = e.target.closest("[data-mode]"); if (b) setMode(b.dataset.mode, true); });
+// Seuls ess et adv changent l’affichage : data-mode sert aussi aux pastilles de couleur (fg, bg) de la page Polices.
+document.addEventListener("click", e => { const b = e.target.closest('[data-mode="ess"],[data-mode="adv"]'); if (b) setMode(b.dataset.mode, true); });
 const UNDO = [], REDO = []; let snapPrev = JSON.stringify({ S, palette }), snapT = 0, undoing = false;
 function snapPush() {
   sumSoon();
@@ -3751,12 +3784,30 @@ function moreRender() { const v = curView(), cur = n => n === v ? ' aria-current
     + `<button type="button" class="mi" data-prj-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>Projets<small>${esc(S.projectName || "")}</small></button>`
     + (figmaUrlOk(S.figma || "") ? `<a class="mi" href="${esc(S.figma)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg>Page Figma<small>Nouvel onglet</small></a>` : "")
     + `<a class="mi acc" href="#exporter"${cur("exporter")}>${moreIc.exporter}Exporter<small>Pour Figma et le code</small></a>`
+    + `<div class="mode-row mmode"><span id="mModeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="mModeL"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div></div>`
     + `<h3 class="mh3">Aide et formation</h3><ul class="mdoc">${[...$("helpPop").querySelectorAll("a")].map(a => `<li>${a.outerHTML.replace("data-help", (a.getAttribute("href") === "#" + v ? 'aria-current="page" ' : "") + "data-help")}</li>`).join("")}</ul>`; }
 function moreClose() { if (MORES.open) MORES.close(); }
 MOREB.addEventListener("click", () => { moreRender(); MORES.showModal(); MOREB.setAttribute("aria-expanded", "true"); });
 MORES.addEventListener("close", () => { MOREB.setAttribute("aria-expanded", "false"); MOREB.focus(); });
 MORES.addEventListener("click", e => { if (e.target === MORES) { moreClose(); return; } const g = e.target.closest("[data-go]"); if (g) { moreClose(); $("tab-" + g.dataset.go).click(); return; } if (e.target.closest("[data-prj-open]")) { moreClose(); setTimeout(() => $("prjB").click(), 0); return; } if (e.target.closest("a")) moreClose(); });
 $("moreX").addEventListener("click", moreClose);
+// Volets mobiles : glisser vers le bas pour fermer. Le bouton Fermer et Échap restent (2.5.1 : un geste n’est jamais le seul moyen).
+// Un geste franc (plus de 90 px, ou 30 px vite) ferme ; sinon le volet revient. Un geste ne déclenche pas le bouton sous le doigt.
+function sheetSwipe(el, close, hand) {
+  let y0 = null, dy = 0, t0 = 0, pid = null, moved = false;
+  el.addEventListener("pointerdown", e => { if (!MOBQ.matches || (e.pointerType === "mouse" && e.button !== 0)) return;
+    const onHand = !!e.target.closest(hand); if (!onHand && (el.scrollTop > 0 || e.target.closest("input,select,textarea,[contenteditable],.chipgrid,.fontlist,ul,ol,table"))) return;
+    if (!onHand && el.scrollHeight > el.clientHeight + 1) return;
+    y0 = e.clientY; dy = 0; t0 = Date.now(); pid = e.pointerId; moved = false; });
+  el.addEventListener("pointermove", e => { if (y0 == null || e.pointerId !== pid) return; dy = Math.max(0, e.clientY - y0);
+    if (dy > 8 && !moved) { moved = true; try { el.setPointerCapture(pid); } catch (x) {} el.classList.add("dragging"); }
+    if (moved) el.style.translate = `0 ${dy}px`; });
+  const end = e => { if (y0 == null) return; const v = dy / Math.max(1, Date.now() - t0), go = moved && (dy > 90 || (dy > 30 && v > 0.6));
+    y0 = null; el.classList.remove("dragging"); el.style.translate = ""; if (moved) { el.dataset.swiped = "1"; setTimeout(() => delete el.dataset.swiped, 0); } if (go) close(); };
+  el.addEventListener("pointerup", end); el.addEventListener("pointercancel", () => { y0 = null; el.classList.remove("dragging"); el.style.translate = ""; });
+  el.addEventListener("click", e => { if (el.dataset.swiped) { e.stopPropagation(); e.preventDefault(); } }, true);
+}
+sheetSwipe(MORES, moreClose, ".sheet-grab,.mh");
 MOBQ.addEventListener("change", () => { if (!MOBQ.matches) moreClose(); });
 MOBQ.addEventListener("change", () => tabInk(true));
 function tabInk(first) { const b = TABS.querySelector('button[aria-current="page"]'); crumbSet(b); const vis = b && b.offsetParent !== null, mq = matchMedia("(max-width:760px)").matches; inkTo(INK, vis ? b : null, first || !INK.classList.contains("on")); const mb = $("moreB"); if (mb) mb.classList.toggle("on", mq && !vis); if (mq && b && !vis) $("tab-matrice").tabIndex = 0; }
@@ -4093,6 +4144,9 @@ function prjRender() {
 }
 $("prjB").addEventListener("click", () => { prjRender(); $("prjDlg").showModal(); });
 $("prjX").addEventListener("click", () => $("prjDlg").close());
+sheetSwipe($("prjDlg"), () => $("prjDlg").close(), ".sheet-grab,.pd-h");
+POP_IDS.forEach(id => sheetSwipe($(id), () => closePops(true), ".sheet-grab,h3"));
+sheetSwipe($("qPop"), () => qClose(true), ".sheet-grab,.qpop-h");
 $("prjDlg").addEventListener("click", e => { if (e.target === $("prjDlg")) $("prjDlg").close(); });
 $("prjDlg").addEventListener("close", () => { const o = $("prjDlg").opener; ((o && o.offsetParent) ? o : $("prjB").offsetParent ? $("prjB") : $("moreB")).focus(); });
 document.addEventListener("click", e => { const o = e.target.closest("#railPrj,#prjB"); if (o) $("prjDlg").opener = o; }, true);
