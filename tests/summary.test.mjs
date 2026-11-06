@@ -2,6 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { projectSummary, SUM_STATUS } from "../src/core/summary.mjs";
+import { STATUS } from "../src/core/status.mjs";
 
 const base = { level: "AA", colors: 4, colorTokens: 120, loneColors: 0, twins: 0, rolesChecked: 30, roleFails: 0, fonts: ["Figtree", "Figtree"], styles: 12, styleFails: 0, styleWarns: 0, blocksOn: 11, blocksAll: 11, manualDone: 0, manualAll: 24, screens: 1, stepsDone: 2, stepsAll: 7 };
 const row = (s, id) => s.rows.find(r => r.id === id);
@@ -35,16 +36,21 @@ test("tout coché, aucun défaut : réussi partout, sans promettre la conformit�
   assert.deepEqual(s.counts, { fail: 0, check: 0, untested: 0 });
   assert.equal(row(s, "manual").status, "ok");
   const all = JSON.stringify(s);
-  assert.doesNotMatch(all, /conforme|certifi|100\s?%/i);
+  assert.doesNotMatch(all, /\bconforme\b(?! au test)|certifi|100\s?%/i);
   assert.match(row(s, "progress").value, /7 étapes sur 7/); assert.match(row(s, "progress").note, /pas (la|une) conformité/);
 });
 
 test("contrôles automatiques : réussis sur total, rôles et styles", () => {
   const s = projectSummary({ ...base, roleFails: 2, styleFails: 1 });
-  assert.match(row(s, "auto").value, /^39 réussis sur 42/);
+  assert.match(row(s, "auto").value, /^39 conformes au test sur 42/);
 });
 
 test("accord : 1 étape complétée, 2 étapes complétées", () => {
   assert.equal(row(projectSummary({ ...base, stepsDone: 1 }), "progress").value, "1 étape sur 7 complétée");
   assert.equal(row(projectSummary({ ...base, stepsDone: 2 }), "progress").value, "2 étapes sur 7 complétées");
+});
+
+test("le résumé parle avec les cinq statuts du blueprint (P0-3 bis)", () => {
+  assert.equal(SUM_STATUS.ok.word, STATUS.pass.word); assert.equal(SUM_STATUS.fail.word, STATUS.fail.word);
+  assert.equal(SUM_STATUS.check.word, STATUS.manual.word); assert.equal(SUM_STATUS.untested.word, STATUS.untested.word);
 });

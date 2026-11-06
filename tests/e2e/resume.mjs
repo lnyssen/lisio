@@ -27,7 +27,7 @@ const sum = p => p.evaluate(() => { const d = document.getElementById("sumBar");
   const s = d.querySelector("summary"), b = s.getBoundingClientRect();
   return { line: s.textContent.replace(/\s+/g, " ").trim(), h: b.height, open: d.open, rows, vis: !!d.getClientRects().length }; });
 const rowOf = (s, id) => (s.rows.find(r => r.id === id) || { text: "", st: "" });
-const WORDS = { ok: "Réussi", fail: "Échec", check: "À vérifier", untested: "Non testé" };
+const WORDS = { ok: "Conforme au test", fail: "Échec du test", check: "À vérifier manuellement", untested: "Non testé" };
 
 // 1. Présent et compact sur chaque page.
 { const p = await open("couleurs"); const bad = [];
@@ -60,7 +60,7 @@ const WORDS = { ok: "Réussi", fail: "Échec", check: "À vérifier", untested: 
   // 4. Chaque état a son mot (pas la couleur seule).
   const noWord = s4.rows.filter(r => r.st !== "info" && !r.text.includes(WORDS[r.st]));
   report(!noWord.length, "chaque ligne avec un état l'écrit en toutes lettres", JSON.stringify(noWord));
-  report(/pas la conformité/.test(rowOf(s4, "progress").text) && !/conforme|certifi|100\s?%/i.test(s4.rows.map(r => r.text).join(" ") + s4.line), "progression : configuration, pas conformité", rowOf(s4, "progress").text);
+  report(/pas la conformité/.test(rowOf(s4, "progress").text) && !/\bconformes?\b(?! au test)|certifi|100\s?%/i.test(s4.rows.map(r => r.text).join(" ") + s4.line), "progression : configuration, pas conformité", rowOf(s4, "progress").text);
   report(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | ")); await p.ctx.close(); }
 
 // 5. Clavier : Entrée ouvre le résumé, chaque lien mène à sa page et y place le focus.

@@ -3,12 +3,9 @@
 // Testée par tests/summary.test.mjs. Inliné dans la page par src/build.py (le mot export est retiré).
 // Règles : la progression dit la configuration, pas la conformité ; « non testé » n'est jamais un échec ;
 // chaque état a un mot et un signe, jamais la seule couleur.
-export const SUM_STATUS = {
-  ok: { word: "Réussi", icon: "✓" },
-  fail: { word: "Échec", icon: "✕" },
-  check: { word: "À vérifier", icon: "!" },
-  untested: { word: "Non testé", icon: "–" }
-};
+import { STATUS } from "./status.mjs";
+// Les mots des cinq statuts du blueprint (src/core/status.mjs) : ok = conforme au test, check = à vérifier manuellement.
+export const SUM_STATUS = { ok: STATUS.pass, fail: STATUS.fail, check: STATUS.manual, untested: STATUS.untested };
 const pl = (n, one, many) => `${n} ${n > 1 ? many : one}`;
 
 // d : { level, colors, colorTokens, loneColors, twins, rolesChecked, roleFails, fonts: [titres, texte], styles, styleFails,
@@ -28,7 +25,7 @@ export function projectSummary(d) {
   if (d.styleWarns) add("comfort", "Confort de lecture", pl(d.styleWarns, "conseil sur les styles de texte", "conseils sur les styles de texte"), "check", "#styles", "Des conseils, pas des erreurs.");
   add("blocks", "Design system", `${d.blocksOn} blocs sur ${d.blocksAll} inclus dans l’export`, "info", "#systeme");
   const autoAll = d.rolesChecked + d.styles, autoOk = autoAll - d.roleFails - d.styleFails;
-  add("auto", "Contrôles automatiques", `${autoOk} réussis sur ${autoAll}`, autoOk === autoAll ? "ok" : "fail", "#exporter", "Contrastes des rôles et des styles : une partie des critères WCAG seulement.");
+  add("auto", "Contrôles automatiques", `${autoOk} conformes au test sur ${autoAll}`, autoOk === autoAll ? "ok" : "fail", "#exporter", "Contrastes des rôles et des styles : une partie des critères WCAG seulement.");
   const left = d.manualAll - d.manualDone;
   add("manual", "Vérifications à la main", left ? `${left} sur ${d.manualAll} pas encore vérifiés` : `${d.manualAll} points cochés par l’équipe`,
     left ? "untested" : "ok", "#exporter", `${pl(d.screens, "écran", "écrans")}. Une case vide veut dire « pas encore vérifié », pas « en échec ».`);
