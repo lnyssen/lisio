@@ -93,6 +93,26 @@
 .mgrid{display:grid;gap:8px;align-items:stretch}
 @container (max-width:150px){.mcell .ck .pill .w{display:none}.mcell .ck .pill{min-width:26px;justify-content:center}.mcell .rr .r{font-size:16px}.mcell .sample .big{font-size:28px}.mcell .foot{padding:9px 8px 10px}}
 .mlist{display:flex;flex-direction:column;gap:22px}
+/* Grille compacte des contrastes (écran étroit ou beaucoup de couleurs) : défile dans son cadre, noms collés à gauche */
+.mwrap.mscroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding-left:0;padding-right:0;padding-top:12px}
+.mwrap.mscroll:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.mwrap .mgrid.mcompact{gap:4px}
+.mwrap .mgrid.mcompact .mcorner{position:sticky;left:0;z-index:2;background:var(--surface);font-size:10px;padding:0 2px 0 4px;align-self:stretch;display:flex;align-items:flex-end}
+.mwrap .mgrid.mcompact .mrow{position:sticky;left:0;z-index:1;background:var(--surface);gap:5px;padding:0 2px 0 4px}
+.mwrap .mgrid.mcompact .mrow .disc{display:block;width:12px;height:12px}
+.mwrap .mgrid.mcompact .mrow b{font-size:12px}
+.mwrap .mgrid.mcompact .mrow code,.mwrap .mgrid.mcompact .mcol code{display:none}
+.mwrap .mgrid.mcompact .mcol{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.mwrap .mgrid.mcompact .mcol .bar{width:14px;height:14px;border-radius:50%}
+.mwrap .mgrid.mcompact .mcol b{font-size:11px;max-width:100%}
+.mwrap .mgrid.mcompact .mcell{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:3px;min-height:64px;padding:3px;border-radius:9px}
+.mwrap .mgrid.mcompact .mcell .sample{order:-1;max-width:none;width:100%;min-width:0;height:28px;padding:0 2px;border-radius:7px}
+.mwrap .mgrid.mcompact .mcell .sample .big{font-size:13px}
+.mwrap .mgrid.mcompact .mcell .mv{align-items:center;text-align:center}
+.mwrap .mgrid.mcompact .mcell .mv .r{font-size:11px;letter-spacing:-.04em}
+.mwrap .mgrid.mcompact .mcell .mv .vl{font-size:10px;font-weight:700}
+.mwrap .mgrid.mcompact .mdiag{min-height:66px;border-radius:10px;font-size:12px;padding:2px}
+
 .mgroup h2{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:16px}
 .mgroup h2 .disc{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--hair)}
 .mgroup h2 code{font-size:12px;color:var(--muted);font-weight:500}
@@ -2697,26 +2717,24 @@ function renderMx() {
         <span class="mv" aria-hidden="true"><span class="r">${f2(r)}</span><span class="vl">${lab.replace("✕ ", "")}</span><span class="sm">${label}</span></span>
         <span class="sample" aria-hidden="true" style="background:${simulate(b.hex, S.mVision)};color:${simulate(t.hex, S.mVision)};font-family:${ff}"><span class="big" style="font-weight:${w}">${sample}</span></span></button>`;
   };
+  // Toujours une grille texte (lignes) sur fond (colonnes). Trop étroite pour la grande : grille compacte, qui défile dans son cadre.
   let h = "";
-  if (useList) {
-    g.className = "mlist"; g.style.gridTemplateColumns = ""; g.style.minWidth = "";
-    C.forEach((b, j) => {
-      const cells = C.map((t, i) => i === j || (S.mView === "ok" && ratio(t.hex, b.hex) < 4.5) ? "" : cell(i, j, "Texte " + esc(t.name))).join("");
-      h += `<section class="mgroup"><h2><span class="disc" style="background:${b.hex}"></span>Sur fond ${esc(b.name)} <code>${b.hex}</code></h2>${cells ? `<div class="mgroup-grid">${cells}</div>` : `<p class="note">Aucun texte de votre palette n’est lisible sur ce fond.</p>`}</section>`;
-    });
-  } else {
-  g.className = "mgrid";
-  h = `<div class="mcorner">Texte ↓ Fond →</div>` + C.map(c => `<div class="mcol"><div class="bar" style="background:${c.hex}"></div><b title="${esc(c.name)}">${esc(c.name)}</b><code>${c.hex}</code></div>`).join("");
+  const cp = useList, wrap = g.parentElement, CW = 44, rw = mxNarrow.matches ? 70 : 104;
+  g.className = cp ? "mgrid mcompact" : "mgrid";
+  wrap.classList.toggle("mscroll", cp);
+  if (cp) { wrap.setAttribute("tabindex", "0"); wrap.setAttribute("role", "region"); wrap.setAttribute("aria-label", "Grille des contrastes : lignes = texte, colonnes = fond"); } else { wrap.removeAttribute("tabindex"); wrap.removeAttribute("role"); wrap.removeAttribute("aria-label"); }
+  if (cp) { g.style.gridTemplateColumns = `${rw}px repeat(${n}, minmax(${CW}px, 1fr))`; g.style.minWidth = `${rw + n * (CW + 4)}px`; }
+  const short = l => /Échec/.test(l) ? "✕" : l.replace(" grand", " gr.");
+  h = `<div class="mcorner">${cp ? "Texte ↓<br>Fond →" : "Texte ↓ Fond →"}</div>` + C.map(c => `<div class="mcol"><div class="bar" style="background:${c.hex}"></div><b title="${esc(c.name)}">${esc(c.name)}</b><code>${c.hex}</code></div>`).join("");
   C.forEach((t, i) => {
     h += `<div class="mrow"><span class="disc" style="background:${t.hex}"></span><div><b title="${esc(t.name)}">${esc(t.name)}</b><code>${t.hex}</code></div></div>`;
     C.forEach((b, j) => {
-      if (i === j) { h += `<div class="mdiag" aria-hidden="true">Même couleur</div>`; return; }
+      if (i === j) { h += cp ? `<div class="mdiag" aria-hidden="true">=</div>` : `<div class="mdiag" aria-hidden="true">Même couleur</div>`; return; }
       const r = ratio(t.hex, b.hex);
       if (S.mView === "ok" && r < 4.5) { h += `<div class="mdiag" title="${esc(t.name)} sur ${esc(b.name)} : ${f1(r)}:1">${f1(r)}</div>`; return; }
-      h += cell(i, j, "Petit texte");
+      h += cp ? cell(i, j, "Petit texte").replace(/<span class="vl">([^<]*)<\/span>/, (m, l) => `<span class="vl">${short(l)}</span>`) : cell(i, j, "Petit texte");
     });
   });
-  }
   g.innerHTML = h;
   renderKeep(); renderDetail();
 }
@@ -4537,7 +4555,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "4089139";
+const LISIO_BUILD = "15ab709";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
