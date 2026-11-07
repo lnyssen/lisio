@@ -78,10 +78,10 @@ for (const [v, vp, trig, pop] of POPS) {
   report(!bad.length, lab, bad.join(" ; ")); await p.ctx.close();
 }
 { // ⌘K puis Échap : le focus revient d'où il venait.
-  const p = await open("matrice"); await p.focus("#themeB"); await p.keyboard.press("Control+k"); await p.waitForTimeout(100);
+  const p = await open("matrice"); await p.focus("#normChip"); await p.keyboard.press("Control+k"); await p.waitForTimeout(100);
   const inQ = await p.evaluate(() => document.activeElement.id === "cmdQ");
   await p.keyboard.press("Escape"); await p.waitForTimeout(150);
-  report(inQ && await focusDesc(p) === "#themeB", "D2 recherche ⌘K puis Échap rend le focus", inQ ? await focusDesc(p) : "le champ n'a pas reçu le focus"); await p.ctx.close();
+  report(inQ && await focusDesc(p) === "#normChip", "D2 recherche ⌘K puis Échap rend le focus", inQ ? await focusDesc(p) : "le champ n'a pas reçu le focus"); await p.ctx.close();
   const m = await open("matrice", MOB); await m.focus("#cmdMB"); await m.keyboard.press("Enter"); await m.waitForTimeout(150);
   const inM = await m.evaluate(() => document.activeElement.id === "cmdQ"); await m.keyboard.press("Escape"); await m.waitForTimeout(150);
   report(inM && await focusDesc(m) === "#cmdMB", "D2 recherche mobile puis Échap rend le focus", inM ? await focusDesc(m) : "le champ n'a pas reçu le focus"); await m.ctx.close();

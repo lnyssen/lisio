@@ -27,7 +27,7 @@ const go = async (p, v) => { await p.evaluate(v => { location.hash = v; }, v); a
 // Le bandeau tel qu'on le lit : page visée, nom, état écrit, étape actuelle.
 const steps = p => p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => ({
   id: a.getAttribute("href").slice(1), label: (a.querySelector(".j-l") || {}).textContent, state: (a.querySelector(".j-s") || {}).textContent || "",
-  cur: a.getAttribute("aria-current"), name: a.textContent.replace(/\s+/g, " ").trim(),
+  cur: a.getAttribute("aria-current"), cls: a.className, name: a.textContent.replace(/\s+/g, " ").trim(),
   stateShown: (() => { const s = a.querySelector(".j-s"); if (!s) return false; const r = s.getBoundingClientRect(); return r.width > 1 && r.height > 1 && getComputedStyle(s).visibility !== "hidden"; })() })));
 const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
 
@@ -36,8 +36,15 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   const S = await steps(p);
   const got = S.map(s => s.id + ":" + s.label).join(" "), want = ORDER.map(([v, l]) => v + ":" + l).join(" ");
   report(got === want, "ordre du parcours : Couleurs, Nuances, Polices, Styles, Design system, Contrastes, Exporter", got === want ? "" : got);
-  const bad = S.filter(s => !STATES.some(t => s.state.startsWith(t)) || !s.stateShown || !s.name.includes(s.state));
-  report(!bad.length, "chaque étape affiche son état en toutes lettres, lu avec son nom", JSON.stringify(bad.slice(0, 2)));
+  // Barre des étapes en pilule (choix de Laurent, 7 novembre 2026) : l'état de chaque étape est dans son nom accessible et se voit
+  // par une marque propre (pastille pleine ✓, rouge, pointillés) ; l'état de l'étape actuelle est écrit en toutes lettres sous le titre.
+  const KEY = { "À commencer": "todo", "En cours": "now", "Complété": "done", "Attention requise": "warn", "Non applicable": "na" };
+  const bad = S.filter(s => !STATES.some(t => s.state.startsWith(t)) || !s.name.includes(s.state) || !s.cls.includes("st-" + KEY[STATES.find(t => s.state.startsWith(t))]));
+  report(!bad.length, "chaque étape : état en toutes lettres dans son nom, et marque visible propre à l'état", JSON.stringify(bad.slice(0, 2)));
+  const now = await p.evaluate(() => { const c = document.querySelector("#jNowBox .j-cst"); if (!c) return null; const r = c.getBoundingClientRect(); return r.width > 1 ? c.textContent : null; });
+  report(now === "En cours", "l'état de l'étape actuelle est écrit, visible, sous le titre", String(now));
+  const prog = await p.evaluate(() => { const e = document.querySelector("#journey .j-prog"); return e && e.textContent; });
+  report(/^\d\/7/.test(prog || ""), "la barre montre la progression (étapes complétées sur 7)", String(prog));
   const cur = S.filter(s => s.cur === "step");
   report(cur.length === 1 && cur[0].id === "matrice" && stOf(S, "matrice") === "En cours", "une seule étape actuelle (aria-current=step), dite « En cours »", JSON.stringify(cur));
   // Mise en page : nom et état collés au numéro, pour chaque étape (une classe d'état ne doit pas hériter d'un autre bloc).
@@ -45,7 +52,7 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   report(gap.every(g => g >= 0 && g <= 12), "nom et état à côté du numéro, sur chaque étape", gap.join(", "));
   // Projet neuf : couleurs d'exemple, rien d'ouvert.
   report(stOf(S, "couleurs") === "À commencer" && stOf(S, "tester") === "À commencer", "projet neuf : Couleurs et Polices « À commencer »", `${stOf(S, "couleurs")} / ${stOf(S, "tester")}`);
-  const help = await p.evaluate(() => { const b = document.querySelector('#journey [data-q="etape"]'); if (!b) return null; b.click(); return document.getElementById("qPop").textContent; });
+  const help = await p.evaluate(() => { const b = document.querySelector('#jNowBox [data-q="etape"]'); if (!b) return null; b.click(); return document.getElementById("qPop").textContent; });
   report(!!help && /pas (la|une) conformité/i.test(help) && STATES.every(t => help.includes(t)), "aide « ? » des états : les 5 états, et ce n'est pas la conformité", help ? "" : "pastille absente");
   report(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | ")); await p.ctx.close(); }
 
@@ -112,7 +119,8 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
 // 7. Mobile : l'étape actuelle montre son nom et son état ; les autres gardent l'état dans leur nom ; pas de débordement.
 for (const w of [320, 390]) { const p = await open({ width: w, height: 800 }, "styles");
   const S = await steps(p), c = S.find(s => s.cur === "step"), sw = await p.evaluate(() => document.documentElement.scrollWidth);
-  report(c && c.stateShown && S.every(s => s.name.includes(s.state)) && sw <= w, `mobile ${w} px : état de l'étape actuelle visible, aucun débordement`, `${c && c.state} ; largeur ${sw}`); await p.ctx.close(); }
+  const vis = await p.evaluate(() => { const e = document.querySelector("#jNowBox .j-cst"); return !!e && e.getBoundingClientRect().width > 1 && e.textContent; });
+  report(c && vis === c.state && S.every(s => s.name.includes(s.state)) && sw <= w, `mobile ${w} px : état de l'étape actuelle visible, aucun débordement`, `${c && c.state} ; largeur ${sw}`); await p.ctx.close(); }
 
 await browser.close();
 console.log(fails ? `\n${fails} contrôle(s) en échec` : "\nLe bandeau suit le parcours et dit l'état de chaque étape.");

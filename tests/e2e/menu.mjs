@@ -1,6 +1,7 @@
 // Navigation « les étapes sont le menu » (choix de Laurent, 7 novembre 2026) : plus de rail d’icônes.
-// Les 7 étapes, collées sous la barre du haut, servent de menu et restent visibles en faisant défiler.
-// Rédaction, Guide, S’entraîner et Projets sont dans « Outils » (barre du haut) ; sur mobile, dans « Plus » (barre du bas, avec précédent et suivant).
+// Puis ses retours du même jour : les 7 étapes dans une longue pilule flottante en bas, toujours visible, aux couleurs inversées
+// (ou orange au choix), avec la progression ; barre du haut allégée ; menu « Outils » en trois groupes (Outils, Apprendre, Réglages),
+// le même sur mobile, où un bouton « Outils » est dans la pilule.
 // Essentiel / Avancé est visible dans la barre du haut. Un bouton « Retour en haut » apparaît quand on a défilé.
 //   node tests/e2e/menu.mjs
 import { createRequire } from "node:module";
@@ -35,8 +36,11 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(steps.every(s => s.w > 20), "ordinateur : chaque étape montre son nom", JSON.stringify(steps.map(s => Math.round(s.w))));
   check(await p.evaluate(() => document.getElementById("journey").getAttribute("aria-label")) === "Étapes", "le menu des étapes est nommé « Étapes »");
   await bottom(p);
-  const st = await p.evaluate(() => { const j = document.getElementById("journey").getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect(); return { jt: Math.round(j.top), jb: Math.round(j.bottom), ab: Math.round(a.bottom) }; });
-  check(st.jt >= st.ab - 2 && st.jt < 160 && await vis(p, "#journey .j-steps"), "en bas de page, les étapes restent visibles sous la barre du haut", JSON.stringify(st));
+  const st = await p.evaluate(() => { const j = document.getElementById("journey").getBoundingClientRect(); return { b: Math.round(innerHeight - j.bottom), mid: Math.round((j.left + j.right) / 2 - innerWidth / 2) }; });
+  check(st.b >= 8 && st.b <= 40 && Math.abs(st.mid) <= 2 && await vis(p, "#journey .j-steps"), "en bas de page, la pilule des étapes reste visible, centrée en bas", JSON.stringify(st));
+  const inv = await p.evaluate(() => { const j = getComputedStyle(document.getElementById("journey")), b = getComputedStyle(document.body); return [j.backgroundColor, b.backgroundColor]; });
+  check(inv[0] !== inv[1], "la pilule se détache de la page (couleurs inversées)", inv.join(" / "));
+  check(/\d\/7/.test(await p.textContent("#journey .j-prog")), "la pilule montre la progression", await p.textContent("#journey .j-prog"));
   check(await vis(p, "#toTop"), "après défilement, le bouton « Retour en haut » apparaît");
   check(/haut/i.test(await p.locator("#toTop").getAttribute("aria-label") || await p.locator("#toTop").textContent()), "le bouton dit ce qu’il fait");
   await p.click("#toTop"); await p.waitForTimeout(900);
@@ -56,8 +60,16 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   const tools = await p.evaluate(() => { const e = document.getElementById("helpPop"), r = e.getBoundingClientRect(); return { open: !e.hidden, t: e.textContent, inside: r.left >= 0 && r.right <= innerWidth && r.top >= 0 }; });
   check(tools.open && tools.inside, "« Outils » s’ouvre dans l’écran", JSON.stringify({ open: tools.open, inside: tools.inside }));
   check(["Rédaction", "Guide", "S’entraîner", "Projets"].every(w => tools.t.includes(w)), "Outils : Rédaction, Guide, S’entraîner, Projets");
+  check(await p.evaluate(() => [...document.querySelectorAll("#helpPop .hp-h")].map(h => h.textContent).join("|")) === "Outils|Apprendre|Réglages", "Outils en trois groupes : Outils, Apprendre, Réglages");
+  const segs = await p.evaluate(() => [...document.querySelectorAll("#helpPop .mode-row .seg")].map(g => { const r = g.getBoundingClientRect(); return Math.round(r.width) + "x" + Math.round(r.height); }));
+  check(segs.length === 3 && new Set(segs).size === 1, "Réglages : thème, barre et affichage de même largeur et même hauteur", segs.join(", "));
+  await p.click('#helpPop [data-bar-set="orange"]'); await p.waitForTimeout(150);
+  check(await p.evaluate(() => document.documentElement.getAttribute("data-bar") === "orange" && localStorage.getItem("lisio-bar") === "orange"), "barre du bas orange au choix, mémorisée");
+  await p.click('#helpPop [data-bar-set="ink"]'); await p.click('#helpPop [data-theme-set="dark"]'); await p.waitForTimeout(150);
+  check(await p.evaluate(() => document.documentElement.getAttribute("data-theme") === "dark" && document.querySelector('#helpPop [data-theme-set="dark"]').getAttribute("aria-pressed") === "true"), "thème sombre depuis Réglages, état annoncé");
+  await p.click('#helpPop [data-theme-set="light"]'); await p.waitForTimeout(150);
   await p.click('#helpPop a[href="#lisibilite"]'); await p.waitForTimeout(300);
-  check(!(await p.evaluate(() => document.getElementById("lisibilite").hidden)) && await vis(p, "#journey .j-steps"), "Rédaction s’ouvre, les étapes restent en haut");
+  check(!(await p.evaluate(() => document.getElementById("lisibilite").hidden)) && await vis(p, "#journey .j-steps"), "Rédaction s’ouvre, les étapes restent visibles");
   check(!(await p.evaluate(() => document.querySelector('#journey a[aria-current="step"]'))), "hors des étapes, aucune n’est marquée en cours");
   for (const w of [1440, 1024, 800]) { await p.setViewportSize({ width: w, height: 800 }); await p.waitForTimeout(200); check(await over(p) <= 0, `${w} px : pas de défilement horizontal`, await over(p)); }
   if (AXE) { await p.setViewportSize({ width: 1440, height: 900 }); await p.addScriptTag({ content: readFileSync(AXE, "utf8") });
@@ -71,26 +83,27 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   const p = await open(opts, "palette");
   check(await over(p) <= 0, `${lab} : pas de défilement horizontal`, await over(p));
   await bottom(p);
-  check(await vis(p, "#journey .j-steps"), `${lab} : en bas de page, les étapes restent visibles en haut`);
+  check(await vis(p, "#journey .j-steps"), `${lab} : en bas de page, les étapes restent visibles`);
   check(await p.evaluate(() => document.querySelectorAll("#journey .j-steps a").length) === 7, `${lab} : les 7 étapes`);
-  const cur = await p.evaluate(() => { const l = document.querySelector('#journey a[aria-current="step"] .j-l'); return l ? [l.textContent, Math.round(l.getBoundingClientRect().width)] : null; });
-  check(cur && cur[0] === "Nuances" && cur[1] > 20, `${lab} : l’étape en cours est écrite en toutes lettres`, JSON.stringify(cur));
-  const bar = await p.evaluate(() => { const n = document.getElementById("stepNav"); if (!n) return null; const r = n.getBoundingClientRect(); return { b: Math.round(r.bottom), vh: innerHeight, links: [...n.querySelectorAll("a")].map(a => a.getAttribute("href") + " " + a.textContent.trim()), more: !!n.querySelector("#moreB") }; });
-  check(bar && Math.abs(bar.b - bar.vh) < 4 && bar.more, `${lab} : barre du bas avec « Plus »`, JSON.stringify(bar));
-  check(bar && bar.links.some(l => l.startsWith("#couleurs")) && bar.links.some(l => l.startsWith("#tester")), `${lab} : étape précédente et suivante en bas`, bar && bar.links.join(" | "));
-  const tt = await p.evaluate(() => { const t = document.getElementById("toTop"), n = document.getElementById("stepNav"); if (!t || !n) return null; return { tb: Math.round(t.getBoundingClientRect().bottom), nt: Math.round(n.getBoundingClientRect().top) }; });
-  check(tt && tt.tb <= tt.nt, `${lab} : « Retour en haut » au-dessus de la barre du bas`, JSON.stringify(tt));
-  await p.click('#stepNav a[href="#tester"]'); await p.waitForTimeout(400);
-  check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : « suivant » ouvre l’étape suivante`);
-  await p.click("#moreB"); await p.waitForTimeout(300);
-  const more = await p.evaluate(() => document.getElementById("moreSheet").textContent);
-  check(["Rédaction", "Guide", "S’entraîner", "Projets", "Essentiel", "Avancé"].every(w => more.includes(w)), `${lab} : « Plus » contient les outils et l’affichage`);
+  const box = await p.evaluate(() => { const j = document.getElementById("journey").getBoundingClientRect(), m = document.getElementById("moreB").getBoundingClientRect(), t = document.getElementById("toTop").getBoundingClientRect();
+    return { jl: Math.round(j.left), jr: Math.round(innerWidth - j.right), jb: Math.round(innerHeight - j.bottom), inPill: m.left >= j.left && m.right <= j.right && m.top >= j.top && m.bottom <= j.bottom, ttAbove: t.bottom <= j.top }; });
+  check(box.jl === box.jr && box.jb >= 8 && box.inPill, `${lab} : une seule barre en bas, marges égales, bouton « Outils » dedans`, JSON.stringify(box));
+  check(box.ttAbove, `${lab} : « Retour en haut » au-dessus de la barre`, JSON.stringify(box));
+  const items = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => a.getBoundingClientRect()).map(r => [Math.round(r.left), Math.round(r.right), Math.round(r.width), Math.round(r.height)]));
+  check(items.every((r, k) => r[2] >= 24 && r[3] >= 24 && (!k || r[0] >= items[k - 1][1])), `${lab} : étapes sans chevauchement, cibles d’au moins 24 px`, JSON.stringify(items));
+  check(/Outils/.test(await p.textContent("#moreB")), `${lab} : le bouton s’appelle « Outils », comme sur ordinateur`);
+  await p.click('#journey a[href="#tester"]'); await p.waitForTimeout(400);
+  check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : toucher une étape l’ouvre`);
+  await p.click("#moreB"); await p.waitForTimeout(400);
+  const more = await p.evaluate(() => ({ t: document.getElementById("moreSheet").textContent, h: [...document.querySelectorAll("#moreSheet .mh3")].map(h => h.textContent).join("|"), segs: [...document.querySelectorAll("#moreSheet .mmode .seg")].map(g => Math.round(g.getBoundingClientRect().width) + "x" + Math.round(g.getBoundingClientRect().height)) }));
+  check(more.h === "Outils|Apprendre|Réglages" && ["Rédaction", "Guide", "S’entraîner", "Projets", "Thème", "Essentiel", "Avancé"].every(w => more.t.includes(w)), `${lab} : « Outils » contient les mêmes groupes que sur ordinateur`, more.h);
+  check(more.segs.length === 3 && new Set(more.segs).size === 1, `${lab} : réglages de même largeur et même hauteur`, more.segs.join(", "));
   if (AXE && lab === "iPhone 390 px") { await p.keyboard.press("Escape"); await p.waitForTimeout(200); await p.addScriptTag({ content: readFileSync(AXE, "utf8") });
     const v = await p.evaluate(async () => (await axe.run({ include: [["#journey"], ["#stepNav"]] }, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
     check(!v.length, `${lab} : axe-core, étapes et barre du bas`, v.join(", ")); }
   check(!p.errs.length, `${lab} : aucune erreur JavaScript`, p.errs.join(" | "));
-  await p.ctx.close();
-}
+  await p.ctx.close(); }
+
 await browser.close();
 console.log(fails ? `\n${fails} échec(s)` : "\nTous les scénarios passent.");
 process.exit(fails ? 1 : 0);

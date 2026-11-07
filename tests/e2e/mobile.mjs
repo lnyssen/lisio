@@ -45,11 +45,11 @@ const phone = { ...devices["iPhone 13"] };
   // Glisser depuis une tuile ferme aussi, sans ouvrir la page de la tuile.
   await page.click("#moreB"); await page.waitForTimeout(300);
   const before = await page.evaluate(() => location.hash);
-  await swipe(page, '#moreSheet [data-go="palette"]', 180);
+  await swipe(page, '#moreSheet [data-go="lisibilite"]', 180);
   check(!(await page.locator("#moreSheet").evaluate(e => e.open)) && await page.evaluate(() => location.hash) === before, "glisser depuis une tuile : fermeture, sans changer de page");
   // Un simple toucher sur une tuile ouvre toujours la page.
-  await page.click("#moreB"); await page.waitForTimeout(300); await page.click('#moreSheet [data-go="palette"]'); await page.waitForTimeout(300);
-  check(await page.evaluate(() => location.hash) === "#palette", "toucher une tuile ouvre la page");
+  await page.click("#moreB"); await page.waitForTimeout(300); await page.click('#moreSheet [data-go="lisibilite"]'); await page.waitForTimeout(300);
+  check(await page.evaluate(() => location.hash) === "#lisibilite", "toucher une tuile ouvre la page");
   await page.goto(PAGE + "#tester"); await page.waitForTimeout(600);
   // Bug corrigé : la pastille « Texte » ne change plus l'affichage.
   await page.evaluate(() => localStorage.setItem("lisio-mode", "ess")); await page.reload(); await page.waitForTimeout(600);
