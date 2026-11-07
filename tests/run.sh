@@ -14,6 +14,7 @@ step "Projets : lien, import, enregistrement" node tests/e2e/projects.mjs
 step "Interface : axe, débordement, fenêtres" node tests/e2e/a11y.mjs
 step "Défauts de l'audit du 5 novembre 2026" node tests/e2e/audit.mjs
 step "Menu par intention" node tests/e2e/menu.mjs
+step "Ligne d’aide repliable" node tests/e2e/aide-ligne.mjs
 step "Bandeau d'étapes (F01)" node tests/e2e/etapes.mjs
 step "Formulations et statuts (P0-3)" node tests/e2e/honnetete.mjs
 step "Page Couleurs, nuances, blocs à inclure (P0-4)" node tests/e2e/nuances.mjs

@@ -49,11 +49,13 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(!(await vis(p, "#toTop")), "en haut de page, le bouton disparaît");
   await p.click('#journey .j-steps a[href="#tester"]'); await p.waitForTimeout(400);
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)) && await p.evaluate(() => document.querySelector('#journey a[aria-current="step"]').getAttribute("href")) === "#tester", "cliquer une étape ouvre sa page et la marque comme en cours");
-  // Essentiel / Avancé dans la barre du haut
-  check(await vis(p, "#modeSegTop"), "Essentiel / Avancé visible dans la barre du haut");
-  check(/Affichage/.test(await p.evaluate(() => { const g = document.getElementById("modeSegTop"); return document.getElementById(g.getAttribute("aria-labelledby")).textContent; })), "le choix est nommé « Affichage »");
-  await p.click('#modeSegTop [data-mode="adv"]'); await p.waitForTimeout(200);
-  check(await p.evaluate(() => document.documentElement.classList.contains("mode-adv") || document.body.classList.contains("mode-adv") || localStorage.getItem("lisio-mode") === "adv") && await p.getAttribute('#modeSegTop [data-mode="adv"]', "aria-pressed") === "true", "cliquer « Avancé » change l’affichage, état annoncé");
+  // Essentiel / Avancé : retiré de la barre du haut (Laurent, 7 novembre 2026, 11 h), reste dans Outils › Réglages.
+  check(!(await p.evaluate(() => !!document.querySelector(".appbar [data-mode]"))), "Essentiel / Avancé n’est plus dans la barre du haut");
+  await p.click("#helpB"); await p.waitForTimeout(200);
+  check(/Affichage/.test(await p.evaluate(() => { const g = document.getElementById("modeSeg"); return document.getElementById(g.getAttribute("aria-labelledby")).textContent; })), "Outils › Réglages : le choix est nommé « Affichage »");
+  await p.click('#modeSeg [data-mode="adv"]'); await p.waitForTimeout(200);
+  check(await p.evaluate(() => localStorage.getItem("lisio-mode") === "adv") && await p.getAttribute('#modeSeg [data-mode="adv"]', "aria-pressed") === "true", "Outils › Réglages : « Avancé » change l’affichage, état annoncé");
+  await p.keyboard.press("Escape"); await p.waitForTimeout(150);
   // Outils
   check(await vis(p, "#helpB") && /Outils/.test(await p.textContent("#helpB")), "bouton « Outils » dans la barre du haut");
   await p.click("#helpB"); await p.waitForTimeout(250);

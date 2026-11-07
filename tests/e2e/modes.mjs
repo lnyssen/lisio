@@ -39,13 +39,15 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   // 2. Essentiel : réglages fins masqués, une invitation à tout afficher sur chaque page concernée.
   const hidden = [["palette", "#shSet"], ["styles", "#tsFluCard"], ["systeme", 'section[aria-labelledby="dsElH"]'], ["exporter", "#exCssAdv"]];
   for (const [v, sel] of hidden) { await go(page, v);
-    check(await page.locator(sel).isHidden() && await page.locator(`#${v} .adv-hint`).first().isVisible(), `Essentiel, ${v} : réglages fins masqués, invitation visible`); }
+    // L’invitation est dans la ligne d’aide repliable (choix de Laurent, 7 novembre 2026).
+    if (await page.getAttribute("#jNowBox .j-help-b", "aria-expanded") !== "true") { await page.click("#jNowBox .j-help-b"); await page.waitForTimeout(150); }
+    check(await page.locator(sel).isHidden() && await page.locator("#jHelp .adv-hint").first().isVisible(), `Essentiel, ${v} : réglages fins masqués, invitation dans l’aide de la page`); }
   await go(page, "tester");
   check(await page.locator("#checks").isVisible(), "Essentiel : les vérifications restent visibles");
   const navEss = await page.locator("nav.tabs a, nav.tabs button").count();
   // 3. Un clic pour tout afficher.
   await go(page, "palette");
-  await page.locator("#palette .adv-hint button").click(); await page.waitForTimeout(200);
+  await page.locator("#jHelp .adv-hint button").click(); await page.waitForTimeout(200);
   check(await page.locator("#shSet").isVisible() && await ls(page, "lisio-mode") === "adv", "« Afficher les réglages avancés » : tout réapparaît");
   check(await page.locator("nav.tabs a, nav.tabs button").count() === navEss, "même menu dans les deux modes");
   // 4. Bascule dans Aide et formation.

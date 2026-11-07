@@ -1,5 +1,5 @@
 <title>Lisio</title>
-<script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("lisio-bar")==="orange")document.documentElement.setAttribute("data-bar","orange")}catch(e){}</script>
+<script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);var br=localStorage.getItem("lisio-bar");if(br==="orange"||br==="rust")document.documentElement.setAttribute("data-bar",br)}catch(e){}</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1144,7 +1144,7 @@ body{background:var(--bg)}
 #sideNav,.side-foot,#sideB,#sideTip{display:none!important}
 .wrap{margin-inline:auto!important}
 /* Étapes : une longue pilule flottante en bas de l’écran (retour de Laurent, 7 novembre 2026 : « en haut, c’est trop chargé »). */
-:root{--pillh:60px}
+:root{--pillh:70px}
 .wrap{padding-bottom:calc(var(--pillh) + 48px)!important}
 .journey{position:fixed!important;z-index:30;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);margin:0!important;padding:5px!important;max-width:calc(100vw - 32px);box-sizing:border-box;background:var(--pl-bg);color:var(--surface);border:0;border-radius:999px;box-shadow:0 12px 32px rgba(0,0,0,.22),0 2px 6px rgba(0,0,0,.12)}
 /* Couleurs inversées : barre sombre sur page claire, claire sur page sombre (retour de Laurent, 7 novembre 2026). */
@@ -1152,6 +1152,9 @@ body{background:var(--bg)}
 /* Variante orange, au choix dans Réglages : texte --accent-ink sur --accent (7,3:1 en clair, 8:1 en sombre). */
 :root[data-bar="orange"] .journey,:root[data-bar="orange"] .stepnav{--pl-fg:var(--accent-ink);--pl-bg:var(--accent);--pl-soft:color-mix(in srgb,var(--accent-ink) 14%,transparent)}
 :root[data-bar="orange"] .journey{background:var(--accent)}
+/* Rouille : orange foncé #C2410C avec texte blanc (5,2:1), pour qui veut du blanc sur orange. */
+:root[data-bar="rust"] .journey,:root[data-bar="rust"] .stepnav{--pl-fg:#FFFFFF;--pl-bg:#C2410C;--pl-soft:rgba(255,255,255,.2)}
+:root[data-bar="rust"] .journey{background:#C2410C}
 body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(var(--pillh) + 44px);z-index:29;pointer-events:none;background:linear-gradient(to bottom,color-mix(in srgb,var(--bg) 0%,transparent),var(--bg) 70%)}
 .journey .j-steps{gap:2px;flex-wrap:nowrap}
 /* 2.4.11 : un élément qui reçoit le focus ne passe pas sous la barre des étapes ni sous « Haut ». */
@@ -1160,7 +1163,10 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 .toast{bottom:calc(var(--pillh) + 32px)!important}
 @media (min-width:761px){.dock{bottom:calc(var(--pillh) + 30px)!important}}
 .journey .j-steps li,.journey .j-steps li:has(a[aria-current]){flex:none!important;min-width:0}
-.journey .j-steps a{border-top:0!important;min-height:48px!important;padding:0 14px 0 8px!important;border-radius:999px;gap:8px;color:var(--pl-fg)!important}
+.journey .j-steps a{border-top:0!important;min-height:0!important;height:40px;box-sizing:border-box;padding:6px 14px 6px 6px!important;border-radius:999px;gap:9px;color:var(--pl-fg)!important;align-items:center}
+/* Pastille concentrique : le rond (28 px) est à 6 px du bord en haut, en bas et à gauche, la pilule à 6 px de la barre. */
+.journey .j-steps a .j-n{width:28px!important;height:28px!important;font-size:13px;line-height:1;box-sizing:border-box}
+.journey .j-l{font-size:14px;line-height:1}
 .journey .j-steps a:hover{background:var(--pl-soft)}
 .journey .j-steps a[aria-current]{background:var(--pl-fg);color:var(--pl-bg)!important}
 .journey .j-steps a:focus-visible{outline:2px solid var(--pl-fg)!important;outline-offset:2px;box-shadow:none!important}
@@ -1170,8 +1176,14 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 .journey .j-t{flex-direction:row}
 .journey .j-steps a[aria-current] .j-n{background:var(--pl-bg)!important;color:var(--pl-fg)!important;border-color:var(--pl-bg)!important}
 .journey .j-i{box-shadow:0 0 0 2px var(--pl-bg)}
-.journey{display:flex;align-items:center;gap:4px}
-.journey::before{content:"";position:absolute;left:22px;right:22px;bottom:3px;height:3px;border-radius:3px;background:linear-gradient(to right,var(--pl-fg) var(--prog,0%),var(--pl-soft) 0);opacity:.9}
+.journey{display:flex;align-items:center;gap:4px;padding:6px 6px 16px!important}
+/* Barre du haut sans fond : seuls les boutons flottent (retour de Laurent, 7 novembre 2026). */
+:root:root .appbar{background:none!important;border-image:none!important;border-bottom:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;pointer-events:none}
+/* Pas de bande : un fondu, comme en bas, pour que le texte qui défile ne se mêle pas aux boutons. */
+html::after{content:"";position:fixed;left:0;right:0;top:0;height:calc(var(--apph,80px) + 18px);z-index:14;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 55%,color-mix(in srgb,var(--bg) 0%,transparent))}
+:root:root .appbar button,:root:root .appbar a,:root:root .appbar input,:root:root .appbar .cmdk,:root:root .appbar .hgrp,:root:root .appbar .logo,:root:root .appbar .cmd-pop{pointer-events:auto}
+.appbar .prj-b,.appbar .cmdk,.appbar .hgrp,.appbar .normchip,.appbar .tools-b,.appbar .expbtn,.appbar .cmd-mb,.appbar .themebtn,.appbar>.side-top .logo{box-shadow:0 2px 12px rgba(8,30,30,.12),0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent)}
+.journey::before{content:"";position:absolute;left:22px;right:22px;bottom:6px;height:3px;border-radius:3px;background:linear-gradient(to right,var(--pl-fg) var(--prog,0%),var(--pl-soft) 0);opacity:.9}
 .j-prog{margin:0;padding:0 10px 0 12px;font-size:13px;white-space:nowrap;color:var(--pl-fg);border-right:1px solid var(--pl-soft);align-self:stretch;display:flex;align-items:center;gap:4px}
 .j-prog b{font-variant-numeric:tabular-nums;font-size:15px}
 /* États : complétée = pastille pleine ✓ ; à vérifier = pastille rouge ; à faire = contour pointillé atténué. */
@@ -1179,9 +1191,24 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 .journey .j-steps a.st-warn:not([aria-current]) .j-n{background:var(--bad)!important;color:var(--surface)!important;border-color:var(--bad)!important}
 .journey .j-steps a.st-todo:not([aria-current]) .j-n,.journey .j-steps a.st-na:not([aria-current]) .j-n{border-style:dashed!important;opacity:.85}
 .journey .j-steps a.st-todo:not([aria-current]) .j-l{opacity:.85}
-@media (max-width:1179px){.journey .j-steps a:not([aria-current]) .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}.journey .j-steps a:not([aria-current]){padding:0 4px!important;min-width:40px;justify-content:center}}
+@media (max-width:1179px){.journey .j-steps a:not([aria-current]) .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}.journey .j-steps a:not([aria-current]){padding:6px!important;width:40px;justify-content:center}}
+/* Ligne d’aide repliable */
+section .adv-hint{display:none!important}
+.j-line{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.j-pos{margin:0;font-size:14px;color:var(--muted)}.j-pos b{color:var(--ink)}
+.j-help-b{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 6px;border:1px solid var(--hair);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:700;cursor:pointer;flex:none}
+.j-help-b:hover{background:var(--hover)}
+.j-help-q{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:13px}
+.j-help-b svg{width:16px;height:16px;transition:transform .15s}
+.j-help-b[aria-expanded="true"] svg{transform:rotate(180deg)}
+@media (prefers-reduced-motion:reduce){.j-help-b svg{transition:none}}
+.j-help{margin:8px 0 0;padding:14px 16px;border-radius:18px;background:var(--surface);border:1px solid var(--hair);display:flex;flex-direction:column;gap:10px}
+.j-help[hidden]{display:none}
+.j-say{margin:0;font-size:14px;color:var(--ink)}
+.j-help .qline{margin:0}
+.j-help .adv-hint{margin:0}
 .j-cst{display:inline-block;margin:0 6px 0 4px;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:700;background:var(--hover);color:var(--ink);vertical-align:1px}.j-cst.st-warn{background:var(--bad-bg);color:var(--bad)}
-.j-nowbox{margin:0 0 22px}.j-nowbox[hidden]{display:none}.j-nowbox .j-now{margin-top:6px}
+.j-nowbox{margin:0 0 16px}.j-nowbox[hidden]{display:none}.j-nowbox .j-now{margin-top:6px}
 .j-steps a{min-height:48px}
 /* Barre du haut : logo, projet, recherche, réglages, Affichage, Outils, Exporter */
 .mode-top{display:flex;align-items:center;gap:8px;flex:none}
@@ -1194,18 +1221,23 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 .help-pop{left:auto!important;right:max(16px,env(safe-area-inset-right,0px));top:calc(var(--apph) + 6px);bottom:auto!important;max-height:calc(100vh - var(--apph) - 20px)}
 .help-pop .hp-h{margin:14px 12px 4px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}.help-pop .hp-h:first-of-type{margin-top:2px}
 .help-pop .mode-row{padding:0 12px}
-@media (min-width:761px){.help-pop{width:360px!important}}
+@media (min-width:761px){.help-pop{width:400px!important}}
+.help-pop .mode-row>span,.more-sheet .mmode>span{white-space:nowrap}
+@media (max-width:359px){.more-sheet .mmode{grid-template-columns:1fr!important;gap:6px!important}.more-sheet .mmode .seg{width:100%!important}}
 /* Réglages : trois sélecteurs de même largeur et même hauteur, boutons égaux, jamais sur deux lignes (retour de Laurent). */
-.help-pop .mode-row,.more-sheet .mmode{display:grid!important;grid-template-columns:minmax(0,1fr) 200px;align-items:center;gap:12px}
-.help-pop .mode-row .seg,.more-sheet .mmode .seg{display:grid!important;grid-template-columns:1fr 1fr;width:200px;height:44px;box-sizing:border-box;flex-wrap:nowrap!important}
+.help-pop .mode-row,.more-sheet .mmode{display:grid!important;grid-template-columns:minmax(0,1fr) 240px;align-items:center;gap:12px}
+.help-pop .mode-row .seg,.more-sheet .mmode .seg{display:grid!important;grid-auto-flow:column;grid-auto-columns:1fr;grid-template-columns:none;width:240px;height:44px;box-sizing:border-box;flex-wrap:nowrap!important}
 .help-pop .mode-row .seg button,.more-sheet .mmode .seg button{min-width:0;height:100%;min-height:0;padding:0 6px;white-space:nowrap;font-size:13px}
 .more-sheet .mmode{grid-column:1/-1}
 .help-pop .hp-b{display:grid;grid-template-columns:22px minmax(0,1fr) auto;column-gap:14px;align-items:center;width:100%;text-align:left;font:inherit;border:0;background:none;color:var(--ink);padding:10px 12px;border-radius:14px;cursor:pointer}
 .help-pop .hp-b:hover{background:var(--hover)}.help-pop .hp-b .hi{width:22px;height:22px;grid-row:1/span 2}.help-pop .hp-b b{font-weight:600;grid-column:2}.help-pop .hp-b small{grid-column:2;font-size:13px;color:var(--muted);line-height:1.35}
 @media (min-width:761px){
-  .side-top{position:static!important;width:auto!important;height:auto!important;padding:0!important;margin:0!important;background:none!important;border:0!important;box-shadow:none!important;flex-direction:row!important;border-radius:0!important}
+  :root:root .appbar>.side-top{position:static!important;width:auto!important;height:auto!important;padding:0!important;margin:0!important;background:none!important;border:0!important;box-shadow:none!important;flex-direction:row!important;border-radius:0!important}
   .appbar{grid-template-columns:auto minmax(0,max-content) minmax(160px,1fr) auto!important}
-  .appbar>.side-top{grid-column:1!important;grid-row:1}.appbar>.where{grid-column:2!important}.appbar>.cmdk{grid-column:3!important}.appbar>.appr{grid-column:4!important}
+  :root:root .appbar>.side-top{grid-column:1!important;grid-row:1;height:var(--ctl)!important;align-self:center;overflow:visible}
+  :root:root .appbar>.side-top .logo-word{display:none!important}
+  :root:root .appbar>.side-top .logo{height:var(--ctl)!important;width:var(--ctl)!important;margin:0!important;padding:0!important}
+  :root:root .appbar>.side-top .logo-mark{width:var(--ctl)!important;height:var(--ctl)!important}.appbar>.where{grid-column:2!important}.appbar>.cmdk{grid-column:3!important}.appbar>.appr{grid-column:4!important}
   .more-b,.stepnav{display:none!important}
   .appbar .crumb{display:none!important}
   .appbar .themebtn{display:none!important}
@@ -1221,16 +1253,15 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
   .journey .j-steps{justify-content:space-between;gap:0;flex:1;min-width:0}
   .j-prog .j-pl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   .j-prog{padding:0 6px 0 8px}.j-prog b{font-size:13px}
-  .journey .j-steps a:not([aria-current]){padding:0!important;min-width:30px}
-  .journey .j-steps a[aria-current]{padding:0 7px!important;min-width:0;gap:6px}
+  .journey .j-steps a,.journey .j-steps a[aria-current],.journey .j-steps a:not([aria-current]){width:34px;height:34px;padding:4px!important;min-width:0;justify-content:center}
   .journey .j-steps a[aria-current] .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}
   .journey .j-steps li:has(a[aria-current]){flex:none!important}
-  .journey .j-steps a .j-n{width:26px;height:26px}
+  .journey .j-steps a .j-n{width:26px!important;height:26px!important}
   .journey .j-l{font-size:13px}
-  .stepnav{position:fixed;right:17px;bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 5px);z-index:31;display:block}
+  .stepnav{position:fixed;right:17px;bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 13px);z-index:31;display:block}
   .stepnav::before{content:"";position:absolute;left:-5px;top:12px;bottom:12px;width:1px;background:var(--pl-soft)}
   .stepnav .sn-prev,.stepnav .sn-next{display:none}
-  .stepnav .more-b{position:static!important;display:inline-flex!important;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:54px;height:48px;border:0;background:none;color:var(--pl-fg);font:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:999px;padding:0;box-shadow:none}
+  .stepnav .more-b{position:static!important;display:inline-flex!important;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:54px;height:40px;border:0;background:none;color:var(--pl-fg);font:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:999px;padding:0;box-shadow:none}
   .stepnav .more-b:hover{background:var(--pl-soft)}
   .stepnav .more-b:focus-visible{outline:2px solid var(--pl-fg);outline-offset:2px}
   .stepnav .more-b svg{width:20px;height:20px;padding:0;background:none!important;color:inherit!important}
@@ -1277,7 +1308,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
     <div class="side-foot"></div>
     <div class="where"><button type="button" class="prj-b" id="prjB" aria-haspopup="dialog" aria-controls="prjDlg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><span class="prj-n" id="prjBN">Projet</span><svg class="cv" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg><span class="sr-only"> : changer de projet</span></button><p class="crumb" id="crumb"></p><a class="fig-l" id="prjFig" href="#" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg><span>Figma</span><span class="sr-only"> : ouvrir la page du projet, nouvel onglet</span></a></div>
     <div class="cmdk" id="cmdk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg><label class="sr-only" for="cmdQ">Rechercher une page, une action, une couleur ou une aide</label><input id="cmdQ" type="text" role="combobox" aria-expanded="false" aria-controls="cmdL" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Rechercher une page, une action, une couleur…" aria-keyshortcuts="Control+K Meta+K"><kbd aria-hidden="true">⌘K</kbd><div class="cmd-pop" id="cmdPop" hidden><ul id="cmdL" role="listbox" aria-label="Résultats"></ul><div class="cmd-ans" id="cmdAns" hidden></div><p class="cmd-st sr-only" id="cmdSt" aria-live="polite"></p></div></div>
-    <div class="appr"><button type="button" class="undobtn cmd-mb" id="cmdMB" aria-label="Rechercher" aria-controls="cmdk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg></button><div class="hgrp" role="group" aria-label="Historique"><button class="undobtn" type="button" id="undoB" disabled aria-label="Annuler la dernière modification" title="Annuler (Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Z Meta+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button class="undobtn" type="button" id="redoB" disabled aria-label="Rétablir la modification annulée" title="Rétablir (Maj + Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button></div><button class="undobtn themebtn" type="button" id="themeB" aria-label="Passer en mode sombre" title="Mode clair ou sombre"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button><button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="WCAG 2.2 AA : norme de référence et niveau visé. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button><div class="mode-top"><span class="mode-top-l" id="modeTopL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeTopL" id="modeSegTop"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div><button type="button" class="tools-b" id="helpB" aria-expanded="false" aria-controls="helpPop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><span>Outils</span></button><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button></div>
+    <div class="appr"><button type="button" class="undobtn cmd-mb" id="cmdMB" aria-label="Rechercher" aria-controls="cmdk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg></button><div class="hgrp" role="group" aria-label="Historique"><button class="undobtn" type="button" id="undoB" disabled aria-label="Annuler la dernière modification" title="Annuler (Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Z Meta+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button><button class="undobtn" type="button" id="redoB" disabled aria-label="Rétablir la modification annulée" title="Rétablir (Maj + Ctrl ou ⌘ + Z)" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button></div><button class="undobtn themebtn" type="button" id="themeB" aria-label="Passer en mode sombre" title="Mode clair ou sombre"><svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button><button class="normchip" type="button" id="normChip" data-pop="popNorm" aria-expanded="false" aria-controls="popNorm" aria-label="WCAG 2.2 AA : norme de référence et niveau visé. Modifier"><span id="normV">WCAG 2.2</span><span class="lv" id="normL">AA</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button><button type="button" class="tools-b" id="helpB" aria-expanded="false" aria-controls="helpPop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><span>Outils</span></button><button class="expbtn" type="button" id="expAll" aria-label="Exporter : voir ce que contient le fichier, puis le télécharger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Exporter</span></button></div>
   </header>
 
   <main id="main" tabindex="-1">
@@ -1748,7 +1779,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 <li><a href="#formation" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg><b>S’entraîner</b><small>Dix questions avec la réponse expliquée</small></a></li>
 <li><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><b>Guide de formation</b><small>Le support complet pour l’équipe</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 <li><a href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M12 16.5V20M8.5 20h7"/></svg><b>Slides</b><small>Pour animer une session</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
-<li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5z"/><path d="M9 12l2 2 4-4"/></svg><b>WCAG 2.2 (W3C)</b><small>Le texte officiel des règles</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li></ul><h3 class="hp-h">Réglages</h3><div class="mode-row"><span id="themeL">Thème</span><div class="seg" role="group" aria-labelledby="themeL" id="themeSeg"><button type="button" data-theme-set="light">Clair</button><button type="button" data-theme-set="dark">Sombre</button></div></div><div class="mode-row"><span id="barL">Barre du bas</span><div class="seg" role="group" aria-labelledby="barL" id="barSeg"><button type="button" data-bar-set="ink">Contraste</button><button type="button" data-bar-set="orange">Orange</button></div></div><div class="mode-row"><span id="modeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div></div>
+<li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5z"/><path d="M9 12l2 2 4-4"/></svg><b>WCAG 2.2 (W3C)</b><small>Le texte officiel des règles</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li></ul><h3 class="hp-h">Réglages</h3><div class="mode-row"><span id="themeL">Thème</span><div class="seg" role="group" aria-labelledby="themeL" id="themeSeg"><button type="button" data-theme-set="light">Clair</button><button type="button" data-theme-set="dark">Sombre</button></div></div><div class="mode-row"><span id="barL">Barre du bas</span><div class="seg" role="group" aria-labelledby="barL" id="barSeg"><button type="button" data-bar-set="ink">Contraste</button><button type="button" data-bar-set="orange">Orange</button><button type="button" data-bar-set="rust">Rouille</button></div></div><div class="mode-row"><span id="modeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div></div>
 <dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
 <div class="pd-cur"><label class="ex-name">Projet en cours<input type="text" id="prjCurName" maxlength="60"></label><label class="ex-name">Page Figma du projet<input type="url" id="prjFigU" inputmode="url" placeholder="https://www.figma.com/design/…" aria-describedby="prjFigE"></label><p class="note" id="prjFigE">Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier.</p><p class="note" id="prjCurMeta"></p>
@@ -3879,6 +3910,8 @@ function jState(id, cur, seen) {
 function jProg(v, seen) { const st = JOURNEY.map(([id]) => jState(id, v, seen)), done = st.filter(x => x === "done").length, warn = st.filter(x => x === "warn").length, tot = JOURNEY.length;
   $("journey").style.setProperty("--prog", Math.round(done / tot * 100) + "%");
   return `<p class="j-prog"><b>${done}/${tot}</b><span class="j-pl"> complétées</span>${warn ? `<span class="sr-only">, ${warn} à vérifier</span>` : ""}</p>`; }
+const jHelpOpen = () => { try { return localStorage.getItem("lisio-help") === "1"; } catch (e) { return false; } };
+document.addEventListener("click", e => { const b = e.target.closest(".j-help-b"); if (!b) return; const on = b.getAttribute("aria-expanded") !== "true"; b.setAttribute("aria-expanded", String(on)); $("jHelp").hidden = !on; try { localStorage.setItem("lisio-help", on ? "1" : "0"); } catch (e) {} });
 function renderJourney(v) {
   sumSoon();
   const i = JOURNEY.findIndex(x => x[0] === v || (x[4] || []).includes(v)), J = $("journey"), X = $("jNext"), NB = $("jNowBox");
@@ -3889,8 +3922,11 @@ function renderJourney(v) {
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
   const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="tpl">Partir d’un modèle</button></div></div>` : "";
   J.innerHTML = jProg(v, seen) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}"><span class="j-n" aria-hidden="true">${st === "done" ? "✓" : n + 1}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`;
+  // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
+  const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`);
   NB.innerHTML = `
-  <div class="j-now"><p><b>Étape ${i + 1} sur ${JOURNEY.length}</b> <span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span> ${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p></div>${hello}`;
+  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b> <span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span></p><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+  <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p>${adv ? adv.outerHTML : ""}</div>${hello}`;
   stepNavRender(i);
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm), nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
@@ -3982,8 +4018,8 @@ function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v
 // Mode clair ou sombre : suit le système, jusqu’à ce qu’on choisisse
 const DARKQ = matchMedia("(prefers-color-scheme: dark)"), themeNow = () => document.documentElement.getAttribute("data-theme") || (DARKQ.matches ? "dark" : "light");
 function themeLabel() { const d = themeNow() === "dark"; document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.themeSet === "dark") === d))); $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
-const barNow = () => document.documentElement.getAttribute("data-bar") === "orange" ? "orange" : "ink";
-function barSet(b) { if (b === "orange") document.documentElement.setAttribute("data-bar", "orange"); else document.documentElement.removeAttribute("data-bar"); try { localStorage.setItem("lisio-bar", b); } catch (e) {} barLabel(); }
+const barNow = () => { const b = document.documentElement.getAttribute("data-bar"); return b === "orange" || b === "rust" ? b : "ink"; };
+function barSet(b) { if (b === "orange" || b === "rust") document.documentElement.setAttribute("data-bar", b); else document.documentElement.removeAttribute("data-bar"); try { localStorage.setItem("lisio-bar", b); } catch (e) {} barLabel(); }
 function barLabel() { const b = barNow(); document.querySelectorAll("[data-bar-set]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.barSet === b))); }
 document.addEventListener("click", e => { const x = e.target.closest("[data-bar-set]"); if (x) barSet(x.dataset.barSet); });
 barLabel();
@@ -4030,7 +4066,7 @@ function moreRender() { const v = curView(), cur = n => n === v ? ' aria-current
     + (figmaUrlOk(S.figma || "") ? `<a class="mi" href="${esc(S.figma)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg>Page Figma<small>Nouvel onglet</small></a>` : "")
     + `<h3 class="mh3">Apprendre</h3><ul class="mdoc">${[...$("helpPop").querySelectorAll("a:not([data-tool])")].map(a => `<li>${a.outerHTML.replace("data-help", (a.getAttribute("href") === "#" + v ? 'aria-current="page" ' : "") + "data-help")}</li>`).join("")}</ul>`
     + `<h3 class="mh3">Réglages</h3><div class="mode-row mmode"><span id="mThemeL">Thème</span><div class="seg" role="group" aria-labelledby="mThemeL"><button type="button" data-theme-set="light" aria-pressed="${themeNow() === "light"}">Clair</button><button type="button" data-theme-set="dark" aria-pressed="${themeNow() === "dark"}">Sombre</button></div></div>`
-    + `<div class="mode-row mmode"><span id="mBarL">Barre du bas</span><div class="seg" role="group" aria-labelledby="mBarL"><button type="button" data-bar-set="ink" aria-pressed="${barNow() === "ink"}">Contraste</button><button type="button" data-bar-set="orange" aria-pressed="${barNow() === "orange"}">Orange</button></div></div>`
+    + `<div class="mode-row mmode"><span id="mBarL">Barre du bas</span><div class="seg" role="group" aria-labelledby="mBarL"><button type="button" data-bar-set="ink" aria-pressed="${barNow() === "ink"}">Contraste</button><button type="button" data-bar-set="orange" aria-pressed="${barNow() === "orange"}">Orange</button><button type="button" data-bar-set="rust" aria-pressed="${barNow() === "rust"}">Rouille</button></div></div>`
     + `<div class="mode-row mmode"><span id="mModeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="mModeL"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div></div>`; }
 function moreClose() { if (MORES.open) MORES.close(); }
 MOREB.addEventListener("click", () => { moreRender(); MORES.showModal(); MOREB.setAttribute("aria-expanded", "true"); });

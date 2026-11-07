@@ -55,6 +55,8 @@ await page.goto(PAGE + "#couleurs"); await page.waitForTimeout(300);
 check(await page.locator('.qchip[data-q="luminance"]').count() === 1, "« ? » luminance sur la page Couleurs");
 await page.goto(PAGE + "#styles"); await page.waitForTimeout(300);
 check(await page.locator('.qchip[data-q="echelle"]').count() >= 1 && await page.locator('.qchip[data-q="fluid"]').count() >= 1, "« ? » échelle et typographie fluide sur la page Styles");
+// Les « ? » de l’étape sont dans la ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : on la déplie.
+if (await page.getAttribute("#jNowBox .j-help-b", "aria-expanded") !== "true") { await page.click("#jNowBox .j-help-b"); await page.waitForTimeout(150); }
 await page.locator('.qchip[data-q="echelle"]').first().click(); await page.waitForTimeout(150);
 check(/1,333/.test(await page.locator("#qPop").textContent()) && /pas une règle WCAG/.test(await page.locator("#qPop").textContent()), "échelle 1,333 : expliquée comme un choix de design");
 // 7. axe-core sur la page Polices panneau ouvert.
