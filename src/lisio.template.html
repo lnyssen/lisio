@@ -1515,7 +1515,7 @@ section .adv-hint{display:none!important}
       </div>
     </div>
     <div class="card-surface sys-card" role="region" aria-label="Aperçu du design system">
-      <div class="sys-pages"><span class="ds-l" id="sysPgL">Page</span><div class="seg" role="group" aria-labelledby="sysPgL" id="sysPg"><button type="button" data-v="ds">Système</button><button type="button" data-v="home">Accueil</button><button type="button" data-v="form">Formulaire</button><button type="button" data-v="article">Article</button><button type="button" data-v="dash">Tableau de bord</button><button type="button" data-v="states">États</button></div></div>
+      <div class="sys-pages"><span class="ds-l" id="sysPgL">Page</span><div class="seg" role="group" aria-labelledby="sysPgL" id="sysPg"><button type="button" data-v="ds">Système</button><button type="button" data-v="home">Accueil</button><button type="button" data-v="form">Formulaire</button><button type="button" data-v="article">Article</button><button type="button" data-v="dash">Tableau de bord</button><button type="button" data-v="states">Composants</button></div></div>
       <div class="row between"><div class="seg" role="group" aria-label="Largeur d’écran de l’aperçu" id="sysView"><button type="button" data-v="w320">320</button><button type="button" data-v="mobile">Mobile<span class="dsk"> 390</span></button><button type="button" data-v="tablet">Tablet<span class="dsk"> 768</span></button><button type="button" data-v="desktop">Desktop<span class="dsk"> 1024</span></button><button type="button" data-v="xl">XL<span class="dsk"> 1440</span></button></div><button class="btn sm" type="button" id="sysCss">Copier le CSS</button></div>
       <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysGrid" aria-pressed="false">Afficher la grille</button><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
       <p class="note" id="sysNote"></p><p class="sys-chk" id="sysChk" role="status"></p>
@@ -1897,6 +1897,7 @@ const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur 
 /*@core:presets*/
 /*@core:report*/
 /*@core:css*/
+/*@core:components*/
 /*@core:ramps*/
 // Réglage des nuances (P0-4) : 50 et 950 réglables, 500 fixe, saturation ; mêmes réglages pour toutes les gammes.
 const SH_BASE = { light: TARGET[0], dark: TARGET[10], sat: 1, exact: false, method: "contrast" };
@@ -3328,7 +3329,7 @@ const inkOn = h => ratio(h, "#FFFFFF") >= ratio(h, "#000000") ? "#FFFFFF" : "#00
 const W320 = { id: "w320", label: "Mobile 320", w: 320 };
 // ---------- Gabarits de pages et lois UX ----------
 const frNb = h => h.replace(/« /g, "«\u00a0").replace(/ »/g, "\u00a0»").replace(/ ([:;!?])(?=[\s<])/g, "\u00a0$1");
-const SYS_PAGES = [["ds", "Système"], ["home", "Accueil"], ["form", "Formulaire"], ["article", "Article"], ["dash", "Tableau de bord"], ["states", "États"]];
+const SYS_PAGES = [["ds", "Système"], ["home", "Accueil"], ["form", "Formulaire"], ["article", "Article"], ["dash", "Tableau de bord"], ["states", "Composants"]];
 const sysPg = () => SYS_PAGES.some(p => p[0] === S.sysPg) ? S.sysPg : "ds";
 // Définitions : Jon Yablonski, Laws of UX (lawsofux.com), traduites en français.
 const LAWS = {
@@ -3457,6 +3458,11 @@ const TPL_CSS = `
 .st-grid.wide{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
 .st-grid>div{display:flex;flex-direction:column;gap:var(--spacing-2);align-items:flex-start;min-width:0}
 .st-grid .field{align-self:stretch}
+.cmp{display:flex;flex-direction:column;gap:var(--spacing-3)}.cmp+.cmp{border-top:var(--border-width-default) solid var(--border-subtle);padding-top:var(--spacing-6)}
+.cmp-use{margin:0}.cmp-tok{margin:0;display:flex;flex-wrap:wrap;gap:var(--spacing-1) var(--spacing-2);align-items:center}.cmp-tok code{font-size:12px}
+.cmp-st .cmp-man{max-width:32ch}.cmp-lim{margin:0;max-width:72ch}.cmp-sum{display:flex;flex-direction:column;gap:var(--spacing-2);margin-top:var(--spacing-4)}.cmp-sum p{margin:0}.cmp-fail{text-decoration:underline;text-decoration-style:wavy;text-underline-offset:4px}
+.cmp-nav .tpl-nav{display:flex!important;margin:0}.tpl-nav a.is-focus{outline:var(--border-width-focus) solid var(--focus-ring);outline-offset:var(--border-width-focus-offset)}
+.st-grid.wide>div>*:first-child{align-self:stretch}
 .spin{width:1em;height:1em;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite;flex:none}
 @keyframes spin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.spin{animation:none;border-right-color:currentColor;opacity:.6}}
 .btn[aria-busy="true"]{cursor:progress}
@@ -3518,36 +3524,15 @@ function tplBody(pg, R, badge) {
 <tr><td>Aide au logement</td><td><span class="tag t-label st-warning">À compléter</span></td><td class="hide-s">28 oct.</td><td><a href="#" class="t-link">Ouvrir<span class="sr-only"> : aide au logement</span></a></td></tr>
 <tr><td>Inscription crèche</td><td><span class="tag t-label st-success">Validé</span></td><td class="hide-s">12 oct.</td><td><a href="#" class="t-link">Ouvrir<span class="sr-only"> : inscription crèche</span></a></td></tr></tbody></table></section></div></main>${tplFoot()}`;
   if (pg === "states") {
-    const it = (html, cap, note) => `<div>${html}<span class="t-caption mut">${cap}</span>${note ? `<span class="t-caption">${note}</span>` : ""}</div>`;
-    return `<main class="page" id="main"><section><p class="t-label layer">États des composants</p><h1 class="t-h1">Chaque état, dessiné et vérifié</h1><p class="t-body mut measure">Un composant n’est pas fini tant qu’on n’a pas dessiné ce qui se passe au survol, au clavier, pendant l’attente, en cas d’erreur et quand il n’y a rien à montrer. Les contrastes sont mesurés sur votre système.</p></section>
-<section><h2 class="t-h3">Bouton</h2><div class="st-grid">
-${it(`<button class="btn btn-primary t-button" type="button">Envoyer</button>`, "Repos", badge("text/on-action"))}
-${it(`<button class="btn btn-primary t-button is-hover" type="button" tabindex="-1">Envoyer</button>`, "Survol", badge("action/hover"))}
-${it(`<button class="btn btn-primary t-button is-active" type="button" tabindex="-1">Envoyer</button>`, "Appuyé", badge("action/pressed"))}
-${it(`<button class="btn btn-primary t-button is-focus" type="button" tabindex="-1">Envoyer</button>`, "Focus clavier (2.4.7)", badge("focus/ring"))}
-${it(`<button class="btn btn-primary t-button" type="button" aria-busy="true" tabindex="-1"><span class="spin" aria-hidden="true"></span>Envoi…</button>`, "Chargement : le libellé change, l’attente est annoncée (4.1.3)", "")}
-${it(`<button class="btn btn-primary t-button" type="button" disabled>Envoyer</button>`, "Désactivé : dites pourquoi à côté", badge("disabled/text"))}
-</div></section>
-<section><h2 class="t-h3">Champ</h2><div class="st-grid">
-${it(`<div class="field"><label for="s1" class="t-body-strong">Vide</label><input id="s1" type="text"></div>`, "Repos", badge("border/default"))}
-${it(`<div class="field"><label for="s2" class="t-body-strong">Survol</label><input id="s2" type="text" class="is-hover" tabindex="-1"></div>`, "Survol", "")}
-${it(`<div class="field"><label for="s3" class="t-body-strong">Focus</label><input id="s3" type="text" class="is-focus" tabindex="-1" value="Camille"></div>`, "Focus clavier", "")}
-${it(`<div class="field"><label for="s4" class="t-body-strong">Erreur</label><input id="s4" type="text" value="750" aria-invalid="true" aria-describedby="s4e"><p id="s4e" class="field-error t-caption">5 chiffres attendus.</p></div>`, "Erreur dite en mots (3.3.1)", badge("error/border"))}
-${it(`<div class="field"><label for="s5" class="t-body-strong">Désactivé</label><input id="s5" type="text" value="75011" disabled></div>`, "Désactivé", badge("disabled/surface"))}
-${it(`<div class="field"><label for="s6" class="t-body-strong">Lecture seule</label><input id="s6" type="text" value="75011" readonly></div>`, "Lecture seule : lisible et copiable", "")}
-</div></section>
-<section><h2 class="t-h3">Lien et choix</h2><div class="st-grid">
-${it(`<a href="#" class="t-link">Voir le dossier</a>`, "Lien au repos", badge("link/default"))}
-${it(`<a href="#" class="t-link is-hover" tabindex="-1">Voir le dossier</a>`, "Lien au survol", "")}
-${it(`<a href="#" class="t-link is-focus" tabindex="-1">Voir le dossier</a>`, "Lien au focus", "")}
-${it(`<label class="choice t-body"><input type="checkbox" checked> Recevoir le suivi</label>`, "Case cochée", "")}
-${it(`<label class="choice t-body"><input type="checkbox" disabled> Option indisponible</label>`, "Case désactivée", "")}
-</div></section>
-<section><h2 class="t-h3">Contenu</h2><div class="st-grid wide">
-${it(`<div class="tcard" style="align-self:stretch" aria-busy="true"><div class="skel" aria-hidden="true"><span style="width:60%"></span><span></span><span style="width:80%"></span></div><span class="sr-only">Chargement</span></div>`, "Chargement : squelette, annoncé aux lecteurs d’écran", "")}
-${it(`<div class="tcard" style="align-self:stretch"><p class="t-body-strong">Aucun dossier</p><p class="t-body mut">Créez votre premier dossier en deux minutes.</p><a href="#" class="t-link link-arrow">Créer un dossier</a></div>`, "Vide : dit quoi faire ensuite", "")}
-${it(`<div class="alert alert-error" role="alert" style="align-self:stretch"><p class="alert-title t-body-strong">Chargement impossible</p><p class="t-body">Vérifiez votre connexion.</p><p><button class="btn btn-secondary t-button" type="button">Réessayer</button></p></div>`, "Erreur : une cause et une sortie", badge("error/text"))}
-</div></section></main>`;
+    // F13 : la page est construite depuis le registre src/core/components.mjs ; ajouter un composant n'oblige à rien d'autre.
+    const measure = k => { const d = ROLE_FR[k]; if (!d || d[2] === "deco" || d[2] === "off" || !d[1]) return "na"; return ratio(R[k], R[d[1]]) >= roleNeed(k) ? "pass" : "fail"; };
+    const all = COMPONENTS.map(c => ({ c, st: compStatus(c, measure) })), n = compCounts(all.flatMap(x => x.st));
+    const pl = (k, one, many) => `${k} ${k > 1 ? many : one}`;
+    const cell = st => `<div class="cmp-st st-${st.status}">${st.html}<span class="t-caption mut">${COMP_STATE_FR[st.s]}</span>${(st.check || []).map(k => badge(k)).join("")}${st.manual ? `<span class="t-caption cmp-man"><b>À vérifier à la main :</b> ${st.manual}</span>` : ""}</div>`;
+    return `<main class="page" id="main"><section><p class="t-label layer">Composants</p><h1 class="t-h1">Vos composants, état par état</h1><p class="t-body mut measure">Chaque composant est dessiné avec vos tokens, dans chacun de ses états : repos, survol, clavier, attente, erreur, vide. Lisio mesure les contrastes qu’il peut mesurer et liste ce qui reste à vérifier à la main.</p>
+<div class="tcard sub cmp-sum"><p class="t-body-strong">${pl(n.pass, "état mesuré", "états mesurés")} au-dessus du seuil, ${n.fail ? `<span class="cmp-fail">${pl(n.fail, "état en échec", "états en échec")}</span>` : "aucun état en échec"}, ${pl(n.manual, "point", "points")} à vérifier à la main.</p><p class="t-body mut">${COMP_LIMITS}</p></div></section>
+${all.map(({ c, st }) => `<section class="cmp" data-cmp="${c.id}" aria-labelledby="cmp-h-${c.id}"><h2 class="t-h3" id="cmp-h-${c.id}">${c.name}</h2><p class="t-body cmp-use">${c.use}</p><p class="t-caption mut cmp-tok">Tokens : ${c.tokens.map(k => `<code>${k}</code>`).join(" ")}</p>
+<div class="st-grid${c.id === "card" || c.id === "alert" || c.id === "nav" ? " wide" : ""}">${st.map(cell).join("")}</div><p class="t-caption mut cmp-lim">${c.limits}</p></section>`).join("\n")}</main>`;
   }
   return "";
 }
