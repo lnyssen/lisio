@@ -1187,7 +1187,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 /* Barre du haut sans fond : seuls les boutons flottent (retour de Laurent, 7 novembre 2026). */
 :root:root .appbar{background:none!important;border-image:none!important;border-bottom:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;pointer-events:none}
 /* Pas de bande : un fondu, comme en bas, pour que le texte qui défile ne se mêle pas aux boutons. */
-html::after{content:"";position:fixed;left:0;right:0;top:0;height:calc(var(--apph,80px) + 18px);z-index:14;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 55%,color-mix(in srgb,var(--bg) 0%,transparent))}
+/* Barre du haut : ni fond ni dégradé, seuls les contrôles ont une surface (demande du 7 novembre). */
 :root:root .appbar button,:root:root .appbar a,:root:root .appbar input,:root:root .appbar .cmdk,:root:root .appbar .hgrp,:root:root .appbar .logo,:root:root .appbar .cmd-pop{pointer-events:auto}
 .appbar .prj-b,.appbar .cmdk,.appbar .hgrp,.appbar .normchip,.appbar .tools-b,.appbar .expbtn,.appbar .cmd-mb,.appbar .themebtn,.appbar>.side-top .logo{box-shadow:0 2px 12px rgba(8,30,30,.12),0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent)}
 .journey::before{content:"";position:absolute;left:22px;right:22px;bottom:6px;height:3px;border-radius:3px;background:linear-gradient(to right,var(--pl-fg) var(--prog,0%),var(--pl-soft) 0);opacity:.9}
@@ -4824,7 +4824,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "8244c24";
+const LISIO_BUILD = "7e346e1";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
