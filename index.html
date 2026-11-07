@@ -1151,7 +1151,7 @@ body{background:var(--bg)}
 #sideNav,.side-foot,#sideB,#sideTip{display:none!important}
 .wrap{margin-inline:auto!important}
 /* Étapes : une longue pilule flottante en bas de l’écran (retour de Laurent, 7 novembre 2026 : « en haut, c’est trop chargé »). */
-:root{--pillh:70px}
+:root{--pillh:60px}
 .wrap{padding-bottom:calc(var(--pillh) + 48px)!important}
 .journey{position:fixed!important;z-index:30;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);margin:0!important;padding:5px!important;max-width:calc(100vw - 32px);box-sizing:border-box;background:var(--pl-bg);color:var(--surface);border:0;border-radius:999px;box-shadow:0 12px 32px rgba(0,0,0,.22),0 2px 6px rgba(0,0,0,.12)}
 /* Couleurs inversées : barre sombre sur page claire, claire sur page sombre (retour de Laurent, 7 novembre 2026). */
@@ -1183,16 +1183,30 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 .journey .j-t{flex-direction:row}
 .journey .j-steps a[aria-current] .j-n{background:var(--pl-bg)!important;color:var(--pl-fg)!important;border-color:var(--pl-bg)!important}
 .journey .j-i{box-shadow:0 0 0 2px var(--pl-bg)}
-.journey{display:flex;align-items:center;gap:4px;padding:6px 6px 16px!important}
+.journey{display:flex;align-items:center;gap:4px;padding:6px!important}
 /* Barre du haut sans fond : seuls les boutons flottent (retour de Laurent, 7 novembre 2026). */
 :root:root .appbar{background:none!important;border-image:none!important;border-bottom:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;pointer-events:none}
 /* Pas de bande : un fondu, comme en bas, pour que le texte qui défile ne se mêle pas aux boutons. */
 html::after{content:"";position:fixed;left:0;right:0;top:0;height:calc(var(--apph,80px) + 18px);z-index:14;pointer-events:none;background:linear-gradient(to bottom,var(--bg) 55%,color-mix(in srgb,var(--bg) 0%,transparent))}
 :root:root .appbar button,:root:root .appbar a,:root:root .appbar input,:root:root .appbar .cmdk,:root:root .appbar .hgrp,:root:root .appbar .logo,:root:root .appbar .cmd-pop{pointer-events:auto}
 .appbar .prj-b,.appbar .cmdk,.appbar .hgrp,.appbar .normchip,.appbar .tools-b,.appbar .expbtn,.appbar .cmd-mb,.appbar .themebtn,.appbar>.side-top .logo{box-shadow:0 2px 12px rgba(8,30,30,.12),0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent)}
-.journey::before{content:"";position:absolute;left:22px;right:22px;bottom:6px;height:3px;border-radius:3px;background:linear-gradient(to right,var(--pl-fg) var(--prog,0%),var(--pl-soft) 0);opacity:.9}
-.j-prog{margin:0;padding:0 10px 0 12px;font-size:13px;white-space:nowrap;color:var(--pl-fg);border-right:1px solid var(--pl-soft);align-self:stretch;display:flex;align-items:center;gap:4px}
-.j-prog b{font-variant-numeric:tabular-nums;font-size:15px}
+.j-prog{margin:0;padding:0 14px 0 0;font-size:13px;white-space:nowrap;color:var(--pl-fg);border-right:1px solid var(--pl-soft);align-self:stretch;display:flex;align-items:center;gap:8px}
+.j-ring{position:relative;width:40px;height:40px;flex:none;display:grid;place-items:center}
+.j-ring svg{position:absolute;inset:0;width:40px;height:40px;transform:rotate(-90deg);display:block}
+.j-ring b{position:relative;font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.j-ring circle{fill:none;stroke-width:3.5}
+.j-ring .tr{stroke:var(--pl-soft)}
+.j-ring .fg{stroke:var(--pl-fg);stroke-linecap:round}
+.journey .j-l{line-height:1.3!important;overflow:visible!important}
+.journey .j-i{display:none}
+.journey .j-steps a.st-warn:not([aria-current]) .j-n{font-weight:800}
+/* Légende des états, dans l’aide */
+.j-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0;font-size:13px;color:var(--muted);align-items:center}
+.j-legend>span{display:inline-flex;align-items:center;gap:6px}
+.j-legend .lg{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;font-style:normal;font-size:11px;font-weight:800;box-sizing:border-box}
+.lg-done{background:var(--ink);color:var(--surface)}.lg-now{background:var(--surface);color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.lg-warn{background:var(--bad);color:var(--surface)}.lg-todo{border:1.5px dashed var(--muted);color:var(--muted)}
+.j-legend .j-lg-note{flex-basis:100%;font-size:12px}
 /* États : complétée = pastille pleine ✓ ; à vérifier = pastille rouge ; à faire = contour pointillé atténué. */
 .journey .j-steps a.st-done:not([aria-current]) .j-n{background:var(--pl-fg)!important;color:var(--pl-bg)!important;border-color:var(--pl-fg)!important;font-weight:800}
 .journey .j-steps a.st-warn:not([aria-current]) .j-n{background:var(--bad)!important;color:var(--surface)!important;border-color:var(--bad)!important}
@@ -1259,13 +1273,13 @@ section .adv-hint{display:none!important}
   .journey{left:12px;right:12px;transform:none;max-width:none;bottom:max(12px,env(safe-area-inset-bottom,0px));padding-right:64px!important}
   .journey .j-steps{justify-content:space-between;gap:0;flex:1;min-width:0}
   .j-prog .j-pl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .j-prog{padding:0 6px 0 8px}.j-prog b{font-size:13px}
+  .j-prog{padding:0 6px 0 0;gap:0}.j-ring,.j-ring svg{width:34px;height:34px}.j-ring b{font-size:11px}
   .journey .j-steps a,.journey .j-steps a[aria-current],.journey .j-steps a:not([aria-current]){width:34px;height:34px;padding:4px!important;min-width:0;justify-content:center}
   .journey .j-steps a[aria-current] .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}
   .journey .j-steps li:has(a[aria-current]){flex:none!important}
   .journey .j-steps a .j-n{width:26px!important;height:26px!important}
   .journey .j-l{font-size:13px}
-  .stepnav{position:fixed;right:17px;bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 13px);z-index:31;display:block}
+  .stepnav{position:fixed;right:17px;bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 3px);z-index:31;display:block}
   .stepnav::before{content:"";position:absolute;left:-5px;top:12px;bottom:12px;width:1px;background:var(--pl-soft)}
   .stepnav .sn-prev,.stepnav .sn-next{display:none}
   .stepnav .more-b{position:static!important;display:inline-flex!important;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:54px;height:40px;border:0;background:none;color:var(--pl-fg);font:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:999px;padding:0;box-shadow:none}
@@ -4457,8 +4471,10 @@ function jState(id, cur, seen) {
 }
 // Progression : étapes complétées sur 7, en chiffres et en barre (retour de Laurent : « bien montrer la progression »).
 function jProg(v, seen) { const st = JOURNEY.map(([id]) => jState(id, v, seen)), done = st.filter(x => x === "done").length, warn = st.filter(x => x === "warn").length, tot = JOURNEY.length;
-  $("journey").style.setProperty("--prog", Math.round(done / tot * 100) + "%");
-  return `<p class="j-prog"><b>${done}/${tot}</b><span class="j-pl"> complétées</span>${warn ? `<span class="sr-only">, ${warn} à vérifier</span>` : ""}</p>`; }
+  const pct = Math.round(done / tot * 100);
+  return `<p class="j-prog"><span class="j-ring"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="tr"/><circle cx="20" cy="20" r="17.5" class="fg" pathLength="100" stroke-dasharray="${pct} 100"/></svg><b>${done}/${tot}</b></span><span class="j-pl"> étapes complétées</span>${warn ? `<span class="sr-only">, ${warn} à corriger</span>` : ""}</p>`; }
+// Une marque par état : ✓ complétée, ! à corriger, – sans objet, le numéro sinon.
+const jIcon = (st, n) => st === "done" ? "✓" : st === "warn" ? "!" : st === "na" ? "–" : n + 1;
 const jHelpOpen = () => { try { return localStorage.getItem("lisio-help") === "1"; } catch (e) { return false; } };
 document.addEventListener("click", e => { const b = e.target.closest(".j-help-b"); if (!b) return; const on = b.getAttribute("aria-expanded") !== "true"; b.setAttribute("aria-expanded", String(on)); $("jHelp").hidden = !on; try { localStorage.setItem("lisio-help", on ? "1" : "0"); } catch (e) {} });
 function renderJourney(v) {
@@ -4466,16 +4482,16 @@ function renderJourney(v) {
   const i = JOURNEY.findIndex(x => x[0] === v || (x[4] || []).includes(v)), J = $("journey"), X = $("jNext"), NB = $("jNowBox");
   // Les étapes sont le menu (choix de Laurent, 7 novembre 2026) : toujours affichées, même hors parcours (Rédaction, Guide…).
   J.hidden = false; X.hidden = NB.hidden = i < 0;
-  if (i < 0) { const seen0 = jSeen(); J.innerHTML = jProg("", seen0) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, "", seen0); return `<li><a href="#${id}" class="st-${st}"><span class="j-n" aria-hidden="true">${st === "done" ? "✓" : n + 1}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`; stepNavRender(-1); return; }
+  if (i < 0) { const seen0 = jSeen(); J.innerHTML = jProg("", seen0) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, "", seen0); return `<li><a href="#${id}" class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`; stepNavRender(-1); return; }
   const [, , say, qs] = JOURNEY[i], seen = jSeen();
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
   const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="tpl">Partir d’un modèle</button></div></div>` : "";
-  J.innerHTML = jProg(v, seen) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}"><span class="j-n" aria-hidden="true">${st === "done" ? "✓" : n + 1}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`;
+  J.innerHTML = jProg(v, seen) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`;
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
   const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`);
   NB.innerHTML = `
   <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b> <span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span></p><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
-  <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p>${adv ? adv.outerHTML : ""}</div>${hello}`;
+  <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p><p class="j-legend"><span><i class="lg lg-done" aria-hidden="true">✓</i>Complétée</span><span><i class="lg lg-now" aria-hidden="true">4</i>En cours</span><span><i class="lg lg-warn" aria-hidden="true">!</i>À corriger</span><span><i class="lg lg-todo" aria-hidden="true">5</i>À commencer</span><span class="j-lg-note">« Complétée » : page ouverte, aucun problème détecté. Ce n’est pas un audit de conformité.</span></p>${adv ? adv.outerHTML : ""}</div>${hello}`;
   stepNavRender(i);
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm), nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
@@ -4824,7 +4840,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "8244c24";
+const LISIO_BUILD = "a79f8fa";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
