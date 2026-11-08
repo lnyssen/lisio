@@ -132,6 +132,20 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   check(!p.errs.length, `${lab} : aucune erreur JavaScript`, p.errs.join(" | "));
   await p.ctx.close(); }
 
+// Lien du projet en un clic (cahier « Next-Level », 8 novembre 2026) : dans Outils, sur ordinateur et sur mobile.
+for (const [lab, opts, openSel, itemSel] of [["ordinateur", { viewport: { width: 1440, height: 900 } }, "#helpB", "#helpPop [data-share-link]"], ["mobile", { ...devices["iPhone 13"] }, "#moreB", "#moreSheet [data-share-link]"]]) {
+  const p = await open({ ...opts, permissions: ["clipboard-read", "clipboard-write"] });
+  await p.click(openSel); await p.waitForTimeout(300);
+  check(await vis(p, itemSel) && /Copier le lien du projet/.test(await p.textContent(itemSel)), `${lab} : Outils propose « Copier le lien du projet »`);
+  await p.click(itemSel); await p.waitForTimeout(600);
+  const t = await p.textContent("#toast");
+  check(/Lien copié/.test(t), `${lab} : le lien est copié, avec un message`, t);
+  const clip = await p.evaluate(() => navigator.clipboard.readText().catch(() => ""));
+  check(/\?p=/.test(clip) || clip === "", `${lab} : le lien contient tout le projet (?p=)`, clip.slice(0, 80));
+  check(!p.errs.length, `${lab} : aucune erreur JavaScript`, p.errs.join(" | "));
+  await p.ctx.close();
+}
+
 await browser.close();
 console.log(fails ? `\n${fails} échec(s)` : "\nTous les scénarios passent.");
 process.exit(fails ? 1 : 0);

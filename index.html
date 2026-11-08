@@ -1036,6 +1036,25 @@ body{background:var(--bg)}
 .ex-cat{flex-wrap:wrap}.ex-vw{max-height:460px;overflow:auto}.ex-vars thead th{position:sticky;top:0;background:var(--surface);z-index:1}.ex-vars td.cp{white-space:nowrap;text-align:right}.ex-vars td.cp .btn{margin-left:4px}.ex-vars td.v code{word-break:break-all}
 .pd-tpl li{grid-template-columns:auto minmax(0,1fr) auto}.pd-tpl .pd-t small{display:block}.pd-tpl details{margin-top:6px;font-size:13px}.pd-tpl summary{cursor:pointer;font-weight:600}.pd-tpl details ul{margin:4px 0 0;padding-left:18px}.pd-tpl details li{display:list-item;padding:2px 0;box-shadow:none;border-radius:0}
 .pd-conf{grid-column:1 / -1;padding:10px 12px;border-radius:12px;background:var(--bg)}.pd-conf p{margin:0 0 8px}
+.wiz-dlg{width:min(620px,calc(100vw - 24px))}.wiz-dlg .pd-h{align-items:flex-start}.wiz-dlg .pd-h .note{margin:2px 0 0}
+.wiz-steps{list-style:none;margin:0;padding:0;display:flex;gap:6px;counter-reset:wz}
+.wiz-steps li{flex:1;min-width:0;counter-increment:wz;padding:8px 10px;border-radius:12px;background:var(--bg);color:var(--muted);font-size:13px;font-weight:600}
+.wiz-steps li::before{content:counter(wz) ". "}.wiz-steps li.done{color:var(--ink)}.wiz-steps li[aria-current]{background:var(--ink);color:var(--surface)}
+.wiz-body{display:flex;flex-direction:column;gap:14px;min-width:0}.wiz-body h3{margin:0;font-size:18px}.wiz-body h3:focus{outline:none}.wiz-body .note{margin:0}.wiz-body .ex-name{flex:none}.wiz-body select{font:inherit;font-weight:400;min-height:44px;padding:0 10px;border-radius:10px;border:1.5px solid var(--field);background:var(--surface);color:var(--ink)}
+.wiz-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px}
+.wiz-col{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600;min-width:0}.wiz-col .note{font-weight:400}
+.wiz-in{display:flex;gap:8px;min-width:0}.wiz-in input[type=color]{flex:none;width:44px;height:44px;padding:2px;border:1.5px solid var(--field);border-radius:10px;background:var(--surface);cursor:pointer}
+.wiz-in input[type=text]{flex:1;min-width:0;font:inherit;font-family:var(--mono);font-weight:400;min-height:44px;padding:0 12px;border-radius:10px;border:1.5px solid var(--field);background:var(--surface);color:var(--ink)}.wiz-in input[aria-invalid=true]{border-color:var(--bad)}
+.wiz-chk{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:16px;background:var(--bg)}.wiz-chk h4{margin:0;font-size:14px}.wiz-chk ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.wiz-chk li{font-size:14px}.wiz-chk li>span:first-child{display:inline-block;width:1.4em;font-weight:700}.wiz-chk li.ok>span:first-child{color:var(--ok)}.wiz-chk li.ko>span:first-child{color:var(--bad)}.wiz-chk .btn{align-self:flex-start}.wiz-err{margin:0;color:var(--bad);font-weight:600}
+.wiz-seg{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;min-width:0}.wiz-seg legend{font-size:13px;font-weight:600;padding:0;margin-bottom:6px}
+.wiz-seg input{accent-color:var(--ink);width:auto;height:auto;min-height:0;margin:0;flex:none}.wiz-seg label{display:flex;flex-direction:row;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:12px;box-shadow:inset 0 0 0 1.5px var(--hair);font-size:14px;cursor:pointer}.wiz-seg label:has(input:checked){box-shadow:inset 0 0 0 2px var(--ink);font-weight:600}
+.wiz-type{padding:16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden;overflow-wrap:anywhere}.wiz-type p{margin:0 0 8px;line-height:1.5}.wiz-type .wt-h{line-height:1.15;font-weight:700}.wiz-type .wt-m{margin:0;font-family:var(--sans);font-size:12px;opacity:.8}
+.wiz-sum{margin:0;padding-left:20px}.wiz-rows{display:flex;flex-direction:column;gap:8px}
+.wiz-row{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr);gap:12px;align-items:center}.wiz-row .mono{font-size:12px;color:var(--muted)}.wiz-n{display:flex;flex-direction:column;min-width:0}
+.wiz-sw{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));height:32px;border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}.wiz-sw i{display:block}
+.wiz-foot{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}.wiz-nav{display:flex;gap:8px;margin-left:auto}
+@media (max-width:480px){.wiz-row{grid-template-columns:minmax(0,1fr)}.wiz-steps li{padding:6px 8px;font-size:12px}}
 .pd-list li.pd-empty{display:block;color:var(--muted);box-shadow:none;background:var(--bg)}
 .pd-sw{display:flex}.pd-sw i{width:16px;height:16px;border-radius:50%;margin-right:-5px;box-shadow:0 0 0 2px var(--surface),inset 0 0 0 1px rgba(127,127,127,.4)}
 .pd-t{min-width:0}.pd-t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pd-t small{color:var(--muted);font-size:13px}
@@ -1583,7 +1602,7 @@ section .adv-hint{display:none!important}
     <div class="card-surface sys-card" role="region" aria-label="Aperçu du design system">
       <div class="sys-pages"><span class="ds-l" id="sysPgL">Page</span><div class="seg" role="group" aria-labelledby="sysPgL" id="sysPg"><button type="button" data-v="ds">Système</button><button type="button" data-v="home">Accueil</button><button type="button" data-v="form">Formulaire</button><button type="button" data-v="article">Article</button><button type="button" data-v="dash">Tableau de bord</button><button type="button" data-v="states">Composants</button></div></div>
       <div class="row between"><div class="seg" role="group" aria-label="Largeur d’écran de l’aperçu" id="sysView"><button type="button" data-v="w320">320</button><button type="button" data-v="mobile">Mobile<span class="dsk"> 390</span></button><button type="button" data-v="tablet">Tablet<span class="dsk"> 768</span></button><button type="button" data-v="desktop">Desktop<span class="dsk"> 1024</span></button><button type="button" data-v="xl">XL<span class="dsk"> 1440</span></button></div><button class="btn sm" type="button" id="sysCss">Copier le CSS</button></div>
-      <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysGrid" aria-pressed="false">Afficher la grille</button><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
+      <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button><button type="button" data-v="split">Côte à côte</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysGrid" aria-pressed="false">Afficher la grille</button><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
       <p class="note" id="sysNote"></p><p class="sys-chk" id="sysChk" role="status"></p>
       <div class="sys-wrap" id="sysWrap"><iframe id="sysFrame" title="Aperçu du design system" sandbox="allow-scripts" scrolling="no"></iframe></div>
       <section class="laws" id="sysLaws" aria-labelledby="sysLawsH" hidden></section>
@@ -1841,7 +1860,8 @@ section .adv-hint{display:none!important}
   <footer class="appfoot"><p><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><p>Sans compte : vos projets restent dans ce navigateur, sauf ceux que vous rangez dans l’espace d’équipe.</p></footer>
 </div>
 <div class="help-pop" id="helpPop" role="region" aria-labelledby="helpH" hidden><h2 id="helpH" class="sr-only">Outils</h2><h3 class="hp-h">Outils</h3><ul><li><a href="#lisibilite" data-help data-tool><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><b>Rédaction</b><small>Textes clairs : phrases, liens, boutons, erreurs</small></a></li>
-<li><button type="button" class="hp-b" data-prj-open><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><b>Projets</b><small>Ouvrir, dupliquer, partager, importer</small></button></li></ul><h3 class="hp-h">Apprendre</h3><ul><li><a href="#demo" data-help data-demo><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><b>Projet démo</b><small>Une palette exemple et la visite guidée des 7 étapes</small></a></li>
+<li><button type="button" class="hp-b" data-prj-open><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><b>Projets</b><small>Ouvrir, dupliquer, partager, importer</small></button></li>
+<li><button type="button" class="hp-b" data-share-link><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><b>Copier le lien du projet</b><small>Tout le projet dans un lien, sans serveur</small></button></li></ul><h3 class="hp-h">Apprendre</h3><ul><li><a href="#demo" data-help data-demo><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><b>Projet démo</b><small>Une palette exemple et la visite guidée des 7 étapes</small></a></li>
 <li><a href="#sources" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><b>Guide de Lisio</b><small>Chaque page expliquée, l’export vers Figma, les sources</small></a></li>
 <li><a href="#formation" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg><b>S’entraîner</b><small>Dix questions avec la réponse expliquée</small></a></li>
 <li><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><b>Guide de formation</b><small>Le support complet pour l’équipe</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
@@ -1850,9 +1870,12 @@ section .adv-hint{display:none!important}
 <dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
 <div class="pd-cur"><label class="ex-name">Projet en cours<input type="text" id="prjCurName" maxlength="60"></label><label class="ex-name">Page Figma du projet<input type="url" id="prjFigU" inputmode="url" placeholder="https://www.figma.com/design/…" aria-describedby="prjFigE"></label><p class="note" id="prjFigE">Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier.</p><p class="note" id="prjCurMeta"></p>
-<div class="row"><button class="btn primary" type="button" id="prjNew">Nouveau projet</button><button class="btn" type="button" id="prjDup">Dupliquer</button><button class="btn" type="button" id="prjShare">Copier le lien de partage</button><button class="btn" type="button" id="prjImp">Importer un fichier</button><button class="btn" type="button" id="prjExp">Télécharger le fichier</button></div></div>
+<div class="row"><button class="btn primary" type="button" id="prjWiz">Créer avec l’assistant</button><button class="btn" type="button" id="prjNew">Nouveau projet vide</button><button class="btn" type="button" id="prjDup">Dupliquer</button><button class="btn" type="button" id="prjShare">Copier le lien de partage</button><button class="btn" type="button" id="prjImp">Importer un fichier</button><button class="btn" type="button" id="prjExp">Télécharger le fichier</button></div></div>
 <h3 id="prjTH">Démarrer depuis un modèle</h3><p class="note" id="prjTplNote"></p><ul class="pd-list pd-tpl" id="prjTpl" aria-labelledby="prjTH"></ul>
 <h3 id="prjLH">Autres projets</h3><ul class="pd-list" id="prjList" aria-labelledby="prjLH"></ul></dialog>
+<dialog class="prj-dlg wiz-dlg" id="wizDlg" aria-labelledby="wizH" aria-describedby="wizStep"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><div><h2 id="wizH">Créer un projet</h2><p class="note" id="wizStep"></p></div><button type="button" class="mx" id="wizX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer l’assistant</span></button></div>
+<ol class="wiz-steps" id="wizSteps" aria-label="Étapes de l’assistant"></ol><div class="wiz-body" id="wizBody"></div><p class="sr-only" id="wizSay" aria-live="polite"></p>
+<div class="wiz-foot"><button type="button" class="btn" id="wizTpl">Ou partir d’un modèle</button><span class="wiz-nav"><button type="button" class="btn" id="wizPrev">Retour</button><button type="button" class="btn primary" id="wizNext"></button></span></div></dialog>
 <nav class="stepnav" id="stepNav" aria-label="Étape précédente et suivante"><span class="sn-prev" id="snPrev"></span><button type="button" class="more-b" id="moreB" aria-haspopup="dialog" aria-expanded="false" aria-controls="moreSheet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg><span>Outils</span></button><span class="sn-next" id="snNext"></span></nav>
 <button type="button" class="to-top" id="toTop" aria-label="Retour en haut de la page" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span class="tt-l">Haut</span></button>
 <dialog class="more-sheet" id="moreSheet" aria-labelledby="moreH"><span class="sheet-grab" aria-hidden="true"></span><div class="mh"><h2 id="moreH">Outils</h2><button type="button" class="mx" id="moreX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div><div class="mg" id="moreG"></div></dialog>
@@ -2604,6 +2627,36 @@ const TOUR = [
   ["exporter", "Exporter", "Un fichier CSS, un fichier JSON et un plugin pour Figma. Lisio vérifie une partie des critères WCAG, pas tous : vos écrans restent à tester, au clavier et avec un lecteur d’écran.", "Les formats d’export et ce que chacun contient."]
 ];
 const demoTour = () => TOUR.map(([step, title, say, look]) => ({ step, title, say, look }));
+// Lisio, assistant de création en 3 étapes (cahier « Next-Level », 8 novembre 2026). Données pures, testées par tests/wizard.test.mjs.
+// L'assistant crée un NOUVEAU projet : il ne remplace jamais le projet en cours.
+const WIZ_STEPS = [
+  { id: "couleurs", title: "Couleurs", say: "Votre couleur principale et la couleur du fond. Lisio en tire une encre de la même teinte pour le texte, et vérifie tout de suite les contrastes." },
+  { id: "police", title: "Police", say: "La police de vos textes, la taille du texte courant et l’écart entre les niveaux de titres. Tout reste réglable ensuite." },
+  { id: "validation", title: "Validation", say: "Lisio calcule les 11 nuances de chaque couleur et les contrastes de départ. Vous créez le projet, il s’ouvre sur la grille des contrastes." }
+];
+const WIZ_FONTS = [
+  ["Figtree", "Sans empattements, ronde et chaleureuse"],
+  ["Inter", "Sans empattements, dessinée pour les écrans"],
+  ["Atkinson Hyperlegible", "Dessinée par le Braille Institute pour les lecteurs malvoyants"],
+  ["Public Sans", "Sans empattements, celle du système de design de l’administration américaine"],
+  ["Source Sans 3", "Sans empattements, sobre"],
+  ["Lora", "Avec empattements, pour les longs textes"]
+];
+const WIZ_SCALES = [["1.2", "1,2 : titres discrets, pour les pages denses"], ["1.25", "1,25 : polyvalent"], ["1.333", "1,333 : titres bien marqués"]];
+const WIZ_BASES = [16, 18, 20];
+// Couleur principale + fond → palette de départ. L'encre (texte) garde la teinte de la principale et vise 7:1 (AAA) sur le fond.
+function wizPalette(primary, bg) {
+  const p = normHex(primary), b = normHex(bg); if (!p || !b || p === b) return null;
+  const ink = ratio(p, b) >= 7 ? p : suggestFix(p, b, 7) || suggestFix(p, b, 4.5) || (ratio("#000000", b) > ratio("#FFFFFF", b) ? "#000000" : "#FFFFFF");
+  const colors = [{ name: "Principale", hex: p }, ...(ink !== p ? [{ name: "Encre", hex: ink }] : []), { name: "Fond", hex: b }];
+  const rp = ratio(p, b), ri = ratio(ink, b);
+  const checks = [
+    { id: "ink-text", label: "Texte (encre) sur le fond", r: ri, need: 4.5, ok: ri >= 4.5 },
+    { id: "primary-text", label: "Principale sur le fond, en texte", r: rp, need: 4.5, ok: rp >= 4.5 },
+    { id: "primary-ui", label: "Principale sur le fond, en bouton ou icône", r: rp, need: 3, ok: rp >= 3 }
+  ];
+  return { colors, fg: ink, bg: b, checks, fixPrimary: rp < 4.5 ? suggestFix(p, b, 4.5) : null };
+}
 // F09 (P2) : rampes perceptuelles OKLCH, une autre façon de décliner une couleur en 11 nuances.
 // La clarté OKLCH (L) descend à pas réguliers du 50 au 950 ; la teinte reste celle de la couleur de départ ;
 // la chroma garde la part du gamut sRGB qu'occupe la couleur de départ ; au-delà de sRGB, elle est réduite et signalée (clipped).
@@ -4246,7 +4299,7 @@ function tplHead(nav, cur, right) {
   return `<header class="tpl-head"><div class="container"><a class="brand" href="#"><i aria-hidden="true"></i>Votre marque</a><nav class="tpl-nav" aria-label="Menu principal">${nav.map(n => `<a href="#"${n === cur ? ' aria-current="page"' : ""}>${n}</a>`).join("")}</nav>${right}<button class="btn btn-secondary t-button menu-btn" type="button" aria-expanded="false">Menu</button></div></header>`;
 }
 const tplFoot = () => `<footer class="tpl-foot"><div class="container"><span class="t-caption mut">© 2026 Votre marque</span><a href="#" class="t-link link-subtle t-caption">Mentions légales</a><a href="#" class="t-link link-subtle t-caption">Accessibilité : partiellement conforme</a><a href="#" class="t-link link-subtle t-caption">Plan du site</a></div></footer>`;
-function tplBody(pg, R, badge) {
+function tplBody(pg, R, badge, mkBadge) {
   const skip = `<a class="skip-link" href="#main">Aller au contenu</a>`;
   if (pg === "home") return `${skip}${tplHead(HOME_NAV, null, `<a class="btn btn-primary t-button head-cta" href="#">Prendre rendez-vous</a>`)}
 <main id="main"><section class="sec"><div class="container stack"><p class="t-label mut">Conception web accessible</p><h1 class="t-display measure">Des sites que tout le monde peut utiliser</h1><p class="t-body measure">Nous concevons des sites clairs, rapides et accessibles, testés avec de vraies personnes avant la mise en ligne.</p><div class="actions"><a class="btn btn-primary t-button" href="#">Prendre rendez-vous</a><a class="btn btn-secondary t-button" href="#">Voir nos réalisations</a></div></div></section>
@@ -4292,18 +4345,24 @@ function tplBody(pg, R, badge) {
 <tr><td>Inscription crèche</td><td><span class="tag t-label st-success">Validé</span></td><td class="hide-s">12 oct.</td><td><a href="#" class="t-link">Ouvrir<span class="sr-only"> : inscription crèche</span></a></td></tr></tbody></table></section></div></main>${tplFoot()}`;
   if (pg === "states") {
     // F13 : la page est construite depuis le registre src/core/components.mjs ; ajouter un composant n'oblige à rien d'autre.
-    const measure = k => { const d = ROLE_FR[k]; if (!d || d[2] === "deco" || d[2] === "off" || !d[1]) return "na"; return ratio(R[k], R[d[1]]) >= roleNeed(k) ? "pass" : "fail"; };
-    const all = COMPONENTS.map(c => ({ c, st: compStatus(c, measure) })), n = compCounts(all.flatMap(x => x.st));
+    // Côte à côte (cahier « Next-Level », 8 novembre 2026) : chaque état est dessiné et mesuré en clair et en sombre.
+    const split = S.sysTheme === "split", RD = split ? dsRoles("dark") : null;
+    const measureOf = RR => k => { const d = ROLE_FR[k]; if (!d || d[2] === "deco" || d[2] === "off" || !d[1]) return "na"; return ratio(RR[k], RR[d[1]]) >= roleNeed(k) ? "pass" : "fail"; };
+    const measure = measureOf(R);
+    const all = COMPONENTS.map(c => ({ c, st: compStatus(c, measure), sd: split ? compStatus(c, measureOf(RD)) : null })), n = compCounts(all.flatMap(x => split ? [...x.st, ...x.sd] : x.st));
     const pl = (k, one, many) => `${k} ${k > 1 ? many : one}`;
     const ctk = c => COMP_TOKENS.filter(t => t.comp === c.id || (t.comp === "focus" && c.tokens.includes("focus/ring")));
     // Correcteur sur les cartes (8 novembre 2026) : la carte en échec propose la nuance qui corrige le rôle ; Lisio l’applique et redessine.
     const th = S.sysTheme === "dark" ? "dark" : "light";
-    const fixOf = st => { if (st.status !== "fail") return ""; const k = (st.check || []).find(x => measure(x) === "fail"), v = k && roleFix(k, R, th); return v ? `<button type="button" class="btn btn-secondary t-button cmp-fix" data-fix-role="${k}" data-fix-v="${v}" data-fix-m="${th}">Corriger : ${ROLE_FR[k][0].toLowerCase()} → ${v}</button>` : ""; };
+    const fixOf = (st, RR = R, t = th) => { if (st.status !== "fail") return ""; const k = (st.check || []).find(x => measureOf(RR)(x) === "fail"), v = k && roleFix(k, RR, t); return v ? `<button type="button" class="btn btn-secondary t-button cmp-fix" data-fix-role="${k}" data-fix-v="${v}" data-fix-m="${t}">Corriger : ${ROLE_FR[k][0].toLowerCase()} → ${v}</button>` : ""; };
     const cell = st => `<div class="cmp-st st-${st.status}">${st.html}<span class="t-caption mut">${COMP_STATE_FR[st.s]}</span>${(st.check || []).map(k => badge(k)).join("")}${fixOf(st)}${st.manual ? `<span class="t-caption cmp-man"><b>À vérifier à la main :</b> ${st.manual}</span>` : ""}</div>`;
+    const dupIds = h => h.replace(/\b(id|for|aria-describedby|aria-labelledby|aria-controls)="([^"]+)"/g, (m, a, v) => `${a}="${v.split(" ").map(x => x + "-sombre").join(" ")}"`);
+    const half = (st, RR, t, lab, html) => `<div class="cmp-${t}">${html}<span class="t-caption mut">${lab}</span>${(st.check || []).map(k => mkBadge(RR)(k)).join("")}${fixOf(st, RR, t)}</div>`;
+    const cell2 = (st, sd) => `<div class="cmp-st st-${st.status === "fail" || sd.status === "fail" ? "fail" : st.status}"><div class="cmp-duo">${half(st, R, "light", "Clair", st.html)}${half(sd, RD, "dark", "Sombre", dupIds(sd.html))}</div><span class="t-caption mut">${COMP_STATE_FR[st.s]}</span>${st.manual ? `<span class="t-caption cmp-man"><b>À vérifier à la main :</b> ${st.manual}</span>` : ""}</div>`;
     return `<main class="page" id="main"><section><p class="t-label layer">Composants</p><h1 class="t-h1">Vos composants, état par état</h1><p class="t-body mut measure">Chaque composant est dessiné avec vos tokens, dans chacun de ses états : repos, survol, clavier, attente, erreur, vide. Lisio mesure les contrastes qu’il peut mesurer et liste ce qui reste à vérifier à la main.</p>
-<div class="tcard sub cmp-sum"><p class="t-body-strong">${pl(n.pass, "état mesuré", "états mesurés")} au-dessus du seuil, ${n.fail ? `<span class="cmp-fail">${pl(n.fail, "état en échec", "états en échec")}</span>` : "aucun état en échec"}, ${pl(n.manual, "point", "points")} à vérifier à la main.</p><p class="t-body mut">${COMP_LIMITS}</p></div></section>
-${all.map(({ c, st }) => `<section class="cmp" data-cmp="${c.id}" aria-labelledby="cmp-h-${c.id}"><h2 class="t-h3" id="cmp-h-${c.id}">${c.name}</h2><p class="t-body cmp-use">${c.use}</p><details class="cmp-tok t-caption"><summary>Jetons du composant (${ctk(c).length})</summary><ul>${ctk(c).map(t => `<li><code>${compTokenVar(t)}</code> → <code>${t.role}</code> <span class="mut">${t.fr}</span></li>`).join("")}</ul></details>
-<div class="st-grid${c.id === "card" || c.id === "alert" || c.id === "nav" ? " wide" : ""}">${st.map(cell).join("")}</div><p class="t-caption mut cmp-lim">${c.limits}</p></section>`).join("\n")}</main>`;
+<div class="tcard sub cmp-sum"><p class="t-body-strong">${split ? "Clair et sombre : " : ""}${pl(n.pass, "état mesuré", "états mesurés")} au-dessus du seuil, ${n.fail ? `<span class="cmp-fail">${pl(n.fail, "état en échec", "états en échec")}</span>` : "aucun état en échec"}, ${pl(n.manual, "point", "points")} à vérifier à la main.</p><p class="t-body mut">${COMP_LIMITS}</p></div></section>
+${all.map(({ c, st, sd }) => `<section class="cmp" data-cmp="${c.id}" aria-labelledby="cmp-h-${c.id}"><h2 class="t-h3" id="cmp-h-${c.id}">${c.name}</h2><p class="t-body cmp-use">${c.use}</p><details class="cmp-tok t-caption"><summary>Jetons du composant (${ctk(c).length})</summary><ul>${ctk(c).map(t => `<li><code>${compTokenVar(t)}</code> → <code>${t.role}</code> <span class="mut">${t.fr}</span></li>`).join("")}</ul></details>
+<div class="st-grid${split || c.id === "card" || c.id === "alert" || c.id === "nav" ? " wide" : ""}">${(split ? st.map((x, i) => cell2(x, sd[i])) : st.map(cell)).join("")}</div><p class="t-caption mut cmp-lim">${c.limits}</p></section>`).join("\n")}</main>`;
   }
   return "";
 }
@@ -4312,7 +4371,8 @@ function sysPage() {
   const theme = S.sysTheme === "dark" ? "dark" : "light", R = dsRoles(theme), need = needRatio(S.level), fr = n => fmt(floor2(n));
   const bp = sysBp();
   const fonts = [S.ts.fonts.head, S.ts.fonts.body].filter(f => f.src === "google" && GFmap.get(f.family)).map(f => `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${gfQuery(GFmap.get(f.family), GFmap.get(f.family).weights)}&display=swap">`).join("");
-  const badge = k => { const [, pair, kind] = ROLE_FR[k]; if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; if (kind === "off") return `<span class="bdg">Exempté : composant inactif${pair ? `, ${fr(ratio(R[k], R[pair]))}:1` : ""}</span>`; const r = ratio(R[k], R[pair]), req = roleNeed(k), ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "(3:1 requis)" : S.level) : `(${fmt(req, 1)}:1 requis)`}</span>`; };
+  const mkBadge = R => k => { const [, pair, kind] = ROLE_FR[k]; if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; if (kind === "off") return `<span class="bdg">Exempté : composant inactif${pair ? `, ${fr(ratio(R[k], R[pair]))}:1` : ""}</span>`; const r = ratio(R[k], R[pair]), req = roleNeed(k), ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "(3:1 requis)" : S.level) : `(${fmt(req, 1)}:1 requis)`}</span>`; };
+  const badge = mkBadge(R);
   const prim = allScales().map(s => `<div class="scale"><p class="t-body-strong">${esc(s.name)}${s.slug !== s.name.toLowerCase() ? ` <code>${s.slug}</code>` : ""}</p><div class="sw">${s.sw.map((h, i) => `<div style="background:${h};color:${inkOn(h)}"><b>${STEPS[i]}</b><span>${h}</span></div>`).join("")}</div></div>`).join("");
   const chip = k => { const h = R[k], bg = R["background/default"], pair = ROLE_FR[k][1];
     if (k.startsWith("text") || k.startsWith("link") || /\/text$/.test(k)) return `<div class="chip" style="background:${R[pair] || bg};color:${h}">Aa</div>`;
@@ -4378,7 +4438,7 @@ html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 .ratios{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:var(--spacing-4);align-items:end}.ratios figure{margin:0;display:flex;flex-direction:column;gap:var(--spacing-2)}
 ${TPL_CSS}`;
   const pg = sysPg(), gov = S.sysGrid ? `<div class="gov" aria-hidden="true"><div class="container grid">${"<div></div>".repeat(L.columns)}</div></div>` : "";
-  const body = pg !== "ds" ? frNb(tplBody(pg, R, badge)) + gov : `<main class="page">
+  const body = pg !== "ds" ? frNb(tplBody(pg, R, badge, mkBadge)) + gov : `<main class="page">
 <section><p class="t-label layer">Aperçu à ${bp.w} px · ${bp.label} · mode ${theme === "dark" ? "sombre" : "clair"}</p><h1 class="t-display">Design system</h1><p class="t-body mut measure">WCAG ${S.version}, niveau ${S.level}. Tout ce qui suit est dessiné avec le CSS exporté, sans autre règle que la mise en page de cet aperçu.</p><p><a class="skip-link skip-demo" href="#">Aller au contenu</a></p><p class="t-caption mut">Le lien d’évitement, ici affiché : sur un vrai site, il n’apparaît qu’à la première pression sur Tab (2.4.1).</p></section>
 <hr class="hr"><section><p class="t-label layer">Couche 1 · Primitives</p><h2 class="t-h2">Couleurs</h2><p class="t-body mut measure">Valeurs brutes, couleurs d’état comprises. Un composant ne les utilise jamais directement : il passe par un rôle.</p>${prim}</section>
 <hr class="hr"><section><p class="t-label layer">Couche 2 · Sémantique</p><h2 class="t-h2">Rôles</h2><p class="t-body mut measure">Chaque rôle pointe vers une nuance, avec le contraste de la paire qu’il forme. Mode ${theme === "dark" ? "sombre" : "clair"} affiché.</p>${roles}</section>
@@ -4405,7 +4465,10 @@ ${TPL_CSS}`;
 const chk=()=>{const W=document.documentElement.clientWidth,bad=[];document.querySelectorAll("body *").forEach(el=>{if(el.closest(".gov,script,style,.sr-only"))return;const r=el.getBoundingClientRect();if(!r.width)return;const cs=getComputedStyle(el);if(r.right>W+1&&cs.position!=="absolute"&&!el.closest(".gridbox"))bad.push(el);else if(/hidden|clip/.test(cs.overflow+cs.overflowX+cs.overflowY)&&!el.closest(".sw")&&(el.scrollWidth>el.clientWidth+2||el.scrollHeight>el.clientHeight+2))bad.push(el)});const top=bad.filter(e=>!bad.includes(e.parentElement));return{n:top.length,list:top.slice(0,5).map(e=>(e.className&&typeof e.className==="string"?e.className.split(" ")[0]:e.tagName.toLowerCase())+(e.textContent?" « "+e.textContent.trim().slice(0,24)+" »":""))}};
 const post=()=>parent.postMessage({lisioSysH:document.documentElement.scrollHeight,lisioChk:chk()},"*");new ResizeObserver(post).observe(document.body);addEventListener("load",post);document.fonts&&document.fonts.ready.then(post);<\/script>`;
   const spacing = S.sysSpacing ? `<style id="tsp">*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}</style>` : "";
-  return `<!doctype html><html lang="fr" data-theme="${theme}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aperçu Lisio</title>${fonts}<style>${css}</style>${spacing}</head><body>${body}${js}</body></html>`;
+  // Côte à côte : la moitié sombre reprend le bloc sombre et les jetons de composants, recalculés sur son propre élément.
+  const splitCss = S.sysTheme === "split" && sysPg() === "states" ? (() => { const dk = (css.match(/:root\[data-theme="dark"\] \{([^}]*)\}/) || [])[1] || "", ct = (css.match(/Component tokens: each one[\s\S]*?:root \{([^}]*)\}/) || [])[1] || "";
+    return `.cmp-duo{display:grid;grid-template-columns:1fr 1fr;align-self:stretch;border-radius:var(--radius-md);overflow:hidden;box-shadow:inset 0 0 0 1px var(--border-subtle)}.cmp-duo>div{display:flex;flex-direction:column;gap:var(--spacing-2);align-items:flex-start;min-width:0;padding:var(--spacing-3);background:var(--background-default);color:var(--text-default)}.cmp-light{${ct}}.cmp-dark{${dk}${ct}}.st-grid.wide{grid-template-columns:repeat(auto-fill,minmax(min(380px,100%),1fr))}`; })() : "";
+  return `<!doctype html><html lang="fr" data-theme="${theme}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aperçu Lisio</title>${fonts}<style>${css}${splitCss}</style>${spacing}</head><body>${body}${js}</body></html>`;
 }
 let sysH = 1200;
 function sysScale() {
@@ -4420,8 +4483,9 @@ function sysDoc() {
 function renderSystem() {
   sysDirty = false; renderDsPanel();
   $("sysView").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === sysBp().id));
-  $("sysTheme").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === (S.sysTheme === "dark" ? "dark" : "light"))));
-  const pg = sysPg(); $("sysPg").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === pg)));
+  const pg = sysPg(), tv = S.sysTheme === "split" && pg === "states" ? "split" : S.sysTheme === "dark" ? "dark" : "light", spB = $("sysTheme").querySelector('[data-v="split"]');
+  spB.hidden = pg !== "states"; spB.style.display = pg === "states" ? "" : "none";
+  $("sysTheme").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === tv))); $("sysPg").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === pg)));
   $("sysGrid").setAttribute("aria-pressed", String(!!S.sysGrid)); $("sysFrame").title = pg === "ds" ? "Aperçu du design system" : `Aperçu : page ${SYS_PAGES.find(x => x[0] === pg)[1].toLowerCase()}, avec votre design system`; renderLaws();
   $("sysSpacing").setAttribute("aria-pressed", String(!!S.sysSpacing)); $("sysVision").value = S.sysVision || "normal"; $("sysChk").textContent = "";
   $("sysFrame").srcdoc = sysDoc(); sysScale();
@@ -4437,7 +4501,7 @@ function sysReport(c) {
   const el = $("sysChk"); el.className = "sys-chk " + (c.n ? "no" : "ok");
   el.textContent = c.n ? `✕ ${c.n} élément${c.n > 1 ? "s" : ""} débordent ou sont coupés ${what} : ${c.list.join(", ")}.` : `✓ Rien ne déborde ni n’est coupé ${what}.`;
 }
-$("sysTheme").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.sysTheme = dsMode = b.dataset.v; save(); renderSystem(); });
+$("sysTheme").addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; S.sysTheme = b.dataset.v; dsMode = S.sysTheme === "dark" ? "dark" : "light"; save(); renderSystem(); });
 $("sysVision").addEventListener("change", e => { S.sysVision = e.target.value; save(); renderSystem(); });
 $("sysSpacing").addEventListener("click", () => { S.sysSpacing = !S.sysSpacing; save(); renderSystem(); });
 $("sysGrid").addEventListener("click", () => { S.sysGrid = !S.sysGrid; save(); renderSystem(); });
@@ -4685,7 +4749,7 @@ function renderJourney(v) {
   if (i < 0) { const seen0 = jSeen(); J.innerHTML = jProg("", seen0) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, "", seen0); return `<li><a href="#${id}" class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`; stepNavRender(-1); return; }
   const [, , say, qs] = JOURNEY[i], seen = jSeen();
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
-  const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm" data-hello="tpl">Créer mon projet</button></div></div>` : "";
+  const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm" data-hello="new">Créer mon projet</button></div></div>` : "";
   J.innerHTML = jProg(v, seen) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`;
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
   const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`);
@@ -4764,7 +4828,7 @@ $("jNext").addEventListener("click", fixClick);
 $("tsCrFix").addEventListener("click", fixClick);
 $("jNowBox").addEventListener("click", e => { const b = e.target.closest("[data-hello]"); if (!b) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("jNowBox").querySelector(".j-hello"); if (h) h.remove();
   if (b.dataset.hello === "demo") { demoOpen(); return; }
-  if (b.dataset.hello === "tpl") { $("railPrj").offsetParent ? $("railPrj").click() : $("prjB").click(); const t = $("prjTpl").querySelector("[data-tpl]"); if (t) { t.scrollIntoView({ block: "center" }); t.focus(); } return; }
+  if (b.dataset.hello === "new") { wizOpen(null); return; }
   setMode(b.dataset.hello, true); $("journey").querySelector("a[aria-current]").focus(); });
 // Barre du bas (mobile) : étape précédente, « Plus », étape suivante.
 function stepNavRender(i) {
@@ -4829,6 +4893,7 @@ const moreIc = { formation: '<svg viewBox="0 0 24 24" fill="none" stroke="curren
 function moreRender() { const v = curView(), cur = n => n === v ? ' aria-current="page"' : "";
   $("moreG").innerHTML = `<h3 class="mh3">Outils</h3>` + MORE_T.map(n => { const t = $("tab-" + n), ic = t.querySelector("svg").outerHTML; return `<button type="button" class="mi" data-go="${n}"${cur(n)}>${ic}${esc(tabLabel(t))}</button>`; }).join("")
     + `<button type="button" class="mi" data-prj-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>Projets<small>${esc(S.projectName || "")}</small></button>`
+    + `<button type="button" class="mi" data-share-link><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Copier le lien<span class="sr-only"> du projet</span><small>Tout le projet, sans serveur</small></button>`
     + (figmaUrlOk(S.figma || "") ? `<a class="mi" href="${esc(S.figma)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg>Page Figma<small>Nouvel onglet</small></a>` : "")
     + `<h3 class="mh3">Apprendre</h3><ul class="mdoc">${[...$("helpPop").querySelectorAll("a:not([data-tool])")].map(a => `<li>${a.outerHTML.replace("data-help", (a.getAttribute("href") === "#" + v ? 'aria-current="page" ' : "") + "data-help")}</li>`).join("")}</ul>`
     + `<h3 class="mh3">Réglages</h3><div class="mode-row mmode"><span id="mThemeL">Thème</span><div class="seg" role="group" aria-labelledby="mThemeL"><button type="button" data-theme-set="light" aria-pressed="${themeNow() === "light"}">Clair</button><button type="button" data-theme-set="dark" aria-pressed="${themeNow() === "dark"}">Sombre</button></div></div>`
@@ -5041,7 +5106,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "73377f0";
+const LISIO_BUILD = "7441304";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
@@ -5196,7 +5261,7 @@ sheetSwipe($("prjDlg"), () => $("prjDlg").close(), ".sheet-grab,.pd-h");
 POP_IDS.forEach(id => sheetSwipe($(id), () => closePops(true), ".sheet-grab,h3"));
 sheetSwipe($("qPop"), () => qClose(true), ".sheet-grab,.qpop-h");
 $("prjDlg").addEventListener("click", e => { if (e.target === $("prjDlg")) $("prjDlg").close(); });
-$("prjDlg").addEventListener("close", () => { const o = $("prjDlg").opener; ((o && o.offsetParent) ? o : $("prjB").offsetParent ? $("prjB") : $("moreB")).focus(); });
+$("prjDlg").addEventListener("close", () => { if ($("wizDlg").open) return; const o = $("prjDlg").opener; ((o && o.offsetParent) ? o : $("prjB").offsetParent ? $("prjB") : $("moreB")).focus(); });
 document.addEventListener("click", e => { const o = e.target.closest("#railPrj,#prjB"); if (o) $("prjDlg").opener = o; }, true);
 $("prjFigU").addEventListener("input", e => { const v = e.target.value.trim(), ok = !v || figmaUrlOk(v); e.target.setAttribute("aria-invalid", String(!ok)); $("prjFigE").textContent = ok ? "Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier." : "Ce lien ne vient pas de figma.com. Copiez-le depuis Figma : Partager, puis Copier le lien."; if (ok) { S.figma = v; save(); prjLabel(); } });
 $("prjCurName").addEventListener("input", e => { S.projectName = e.target.value.trim().slice(0, 60); save(); $("prjName").value = S.projectName; prjLabel(); });
@@ -5215,6 +5280,77 @@ $("prjTpl").addEventListener("click", e => {
 });
 $("prjNew").addEventListener("click", () => { const P = prjAll(), n = P.list.length + 1; prjGo({ id: prjId(), name: `Projet ${n}`, savedAt: new Date().toISOString(), colors: null, state: {} }); });
 $("prjDup").addEventListener("click", () => { prjSync(); prjGo({ id: prjId(), name: `${S.projectName || "Projet"} (copie)`, savedAt: new Date().toISOString(), colors: isExample ? null : JSON.parse(JSON.stringify(palette)), state: (s => { delete s.demo; return s; })(JSON.parse(JSON.stringify(S))) }); });
+// ---------- Assistant de création (cahier « Next-Level ») : couleurs, police, validation ----------
+// Il crée un NOUVEAU projet (prjGo), comme les modèles et la démo : le projet en cours reste dans la liste.
+const WIZ0 = { i: 0, name: "", p: "#2563EB", b: "#FFFFFF", font: "Figtree", base: 16, ratio: "1.25" }, WIZ = { ...WIZ0 };
+const wizR = r => String(r).replace(".", ",");
+function wizOpen(opener) { Object.assign(WIZ, WIZ0); $("wizDlg").opener = opener || null; $("wizSay").textContent = ""; wizRender(false); $("wizDlg").showModal(); $("wizName").focus(); }
+function wizColField(id, label, hint, v) { const h = normHex(v);
+  return `<div class="wiz-col"><label for="${id}">${label}</label><span class="note" id="${id}H">${hint}</span><span class="wiz-in"><input type="color" id="${id}C" value="${(h || "#000000").toLowerCase()}" aria-label="${label} : sélecteur de couleur"><input type="text" id="${id}" value="${esc(v)}" maxlength="7" spellcheck="false" autocomplete="off" aria-describedby="${id}H"${h ? "" : ' aria-invalid="true"'}></span></div>`; }
+function wizChecks(P) { return `<ul>${P.checks.map(c => `<li class="${c.ok ? "ok" : "ko"}"><span aria-hidden="true">${c.ok ? "✓" : "✕"}</span><span class="sr-only">${c.ok ? "Réussi" : "Échec"} : </span>${esc(c.label)} : ${f2(c.r)}:1 <span class="muted">(${wizR(c.need)}:1 demandé)</span></li>`).join("")}</ul>`; }
+function wizCheck() {
+  const box = $("wizChk"), P = wizPalette(WIZ.p, WIZ.b); if (!box) return P;
+  if (!P) { box.innerHTML = `<p class="wiz-err">${normHex(WIZ.p) && normHex(WIZ.b) ? "La principale et le fond sont identiques : choisissez deux couleurs différentes." : "Saisissez deux codes couleur en hexadécimal, par exemple #2563EB."}</p>`; return null; }
+  box.innerHTML = `<h4>Contrastes de départ</h4>${wizChecks(P)}`
+    + (P.fg !== P.colors[0].hex ? `<p class="note">Pour le texte, Lisio ajoute une encre <span class="mono">${P.fg}</span>, de la même teinte que la principale, qui vise 7:1 sur le fond.</p>` : "")
+    + (P.fixPrimary ? `<p class="note">La principale est trop claire pour un texte sur ce fond. Gardez-la pour le décor, ou corrigez-la :</p><button type="button" class="btn sm" data-wiz-fix="${P.fixPrimary}">Corriger : ${P.colors[0].hex} → ${P.fixPrimary}, même teinte</button>` : "");
+  return P;
+}
+function wizType() {
+  const el = $("wizType"); if (!el) return; const P = wizPalette(WIZ.p, WIZ.b) || { fg: "#101828", bg: "#FFFFFF" }, f = { src: "google", family: WIZ.font }, r = +WIZ.ratio, b = WIZ.base;
+  ensureFont(f); const sz = [3, 2, 1].map(k => Math.round(b * r ** k));
+  el.style.cssText = `background:${P.bg};color:${P.fg};font-family:${fontCss(f)}`;
+  el.innerHTML = `<p class="wt-h" style="font-size:${sz[1]}px">Un titre de niveau 2</p><p style="font-size:${b}px">Le texte courant de vos pages, à ${b} px. Lisio en déduit la taille des titres et la version mobile.</p><p class="wt-m">Titre 1 : ${sz[0]} px · titre 2 : ${sz[1]} px · titre 3 : ${sz[2]} px · texte : ${b} px</p>`;
+  const d = WIZ_FONTS.find(x => x[0] === WIZ.font); $("wizFontH").textContent = d ? d[1] : "";
+}
+function wizRender(focusHead) {
+  const n = WIZ_STEPS.length, s = WIZ_STEPS[WIZ.i];
+  $("wizStep").textContent = `Étape ${WIZ.i + 1} sur ${n} : ${s.title}`;
+  $("wizSteps").innerHTML = WIZ_STEPS.map((x, k) => `<li${k === WIZ.i ? ' aria-current="step"' : k < WIZ.i ? ' class="done"' : ""}>${esc(x.title)}${k < WIZ.i ? '<span class="sr-only"> (fait)</span>' : ""}</li>`).join("");
+  let h = `<h3 id="wizSH" tabindex="-1">${esc(s.title)}</h3><p class="note">${esc(s.say)}</p>`;
+  if (s.id === "couleurs") h += `<label class="ex-name">Nom du projet<input type="text" id="wizName" maxlength="60" value="${esc(WIZ.name)}" autocomplete="off"></label><div class="wiz-cols">${wizColField("wizP", "Couleur principale", "Boutons, liens, accents.", WIZ.p)}${wizColField("wizB", "Couleur du fond", "Le fond de vos pages.", WIZ.b)}</div><div class="wiz-chk" id="wizChk"></div>`;
+  else if (s.id === "police") h += `<label class="ex-name">Police<select id="wizFont" aria-describedby="wizFontH">${WIZ_FONTS.map(([f]) => `<option${f === WIZ.font ? " selected" : ""}>${esc(f)}</option>`).join("")}</select></label><p class="note" id="wizFontH"></p>`
+    + `<fieldset class="wiz-seg"><legend>Taille du texte courant</legend>${WIZ_BASES.map(v => `<label><input type="radio" name="wizBase" value="${v}"${v === WIZ.base ? " checked" : ""}>${v} px</label>`).join("")}</fieldset>`
+    + `<fieldset class="wiz-seg"><legend>Écart entre les niveaux de titres</legend>${WIZ_SCALES.map(([v, t]) => `<label><input type="radio" name="wizRatio" value="${v}"${v === WIZ.ratio ? " checked" : ""}>${esc(t)}</label>`).join("")}</fieldset><div class="wiz-type" id="wizType" aria-label="Aperçu" role="group"></div>`;
+  else { const P = wizPalette(WIZ.p, WIZ.b);
+    h += `<ul class="wiz-sum"><li>Projet : <b>${esc(WIZ.name.trim() || `Projet ${prjAll().list.length + 1}`)}</b></li><li>Police : <b>${esc(WIZ.font)}</b>, texte courant à ${WIZ.base} px, échelle ${wizR(WIZ.ratio)}</li></ul>`
+      + `<div class="wiz-rows">${P.colors.map(c => `<div class="wiz-row"><span class="wiz-n"><b>${esc(c.name)}</b><span class="mono">${c.hex}</span></span><span class="wiz-sw" role="img" aria-label="11 nuances de ${esc(c.name)}, de 50 à 950">${rampFor(c.hex).sw.map(x => `<i style="background:${x}"></i>`).join("")}</span></div>`).join("")}</div>`
+      + `<div class="wiz-chk"><h4>Contrastes de départ</h4>${wizChecks(P)}</div><p class="note">Lisio vérifie une partie des critères WCAG : contrastes, tailles de texte, zoom. Vos écrans restent à tester au clavier et avec un lecteur d’écran.</p>`; }
+  $("wizBody").innerHTML = h;
+  $("wizPrev").hidden = WIZ.i === 0; $("wizTpl").hidden = WIZ.i !== 0;
+  $("wizNext").textContent = WIZ.i === n - 1 ? "Créer le projet" : `Suivant : ${WIZ_STEPS[WIZ.i + 1].title}`;
+  if (s.id === "couleurs") wizCheck(); if (s.id === "police") wizType();
+  if (focusHead) $("wizSH").focus();
+}
+function wizCreate() {
+  const P = wizPalette(WIZ.p, WIZ.b); if (!P) { WIZ.i = 0; wizRender(false); $("wizP").focus(); return; }
+  const name = WIZ.name.trim().slice(0, 60) || `Projet ${prjAll().list.length + 1}`;
+  const st = { fg: P.fg, bg: P.bg, level: "AA", version: "2.2", font: { src: "google", family: WIZ.font }, size: WIZ.base, tsPreset: { base: WIZ.base, ratio: WIZ.ratio }, ds: JSON.parse(JSON.stringify(DS_BASE)), projectName: name };
+  try { localStorage.setItem("lisio-wiz-done", name); history.replaceState(null, "", location.pathname + location.search + "#matrice"); } catch (e) {}
+  prjGo({ id: prjId(), name, savedAt: new Date().toISOString(), colors: P.colors.map(c => ({ ...c })), state: st });
+  if (!prjLeaving) try { localStorage.removeItem("lisio-wiz-done"); } catch (e) {}
+}
+function wizField(e) { const t = e.target;
+  if (t.id === "wizName") WIZ.name = t.value;
+  else if (t.id === "wizP" || t.id === "wizB") { const k = t.id === "wizP" ? "p" : "b", hx = normHex(t.value); WIZ[k] = t.value.trim(); t.setAttribute("aria-invalid", String(!hx)); if (hx) $(t.id + "C").value = hx.toLowerCase(); wizCheck(); }
+  else if (t.id === "wizPC" || t.id === "wizBC") { const id = t.id.slice(0, -1), hx = normHex(t.value); if (!hx) return; WIZ[id === "wizP" ? "p" : "b"] = hx; $(id).value = hx; $(id).removeAttribute("aria-invalid"); wizCheck(); }
+  else if (t.id === "wizFont") { WIZ.font = t.value; wizType(); }
+  else if (t.name === "wizBase") { WIZ.base = +t.value; wizType(); }
+  else if (t.name === "wizRatio") { WIZ.ratio = t.value; wizType(); } }
+$("wizDlg").addEventListener("input", wizField); $("wizDlg").addEventListener("change", wizField);
+$("wizDlg").addEventListener("click", e => { const fx = e.target.closest("[data-wiz-fix]"); if (!fx) return;
+  WIZ.p = fx.dataset.wizFix; $("wizP").value = WIZ.p; $("wizP").removeAttribute("aria-invalid"); $("wizPC").value = WIZ.p.toLowerCase(); wizCheck(); $("wizP").focus();
+  $("wizSay").textContent = `Principale corrigée : ${WIZ.p}, ${f2(ratio(WIZ.p, normHex(WIZ.b)))}:1 sur le fond, même teinte.`; });
+$("wizNext").addEventListener("click", () => {
+  if (WIZ.i === 0 && !wizPalette(WIZ.p, WIZ.b)) { wizCheck(); $(normHex(WIZ.p) ? "wizB" : "wizP").focus(); $("wizSay").textContent = $("wizChk").textContent; return; }
+  if (WIZ.i === WIZ_STEPS.length - 1) { wizCreate(); return; }
+  WIZ.i++; wizRender(true); });
+$("wizPrev").addEventListener("click", () => { if (WIZ.i) { WIZ.i--; wizRender(true); } });
+$("wizX").addEventListener("click", () => $("wizDlg").close());
+$("wizTpl").addEventListener("click", () => { const o = $("wizDlg").opener; $("wizDlg").close(); $("prjDlg").opener = o; prjRender(); $("prjDlg").showModal(); const t = $("prjTpl").querySelector("[data-tpl]"); if (t) { t.scrollIntoView({ block: "center" }); t.focus(); } });
+$("wizDlg").addEventListener("close", () => { if ($("prjDlg").open) return; const o = $("wizDlg").opener; ((o && o.offsetParent) ? o : $("prjB").offsetParent ? $("prjB") : $("moreB")).focus(); });
+$("prjWiz").addEventListener("click", () => { const o = $("prjDlg").opener; $("prjDlg").close(); wizOpen(o); });
+sheetSwipe($("wizDlg"), () => $("wizDlg").close(), ".sheet-grab,.pd-h");
 // ---------- Projet démo et visite guidée (F06) : un projet à part, signalé, qu’on quitte d’un clic ----------
 // La démo ne remplace jamais un projet : elle est ajoutée à la liste (une seule fois), et « Quitter la démo » rend le projet d’avant.
 function demoOpen() {
@@ -5243,6 +5379,8 @@ document.addEventListener("click", e => {
   if (e.target.closest("[data-demo-next]")) { const T = demoTour(), i = +($("demoBar").dataset.i || 0); location.hash = (T[i + 1] || T[0]).step; }
 });
 $("prjShare").addEventListener("click", () => $("prjLink").click());
+// Lien du projet en un clic, depuis Outils (cahier « Next-Level », 8 novembre 2026) : le même lien que dans Projets.
+document.addEventListener("click", e => { if (!e.target.closest("[data-share-link]")) return; helpSet(false); if (MORES.open) moreClose(); prjSync(); $("prjLink").click(); });
 $("prjImp").addEventListener("click", () => $("prjFile").click());
 $("prjExp").addEventListener("click", () => $("prjSave").click());
 $("prjList").addEventListener("click", e => {
@@ -5267,7 +5405,8 @@ function cmdSource() {
     { k: "Action", t: "Modifier les couleurs", x: "palette editer", run: () => { cmdGoView("couleurs"); setTimeout(() => $("addColor").focus(), 50); } },
     { k: "Action", t: dark ? "Passer en mode clair" : "Passer en mode sombre", x: "theme", run: () => $("themeB").click() },
     { k: "Action", t: "Projets : ouvrir, créer, dupliquer", x: "projet sauvegarder enregistrer equipe", run: () => $("prjB").click() },
-    { k: "Action", t: "Nouveau projet", x: "creer", run: () => $("prjNew").click() },
+    { k: "Action", t: "Créer un projet avec l’assistant", x: "nouveau projet creer etapes", run: () => wizOpen(null) },
+    { k: "Action", t: "Nouveau projet vide", x: "creer", run: () => $("prjNew").click() },
     { k: "Action", t: "Affichage Essentiel", x: "mode simple debutant masquer", run: () => setMode("ess", true) },
     { k: "Action", t: "Affichage Avancé", x: "mode expert tout afficher reglages", run: () => setMode("adv", true) },
     { k: "Action", t: "Copier le lien de partage", x: "equipe collegue projet", run: () => $("prjLink").click() },
@@ -5350,6 +5489,7 @@ show(location.hash.slice(1));
 requestAnimationFrame(() => window.scrollTo(0, 0)); setTimeout(() => window.scrollTo(0, 0), 60);
 document.fonts.ready.then(renderMetrics);
 document.fonts.load(`${S.weight} 40px ${fontCss(S.font)}`).then(renderMetrics, () => {});
+try { const w = localStorage.getItem("lisio-wiz-done"); if (w) { localStorage.removeItem("lisio-wiz-done"); toast(`« ${w} » créé : voici la grille des contrastes de départ.`); } } catch (e) {}
 window.__lisioReady = true;
 })();
 </script>

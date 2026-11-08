@@ -81,6 +81,33 @@ async function open(state, w = 1440) {
   await ctx.close();
 }
 {
+  // Côte à côte (cahier « Next-Level », 8 novembre 2026) : chaque état dessiné en clair et en sombre, mesuré dans les deux modes.
+  const { ctx, page, errors } = await open({ version: "2.2", level: "AA" });
+  const split = page.locator('#sysTheme [data-v="split"]');
+  check(!(await split.isVisible()), "page Système : pas de bouton « Côte à côte » (il ne sert qu’aux composants)");
+  await page.click('#sysPg button[data-v="states"]'); await page.waitForTimeout(500);
+  check(await split.isVisible() && /Côte à côte/.test(await split.textContent()), "page Composants : bouton « Côte à côte »");
+  await split.click(); await page.waitForTimeout(900);
+  check(await split.getAttribute("aria-pressed") === "true", "« Côte à côte » est marqué comme choisi");
+  const f = page.frameLocator("#sysFrame"), cells = await f.locator(".cmp-st").count(), duos = await f.locator(".cmp-st .cmp-duo").count();
+  check(cells > 20 && duos === cells, "chaque état est dessiné deux fois, clair et sombre", `${duos} sur ${cells}`);
+  const bgs = await f.locator(".cmp-duo").first().evaluate(d => [...d.children].map(x => getComputedStyle(x).backgroundColor));
+  const dark = c => { const [r, g, b] = c.match(/\d+/g).map(Number); return r + g + b < 200; };
+  check(bgs.length === 2 && !dark(bgs[0]) && dark(bgs[1]), "moitié gauche claire, moitié droite sombre", bgs.join(" | "));
+  const btnBg = await f.locator('.cmp[data-cmp="button"] .cmp-duo').first().evaluate(d => [...d.querySelectorAll(".btn-primary")].map(b => getComputedStyle(b).backgroundColor));
+  check(btnBg.length === 2 && btnBg[0] !== btnBg[1], "le bouton prend ses couleurs du mode de sa moitié (jetons de composants)", btnBg.join(" | "));
+  check(/clair et sombre/i.test(await f.locator(".cmp-sum").textContent()), "le bilan compte les deux modes", await f.locator(".cmp-sum").textContent());
+  const dup = await page.frames().find(x => x.url() === "about:srcdoc").evaluate(() => { const ids = [...document.querySelectorAll("[id]")].map(e => e.id); return ids.filter((x, i) => ids.indexOf(x) !== i); });
+  check(!dup.length, "aucun identifiant en double dans la vue côte à côte", dup.slice(0, 5).join(", "));
+  if (AXE) { const fr = page.frames().find(x => x.url() === "about:srcdoc"); await fr.addScriptTag({ content: readFileSync(AXE, "utf8") });
+    const v = await fr.evaluate(async () => (await axe.run(document, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
+    check(!v.length, "axe-core : aucune violation en côte à côte", v.join(", ")); }
+  await page.click('#sysPg button[data-v="ds"]'); await page.waitForTimeout(500);
+  check(await page.evaluate(() => document.querySelector('#sysTheme [aria-pressed="true"]') && document.querySelector('#sysTheme [aria-pressed="true"]').dataset.v) === "light", "ailleurs, l’aperçu revient en clair");
+  check(!errors.length, "aucune erreur JavaScript", errors.join(" | "));
+  await ctx.close();
+}
+{
   const { ctx, page } = await open({ version: "2.2" }, 390);
   await page.click('#sysPg button[data-v="states"]'); await page.waitForTimeout(500);
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
