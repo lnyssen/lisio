@@ -35,7 +35,7 @@ test("guide et slides : aucune formulation interdite", () => {
 
 // P1 : les nouvelles fonctions figurent dans le guide et les slides, avec les mots de l'interface.
 test("guide : fonctions de la P1, avec les mots de l'interface", () => {
-  for (const w of ["Je débute, affichage Essentiel", "Je connais, tout afficher", "Partir d’un modèle", "Afficher les réglages avancés",
+  for (const w of ["Je débute, affichage Essentiel", "Je connais, tout afficher", "Créer mon projet", "Essayer avec un projet démo", "Quitter la démo", "Afficher les réglages avancés",
     "Service public sobre", "Éditorial, longue lecture", "Lecture renforcée (AAA)", "Palette Média Animation",
     "Comment tester ?", "Focus, cibles et états", "Télécharger en Markdown (.md)", "Télécharger en JSON",
     "Copier les variables seules", "Télécharger lisio.css", "ne remplace pas une sauvegarde"])

@@ -1026,6 +1026,13 @@ body{background:var(--bg)}
 :root.mode-ess .adv{display:none!important}.adv-hint{display:none}:root.mode-ess .adv-hint{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin:0;padding:12px 16px;border-radius:14px;border:1px dashed var(--field);font-size:14px;color:var(--muted)}
 .mode-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px;font-size:14px;font-weight:600}
 .j-hello .row{gap:8px}
+/* Projet démo (F06) : un bandeau qui dit où l’on est, et la visite guidée des 7 étapes. */
+.demo-bar{display:grid;gap:10px;margin:16px 0 0;padding:14px 16px;border-radius:14px;background:var(--surface);border:2px solid var(--accent)}
+.demo-bar p{margin:0;font-size:14px;max-width:72ch}
+.demo-bar .db-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.demo-bar .db-tag{display:inline-block;margin-right:6px;padding:2px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:13px}
+.demo-bar .db-tour{display:grid;gap:6px;justify-items:start;padding-top:10px;border-top:1px solid var(--hair)}
+.demo-bar .db-h{margin:0;font-size:16px}
 .ex-cat{flex-wrap:wrap}.ex-vw{max-height:460px;overflow:auto}.ex-vars thead th{position:sticky;top:0;background:var(--surface);z-index:1}.ex-vars td.cp{white-space:nowrap;text-align:right}.ex-vars td.cp .btn{margin-left:4px}.ex-vars td.v code{word-break:break-all}
 .pd-tpl li{grid-template-columns:auto minmax(0,1fr) auto}.pd-tpl .pd-t small{display:block}.pd-tpl details{margin-top:6px;font-size:13px}.pd-tpl summary{cursor:pointer;font-weight:600}.pd-tpl details ul{margin:4px 0 0;padding-left:18px}.pd-tpl details li{display:list-item;padding:2px 0;box-shadow:none;border-radius:0}
 .pd-conf{grid-column:1 / -1;padding:10px 12px;border-radius:12px;background:var(--bg)}.pd-conf p{margin:0 0 8px}
@@ -1351,6 +1358,7 @@ section .adv-hint{display:none!important}
 
   <main id="main" tabindex="-1">
   <div class="prj-in" id="prjIn" role="region" aria-label="Projet partagé" hidden></div>
+  <section class="demo-bar" id="demoBar" aria-label="Projet démo" hidden></section>
   <details class="sumbar" id="sumBar"><summary><span class="sum-t">Résumé du projet</span><span class="sum-line" id="sumLine"></span></summary><div class="sum-body"><ul class="sum-rows" id="sumRows"></ul></div></details>
   <nav class="journey" id="journey" aria-label="Étapes"></nav>
   <div class="j-nowbox" id="jNowBox"></div>
@@ -1813,7 +1821,8 @@ section .adv-hint{display:none!important}
   <footer class="appfoot"><p><b>Lisio</b> · contrastes WCAG 2.2 et design system accessible</p><p>Sans compte : vos projets restent dans ce navigateur, sauf ceux que vous rangez dans l’espace d’équipe.</p></footer>
 </div>
 <div class="help-pop" id="helpPop" role="region" aria-labelledby="helpH" hidden><h2 id="helpH" class="sr-only">Outils</h2><h3 class="hp-h">Outils</h3><ul><li><a href="#lisibilite" data-help data-tool><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><b>Rédaction</b><small>Textes clairs : phrases, liens, boutons, erreurs</small></a></li>
-<li><button type="button" class="hp-b" data-prj-open><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><b>Projets</b><small>Ouvrir, dupliquer, partager, importer</small></button></li></ul><h3 class="hp-h">Apprendre</h3><ul><li><a href="#sources" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><b>Guide de Lisio</b><small>Chaque page expliquée, l’export vers Figma, les sources</small></a></li>
+<li><button type="button" class="hp-b" data-prj-open><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><b>Projets</b><small>Ouvrir, dupliquer, partager, importer</small></button></li></ul><h3 class="hp-h">Apprendre</h3><ul><li><a href="#demo" data-help data-demo><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><b>Projet démo</b><small>Une palette exemple et la visite guidée des 7 étapes</small></a></li>
+<li><a href="#sources" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><b>Guide de Lisio</b><small>Chaque page expliquée, l’export vers Figma, les sources</small></a></li>
 <li><a href="#formation" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg><b>S’entraîner</b><small>Dix questions avec la réponse expliquée</small></a></li>
 <li><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><b>Guide de formation</b><small>Le support complet pour l’équipe</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 <li><a href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M12 16.5V20M8.5 20h7"/></svg><b>Slides</b><small>Pour animer une session</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
@@ -2554,6 +2563,27 @@ const COMP_TOKENS = [
   ct("focus", "outline", "focus/ring", "Contour de focus, partagé par tous les composants", "Focus ring, shared by every component")
 ];
 const compTokenVar = t => `--${t.comp}-${t.name}`;
+// Lisio, projet démo et visite guidée (F06). Données pures, testées par tests/demo.test.mjs.
+// La démo est un projet à part, marqué state.demo : elle ne remplace jamais un projet de l'utilisateur.
+// La palette contient exprès deux défauts, pour voir Lisio corriger et pas seulement valider :
+//   Orange #D9480F ne passe le texte courant avec aucune autre couleur (au mieux 4,30:1 avec Blanc) ;
+//   Ciel #38BDF8 sur Blanc reste à 2,14:1.
+const DEMO_NOTE = "Vos projets ne sont pas touchés : tout ce que vous changez ici reste dans la démo.";
+const DEMO = {
+  name: "Démo Lisio",
+  colors: [{ name: "Nuit", hex: "#0F172A" }, { name: "Bleu", hex: "#2563EB" }, { name: "Ciel", hex: "#38BDF8" }, { name: "Gris", hex: "#64748B" }, { name: "Orange", hex: "#D9480F" }, { name: "Blanc", hex: "#FFFFFF" }],
+  state: { demo: true, fg: "#0F172A", bg: "#FFFFFF", level: "AA", version: "2.2", tsPreset: { base: 16, ratio: "1.25" } }
+};
+const TOUR = [
+  ["couleurs", "Couleurs", "Six couleurs d’une marque inventée. L’Orange ne se lit en texte courant avec aucune autre : Lisio le signale sous « À corriger avant d’aller plus loin » et propose de le corriger en gardant sa teinte.", "Le bouton « Corriger : Orange → … », ou « Décorative : laisser telle quelle » si l’Orange ne sert qu’au décor."],
+  ["palette", "Nuances", "Chaque couleur devient une gamme de 11 nuances, de 50 à 950. Les nuances de même numéro ont la même clarté d’une couleur à l’autre : si Gris 700 sur Gris 50 passe, Bleu 700 sur Bleu 50 passe aussi.", "Les gammes, et les numéros de 50 à 950."],
+  ["tester", "Polices", "Choisissez une police et voyez-la sur un vrai texte, avec les couleurs de la démo. Sous 12 px, Lisio vous prévient.", "L’aperçu du texte et le choix de la police."],
+  ["styles", "Styles de texte", "La démo part d’un texte de 16 px et d’une échelle de 1,25. Vous réglez le desktop, Lisio calcule le mobile et vérifie chaque style, y compris le zoom à 200 %.", "Les tailles de chaque style et leur verdict."],
+  ["systeme", "Design system", "Les rôles donnent un métier aux nuances : texte, fond, action. Lisio en déduit le mode sombre et revérifie chaque paire. La page Composants montre les boutons, champs et alertes état par état.", "Les rôles, le mode sombre, puis la page Composants."],
+  ["matrice", "Contrastes", "La matrice croise chaque texte avec chaque fond. Ciel sur Blanc reste à 2,14:1, sous le seuil de 4,5:1 : ouvrez la case, Lisio montre l’avant et l’après et propose une couleur corrigée.", "La case Ciel sur Blanc, puis le détail de la paire."],
+  ["exporter", "Exporter", "Un fichier CSS, un fichier JSON et un plugin pour Figma. Lisio vérifie une partie des critères WCAG, pas tous : vos écrans restent à tester, au clavier et avec un lecteur d’écran.", "Les formats d’export et ce que chacun contient."]
+];
+const demoTour = () => TOUR.map(([step, title, say, look]) => ({ step, title, say, look }));
 // F09 (P2) : rampes perceptuelles OKLCH, une autre façon de décliner une couleur en 11 nuances.
 // La clarté OKLCH (L) descend à pas réguliers du 50 au 950 ; la teinte reste celle de la couleur de départ ;
 // la chroma garde la part du gamut sRGB qu'occupe la couleur de départ ; au-delà de sRGB, elle est réduite et signalée (clipped).
@@ -4609,7 +4639,7 @@ function renderJourney(v) {
   if (i < 0) { const seen0 = jSeen(); J.innerHTML = jProg("", seen0) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, "", seen0); return `<li><a href="#${id}" class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`; stepNavRender(-1); return; }
   const [, , say, qs] = JOURNEY[i], seen = jSeen();
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
-  const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="tpl">Partir d’un modèle</button></div></div>` : "";
+  const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm" data-hello="tpl">Créer mon projet</button></div></div>` : "";
   J.innerHTML = jProg(v, seen) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`;
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
   const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`);
@@ -4687,6 +4717,7 @@ $("exFix").addEventListener("click", fixClick);
 $("jNext").addEventListener("click", fixClick);
 $("tsCrFix").addEventListener("click", fixClick);
 $("jNowBox").addEventListener("click", e => { const b = e.target.closest("[data-hello]"); if (!b) return; try { localStorage.setItem("lisio-welcome", "1"); } catch (er) {} const h = $("jNowBox").querySelector(".j-hello"); if (h) h.remove();
+  if (b.dataset.hello === "demo") { demoOpen(); return; }
   if (b.dataset.hello === "tpl") { $("railPrj").offsetParent ? $("railPrj").click() : $("prjB").click(); const t = $("prjTpl").querySelector("[data-tpl]"); if (t) { t.scrollIntoView({ block: "center" }); t.focus(); } return; }
   setMode(b.dataset.hello, true); $("journey").querySelector("a[aria-current]").focus(); });
 // Barre du bas (mobile) : étape précédente, « Plus », étape suivante.
@@ -4703,7 +4734,7 @@ function stepNavRender(i) {
 $("helpPop").addEventListener("click", e => { if (e.target.closest("[data-prj-open]")) { helpSet(false); setTimeout(() => $("prjB").click(), 0); } });
 // R2 · 2.4.2 : le titre de l'onglet du navigateur dit la page affichée.
 const VIEW_TITLE = { couleurs: "Couleurs", matrice: "Contrastes", palette: "Nuances", tester: "Polices", styles: "Styles de texte", systeme: "Design system", lisibilite: "Rédaction", sources: "Guide", exporter: "Exporter", formation: "S’entraîner" };
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "couleurs"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); VIEWS.forEach(n => { $(n).hidden = n !== v; }); document.querySelectorAll("nav.tabs button[data-view]").forEach(t => t.dataset.view === v ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); jMark(v); renderJourney(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
+function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "couleurs"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); VIEWS.forEach(n => { $(n).hidden = n !== v; }); document.querySelectorAll("nav.tabs button[data-view]").forEach(t => t.dataset.view === v ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); jMark(v); renderJourney(v); demoRender(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
 // Mode clair ou sombre : suit le système, jusqu’à ce qu’on choisisse
 const DARKQ = matchMedia("(prefers-color-scheme: dark)"), themeNow = () => document.documentElement.getAttribute("data-theme") || (DARKQ.matches ? "dark" : "light");
 function themeLabel() { const d = themeNow() === "dark"; document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.themeSet === "dark") === d))); $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
@@ -4964,7 +4995,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "f24eac4";
+const LISIO_BUILD = "76c1e23";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
@@ -5137,7 +5168,34 @@ $("prjTpl").addEventListener("click", e => {
   prjGo({ id: prjId(), name: p.name, savedAt: new Date().toISOString(), colors: JSON.parse(JSON.stringify(p.colors)), state: { ...st, projectName: p.name, fromPreset: p.id } });
 });
 $("prjNew").addEventListener("click", () => { const P = prjAll(), n = P.list.length + 1; prjGo({ id: prjId(), name: `Projet ${n}`, savedAt: new Date().toISOString(), colors: null, state: {} }); });
-$("prjDup").addEventListener("click", () => { prjSync(); prjGo({ id: prjId(), name: `${S.projectName || "Projet"} (copie)`, savedAt: new Date().toISOString(), colors: isExample ? null : JSON.parse(JSON.stringify(palette)), state: JSON.parse(JSON.stringify(S)) }); });
+$("prjDup").addEventListener("click", () => { prjSync(); prjGo({ id: prjId(), name: `${S.projectName || "Projet"} (copie)`, savedAt: new Date().toISOString(), colors: isExample ? null : JSON.parse(JSON.stringify(palette)), state: (s => { delete s.demo; return s; })(JSON.parse(JSON.stringify(S))) }); });
+// ---------- Projet démo et visite guidée (F06) : un projet à part, signalé, qu’on quitte d’un clic ----------
+// La démo ne remplace jamais un projet : elle est ajoutée à la liste (une seule fois), et « Quitter la démo » rend le projet d’avant.
+function demoOpen() {
+  const P = prjSync(), had = P.list.find(x => x.state && x.state.demo);
+  if (had && had.id === P.cur) { location.hash = "couleurs"; return; }
+  try { history.replaceState(null, "", location.pathname + location.search + "#couleurs"); } catch (e) {}
+  if (had) { prjGo(had); return; }
+  const st = JSON.parse(JSON.stringify(DEMO.state)); st.ds = JSON.parse(JSON.stringify(DS_BASE));
+  prjGo({ id: prjId(), name: DEMO.name, savedAt: new Date().toISOString(), colors: JSON.parse(JSON.stringify(DEMO.colors)), state: { ...st, projectName: DEMO.name } });
+}
+function demoQuit() {
+  const P = prjSync(); let prev = null; try { prev = localStorage.getItem("lisio-boot-prev"); } catch (e) {}
+  const real = P.list.filter(x => !(x.state && x.state.demo)), to = real.find(x => x.id === prev) || real.sort((a, b) => (b.savedAt || "").localeCompare(a.savedAt || ""))[0];
+  prjGo(to || { id: prjId(), name: "Mon projet", savedAt: new Date().toISOString(), colors: null, state: {} });
+}
+function demoRender(v) {
+  const el = $("demoBar"); if (!el) return; el.hidden = !S.demo; if (!S.demo) { el.innerHTML = ""; return; }
+  const T = demoTour(); let i = T.findIndex(t => t.step === v); if (i < 0) i = +(el.dataset.i || 0); el.dataset.i = i;
+  const t = T[i], nx = T[i + 1], back = el.contains(document.activeElement) && document.activeElement.hasAttribute("data-demo-next");
+  el.innerHTML = `<div class="db-top"><p><span class="db-tag">Projet démo</span> ${esc(DEMO_NOTE)}</p><button type="button" class="btn sm" data-demo-quit>Quitter la démo</button></div><div class="db-tour"><h2 class="db-h">Visite guidée : étape ${i + 1} sur ${T.length}, ${esc(t.title)}</h2><p>${esc(t.say)}</p><p><b>À regarder :</b> ${esc(t.look)}</p><button type="button" class="btn primary sm" data-demo-next>${nx ? `Étape suivante : ${esc(nx.title)}` : "Revoir depuis le début"}</button></div>`;
+  if (back) el.querySelector("[data-demo-next]").focus();
+}
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-demo]")) { e.preventDefault(); helpSet(false); if (MORES.open) moreClose(); demoOpen(); return; }
+  if (e.target.closest("[data-demo-quit]")) { demoQuit(); return; }
+  if (e.target.closest("[data-demo-next]")) { const T = demoTour(), i = +($("demoBar").dataset.i || 0); location.hash = (T[i + 1] || T[0]).step; }
+});
 $("prjShare").addEventListener("click", () => $("prjLink").click());
 $("prjImp").addEventListener("click", () => $("prjFile").click());
 $("prjExp").addEventListener("click", () => $("prjSave").click());

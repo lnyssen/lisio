@@ -35,5 +35,6 @@ step "Contrastes : toujours une grille texte sur fond" node tests/e2e/grille.mjs
 step "Images et voile sur photo : options" node tests/e2e/voile.mjs
 step "Rampes OKLCH (P2, F09)" node tests/e2e/oklch.mjs
 step "Composants état par état (P2, F13)" node tests/e2e/composants.mjs
+step "Projet démo et visite guidée (P2, F06)" node tests/e2e/demo.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail

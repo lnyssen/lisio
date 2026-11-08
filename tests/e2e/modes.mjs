@@ -26,7 +26,7 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   const { ctx, page } = await open({});
   const h = page.locator("#hello");
   check(await h.isVisible(), "accueil affiché au premier lancement");
-  check(await h.locator("[data-hello=ess]").count() === 1 && await h.locator("[data-hello=adv]").count() === 1 && await h.locator("[data-hello=tpl]").count() === 1, "trois choix : Essentiel, Avancé, modèle");
+  check(await h.locator("[data-hello=ess]").count() === 1 && await h.locator("[data-hello=adv]").count() === 1 && await h.locator("[data-hello=tpl]").count() === 1, "choix : Essentiel, Avancé, modèle (plus la démo)");
   check(await page.evaluate(() => document.documentElement.classList.contains("mode-ess")), "nouveau venu : Essentiel par défaut");
   await go(page, "styles");
   check(await page.locator("#tsList").isVisible(), "on navigue sans répondre à l’accueil");
@@ -65,11 +65,11 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   check(await page.locator("#hello").count() === 0 && await page.locator("#shSet").isVisible(), "utilisateur existant : Avancé, sans accueil");
   await ctx.close();
 }
-// 6. « Partir d’un modèle » ouvre les modèles.
+// 6. « Créer mon projet » ouvre les modèles.
 {
   const { ctx, page } = await open({});
   await page.locator("#hello [data-hello=tpl]").click(); await page.waitForTimeout(300);
-  check(await page.locator("#prjDlg").evaluate(d => d.open) && await page.evaluate(() => document.activeElement && !!document.activeElement.dataset.tpl), "« Partir d’un modèle » : fenêtre Projets, focus sur le premier modèle");
+  check(await page.locator("#prjDlg").evaluate(d => d.open) && await page.evaluate(() => document.activeElement && !!document.activeElement.dataset.tpl), "« Créer mon projet » : fenêtre Projets, focus sur le premier modèle");
   await ctx.close();
 }
 await browser.close();
