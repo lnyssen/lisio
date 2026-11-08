@@ -111,6 +111,15 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   check(look.logoRound, `${lab} : logo rond, sans carré derrière`, JSON.stringify(look));
   check(!look.fades.length, `${lab} : aucun dégradé derrière les barres, ni en haut ni en bas`, look.fades.join(", "));
   check(look.sepBorder === "0px" && look.seps[0] === look.seps[1] && look.seps[0] !== "auto", `${lab} : séparateurs verticaux de même hauteur`, JSON.stringify(look.seps) + " " + look.sepBorder);
+  // Distances recalculées (8 novembre 2026, 14 h) : ronds de même taille, même écart partout, séparateurs au milieu, marges intérieures égales.
+  const sp = await p.evaluate(() => { const r = el => el.getBoundingClientRect(), J = r(document.getElementById("journey")), ring = r(document.querySelector("#journey .j-ring")), st = [...document.querySelectorAll("#journey .j-steps a")].map(r), m = r(document.getElementById("moreB")), sn = document.getElementById("stepNav");
+    const s1 = r(document.querySelector("#journey .j-prog")).right, x2 = r(sn).left + parseFloat(getComputedStyle(sn, "::before").left), q = v => Math.round(v * 10) / 10;
+    return { size: [ring.width, ...st.map(b => b.width), m.width].map(q), pads: [ring.left - J.left, ring.top - J.top, J.bottom - ring.bottom, J.right - m.right, m.top - J.top].map(q),
+      gaps: st.slice(1).map((b, k) => b.left - st[k].right).map(q), seps: [s1 - 1 - ring.right, st[0].left - s1, x2 - st[6].right, m.left - x2 - 1].map(q) }; });
+  const near = (xs, t) => Math.max(...xs) - Math.min(...xs) <= t;
+  check(near(sp.size, 1), `${lab} : anneau, étapes et « Outils » ont la même taille`, JSON.stringify(sp.size));
+  check(near(sp.pads, 1), `${lab} : même marge intérieure tout autour de la barre`, JSON.stringify(sp.pads));
+  check(near([...sp.gaps, ...sp.seps], 1.5) && Math.min(...sp.gaps) >= 2, `${lab} : même écart entre les ronds et de chaque côté des séparateurs`, JSON.stringify(sp));
   await p.click('#journey a[href="#tester"]'); await p.waitForTimeout(400);
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : toucher une étape l’ouvre`);
   await p.click("#moreB"); await p.waitForTimeout(400);

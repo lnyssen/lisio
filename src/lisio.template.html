@@ -1309,6 +1309,26 @@ section .adv-hint{display:none!important}
   :root:root .stepnav .more-b span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   :root:root .stepnav .more-b svg{width:22px;height:22px}
 }
+/* ===== Distances de la barre du bas, recalculées (Laurent, 8 novembre 2026, 14 h) =====
+   Ordinateur : le séparateur est au milieu, 14 px de chaque côté.
+   Mobile : 9 ronds de même taille (anneau, 7 étapes, Outils), 6 px de marge tout autour, et un seul écart --g
+   entre deux ronds comme de chaque côté des séparateurs. La barre fait au plus 440 px, centrée. */
+:root:root .journey{gap:0}
+:root:root .journey .j-steps{margin-left:8px}
+@media (max-width:760px){
+  :root{--pw:min(calc(100vw - 24px), 440px);--c:min(34px, calc((var(--pw) - 14px) / 10.6));--g:calc((var(--pw) - 14px - 9 * var(--c)) / 10)}
+  :root:root .journey{left:50%;right:auto;transform:translateX(-50%);width:var(--pw);max-width:none;padding:6px calc(6px + var(--c) + 2 * var(--g) + 1px) 6px 6px!important}
+  :root:root .j-prog{padding:0 calc(var(--g) + 1px) 0 0!important;gap:0}
+  :root:root .j-prog::after{right:0}
+  :root:root .journey .j-steps{flex:none;justify-content:flex-start;gap:var(--g);margin-left:var(--g)}
+  :root:root .j-ring,:root:root .j-ring svg{width:var(--c);height:var(--c)}
+  :root:root .journey .j-steps a,:root:root .journey .j-steps a[aria-current],:root:root .journey .j-steps a:not([aria-current]){width:var(--c);height:var(--c);padding:0!important}
+  :root:root .journey .j-steps a .j-n{width:calc(var(--c) - 8px)!important;height:calc(var(--c) - 8px)!important}
+  :root:root .stepnav{display:flex;line-height:0;right:calc((100vw - var(--pw)) / 2 + 6px);bottom:calc(max(12px, env(safe-area-inset-bottom,0px)) + 6px)}
+  :root:root .stepnav::before{left:calc(-1 * var(--g) - 1px)}
+  :root:root .stepnav .more-b{width:var(--c);height:var(--c)}
+}
+@media (max-width:359px){:root:root .j-ring b{font-size:10px}:root:root .journey .j-steps a .j-n{font-size:12px}}
 </style>
 
 <a class="app-skip" href="#main">Aller au contenu</a>

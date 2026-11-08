@@ -15,12 +15,15 @@ const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + la
 const MINE = [{ name: "Rouge maison", hex: "#B3261E" }, { name: "Nuit", hex: "#101828" }, { name: "Blanc", hex: "#FFFFFF" }];
 async function open(opts = {}, { welcomed = true, mine = true } = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...opts }); await ctx.route(/^https?:/, r => r.abort());
-  await ctx.addInitScript(([w, m, cols]) => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); if (w) localStorage.setItem("lisio-welcome", "1"); if (m) { localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); } } } catch (e) {} }, [welcomed, mine, MINE]);
+  // Préparation : on écrit le stockage une seule fois, puis on recharge (un script d’initialisation relancé à chaque rechargement pouvait l’effacer sous charge).
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
-  await page.goto(PAGE + "#couleurs"); await page.waitForTimeout(700); return { ctx, page, errors };
+  await page.goto(PAGE + "#couleurs");
+  await page.evaluate(([w, m, cols]) => { localStorage.clear(); if (w) localStorage.setItem("lisio-welcome", "1"); if (m) { localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); } }, [welcomed, mine, MINE]);
+  await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); return { ctx, page, errors };
 }
 const projects = p => p.evaluate(() => JSON.parse(localStorage.getItem("lisio:projects") || "null"));
-const nav = async (p, fn) => { await Promise.all([p.waitForEvent("load"), fn()]); await p.waitForTimeout(700); };
+// Après un clic qui recharge la page, on attend le projet voulu dans la barre du haut, plutôt qu’un délai fixe (stable sous charge).
+const nav = async (p, fn, want) => { await fn(); await p.waitForFunction(w => document.readyState === "complete" && window.__lisioReady === true && (document.getElementById("prjBN") || {}).textContent === w, want, { timeout: 20000 }).catch(() => {}); await p.waitForTimeout(400); };
 {
   // Première visite : le bandeau d’accueil propose la démo et la création.
   const { ctx, page } = await open({}, { welcomed: false, mine: false });
@@ -35,8 +38,8 @@ const nav = async (p, fn) => { await Promise.all([p.waitForEvent("load"), fn()])
   // Outils › Apprendre propose la démo à tout moment.
   await page.click("#helpB"); await page.waitForTimeout(300);
   check(await page.locator('#helpPop [data-demo]').isVisible(), "Outils › Apprendre : « Projet démo »");
-  await nav(page, () => page.click('#helpPop [data-demo]'));
-  check((await page.textContent("#prjBN")).includes("Démo"), "le projet ouvert s’appelle « Démo… »", await page.textContent("#prjBN"));
+  await nav(page, () => page.click('#helpPop [data-demo]'), "Démo Lisio");
+  check((await page.textContent("#prjBN")).includes("Démo"), "le projet ouvert s’appelle « Démo… »", await page.textContent("#prjBN") + " " + JSON.stringify(await page.evaluate(() => ({ h: location.hash, pop: !document.getElementById("helpPop").hidden, P: localStorage.getItem("lisio:projects"), ae: document.activeElement && (document.activeElement.id || document.activeElement.textContent.slice(0, 30)) }))));
   const bar = page.locator("#demoBar");
   check(await bar.isVisible() && /Projet démo/.test(await bar.textContent()) && /vos projets/i.test(await bar.textContent()), "bandeau « Projet démo » : vos projets ne sont pas touchés", await bar.textContent());
   check(/1 sur 7/.test(await bar.textContent()) && /Couleurs/.test(await bar.textContent()), "visite : étape 1 sur 7, Couleurs", await bar.textContent());
@@ -50,14 +53,14 @@ const nav = async (p, fn) => { await Promise.all([p.waitForEvent("load"), fn()])
     const v = await page.evaluate(async () => (await axe.run(document.querySelector("#demoBar"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
     check(!v.length, "axe-core : aucune violation dans le bandeau démo", v.join(", ")); }
   // Rouvrir la démo ne la duplique pas ; la quitter rend mon projet.
-  await nav(page, () => page.click("#demoBar [data-demo-quit]"));
+  await nav(page, () => page.click("#demoBar [data-demo-quit]"), "Mon site");
   check((await page.textContent("#prjBN")).trim() === "Mon site", "« Quitter la démo » rend mon projet", await page.textContent("#prjBN"));
   check(!(await page.locator("#demoBar").isVisible()), "hors démo : pas de bandeau");
   const cols = await page.evaluate(() => JSON.parse(localStorage.getItem("lisio:colors")));
   check(JSON.stringify(cols) === JSON.stringify(MINE), "mes couleurs sont revenues telles quelles");
-  await page.click("#helpB"); await page.waitForTimeout(300); await nav(page, () => page.click('#helpPop [data-demo]'));
+  await page.click("#helpB"); await page.waitForTimeout(300); await nav(page, () => page.click('#helpPop [data-demo]'), "Démo Lisio");
   P = await projects(page);
-  check(P.list.filter(x => x.state && x.state.demo).length === 1, "rouvrir la démo ne crée pas de doublon", String(P.list.length));
+  check(P.list.filter(x => x.state && x.state.demo).length === 1, "rouvrir la démo ne crée pas de doublon", JSON.stringify(P.list.map(x => [x.name, !!(x.state && x.state.demo)])) + " cur=" + P.cur + " bn=" + await page.textContent("#prjBN"));
   check(!errors.length, "aucune erreur JavaScript", errors.join(" | "));
   await ctx.close();
 }
@@ -65,7 +68,7 @@ const nav = async (p, fn) => { await Promise.all([p.waitForEvent("load"), fn()])
   // Mobile : le bandeau tient dans l’écran.
   const { ctx, page } = await open({ ...devices["iPhone 13"] });
   await page.click("#moreB"); await page.waitForTimeout(400);
-  await nav(page, () => page.click('#moreSheet [data-demo]'));
+  await nav(page, () => page.click('#moreSheet [data-demo]'), "Démo Lisio");
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check(await page.locator("#demoBar").isVisible() && ov <= 0, "mobile : bandeau visible, pas de défilement horizontal", String(ov));
   await ctx.close();
