@@ -1,7 +1,8 @@
 /* Lisio: accessible design system foundations, WCAG 2.2 level AA.
    Four layers, each one only uses the layer below:
    1. Primitives  2. Semantic roles  3. Layout and spacing  4. Typography (fluid from 390 to 1440 px).
-   Components should only use layers 2, 3 and 4: never a raw value, never a primitive. */
+   Components should only use layers 2, 3 and 4: never a raw value, never a primitive.
+   Component tokens (--button-primary-background…) sit between roles and components: components take their colours from them. */
 
 /* ===== 1. Primitives ===== */
 :root {
@@ -511,7 +512,7 @@ body {
 
 /* Links never rely on colour alone (SC 1.4.1): dotted 1 px underline, solid 2 px on hover and focus */
 a, .t-link {
-  color: var(--link-default);
+  color: var(--link-text);
   text-decoration: underline dotted;
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
@@ -551,7 +552,62 @@ a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
 }
 .skip-link:focus { transform: none; }
 
-.link-subtle { color: var(--link-subtle); }
+.link-subtle { color: var(--link-subtle-text); }
+
+/* ===== Component tokens: each one points at a semantic role. Components take their colours from here only,
+   so a team can restyle one component without touching the shared role. ===== */
+:root {
+  --button-primary-background: var(--action-default); /* Primary button background */
+  --button-primary-text: var(--text-on-action); /* Primary button text */
+  --button-primary-background-hover: var(--action-hover); /* Primary button background on hover */
+  --button-primary-background-pressed: var(--action-pressed); /* Primary button background when pressed */
+  --button-secondary-text: var(--text-default); /* Secondary button text */
+  --button-secondary-border: var(--border-default); /* Secondary button border */
+  --button-secondary-background-hover: var(--background-subtle); /* Secondary button background on hover */
+  --button-disabled-background: var(--disabled-surface); /* Disabled button background */
+  --button-disabled-text: var(--disabled-text); /* Disabled button text */
+  --field-background: var(--background-default); /* Field background */
+  --field-text: var(--text-default); /* Field text */
+  --field-border: var(--border-default); /* Field border */
+  --field-help-text: var(--text-muted); /* Field help text */
+  --field-error-border: var(--error-border); /* Field border in error */
+  --field-error-text: var(--error-text); /* Field error message */
+  --field-success-border: var(--success-border); /* Field border when valid */
+  --field-disabled-background: var(--disabled-surface); /* Disabled field background */
+  --field-disabled-text: var(--disabled-text); /* Disabled field text */
+  --link-text: var(--link-default); /* Link text */
+  --link-subtle-text: var(--link-subtle); /* Secondary link text */
+  --alert-body-text: var(--text-default); /* Alert body text */
+  --alert-info-background: var(--info-surface); /* Info alert background */
+  --alert-info-border: var(--info-border); /* Info alert border and icon */
+  --alert-info-text: var(--info-text); /* Info alert title and icon */
+  --alert-success-background: var(--success-surface); /* Success alert background */
+  --alert-success-border: var(--success-border); /* Success alert border and icon */
+  --alert-success-text: var(--success-text); /* Success alert title and icon */
+  --alert-warning-background: var(--warning-surface); /* Warning alert background */
+  --alert-warning-border: var(--warning-border); /* Warning alert border and icon */
+  --alert-warning-text: var(--warning-text); /* Warning alert title and icon */
+  --alert-error-background: var(--error-surface); /* Error alert background */
+  --alert-error-border: var(--error-border); /* Error alert border and icon */
+  --alert-error-text: var(--error-text); /* Error alert title and icon */
+  --badge-info-background: var(--info-surface); /* Info badge background */
+  --badge-info-border: var(--info-border); /* Info badge border */
+  --badge-info-text: var(--info-text); /* Info badge text */
+  --badge-success-background: var(--success-surface); /* Success badge background */
+  --badge-success-border: var(--success-border); /* Success badge border */
+  --badge-success-text: var(--success-text); /* Success badge text */
+  --badge-warning-background: var(--warning-surface); /* Warning badge background */
+  --badge-warning-border: var(--warning-border); /* Warning badge border */
+  --badge-warning-text: var(--warning-text); /* Warning badge text */
+  --nav-text: var(--text-default); /* Navigation link */
+  --nav-current-text: var(--text-default); /* Current page link */
+  --card-background: var(--background-default); /* Card background */
+  --card-subtle-background: var(--background-subtle); /* Secondary card background */
+  --card-border: var(--border-subtle); /* Card border (decorative) */
+  --card-text: var(--text-default); /* Card text */
+  --card-muted-text: var(--text-muted); /* Card secondary text */
+  --focus-outline: var(--focus-ring); /* Focus ring, shared by every component */
+}
 
 /* ===== 6. Components and their states ===== */
 .icon { inline-size: var(--icon-md); block-size: var(--icon-md); flex: none; background: currentColor; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
@@ -570,30 +626,30 @@ a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
-.btn-primary { background: var(--action-default); color: var(--text-on-action); }
-.btn-primary:hover { background: var(--action-hover); }
-.btn-primary:active { background: var(--action-pressed); }
-.btn-secondary { background: transparent; color: var(--text-default); border-color: var(--border-default); }
-.btn-secondary:hover { background: var(--background-subtle); }
-.btn:disabled, .btn[aria-disabled="true"] { background: var(--disabled-surface); color: var(--disabled-text); border-color: transparent; cursor: not-allowed; } /* exempt from SC 1.4.3, never the only way to know why */
+.btn-primary { background: var(--button-primary-background); color: var(--button-primary-text); }
+.btn-primary:hover { background: var(--button-primary-background-hover); }
+.btn-primary:active { background: var(--button-primary-background-pressed); }
+.btn-secondary { background: transparent; color: var(--button-secondary-text); border-color: var(--button-secondary-border); }
+.btn-secondary:hover { background: var(--button-secondary-background-hover); }
+.btn:disabled, .btn[aria-disabled="true"] { background: var(--button-disabled-background); color: var(--button-disabled-text); border-color: transparent; cursor: not-allowed; } /* exempt from SC 1.4.3, never the only way to know why */
 
 /* Field: visible label, linked help, error in words and icon, not colour alone (SC 1.4.1, 3.3.1, 3.3.2) */
 .field { display: flex; flex-direction: column; gap: var(--spacing-1); }
-.field-help { color: var(--text-muted); }
+.field-help { color: var(--field-help-text); }
 .field input, .field select, .field textarea {
   font: inherit;
   min-block-size: var(--size-target-comfort);
   padding-inline: var(--spacing-3);
-  border: var(--border-width-default) solid var(--border-default);
+  border: var(--border-width-default) solid var(--field-border);
   border-radius: var(--radius-control);
-  background: var(--background-default);
-  color: var(--text-default);
+  background: var(--field-background);
+  color: var(--field-text);
   box-sizing: border-box;
   inline-size: 100%;
 }
-.field :is(input, select, textarea):disabled { background: var(--disabled-surface); color: var(--disabled-text); cursor: not-allowed; }
-.field [aria-invalid="true"] { border-color: var(--error-border); border-width: 2px; }
-.field-error { display: flex; gap: var(--spacing-2); align-items: flex-start; color: var(--error-text); }
+.field :is(input, select, textarea):disabled { background: var(--field-disabled-background); color: var(--field-disabled-text); cursor: not-allowed; }
+.field [aria-invalid="true"] { border-color: var(--field-error-border); border-width: 2px; }
+.field-error { display: flex; gap: var(--spacing-2); align-items: flex-start; color: var(--field-error-text); }
 .field-error::before { content: ""; inline-size: var(--icon-sm); block-size: var(--icon-sm); margin-block-start: 0.2em; flex: none; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E") center / contain no-repeat; }
 
 /* Messages: an icon and a title in words, never colour alone (SC 1.4.1). Use role="alert" or role="status". */
@@ -605,18 +661,18 @@ a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
   border: var(--border-width-default) solid;
   border-inline-start-width: 4px;
   border-radius: var(--radius-md);
-  color: var(--text-default);
+  color: var(--alert-body-text);
 }
 .alert::before { content: ""; inline-size: var(--icon-md); block-size: var(--icon-md); grid-row: span 2; background: currentColor; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
 .alert-title { font-weight: 700; }
-.alert-error { background: var(--error-surface); border-color: var(--error-border); }
-.alert-error::before, .alert-error .alert-title { color: var(--error-text); }
-.alert-success { background: var(--success-surface); border-color: var(--success-border); }
-.alert-success::before, .alert-success .alert-title { color: var(--success-text); }
-.alert-warning { background: var(--warning-surface); border-color: var(--warning-border); }
-.alert-warning::before, .alert-warning .alert-title { color: var(--warning-text); }
-.alert-info { background: var(--info-surface); border-color: var(--info-border); }
-.alert-info::before, .alert-info .alert-title { color: var(--info-text); }
+.alert-error { background: var(--alert-error-background); border-color: var(--alert-error-border); }
+.alert-error::before, .alert-error .alert-title { color: var(--alert-error-text); }
+.alert-success { background: var(--alert-success-background); border-color: var(--alert-success-border); }
+.alert-success::before, .alert-success .alert-title { color: var(--alert-success-text); }
+.alert-warning { background: var(--alert-warning-background); border-color: var(--alert-warning-border); }
+.alert-warning::before, .alert-warning .alert-title { color: var(--alert-warning-text); }
+.alert-info { background: var(--alert-info-background); border-color: var(--alert-info-border); }
+.alert-info::before, .alert-info .alert-title { color: var(--alert-info-text); }
 .alert-error::before, .icon-error { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E"); }
 .alert-success::before, .icon-success { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M5 8.2l2 2 4-4.4'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M5 8.2l2 2 4-4.4'/%3E%3C/svg%3E"); }
 .alert-warning::before, .icon-warning { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 1.8 15 14H1z'/%3E%3Cpath d='M8 6v3.8M8 11.6v.6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 1.8 15 14H1z'/%3E%3Cpath d='M8 6v3.8M8 11.6v.6'/%3E%3C/svg%3E"); }

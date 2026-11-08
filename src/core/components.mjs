@@ -67,3 +67,47 @@ export function compStatus(c, measure) {
 export function compCounts(list) {
   return { pass: list.filter(x => x.status === "pass").length, fail: list.filter(x => x.status === "fail").length, manual: list.filter(x => x.status === "manual" || (x.manual && x.status !== "manual")).length, na: list.filter(x => x.status === "na").length };
 }
+// Couche 3 : jetons de composants. Chacun pointe vers un rôle (couche 2) ; les composants exportés n'utilisent que
+// ces jetons pour leurs couleurs. Changer le fond d'un bouton = changer un jeton, sans toucher au rôle partagé.
+const ct = (comp, name, role, fr, en) => ({ comp, name, role, fr, en });
+const ST4 = [["info", "information", "Info"], ["success", "succès", "Success"], ["warning", "alerte", "Warning"], ["error", "erreur", "Error"]];
+export const COMP_TOKENS = [
+  ct("button", "primary-background", "action/default", "Fond du bouton principal", "Primary button background"),
+  ct("button", "primary-text", "text/on-action", "Texte du bouton principal", "Primary button text"),
+  ct("button", "primary-background-hover", "action/hover", "Fond du bouton principal au survol", "Primary button background on hover"),
+  ct("button", "primary-background-pressed", "action/pressed", "Fond du bouton principal appuyé", "Primary button background when pressed"),
+  ct("button", "secondary-text", "text/default", "Texte du bouton secondaire", "Secondary button text"),
+  ct("button", "secondary-border", "border/default", "Bordure du bouton secondaire", "Secondary button border"),
+  ct("button", "secondary-background-hover", "background/subtle", "Fond du bouton secondaire au survol", "Secondary button background on hover"),
+  ct("button", "disabled-background", "disabled/surface", "Fond du bouton désactivé", "Disabled button background"),
+  ct("button", "disabled-text", "disabled/text", "Texte du bouton désactivé", "Disabled button text"),
+  ct("field", "background", "background/default", "Fond du champ", "Field background"),
+  ct("field", "text", "text/default", "Texte saisi", "Field text"),
+  ct("field", "border", "border/default", "Bordure du champ", "Field border"),
+  ct("field", "help-text", "text/muted", "Texte d’aide du champ", "Field help text"),
+  ct("field", "error-border", "error/border", "Bordure du champ en erreur", "Field border in error"),
+  ct("field", "error-text", "error/text", "Message d’erreur du champ", "Field error message"),
+  ct("field", "success-border", "success/border", "Bordure du champ validé", "Field border when valid"),
+  ct("field", "disabled-background", "disabled/surface", "Fond du champ désactivé", "Disabled field background"),
+  ct("field", "disabled-text", "disabled/text", "Texte du champ désactivé", "Disabled field text"),
+  ct("link", "text", "link/default", "Texte du lien", "Link text"),
+  ct("link", "subtle-text", "link/subtle", "Texte du lien secondaire", "Secondary link text"),
+  ct("alert", "body-text", "text/default", "Texte de l’alerte", "Alert body text"),
+  ...ST4.flatMap(([k, fr, en]) => [
+    ct("alert", `${k}-background`, `${k}/surface`, `Fond de l’alerte ${fr}`, `${en} alert background`),
+    ct("alert", `${k}-border`, `${k}/border`, `Bordure et icône de l’alerte ${fr}`, `${en} alert border and icon`),
+    ct("alert", `${k}-text`, `${k}/text`, `Titre et icône de l’alerte ${fr}`, `${en} alert title and icon`)]),
+  ...ST4.slice(0, 3).flatMap(([k, fr, en]) => [
+    ct("badge", `${k}-background`, `${k}/surface`, `Fond du badge ${fr}`, `${en} badge background`),
+    ct("badge", `${k}-border`, `${k}/border`, `Bordure du badge ${fr}`, `${en} badge border`),
+    ct("badge", `${k}-text`, `${k}/text`, `Texte du badge ${fr}`, `${en} badge text`)]),
+  ct("nav", "text", "text/default", "Lien du menu", "Navigation link"),
+  ct("nav", "current-text", "text/default", "Lien de la page en cours", "Current page link"),
+  ct("card", "background", "background/default", "Fond de la carte", "Card background"),
+  ct("card", "subtle-background", "background/subtle", "Fond de la carte secondaire", "Secondary card background"),
+  ct("card", "border", "border/subtle", "Filet de la carte (décoratif)", "Card border (decorative)"),
+  ct("card", "text", "text/default", "Texte de la carte", "Card text"),
+  ct("card", "muted-text", "text/muted", "Texte secondaire de la carte", "Card secondary text"),
+  ct("focus", "outline", "focus/ring", "Contour de focus, partagé par tous les composants", "Focus ring, shared by every component")
+];
+export const compTokenVar = t => `--${t.comp}-${t.name}`;

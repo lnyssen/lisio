@@ -28,7 +28,8 @@ async function open(state, w = 1440) {
   check(["Bouton", "Champ de formulaire", "Lien", "Alerte", "Badge de statut", "Navigation", "Carte"].every(n => names.includes(n)), "les sept composants du registre", names.join(" | "));
   const btn = f.locator('.cmp[data-cmp="button"]');
   check(/Lancer une action/.test(await btn.locator(".cmp-use").textContent()), "chaque composant dit à quoi il sert");
-  check((await btn.locator(".cmp-tok code").allTextContents()).includes("action/default"), "tokens utilisés listés");
+  const tok = await btn.locator(".cmp-tok li").allTextContents();
+  check(tok.some(t => /--button-primary-background/.test(t) && /action\/default/.test(t)), "jetons du composant listés, avec le rôle vers lequel ils pointent", tok.slice(0, 3).join(" | "));
   const caps = await btn.locator(".st-grid .t-caption.mut").allTextContents();
   check(["Repos", "Survol", "Appuyé", "Désactivé", "Chargement"].every(w => caps.some(c => c.startsWith(w))) && caps.some(c => /^Focus clavier/.test(c)), "bouton : six états dessinés", caps.join(" | "));
   check(/Lisio mesure/.test(await btn.locator(".cmp-lim").textContent()), "limites dites pour chaque composant");

@@ -3056,6 +3056,8 @@ function dsTrim(o) {
   const drop = g => !dsOn(g);
   if (drop("status")) { allScales().filter(sc => sc.status).forEach(sc => { delete o.color[sc.slug]; }); ST_KEYS.forEach(k => { delete o.semantic[k]; }); }
   if (drop("chart")) delete o.semantic.chart;
+  // Un jeton de composant dont le rôle est sorti du fichier part avec lui : jamais d'alias vers rien.
+  if (o.component) for (const c of Object.keys(o.component)) { if (c[0] === "$") continue; for (const k of Object.keys(o.component[c])) { const [g, r] = o.component[c][k].$value.slice(10, -1).split("."); if (!o.semantic[g] || !o.semantic[g][r]) delete o.component[c][k]; } if (!Object.keys(o.component[c]).length) delete o.component[c]; }
   if (drop("dark")) { const w = x => { if (!x || typeof x !== "object") return; const e = x.$extensions && x.$extensions["app.lisio"]; if (e) { delete e.modes; delete e.darkDescription; } for (const k in x) if (k[0] !== "$") w(x[k]); }; w(o.semantic); w(o.shadow); o.semantic.$description = "Semantic roles, light mode only"; }
   [["radius", "radius"], ["layout", "layout"], ["shadow", "shadow"], ["opacity", "opacity"], ["blur", "blur"], ["ratio", "ratio"], ["icon", "icon"]].forEach(([g, k]) => { if (drop(g)) delete o[k]; });
   if (drop("motion")) { delete o.duration; delete o.easing; }
@@ -3066,6 +3068,8 @@ function tsJson() {
   const semD = dsSemantic("dark");
   o.semantic = { $description: "Semantic roles. $value is the light mode; $extensions app.lisio.modes.dark holds the dark mode (a second mode in Figma, prefers-color-scheme and data-theme in CSS)" };
   for (const [g, items] of Object.entries(dsSemantic("light"))) { o.semantic[g] = {}; for (const [k, [hex, d, scopes]] of Object.entries(items)) { const dk = semD[g] && semD[g][k]; o.semantic[g][k] = { $type: "color", $value: tsTokenRef(hex), $description: d, $extensions: { "app.lisio": { scopes, modes: dk ? { dark: tsTokenRef(dk[0]) } : {}, darkDescription: dk ? dk[1] : undefined } } }; } }
+  o.component = { $description: "Component tokens. Each one is an alias to a semantic role; components take their colours from here only" };
+  for (const t of COMP_TOKENS) (o.component[t.comp] = o.component[t.comp] || {})[t.name] = { $type: "color", $value: `{semantic.${t.role.replace("/", ".")}}`, $description: t.en };
   for (const [g, def] of Object.entries(dsDim())) { o[g] = { $description: def.$d }; for (const [k, v] of Object.entries(def.v)) { const [n, d] = Array.isArray(v) ? v : [v, null]; o[g][k] = { $type: "dimension", $value: { value: n, unit: "px" } }; if (d) o[g][k].$description = d; } }
   o.layout = { $description: `Layout per breakpoint (${BP.map(b => b.label + " " + b.w).join(", ")}): one value per screen` };
   ["margin", "gutter", "columns", "section"].forEach(k => { const bps = {}; BP.forEach(b => { bps[b.id] = dsLay()[b.id][k]; });
@@ -3116,12 +3120,14 @@ function tsCss(full) {
   let c = `/* Lisio: accessible design system foundations, WCAG ${S.version} level ${S.level}.
    Four layers, each one only uses the layer below:
    1. Primitives  2. Semantic roles  3. Layout and spacing  4. Typography (fluid from ${VMIN} to ${VMAX} px).
-   Components should only use layers 2, 3 and 4: never a raw value, never a primitive. */
+   Components should only use layers 2, 3 and 4: never a raw value, never a primitive.
+   Component tokens (--button-primary-background…) sit between roles and components: components take their colours from them. */
 
 /* ===== 1. Primitives ===== */
 :root {
 ` + allScales().map(s => `  --${s.slug}: ${s.hex};\n` + s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n}\n\n/* ===== 2. Semantic roles (light mode) ===== */\n:root {\n  color-scheme: light;\n";
   const semOn = g => !(g === "chart" && !on("chart")) && !(ST_KEYS.includes(g) && !on("status"));
+  const compTok = COMP_TOKENS.filter(t => semOn(t.role.split("/")[0])).map(t => `  ${compTokenVar(t)}: var(--${t.role.replace("/", "-")}); /* ${t.en} */`).join("\n");
   for (const [g, items] of Object.entries(dsSemantic("light"))) if (semOn(g)) for (const [k, [hex, d]] of Object.entries(items)) c += `  --${g}-${k}: ${cssRef(hex)}; /* ${d} */\n`;
   let dk = ""; for (const [g, items] of Object.entries(dsSemantic("dark"))) if (semOn(g)) for (const [k, [hex]] of Object.entries(items)) dk += `    --${g}-${k}: ${cssRef(hex)};\n`;
   if (on("shadow")) for (let n = 1; n <= 4; n++) dk += `    --shadow-${n}: ${shCss(n, "dark")};\n`;
@@ -3151,7 +3157,7 @@ body {
 
 /* Links never rely on colour alone (SC 1.4.1): ${dsCfg("link")} 1 px underline, solid 2 px on hover and focus */
 a, .t-link {
-  color: var(--link-default);
+  color: var(--link-text);
   text-decoration: underline ${dsCfg("link") === "solid" ? "solid" : "dotted"};
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
@@ -3191,7 +3197,13 @@ a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
 }
 .skip-link:focus { transform: none; }
 
-.link-subtle { color: var(--link-subtle); }
+.link-subtle { color: var(--link-subtle-text); }
+
+/* ===== Component tokens: each one points at a semantic role. Components take their colours from here only,
+   so a team can restyle one component without touching the shared role. ===== */
+:root {
+${compTok}
+}
 
 /* ===== 6. Components and their states ===== */
 .icon { inline-size: var(--icon-md); block-size: var(--icon-md); flex: none; background: currentColor; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
@@ -3210,30 +3222,30 @@ a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
-.btn-primary { background: var(--action-default); color: var(--text-on-action); }
-.btn-primary:hover { background: var(--action-hover); }
-.btn-primary:active { background: var(--action-pressed); }
-.btn-secondary { background: transparent; color: var(--text-default); border-color: var(--border-default); }
-.btn-secondary:hover { background: var(--background-subtle); }
-.btn:disabled, .btn[aria-disabled="true"] { background: var(--disabled-surface); color: var(--disabled-text); border-color: transparent; cursor: not-allowed; } /* exempt from SC 1.4.3, never the only way to know why */
+.btn-primary { background: var(--button-primary-background); color: var(--button-primary-text); }
+.btn-primary:hover { background: var(--button-primary-background-hover); }
+.btn-primary:active { background: var(--button-primary-background-pressed); }
+.btn-secondary { background: transparent; color: var(--button-secondary-text); border-color: var(--button-secondary-border); }
+.btn-secondary:hover { background: var(--button-secondary-background-hover); }
+.btn:disabled, .btn[aria-disabled="true"] { background: var(--button-disabled-background); color: var(--button-disabled-text); border-color: transparent; cursor: not-allowed; } /* exempt from SC 1.4.3, never the only way to know why */
 
 /* Field: visible label, linked help, error in words and icon, not colour alone (SC 1.4.1, 3.3.1, 3.3.2) */
 .field { display: flex; flex-direction: column; gap: var(--spacing-1); }
-.field-help { color: var(--text-muted); }
+.field-help { color: var(--field-help-text); }
 .field input, .field select, .field textarea {
   font: inherit;
   min-block-size: var(--size-target-comfort);
   padding-inline: var(--spacing-3);
-  border: var(--border-width-default) solid var(--border-default);
+  border: var(--border-width-default) solid var(--field-border);
   border-radius: var(--radius-control);
-  background: var(--background-default);
-  color: var(--text-default);
+  background: var(--field-background);
+  color: var(--field-text);
   box-sizing: border-box;
   inline-size: 100%;
 }
-.field :is(input, select, textarea):disabled { background: var(--disabled-surface); color: var(--disabled-text); cursor: not-allowed; }
-.field [aria-invalid="true"] { border-color: var(--error-border); border-width: 2px; }
-.field-error { display: flex; gap: var(--spacing-2); align-items: flex-start; color: var(--error-text); }
+.field :is(input, select, textarea):disabled { background: var(--field-disabled-background); color: var(--field-disabled-text); cursor: not-allowed; }
+.field [aria-invalid="true"] { border-color: var(--field-error-border); border-width: 2px; }
+.field-error { display: flex; gap: var(--spacing-2); align-items: flex-start; color: var(--field-error-text); }
 .field-error::before { content: ""; inline-size: var(--icon-sm); block-size: var(--icon-sm); margin-block-start: 0.2em; flex: none; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E") center / contain no-repeat; }
 
 /* Messages: an icon and a title in words, never colour alone (SC 1.4.1). Use role="alert" or role="status". */
@@ -3245,11 +3257,11 @@ a:hover, a:focus-visible, .t-link:hover, .t-link:focus-visible {
   border: var(--border-width-default) solid;
   border-inline-start-width: 4px;
   border-radius: var(--radius-md);
-  color: var(--text-default);
+  color: var(--alert-body-text);
 }
 .alert::before { content: ""; inline-size: var(--icon-md); block-size: var(--icon-md); grid-row: span 2; background: currentColor; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
 .alert-title { font-weight: 700; }
-${ST_KEYS.map(k => `.alert-${k} { background: var(--${k}-surface); border-color: var(--${k}-border); }\n.alert-${k}::before, .alert-${k} .alert-title { color: var(--${k}-text); }`).join("\n")}
+${ST_KEYS.map(k => `.alert-${k} { background: var(--alert-${k}-background); border-color: var(--alert-${k}-border); }\n.alert-${k}::before, .alert-${k} .alert-title { color: var(--alert-${k}-text); }`).join("\n")}
 .alert-error::before, .icon-error { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 4.5v4.2M8 10.8v.7'/%3E%3C/svg%3E"); }\n.alert-success::before, .icon-success { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M5 8.2l2 2 4-4.4'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M5 8.2l2 2 4-4.4'/%3E%3C/svg%3E"); }\n.alert-warning::before, .icon-warning { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 1.8 15 14H1z'/%3E%3Cpath d='M8 6v3.8M8 11.6v.6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 1.8 15 14H1z'/%3E%3Cpath d='M8 6v3.8M8 11.6v.6'/%3E%3C/svg%3E"); }\n.alert-info::before, .icon-info { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 7.2v4.3M8 4.6v.6'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='8' r='6.5'/%3E%3Cpath d='M8 7.2v4.3M8 4.6v.6'/%3E%3C/svg%3E"); }\n
 /* Windows high contrast (forced colors): keep every control outlined and the focus visible */
 @media (forced-colors: active) {
@@ -3427,8 +3439,8 @@ const TPL_CSS = `
 .brand{font-weight:800;font-size:20px;color:var(--text-default);text-decoration:none;display:inline-flex;align-items:center;gap:var(--spacing-2);min-height:var(--size-target-min);white-space:nowrap}
 .brand i{width:28px;height:28px;border-radius:var(--radius-md);background:var(--action-default);flex:none}
 .tpl-nav{display:flex;gap:var(--spacing-1);margin-inline-start:auto;align-items:center;flex-wrap:wrap}
-.tpl-nav a{color:var(--text-default);text-decoration:none;padding:var(--spacing-2) var(--spacing-3);border-radius:var(--radius-sm);min-height:var(--size-target-min);display:inline-flex;align-items:center}
-.tpl-nav a[aria-current]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px;font-weight:700}
+.tpl-nav a{color:var(--nav-text);text-decoration:none;padding:var(--spacing-2) var(--spacing-3);border-radius:var(--radius-sm);min-height:var(--size-target-min);display:inline-flex;align-items:center}
+.tpl-nav a[aria-current]{color:var(--nav-current-text);text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px;font-weight:700}
 .menu-btn{display:none;margin-inline-start:auto}
 .avatar{width:36px;height:36px;border-radius:50%;background:var(--background-subtle);border:var(--border-width-default) solid var(--border-default);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
 @media (max-width:1023px){.tpl-nav{display:none}.menu-btn{display:inline-flex}.head-cta{display:none}}
@@ -3436,8 +3448,8 @@ const TPL_CSS = `
 .stack{display:flex;flex-direction:column;gap:var(--spacing-5)}.stack-s{display:flex;flex-direction:column;gap:var(--spacing-2)}
 .actions{display:flex;flex-wrap:wrap;gap:var(--spacing-3);align-items:center}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:var(--layout-gutter)}
-.tcard{background:var(--background-default);border:var(--border-width-default) solid var(--border-subtle);border-radius:var(--radius-lg);padding:var(--spacing-5);display:flex;flex-direction:column;gap:var(--spacing-3);min-width:0}
-.tcard.sub{background:var(--background-subtle)}
+.tcard{background:var(--card-background);color:var(--card-text);border:var(--border-width-default) solid var(--card-border);border-radius:var(--radius-lg);padding:var(--spacing-5);display:flex;flex-direction:column;gap:var(--spacing-3);min-width:0}
+.tcard.sub{background:var(--card-subtle-background)}
 .steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:var(--layout-gutter);counter-reset:s}
 .steps li{display:flex;flex-direction:column;gap:var(--spacing-2);counter-increment:s}
 .steps li::before{content:counter(s);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--action-default);color:var(--text-on-action)}
@@ -3464,16 +3476,16 @@ const TPL_CSS = `
 .tbl th,.tbl td{padding:var(--spacing-3) var(--spacing-2);border-bottom:var(--border-width-default) solid var(--border-subtle);text-align:start;vertical-align:middle}
 .tbl th{color:var(--text-muted);font-weight:600}
 @media (max-width:767px){.hide-s{display:none}}
-.tag.st-success{color:var(--success-text);background:var(--success-surface);border-color:var(--success-border)}
-.tag.st-warning{color:var(--warning-text);background:var(--warning-surface);border-color:var(--warning-border)}
-.tag.st-info{color:var(--info-text);background:var(--info-surface);border-color:var(--info-border)}
+.tag.st-success{color:var(--badge-success-text);background:var(--badge-success-background);border-color:var(--badge-success-border)}
+.tag.st-warning{color:var(--badge-warning-text);background:var(--badge-warning-background);border-color:var(--badge-warning-border)}
+.tag.st-info{color:var(--badge-info-text);background:var(--badge-info-background);border-color:var(--badge-info-border)}
 .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:var(--layout-gutter);align-items:start}
 .st-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:var(--spacing-5)}
 .st-grid.wide{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
 .st-grid>div{display:flex;flex-direction:column;gap:var(--spacing-2);align-items:flex-start;min-width:0}
 .st-grid .field{align-self:stretch}
 .cmp{display:flex;flex-direction:column;gap:var(--spacing-3)}.cmp+.cmp{border-top:var(--border-width-default) solid var(--border-subtle);padding-top:var(--spacing-6)}
-.cmp-use{margin:0}.cmp-tok{margin:0;display:flex;flex-wrap:wrap;gap:var(--spacing-1) var(--spacing-2);align-items:center}.cmp-tok code{font-size:12px}
+.cmp-use{margin:0}.cmp-tok{margin:0}.cmp-tok summary{cursor:pointer;font-weight:600;min-height:var(--size-target-min);display:inline-flex;align-items:center}.cmp-tok summary::before{content:"▸";margin-inline-end:6px}.cmp-tok[open] summary::before{content:"▾"}.cmp-tok ul{margin:var(--spacing-2) 0 0;padding-left:1.2em;display:flex;flex-direction:column;gap:var(--spacing-1)}.cmp-tok code{font-size:12px;overflow-wrap:anywhere}
 .cmp-st .cmp-man{max-width:32ch}.cmp-lim{margin:0;max-width:72ch}.cmp-sum{display:flex;flex-direction:column;gap:var(--spacing-2);margin-top:var(--spacing-4)}.cmp-sum p{margin:0}.cmp-fail{text-decoration:underline;text-decoration-style:wavy;text-underline-offset:4px}
 .cmp-nav .tpl-nav{display:flex!important;margin:0}.tpl-nav a.is-focus{outline:var(--border-width-focus) solid var(--focus-ring);outline-offset:var(--border-width-focus-offset)}
 .st-grid.wide>div>*:first-child{align-self:stretch}
@@ -3542,10 +3554,11 @@ function tplBody(pg, R, badge) {
     const measure = k => { const d = ROLE_FR[k]; if (!d || d[2] === "deco" || d[2] === "off" || !d[1]) return "na"; return ratio(R[k], R[d[1]]) >= roleNeed(k) ? "pass" : "fail"; };
     const all = COMPONENTS.map(c => ({ c, st: compStatus(c, measure) })), n = compCounts(all.flatMap(x => x.st));
     const pl = (k, one, many) => `${k} ${k > 1 ? many : one}`;
+    const ctk = c => COMP_TOKENS.filter(t => t.comp === c.id || (t.comp === "focus" && c.tokens.includes("focus/ring")));
     const cell = st => `<div class="cmp-st st-${st.status}">${st.html}<span class="t-caption mut">${COMP_STATE_FR[st.s]}</span>${(st.check || []).map(k => badge(k)).join("")}${st.manual ? `<span class="t-caption cmp-man"><b>À vérifier à la main :</b> ${st.manual}</span>` : ""}</div>`;
     return `<main class="page" id="main"><section><p class="t-label layer">Composants</p><h1 class="t-h1">Vos composants, état par état</h1><p class="t-body mut measure">Chaque composant est dessiné avec vos tokens, dans chacun de ses états : repos, survol, clavier, attente, erreur, vide. Lisio mesure les contrastes qu’il peut mesurer et liste ce qui reste à vérifier à la main.</p>
 <div class="tcard sub cmp-sum"><p class="t-body-strong">${pl(n.pass, "état mesuré", "états mesurés")} au-dessus du seuil, ${n.fail ? `<span class="cmp-fail">${pl(n.fail, "état en échec", "états en échec")}</span>` : "aucun état en échec"}, ${pl(n.manual, "point", "points")} à vérifier à la main.</p><p class="t-body mut">${COMP_LIMITS}</p></div></section>
-${all.map(({ c, st }) => `<section class="cmp" data-cmp="${c.id}" aria-labelledby="cmp-h-${c.id}"><h2 class="t-h3" id="cmp-h-${c.id}">${c.name}</h2><p class="t-body cmp-use">${c.use}</p><p class="t-caption mut cmp-tok">Tokens : ${c.tokens.map(k => `<code>${k}</code>`).join(" ")}</p>
+${all.map(({ c, st }) => `<section class="cmp" data-cmp="${c.id}" aria-labelledby="cmp-h-${c.id}"><h2 class="t-h3" id="cmp-h-${c.id}">${c.name}</h2><p class="t-body cmp-use">${c.use}</p><details class="cmp-tok t-caption"><summary>Jetons du composant (${ctk(c).length})</summary><ul>${ctk(c).map(t => `<li><code>${compTokenVar(t)}</code> → <code>${t.role}</code> <span class="mut">${t.fr}</span></li>`).join("")}</ul></details>
 <div class="st-grid${c.id === "card" || c.id === "alert" || c.id === "nav" ? " wide" : ""}">${st.map(cell).join("")}</div><p class="t-caption mut cmp-lim">${c.limits}</p></section>`).join("\n")}</main>`;
   }
   return "";

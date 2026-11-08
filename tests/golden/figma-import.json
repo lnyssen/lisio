@@ -1,8 +1,8 @@
 {
  "exemple/sans-planche": {
   "report": {
-   "variables": 223,
-   "created": 223,
+   "variables": 273,
+   "created": 273,
    "updated": 0,
    "styles": 69,
    "warnings": [
@@ -30,6 +30,12 @@
     "modes": [
      "Light",
      "Dark"
+    ]
+   },
+   {
+    "name": "Components",
+    "modes": [
+     "Default"
     ]
    },
    {
@@ -1776,7 +1782,7 @@
      "TEXT_FILL"
     ],
     "description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-default)",
+    "web": "var(--text-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -1789,7 +1795,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-muted)",
+    "web": "var(--text-muted)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/deep/400"
@@ -1802,7 +1808,7 @@
      "TEXT_FILL"
     ],
     "description": "Text on primary button: 17.86:1 with primary button fill (SC 1.4.3, minimum 4.5:1)\nDark: Text on primary button: 19.78:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-on-action)",
+    "web": "var(--text-on-action)",
     "values": {
      "Light": "→ Colors/surface/main",
      "Dark": "→ Colors/neutral/black"
@@ -1816,7 +1822,7 @@
      "SHAPE_FILL"
     ],
     "description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-default)",
+    "web": "var(--background-default)",
     "values": {
      "Light": "→ Colors/canvas/main",
      "Dark": "→ Colors/canvas/950"
@@ -1830,7 +1836,7 @@
      "SHAPE_FILL"
     ],
     "description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-subtle)",
+    "web": "var(--background-subtle)",
     "values": {
      "Light": "→ Colors/deep/50",
      "Dark": "→ Colors/deep/950"
@@ -1844,7 +1850,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-default)",
+    "web": "var(--action-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -1858,7 +1864,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-hover)",
+    "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/ink/900",
      "Dark": "→ Colors/deep/100"
@@ -1872,7 +1878,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-pressed)",
+    "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/ink/800",
      "Dark": "→ Colors/deep/200"
@@ -1885,7 +1891,7 @@
      "TEXT_FILL"
     ],
     "description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-default)",
+    "web": "var(--link-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -1898,7 +1904,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-subtle)",
+    "web": "var(--link-subtle)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/deep/400"
@@ -1911,7 +1917,7 @@
      "TEXT_FILL"
     ],
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill",
-    "web": "var(--semantic-disabled-text)",
+    "web": "var(--disabled-text)",
     "values": {
      "Light": "→ Colors/ink/400",
      "Dark": "→ Colors/deep/600"
@@ -1925,7 +1931,7 @@
      "SHAPE_FILL"
     ],
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
-    "web": "var(--semantic-disabled-surface)",
+    "web": "var(--disabled-surface)",
     "values": {
      "Light": "→ Colors/deep/50",
      "Dark": "→ Colors/deep/950"
@@ -1938,7 +1944,7 @@
      "STROKE_COLOR"
     ],
     "description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-border-default)",
+    "web": "var(--border-default)",
     "values": {
      "Light": "→ Colors/ink/500",
      "Dark": "→ Colors/deep/500"
@@ -1951,7 +1957,7 @@
      "STROKE_COLOR"
     ],
     "description": "Decorative divider, carries no information: 1.26:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
-    "web": "var(--semantic-border-subtle)",
+    "web": "var(--border-subtle)",
     "values": {
      "Light": "→ Colors/ink/200",
      "Dark": "→ Colors/deep/900"
@@ -1964,7 +1970,7 @@
      "STROKE_COLOR"
     ],
     "description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
-    "web": "var(--semantic-focus-ring)",
+    "web": "var(--focus-ring)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -1977,7 +1983,7 @@
      "TEXT_FILL"
     ],
     "description": "Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1)\nDark: Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-text)",
+    "web": "var(--error-text)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/error/400"
@@ -1991,7 +1997,7 @@
      "SHAPE_FILL"
     ],
     "description": "Error message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Error message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-surface)",
+    "web": "var(--error-surface)",
     "values": {
      "Light": "→ Colors/error/100",
      "Dark": "→ Colors/error/900"
@@ -2004,7 +2010,7 @@
      "STROKE_COLOR"
     ],
     "description": "Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-error-border)",
+    "web": "var(--error-border)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -2017,7 +2023,7 @@
      "TEXT_FILL"
     ],
     "description": "Success message text: 5.30:1 with success message background (SC 1.4.3, minimum 4.5:1)\nDark: Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-text)",
+    "web": "var(--success-text)",
     "values": {
      "Light": "→ Colors/success/600",
      "Dark": "→ Colors/success/400"
@@ -2031,7 +2037,7 @@
      "SHAPE_FILL"
     ],
     "description": "Success message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Success message background: 13.83:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-surface)",
+    "web": "var(--success-surface)",
     "values": {
      "Light": "→ Colors/success/100",
      "Dark": "→ Colors/success/900"
@@ -2044,7 +2050,7 @@
      "STROKE_COLOR"
     ],
     "description": "Success border and icon: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-success-border)",
+    "web": "var(--success-border)",
     "values": {
      "Light": "→ Colors/success/500",
      "Dark": "→ Colors/success/500"
@@ -2057,7 +2063,7 @@
      "TEXT_FILL"
     ],
     "description": "Warning message text: 5.31:1 with warning message background (SC 1.4.3, minimum 4.5:1)\nDark: Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-text)",
+    "web": "var(--warning-text)",
     "values": {
      "Light": "→ Colors/warning/600",
      "Dark": "→ Colors/warning/400"
@@ -2071,7 +2077,7 @@
      "SHAPE_FILL"
     ],
     "description": "Warning message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Warning message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-surface)",
+    "web": "var(--warning-surface)",
     "values": {
      "Light": "→ Colors/warning/100",
      "Dark": "→ Colors/warning/900"
@@ -2084,7 +2090,7 @@
      "STROKE_COLOR"
     ],
     "description": "Warning border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Warning border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-warning-border)",
+    "web": "var(--warning-border)",
     "values": {
      "Light": "→ Colors/warning/500",
      "Dark": "→ Colors/warning/500"
@@ -2097,7 +2103,7 @@
      "TEXT_FILL"
     ],
     "description": "Info message text: 5.30:1 with info message background (SC 1.4.3, minimum 4.5:1)\nDark: Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-text)",
+    "web": "var(--info-text)",
     "values": {
      "Light": "→ Colors/info/600",
      "Dark": "→ Colors/info/400"
@@ -2111,7 +2117,7 @@
      "SHAPE_FILL"
     ],
     "description": "Info message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Info message background: 13.79:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-surface)",
+    "web": "var(--info-surface)",
     "values": {
      "Light": "→ Colors/info/100",
      "Dark": "→ Colors/info/900"
@@ -2124,7 +2130,7 @@
      "STROKE_COLOR"
     ],
     "description": "Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-info-border)",
+    "web": "var(--info-border)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -2138,7 +2144,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 1: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-1)",
+    "web": "var(--chart-1)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -2152,7 +2158,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 2: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 2: 3.78:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-2)",
+    "web": "var(--chart-2)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -2166,7 +2172,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-3)",
+    "web": "var(--chart-3)",
     "values": {
      "Light": "→ Colors/deep/800",
      "Dark": "→ Colors/error/300"
@@ -2180,7 +2186,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 4: 9.98:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 4: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-4)",
+    "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/warning/800",
      "Dark": "→ Colors/brand/300"
@@ -2194,10 +2200,660 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-5)",
+    "web": "var(--chart-5)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/ink/600"
+    }
+   },
+   {
+    "name": "Components/button/primary-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background",
+    "web": "var(--button-primary-background)",
+    "values": {
+     "Default": "→ Semantic/action/default"
+    }
+   },
+   {
+    "name": "Components/button/primary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button text",
+    "web": "var(--button-primary-text)",
+    "values": {
+     "Default": "→ Semantic/text/on-action"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background on hover",
+    "web": "var(--button-primary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/action/hover"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-pressed",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background when pressed",
+    "web": "var(--button-primary-background-pressed)",
+    "values": {
+     "Default": "→ Semantic/action/pressed"
+    }
+   },
+   {
+    "name": "Components/button/secondary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button text",
+    "web": "var(--button-secondary-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button border",
+    "web": "var(--button-secondary-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button background on hover",
+    "web": "var(--button-secondary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/button/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button background",
+    "web": "var(--button-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/button/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button text",
+    "web": "var(--button-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/field/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field background",
+    "web": "var(--field-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/field/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field text",
+    "web": "var(--field-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/field/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border",
+    "web": "var(--field-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/field/help-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field help text",
+    "web": "var(--field-help-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/field/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border in error",
+    "web": "var(--field-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/field/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field error message",
+    "web": "var(--field-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/field/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border when valid",
+    "web": "var(--field-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/field/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field background",
+    "web": "var(--field-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/field/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field text",
+    "web": "var(--field-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/link/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Link text",
+    "web": "var(--link-text)",
+    "values": {
+     "Default": "→ Semantic/link/default"
+    }
+   },
+   {
+    "name": "Components/link/subtle-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary link text",
+    "web": "var(--link-subtle-text)",
+    "values": {
+     "Default": "→ Semantic/link/subtle"
+    }
+   },
+   {
+    "name": "Components/alert/body-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Alert body text",
+    "web": "var(--alert-body-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/alert/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert background",
+    "web": "var(--alert-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/alert/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert border and icon",
+    "web": "var(--alert-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/alert/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert title and icon",
+    "web": "var(--alert-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/alert/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert background",
+    "web": "var(--alert-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/alert/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert border and icon",
+    "web": "var(--alert-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/alert/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert title and icon",
+    "web": "var(--alert-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/alert/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert background",
+    "web": "var(--alert-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/alert/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert border and icon",
+    "web": "var(--alert-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/alert/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert title and icon",
+    "web": "var(--alert-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/alert/error-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert background",
+    "web": "var(--alert-error-background)",
+    "values": {
+     "Default": "→ Semantic/error/surface"
+    }
+   },
+   {
+    "name": "Components/alert/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert border and icon",
+    "web": "var(--alert-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/alert/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert title and icon",
+    "web": "var(--alert-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/badge/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge background",
+    "web": "var(--badge-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/badge/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge border",
+    "web": "var(--badge-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/badge/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge text",
+    "web": "var(--badge-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/badge/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge background",
+    "web": "var(--badge-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/badge/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge border",
+    "web": "var(--badge-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/badge/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge text",
+    "web": "var(--badge-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/badge/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge background",
+    "web": "var(--badge-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/badge/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge border",
+    "web": "var(--badge-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/badge/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge text",
+    "web": "var(--badge-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/nav/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Navigation link",
+    "web": "var(--nav-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/nav/current-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Current page link",
+    "web": "var(--nav-current-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card background",
+    "web": "var(--card-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/card/subtle-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary card background",
+    "web": "var(--card-subtle-background)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/card/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card border (decorative)",
+    "web": "var(--card-border)",
+    "values": {
+     "Default": "→ Semantic/border/subtle"
+    }
+   },
+   {
+    "name": "Components/card/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card text",
+    "web": "var(--card-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/muted-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card secondary text",
+    "web": "var(--card-muted-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/focus/outline",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Focus ring, shared by every component",
+    "web": "var(--focus-outline)",
+    "values": {
+     "Default": "→ Semantic/focus/ring"
     }
    },
    {
@@ -4573,8 +5229,8 @@
  },
  "exemple/planche": {
   "report": {
-   "variables": 223,
-   "created": 223,
+   "variables": 273,
+   "created": 273,
    "updated": 0,
    "styles": 69,
    "warnings": [
@@ -4602,6 +5258,12 @@
     "modes": [
      "Light",
      "Dark"
+    ]
+   },
+   {
+    "name": "Components",
+    "modes": [
+     "Default"
     ]
    },
    {
@@ -6348,7 +7010,7 @@
      "TEXT_FILL"
     ],
     "description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-default)",
+    "web": "var(--text-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -6361,7 +7023,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-muted)",
+    "web": "var(--text-muted)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/deep/400"
@@ -6374,7 +7036,7 @@
      "TEXT_FILL"
     ],
     "description": "Text on primary button: 17.86:1 with primary button fill (SC 1.4.3, minimum 4.5:1)\nDark: Text on primary button: 19.78:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-on-action)",
+    "web": "var(--text-on-action)",
     "values": {
      "Light": "→ Colors/surface/main",
      "Dark": "→ Colors/neutral/black"
@@ -6388,7 +7050,7 @@
      "SHAPE_FILL"
     ],
     "description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-default)",
+    "web": "var(--background-default)",
     "values": {
      "Light": "→ Colors/canvas/main",
      "Dark": "→ Colors/canvas/950"
@@ -6402,7 +7064,7 @@
      "SHAPE_FILL"
     ],
     "description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-subtle)",
+    "web": "var(--background-subtle)",
     "values": {
      "Light": "→ Colors/deep/50",
      "Dark": "→ Colors/deep/950"
@@ -6416,7 +7078,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-default)",
+    "web": "var(--action-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -6430,7 +7092,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-hover)",
+    "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/ink/900",
      "Dark": "→ Colors/deep/100"
@@ -6444,7 +7106,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-pressed)",
+    "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/ink/800",
      "Dark": "→ Colors/deep/200"
@@ -6457,7 +7119,7 @@
      "TEXT_FILL"
     ],
     "description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-default)",
+    "web": "var(--link-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -6470,7 +7132,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-subtle)",
+    "web": "var(--link-subtle)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/deep/400"
@@ -6483,7 +7145,7 @@
      "TEXT_FILL"
     ],
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill",
-    "web": "var(--semantic-disabled-text)",
+    "web": "var(--disabled-text)",
     "values": {
      "Light": "→ Colors/ink/400",
      "Dark": "→ Colors/deep/600"
@@ -6497,7 +7159,7 @@
      "SHAPE_FILL"
     ],
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
-    "web": "var(--semantic-disabled-surface)",
+    "web": "var(--disabled-surface)",
     "values": {
      "Light": "→ Colors/deep/50",
      "Dark": "→ Colors/deep/950"
@@ -6510,7 +7172,7 @@
      "STROKE_COLOR"
     ],
     "description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-border-default)",
+    "web": "var(--border-default)",
     "values": {
      "Light": "→ Colors/ink/500",
      "Dark": "→ Colors/deep/500"
@@ -6523,7 +7185,7 @@
      "STROKE_COLOR"
     ],
     "description": "Decorative divider, carries no information: 1.26:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
-    "web": "var(--semantic-border-subtle)",
+    "web": "var(--border-subtle)",
     "values": {
      "Light": "→ Colors/ink/200",
      "Dark": "→ Colors/deep/900"
@@ -6536,7 +7198,7 @@
      "STROKE_COLOR"
     ],
     "description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
-    "web": "var(--semantic-focus-ring)",
+    "web": "var(--focus-ring)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -6549,7 +7211,7 @@
      "TEXT_FILL"
     ],
     "description": "Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1)\nDark: Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-text)",
+    "web": "var(--error-text)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/error/400"
@@ -6563,7 +7225,7 @@
      "SHAPE_FILL"
     ],
     "description": "Error message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Error message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-surface)",
+    "web": "var(--error-surface)",
     "values": {
      "Light": "→ Colors/error/100",
      "Dark": "→ Colors/error/900"
@@ -6576,7 +7238,7 @@
      "STROKE_COLOR"
     ],
     "description": "Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-error-border)",
+    "web": "var(--error-border)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -6589,7 +7251,7 @@
      "TEXT_FILL"
     ],
     "description": "Success message text: 5.30:1 with success message background (SC 1.4.3, minimum 4.5:1)\nDark: Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-text)",
+    "web": "var(--success-text)",
     "values": {
      "Light": "→ Colors/success/600",
      "Dark": "→ Colors/success/400"
@@ -6603,7 +7265,7 @@
      "SHAPE_FILL"
     ],
     "description": "Success message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Success message background: 13.83:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-surface)",
+    "web": "var(--success-surface)",
     "values": {
      "Light": "→ Colors/success/100",
      "Dark": "→ Colors/success/900"
@@ -6616,7 +7278,7 @@
      "STROKE_COLOR"
     ],
     "description": "Success border and icon: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-success-border)",
+    "web": "var(--success-border)",
     "values": {
      "Light": "→ Colors/success/500",
      "Dark": "→ Colors/success/500"
@@ -6629,7 +7291,7 @@
      "TEXT_FILL"
     ],
     "description": "Warning message text: 5.31:1 with warning message background (SC 1.4.3, minimum 4.5:1)\nDark: Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-text)",
+    "web": "var(--warning-text)",
     "values": {
      "Light": "→ Colors/warning/600",
      "Dark": "→ Colors/warning/400"
@@ -6643,7 +7305,7 @@
      "SHAPE_FILL"
     ],
     "description": "Warning message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Warning message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-surface)",
+    "web": "var(--warning-surface)",
     "values": {
      "Light": "→ Colors/warning/100",
      "Dark": "→ Colors/warning/900"
@@ -6656,7 +7318,7 @@
      "STROKE_COLOR"
     ],
     "description": "Warning border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Warning border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-warning-border)",
+    "web": "var(--warning-border)",
     "values": {
      "Light": "→ Colors/warning/500",
      "Dark": "→ Colors/warning/500"
@@ -6669,7 +7331,7 @@
      "TEXT_FILL"
     ],
     "description": "Info message text: 5.30:1 with info message background (SC 1.4.3, minimum 4.5:1)\nDark: Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-text)",
+    "web": "var(--info-text)",
     "values": {
      "Light": "→ Colors/info/600",
      "Dark": "→ Colors/info/400"
@@ -6683,7 +7345,7 @@
      "SHAPE_FILL"
     ],
     "description": "Info message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Info message background: 13.79:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-surface)",
+    "web": "var(--info-surface)",
     "values": {
      "Light": "→ Colors/info/100",
      "Dark": "→ Colors/info/900"
@@ -6696,7 +7358,7 @@
      "STROKE_COLOR"
     ],
     "description": "Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-info-border)",
+    "web": "var(--info-border)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -6710,7 +7372,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 1: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-1)",
+    "web": "var(--chart-1)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -6724,7 +7386,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 2: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 2: 3.78:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-2)",
+    "web": "var(--chart-2)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -6738,7 +7400,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-3)",
+    "web": "var(--chart-3)",
     "values": {
      "Light": "→ Colors/deep/800",
      "Dark": "→ Colors/error/300"
@@ -6752,7 +7414,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 4: 9.98:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 4: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-4)",
+    "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/warning/800",
      "Dark": "→ Colors/brand/300"
@@ -6766,10 +7428,660 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-5)",
+    "web": "var(--chart-5)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/ink/600"
+    }
+   },
+   {
+    "name": "Components/button/primary-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background",
+    "web": "var(--button-primary-background)",
+    "values": {
+     "Default": "→ Semantic/action/default"
+    }
+   },
+   {
+    "name": "Components/button/primary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button text",
+    "web": "var(--button-primary-text)",
+    "values": {
+     "Default": "→ Semantic/text/on-action"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background on hover",
+    "web": "var(--button-primary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/action/hover"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-pressed",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background when pressed",
+    "web": "var(--button-primary-background-pressed)",
+    "values": {
+     "Default": "→ Semantic/action/pressed"
+    }
+   },
+   {
+    "name": "Components/button/secondary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button text",
+    "web": "var(--button-secondary-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button border",
+    "web": "var(--button-secondary-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button background on hover",
+    "web": "var(--button-secondary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/button/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button background",
+    "web": "var(--button-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/button/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button text",
+    "web": "var(--button-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/field/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field background",
+    "web": "var(--field-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/field/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field text",
+    "web": "var(--field-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/field/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border",
+    "web": "var(--field-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/field/help-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field help text",
+    "web": "var(--field-help-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/field/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border in error",
+    "web": "var(--field-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/field/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field error message",
+    "web": "var(--field-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/field/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border when valid",
+    "web": "var(--field-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/field/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field background",
+    "web": "var(--field-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/field/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field text",
+    "web": "var(--field-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/link/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Link text",
+    "web": "var(--link-text)",
+    "values": {
+     "Default": "→ Semantic/link/default"
+    }
+   },
+   {
+    "name": "Components/link/subtle-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary link text",
+    "web": "var(--link-subtle-text)",
+    "values": {
+     "Default": "→ Semantic/link/subtle"
+    }
+   },
+   {
+    "name": "Components/alert/body-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Alert body text",
+    "web": "var(--alert-body-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/alert/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert background",
+    "web": "var(--alert-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/alert/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert border and icon",
+    "web": "var(--alert-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/alert/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert title and icon",
+    "web": "var(--alert-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/alert/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert background",
+    "web": "var(--alert-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/alert/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert border and icon",
+    "web": "var(--alert-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/alert/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert title and icon",
+    "web": "var(--alert-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/alert/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert background",
+    "web": "var(--alert-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/alert/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert border and icon",
+    "web": "var(--alert-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/alert/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert title and icon",
+    "web": "var(--alert-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/alert/error-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert background",
+    "web": "var(--alert-error-background)",
+    "values": {
+     "Default": "→ Semantic/error/surface"
+    }
+   },
+   {
+    "name": "Components/alert/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert border and icon",
+    "web": "var(--alert-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/alert/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert title and icon",
+    "web": "var(--alert-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/badge/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge background",
+    "web": "var(--badge-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/badge/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge border",
+    "web": "var(--badge-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/badge/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge text",
+    "web": "var(--badge-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/badge/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge background",
+    "web": "var(--badge-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/badge/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge border",
+    "web": "var(--badge-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/badge/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge text",
+    "web": "var(--badge-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/badge/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge background",
+    "web": "var(--badge-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/badge/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge border",
+    "web": "var(--badge-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/badge/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge text",
+    "web": "var(--badge-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/nav/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Navigation link",
+    "web": "var(--nav-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/nav/current-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Current page link",
+    "web": "var(--nav-current-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card background",
+    "web": "var(--card-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/card/subtle-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary card background",
+    "web": "var(--card-subtle-background)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/card/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card border (decorative)",
+    "web": "var(--card-border)",
+    "values": {
+     "Default": "→ Semantic/border/subtle"
+    }
+   },
+   {
+    "name": "Components/card/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card text",
+    "web": "var(--card-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/muted-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card secondary text",
+    "web": "var(--card-muted-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/focus/outline",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Focus ring, shared by every component",
+    "web": "var(--focus-outline)",
+    "values": {
+     "Default": "→ Semantic/focus/ring"
     }
    },
    {
@@ -9149,8 +10461,8 @@
  },
  "media-animation/sans-planche": {
   "report": {
-   "variables": 222,
-   "created": 222,
+   "variables": 272,
+   "created": 272,
    "updated": 0,
    "styles": 69,
    "warnings": [
@@ -9178,6 +10490,12 @@
     "modes": [
      "Light",
      "Dark"
+    ]
+   },
+   {
+    "name": "Components",
+    "modes": [
+     "Default"
     ]
    },
    {
@@ -10924,7 +12242,7 @@
      "TEXT_FILL"
     ],
     "description": "Primary text: 14.91:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-default)",
+    "web": "var(--text-default)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -10937,7 +12255,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary text: 5.53:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-muted)",
+    "web": "var(--text-muted)",
     "values": {
      "Light": "→ Colors/marine/600",
      "Dark": "→ Colors/marine/400"
@@ -10950,7 +12268,7 @@
      "TEXT_FILL"
     ],
     "description": "Text on primary button: 16.42:1 with primary button fill (SC 1.4.3, minimum 4.5:1)\nDark: Text on primary button: 19.75:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-on-action)",
+    "web": "var(--text-on-action)",
     "values": {
      "Light": "→ Colors/neutral/white",
      "Dark": "→ Colors/neutral/black"
@@ -10964,7 +12282,7 @@
      "SHAPE_FILL"
     ],
     "description": "Page background: 14.91:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.58:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-default)",
+    "web": "var(--background-default)",
     "values": {
      "Light": "#F1F4FB",
      "Dark": "→ Colors/marine/950"
@@ -10978,7 +12296,7 @@
      "SHAPE_FILL"
     ],
     "description": "Secondary surface (cards, panels): 15.44:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 13.71:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-subtle)",
+    "web": "var(--background-subtle)",
     "values": {
      "Light": "→ Colors/marine/50",
      "Dark": "→ Colors/marine/900"
@@ -10992,7 +12310,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button fill: 16.42:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.75:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-default)",
+    "web": "var(--action-default)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -11006,7 +12324,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, hover: 14.58:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-hover)",
+    "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/marine/900",
      "Dark": "→ Colors/marine/100"
@@ -11020,7 +12338,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, pressed: 11.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-pressed)",
+    "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/marine/800",
      "Dark": "→ Colors/marine/200"
@@ -11033,7 +12351,7 @@
      "TEXT_FILL"
     ],
     "description": "Link: 14.91:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-default)",
+    "web": "var(--link-default)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -11046,7 +12364,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary link: 5.53:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-subtle)",
+    "web": "var(--link-subtle)",
     "values": {
      "Light": "→ Colors/marine/600",
      "Dark": "→ Colors/marine/400"
@@ -11059,7 +12377,7 @@
      "TEXT_FILL"
     ],
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.90:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.39:1 on disabled fill",
-    "web": "var(--semantic-disabled-text)",
+    "web": "var(--disabled-text)",
     "values": {
      "Light": "→ Colors/marine/400",
      "Dark": "→ Colors/marine/600"
@@ -11073,7 +12391,7 @@
      "SHAPE_FILL"
     ],
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
-    "web": "var(--semantic-disabled-surface)",
+    "web": "var(--disabled-surface)",
     "values": {
      "Light": "→ Colors/marine/50",
      "Dark": "→ Colors/marine/900"
@@ -11086,7 +12404,7 @@
      "STROKE_COLOR"
     ],
     "description": "Input and component border: 4.24:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-border-default)",
+    "web": "var(--border-default)",
     "values": {
      "Light": "→ Colors/marine/500",
      "Dark": "→ Colors/marine/500"
@@ -11099,7 +12417,7 @@
      "STROKE_COLOR"
     ],
     "description": "Decorative divider, carries no information: 1.27:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
-    "web": "var(--semantic-border-subtle)",
+    "web": "var(--border-subtle)",
     "values": {
      "Light": "→ Colors/marine/200",
      "Dark": "→ Colors/marine/900"
@@ -11112,7 +12430,7 @@
      "STROKE_COLOR"
     ],
     "description": "Focus outline: 14.91:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.58:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
-    "web": "var(--semantic-focus-ring)",
+    "web": "var(--focus-ring)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -11125,7 +12443,7 @@
      "TEXT_FILL"
     ],
     "description": "Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1)\nDark: Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-text)",
+    "web": "var(--error-text)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/error/400"
@@ -11139,7 +12457,7 @@
      "SHAPE_FILL"
     ],
     "description": "Error message background: 14.31:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Error message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-surface)",
+    "web": "var(--error-surface)",
     "values": {
      "Light": "→ Colors/corail/100",
      "Dark": "→ Colors/error/900"
@@ -11152,7 +12470,7 @@
      "STROKE_COLOR"
     ],
     "description": "Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-error-border)",
+    "web": "var(--error-border)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -11165,7 +12483,7 @@
      "TEXT_FILL"
     ],
     "description": "Success message text: 5.30:1 with success message background (SC 1.4.3, minimum 4.5:1)\nDark: Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-text)",
+    "web": "var(--success-text)",
     "values": {
      "Light": "→ Colors/success/600",
      "Dark": "→ Colors/success/400"
@@ -11179,7 +12497,7 @@
      "SHAPE_FILL"
     ],
     "description": "Success message background: 14.30:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Success message background: 13.81:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-surface)",
+    "web": "var(--success-surface)",
     "values": {
      "Light": "→ Colors/success/100",
      "Dark": "→ Colors/success/900"
@@ -11192,7 +12510,7 @@
      "STROKE_COLOR"
     ],
     "description": "Success border and icon: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-success-border)",
+    "web": "var(--success-border)",
     "values": {
      "Light": "→ Colors/success/500",
      "Dark": "→ Colors/success/500"
@@ -11205,7 +12523,7 @@
      "TEXT_FILL"
     ],
     "description": "Warning message text: 5.31:1 with warning message background (SC 1.4.3, minimum 4.5:1)\nDark: Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-text)",
+    "web": "var(--warning-text)",
     "values": {
      "Light": "→ Colors/warning/600",
      "Dark": "→ Colors/warning/400"
@@ -11219,7 +12537,7 @@
      "SHAPE_FILL"
     ],
     "description": "Warning message background: 14.31:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Warning message background: 13.73:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-surface)",
+    "web": "var(--warning-surface)",
     "values": {
      "Light": "→ Colors/warning/100",
      "Dark": "→ Colors/warning/900"
@@ -11232,7 +12550,7 @@
      "STROKE_COLOR"
     ],
     "description": "Warning border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Warning border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-warning-border)",
+    "web": "var(--warning-border)",
     "values": {
      "Light": "→ Colors/warning/500",
      "Dark": "→ Colors/warning/500"
@@ -11245,7 +12563,7 @@
      "TEXT_FILL"
     ],
     "description": "Info message text: 5.30:1 with info message background (SC 1.4.3, minimum 4.5:1)\nDark: Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-text)",
+    "web": "var(--info-text)",
     "values": {
      "Light": "→ Colors/info/600",
      "Dark": "→ Colors/info/400"
@@ -11259,7 +12577,7 @@
      "SHAPE_FILL"
     ],
     "description": "Info message background: 14.31:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Info message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-surface)",
+    "web": "var(--info-surface)",
     "values": {
      "Light": "→ Colors/info/100",
      "Dark": "→ Colors/info/900"
@@ -11272,7 +12590,7 @@
      "STROKE_COLOR"
     ],
     "description": "Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-info-border)",
+    "web": "var(--info-border)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -11286,7 +12604,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 1: 4.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-1)",
+    "web": "var(--chart-1)",
     "values": {
      "Light": "→ Colors/bleu/500",
      "Dark": "→ Colors/bleu/500"
@@ -11300,7 +12618,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 2: 5.54:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 2: 5.69:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-2)",
+    "web": "var(--chart-2)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/orange/400"
@@ -11314,7 +12632,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 3: 9.96:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.31:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-3)",
+    "web": "var(--chart-3)",
     "values": {
      "Light": "→ Colors/bleu/800",
      "Dark": "→ Colors/info/300"
@@ -11328,10 +12646,660 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 4: 5.53:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 4: 9.25:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-4)",
+    "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/turquoise/600",
      "Dark": "→ Colors/corail/300"
+    }
+   },
+   {
+    "name": "Components/button/primary-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background",
+    "web": "var(--button-primary-background)",
+    "values": {
+     "Default": "→ Semantic/action/default"
+    }
+   },
+   {
+    "name": "Components/button/primary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button text",
+    "web": "var(--button-primary-text)",
+    "values": {
+     "Default": "→ Semantic/text/on-action"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background on hover",
+    "web": "var(--button-primary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/action/hover"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-pressed",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background when pressed",
+    "web": "var(--button-primary-background-pressed)",
+    "values": {
+     "Default": "→ Semantic/action/pressed"
+    }
+   },
+   {
+    "name": "Components/button/secondary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button text",
+    "web": "var(--button-secondary-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button border",
+    "web": "var(--button-secondary-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button background on hover",
+    "web": "var(--button-secondary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/button/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button background",
+    "web": "var(--button-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/button/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button text",
+    "web": "var(--button-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/field/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field background",
+    "web": "var(--field-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/field/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field text",
+    "web": "var(--field-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/field/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border",
+    "web": "var(--field-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/field/help-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field help text",
+    "web": "var(--field-help-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/field/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border in error",
+    "web": "var(--field-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/field/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field error message",
+    "web": "var(--field-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/field/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border when valid",
+    "web": "var(--field-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/field/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field background",
+    "web": "var(--field-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/field/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field text",
+    "web": "var(--field-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/link/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Link text",
+    "web": "var(--link-text)",
+    "values": {
+     "Default": "→ Semantic/link/default"
+    }
+   },
+   {
+    "name": "Components/link/subtle-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary link text",
+    "web": "var(--link-subtle-text)",
+    "values": {
+     "Default": "→ Semantic/link/subtle"
+    }
+   },
+   {
+    "name": "Components/alert/body-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Alert body text",
+    "web": "var(--alert-body-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/alert/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert background",
+    "web": "var(--alert-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/alert/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert border and icon",
+    "web": "var(--alert-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/alert/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert title and icon",
+    "web": "var(--alert-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/alert/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert background",
+    "web": "var(--alert-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/alert/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert border and icon",
+    "web": "var(--alert-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/alert/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert title and icon",
+    "web": "var(--alert-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/alert/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert background",
+    "web": "var(--alert-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/alert/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert border and icon",
+    "web": "var(--alert-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/alert/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert title and icon",
+    "web": "var(--alert-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/alert/error-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert background",
+    "web": "var(--alert-error-background)",
+    "values": {
+     "Default": "→ Semantic/error/surface"
+    }
+   },
+   {
+    "name": "Components/alert/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert border and icon",
+    "web": "var(--alert-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/alert/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert title and icon",
+    "web": "var(--alert-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/badge/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge background",
+    "web": "var(--badge-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/badge/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge border",
+    "web": "var(--badge-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/badge/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge text",
+    "web": "var(--badge-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/badge/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge background",
+    "web": "var(--badge-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/badge/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge border",
+    "web": "var(--badge-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/badge/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge text",
+    "web": "var(--badge-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/badge/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge background",
+    "web": "var(--badge-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/badge/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge border",
+    "web": "var(--badge-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/badge/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge text",
+    "web": "var(--badge-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/nav/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Navigation link",
+    "web": "var(--nav-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/nav/current-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Current page link",
+    "web": "var(--nav-current-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card background",
+    "web": "var(--card-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/card/subtle-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary card background",
+    "web": "var(--card-subtle-background)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/card/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card border (decorative)",
+    "web": "var(--card-border)",
+    "values": {
+     "Default": "→ Semantic/border/subtle"
+    }
+   },
+   {
+    "name": "Components/card/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card text",
+    "web": "var(--card-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/muted-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card secondary text",
+    "web": "var(--card-muted-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/focus/outline",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Focus ring, shared by every component",
+    "web": "var(--focus-outline)",
+    "values": {
+     "Default": "→ Semantic/focus/ring"
     }
    },
    {
@@ -13707,8 +15675,8 @@
  },
  "media-animation/planche": {
   "report": {
-   "variables": 222,
-   "created": 222,
+   "variables": 272,
+   "created": 272,
    "updated": 0,
    "styles": 69,
    "warnings": [
@@ -13736,6 +15704,12 @@
     "modes": [
      "Light",
      "Dark"
+    ]
+   },
+   {
+    "name": "Components",
+    "modes": [
+     "Default"
     ]
    },
    {
@@ -15482,7 +17456,7 @@
      "TEXT_FILL"
     ],
     "description": "Primary text: 14.91:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-default)",
+    "web": "var(--text-default)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -15495,7 +17469,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary text: 5.53:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-muted)",
+    "web": "var(--text-muted)",
     "values": {
      "Light": "→ Colors/marine/600",
      "Dark": "→ Colors/marine/400"
@@ -15508,7 +17482,7 @@
      "TEXT_FILL"
     ],
     "description": "Text on primary button: 16.42:1 with primary button fill (SC 1.4.3, minimum 4.5:1)\nDark: Text on primary button: 19.75:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-on-action)",
+    "web": "var(--text-on-action)",
     "values": {
      "Light": "→ Colors/neutral/white",
      "Dark": "→ Colors/neutral/black"
@@ -15522,7 +17496,7 @@
      "SHAPE_FILL"
     ],
     "description": "Page background: 14.91:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.58:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-default)",
+    "web": "var(--background-default)",
     "values": {
      "Light": "#F1F4FB",
      "Dark": "→ Colors/marine/950"
@@ -15536,7 +17510,7 @@
      "SHAPE_FILL"
     ],
     "description": "Secondary surface (cards, panels): 15.44:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 13.71:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-subtle)",
+    "web": "var(--background-subtle)",
     "values": {
      "Light": "→ Colors/marine/50",
      "Dark": "→ Colors/marine/900"
@@ -15550,7 +17524,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button fill: 16.42:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.75:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-default)",
+    "web": "var(--action-default)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -15564,7 +17538,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, hover: 14.58:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-hover)",
+    "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/marine/900",
      "Dark": "→ Colors/marine/100"
@@ -15578,7 +17552,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, pressed: 11.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-pressed)",
+    "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/marine/800",
      "Dark": "→ Colors/marine/200"
@@ -15591,7 +17565,7 @@
      "TEXT_FILL"
     ],
     "description": "Link: 14.91:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-default)",
+    "web": "var(--link-default)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -15604,7 +17578,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary link: 5.53:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-subtle)",
+    "web": "var(--link-subtle)",
     "values": {
      "Light": "→ Colors/marine/600",
      "Dark": "→ Colors/marine/400"
@@ -15617,7 +17591,7 @@
      "TEXT_FILL"
     ],
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.90:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.39:1 on disabled fill",
-    "web": "var(--semantic-disabled-text)",
+    "web": "var(--disabled-text)",
     "values": {
      "Light": "→ Colors/marine/400",
      "Dark": "→ Colors/marine/600"
@@ -15631,7 +17605,7 @@
      "SHAPE_FILL"
     ],
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
-    "web": "var(--semantic-disabled-surface)",
+    "web": "var(--disabled-surface)",
     "values": {
      "Light": "→ Colors/marine/50",
      "Dark": "→ Colors/marine/900"
@@ -15644,7 +17618,7 @@
      "STROKE_COLOR"
     ],
     "description": "Input and component border: 4.24:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-border-default)",
+    "web": "var(--border-default)",
     "values": {
      "Light": "→ Colors/marine/500",
      "Dark": "→ Colors/marine/500"
@@ -15657,7 +17631,7 @@
      "STROKE_COLOR"
     ],
     "description": "Decorative divider, carries no information: 1.27:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
-    "web": "var(--semantic-border-subtle)",
+    "web": "var(--border-subtle)",
     "values": {
      "Light": "→ Colors/marine/200",
      "Dark": "→ Colors/marine/900"
@@ -15670,7 +17644,7 @@
      "STROKE_COLOR"
     ],
     "description": "Focus outline: 14.91:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.58:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
-    "web": "var(--semantic-focus-ring)",
+    "web": "var(--focus-ring)",
     "values": {
      "Light": "→ Colors/marine/main",
      "Dark": "→ Colors/marine/50"
@@ -15683,7 +17657,7 @@
      "TEXT_FILL"
     ],
     "description": "Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1)\nDark: Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-text)",
+    "web": "var(--error-text)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/error/400"
@@ -15697,7 +17671,7 @@
      "SHAPE_FILL"
     ],
     "description": "Error message background: 14.31:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Error message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-surface)",
+    "web": "var(--error-surface)",
     "values": {
      "Light": "→ Colors/corail/100",
      "Dark": "→ Colors/error/900"
@@ -15710,7 +17684,7 @@
      "STROKE_COLOR"
     ],
     "description": "Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-error-border)",
+    "web": "var(--error-border)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -15723,7 +17697,7 @@
      "TEXT_FILL"
     ],
     "description": "Success message text: 5.30:1 with success message background (SC 1.4.3, minimum 4.5:1)\nDark: Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-text)",
+    "web": "var(--success-text)",
     "values": {
      "Light": "→ Colors/success/600",
      "Dark": "→ Colors/success/400"
@@ -15737,7 +17711,7 @@
      "SHAPE_FILL"
     ],
     "description": "Success message background: 14.30:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Success message background: 13.81:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-surface)",
+    "web": "var(--success-surface)",
     "values": {
      "Light": "→ Colors/success/100",
      "Dark": "→ Colors/success/900"
@@ -15750,7 +17724,7 @@
      "STROKE_COLOR"
     ],
     "description": "Success border and icon: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-success-border)",
+    "web": "var(--success-border)",
     "values": {
      "Light": "→ Colors/success/500",
      "Dark": "→ Colors/success/500"
@@ -15763,7 +17737,7 @@
      "TEXT_FILL"
     ],
     "description": "Warning message text: 5.31:1 with warning message background (SC 1.4.3, minimum 4.5:1)\nDark: Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-text)",
+    "web": "var(--warning-text)",
     "values": {
      "Light": "→ Colors/warning/600",
      "Dark": "→ Colors/warning/400"
@@ -15777,7 +17751,7 @@
      "SHAPE_FILL"
     ],
     "description": "Warning message background: 14.31:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Warning message background: 13.73:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-surface)",
+    "web": "var(--warning-surface)",
     "values": {
      "Light": "→ Colors/warning/100",
      "Dark": "→ Colors/warning/900"
@@ -15790,7 +17764,7 @@
      "STROKE_COLOR"
     ],
     "description": "Warning border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Warning border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-warning-border)",
+    "web": "var(--warning-border)",
     "values": {
      "Light": "→ Colors/warning/500",
      "Dark": "→ Colors/warning/500"
@@ -15803,7 +17777,7 @@
      "TEXT_FILL"
     ],
     "description": "Info message text: 5.30:1 with info message background (SC 1.4.3, minimum 4.5:1)\nDark: Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-text)",
+    "web": "var(--info-text)",
     "values": {
      "Light": "→ Colors/info/600",
      "Dark": "→ Colors/info/400"
@@ -15817,7 +17791,7 @@
      "SHAPE_FILL"
     ],
     "description": "Info message background: 14.31:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Info message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-surface)",
+    "web": "var(--info-surface)",
     "values": {
      "Light": "→ Colors/info/100",
      "Dark": "→ Colors/info/900"
@@ -15830,7 +17804,7 @@
      "STROKE_COLOR"
     ],
     "description": "Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-info-border)",
+    "web": "var(--info-border)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -15844,7 +17818,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 1: 4.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-1)",
+    "web": "var(--chart-1)",
     "values": {
      "Light": "→ Colors/bleu/500",
      "Dark": "→ Colors/bleu/500"
@@ -15858,7 +17832,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 2: 5.54:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 2: 5.69:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-2)",
+    "web": "var(--chart-2)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/orange/400"
@@ -15872,7 +17846,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 3: 9.96:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.31:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-3)",
+    "web": "var(--chart-3)",
     "values": {
      "Light": "→ Colors/bleu/800",
      "Dark": "→ Colors/info/300"
@@ -15886,10 +17860,660 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 4: 5.53:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 4: 9.25:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-4)",
+    "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/turquoise/600",
      "Dark": "→ Colors/corail/300"
+    }
+   },
+   {
+    "name": "Components/button/primary-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background",
+    "web": "var(--button-primary-background)",
+    "values": {
+     "Default": "→ Semantic/action/default"
+    }
+   },
+   {
+    "name": "Components/button/primary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button text",
+    "web": "var(--button-primary-text)",
+    "values": {
+     "Default": "→ Semantic/text/on-action"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background on hover",
+    "web": "var(--button-primary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/action/hover"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-pressed",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background when pressed",
+    "web": "var(--button-primary-background-pressed)",
+    "values": {
+     "Default": "→ Semantic/action/pressed"
+    }
+   },
+   {
+    "name": "Components/button/secondary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button text",
+    "web": "var(--button-secondary-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button border",
+    "web": "var(--button-secondary-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button background on hover",
+    "web": "var(--button-secondary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/button/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button background",
+    "web": "var(--button-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/button/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button text",
+    "web": "var(--button-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/field/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field background",
+    "web": "var(--field-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/field/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field text",
+    "web": "var(--field-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/field/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border",
+    "web": "var(--field-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/field/help-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field help text",
+    "web": "var(--field-help-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/field/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border in error",
+    "web": "var(--field-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/field/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field error message",
+    "web": "var(--field-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/field/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border when valid",
+    "web": "var(--field-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/field/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field background",
+    "web": "var(--field-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/field/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field text",
+    "web": "var(--field-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/link/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Link text",
+    "web": "var(--link-text)",
+    "values": {
+     "Default": "→ Semantic/link/default"
+    }
+   },
+   {
+    "name": "Components/link/subtle-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary link text",
+    "web": "var(--link-subtle-text)",
+    "values": {
+     "Default": "→ Semantic/link/subtle"
+    }
+   },
+   {
+    "name": "Components/alert/body-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Alert body text",
+    "web": "var(--alert-body-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/alert/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert background",
+    "web": "var(--alert-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/alert/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert border and icon",
+    "web": "var(--alert-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/alert/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert title and icon",
+    "web": "var(--alert-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/alert/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert background",
+    "web": "var(--alert-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/alert/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert border and icon",
+    "web": "var(--alert-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/alert/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert title and icon",
+    "web": "var(--alert-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/alert/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert background",
+    "web": "var(--alert-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/alert/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert border and icon",
+    "web": "var(--alert-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/alert/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert title and icon",
+    "web": "var(--alert-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/alert/error-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert background",
+    "web": "var(--alert-error-background)",
+    "values": {
+     "Default": "→ Semantic/error/surface"
+    }
+   },
+   {
+    "name": "Components/alert/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert border and icon",
+    "web": "var(--alert-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/alert/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert title and icon",
+    "web": "var(--alert-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/badge/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge background",
+    "web": "var(--badge-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/badge/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge border",
+    "web": "var(--badge-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/badge/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge text",
+    "web": "var(--badge-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/badge/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge background",
+    "web": "var(--badge-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/badge/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge border",
+    "web": "var(--badge-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/badge/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge text",
+    "web": "var(--badge-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/badge/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge background",
+    "web": "var(--badge-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/badge/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge border",
+    "web": "var(--badge-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/badge/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge text",
+    "web": "var(--badge-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/nav/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Navigation link",
+    "web": "var(--nav-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/nav/current-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Current page link",
+    "web": "var(--nav-current-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card background",
+    "web": "var(--card-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/card/subtle-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary card background",
+    "web": "var(--card-subtle-background)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/card/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card border (decorative)",
+    "web": "var(--card-border)",
+    "values": {
+     "Default": "→ Semantic/border/subtle"
+    }
+   },
+   {
+    "name": "Components/card/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card text",
+    "web": "var(--card-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/muted-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card secondary text",
+    "web": "var(--card-muted-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/focus/outline",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Focus ring, shared by every component",
+    "web": "var(--focus-outline)",
+    "values": {
+     "Default": "→ Semantic/focus/ring"
     }
    },
    {
@@ -18269,8 +20893,8 @@
  },
  "exemple/sans-planche/Figtree": {
   "report": {
-   "variables": 223,
-   "created": 223,
+   "variables": 273,
+   "created": 273,
    "updated": 0,
    "styles": 69,
    "warnings": []
@@ -18296,6 +20920,12 @@
     "modes": [
      "Light",
      "Dark"
+    ]
+   },
+   {
+    "name": "Components",
+    "modes": [
+     "Default"
     ]
    },
    {
@@ -20042,7 +22672,7 @@
      "TEXT_FILL"
     ],
     "description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-default)",
+    "web": "var(--text-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -20055,7 +22685,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-muted)",
+    "web": "var(--text-muted)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/deep/400"
@@ -20068,7 +22698,7 @@
      "TEXT_FILL"
     ],
     "description": "Text on primary button: 17.86:1 with primary button fill (SC 1.4.3, minimum 4.5:1)\nDark: Text on primary button: 19.78:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-text-on-action)",
+    "web": "var(--text-on-action)",
     "values": {
      "Light": "→ Colors/surface/main",
      "Dark": "→ Colors/neutral/black"
@@ -20082,7 +22712,7 @@
      "SHAPE_FILL"
     ],
     "description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-default)",
+    "web": "var(--background-default)",
     "values": {
      "Light": "→ Colors/canvas/main",
      "Dark": "→ Colors/canvas/950"
@@ -20096,7 +22726,7 @@
      "SHAPE_FILL"
     ],
     "description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-background-subtle)",
+    "web": "var(--background-subtle)",
     "values": {
      "Light": "→ Colors/deep/50",
      "Dark": "→ Colors/deep/950"
@@ -20110,7 +22740,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-default)",
+    "web": "var(--action-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -20124,7 +22754,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-hover)",
+    "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/ink/900",
      "Dark": "→ Colors/deep/100"
@@ -20138,7 +22768,7 @@
      "SHAPE_FILL"
     ],
     "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-action-pressed)",
+    "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/ink/800",
      "Dark": "→ Colors/deep/200"
@@ -20151,7 +22781,7 @@
      "TEXT_FILL"
     ],
     "description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-default)",
+    "web": "var(--link-default)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -20164,7 +22794,7 @@
      "TEXT_FILL"
     ],
     "description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-link-subtle)",
+    "web": "var(--link-subtle)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/deep/400"
@@ -20177,7 +22807,7 @@
      "TEXT_FILL"
     ],
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill",
-    "web": "var(--semantic-disabled-text)",
+    "web": "var(--disabled-text)",
     "values": {
      "Light": "→ Colors/ink/400",
      "Dark": "→ Colors/deep/600"
@@ -20191,7 +22821,7 @@
      "SHAPE_FILL"
     ],
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
-    "web": "var(--semantic-disabled-surface)",
+    "web": "var(--disabled-surface)",
     "values": {
      "Light": "→ Colors/deep/50",
      "Dark": "→ Colors/deep/950"
@@ -20204,7 +22834,7 @@
      "STROKE_COLOR"
     ],
     "description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-border-default)",
+    "web": "var(--border-default)",
     "values": {
      "Light": "→ Colors/ink/500",
      "Dark": "→ Colors/deep/500"
@@ -20217,7 +22847,7 @@
      "STROKE_COLOR"
     ],
     "description": "Decorative divider, carries no information: 1.26:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
-    "web": "var(--semantic-border-subtle)",
+    "web": "var(--border-subtle)",
     "values": {
      "Light": "→ Colors/ink/200",
      "Dark": "→ Colors/deep/900"
@@ -20230,7 +22860,7 @@
      "STROKE_COLOR"
     ],
     "description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
-    "web": "var(--semantic-focus-ring)",
+    "web": "var(--focus-ring)",
     "values": {
      "Light": "→ Colors/ink/main",
      "Dark": "→ Colors/deep/50"
@@ -20243,7 +22873,7 @@
      "TEXT_FILL"
     ],
     "description": "Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1)\nDark: Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-text)",
+    "web": "var(--error-text)",
     "values": {
      "Light": "→ Colors/error/600",
      "Dark": "→ Colors/error/400"
@@ -20257,7 +22887,7 @@
      "SHAPE_FILL"
     ],
     "description": "Error message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Error message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-error-surface)",
+    "web": "var(--error-surface)",
     "values": {
      "Light": "→ Colors/error/100",
      "Dark": "→ Colors/error/900"
@@ -20270,7 +22900,7 @@
      "STROKE_COLOR"
     ],
     "description": "Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-error-border)",
+    "web": "var(--error-border)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -20283,7 +22913,7 @@
      "TEXT_FILL"
     ],
     "description": "Success message text: 5.30:1 with success message background (SC 1.4.3, minimum 4.5:1)\nDark: Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-text)",
+    "web": "var(--success-text)",
     "values": {
      "Light": "→ Colors/success/600",
      "Dark": "→ Colors/success/400"
@@ -20297,7 +22927,7 @@
      "SHAPE_FILL"
     ],
     "description": "Success message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Success message background: 13.83:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-success-surface)",
+    "web": "var(--success-surface)",
     "values": {
      "Light": "→ Colors/success/100",
      "Dark": "→ Colors/success/900"
@@ -20310,7 +22940,7 @@
      "STROKE_COLOR"
     ],
     "description": "Success border and icon: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-success-border)",
+    "web": "var(--success-border)",
     "values": {
      "Light": "→ Colors/success/500",
      "Dark": "→ Colors/success/500"
@@ -20323,7 +22953,7 @@
      "TEXT_FILL"
     ],
     "description": "Warning message text: 5.31:1 with warning message background (SC 1.4.3, minimum 4.5:1)\nDark: Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-text)",
+    "web": "var(--warning-text)",
     "values": {
      "Light": "→ Colors/warning/600",
      "Dark": "→ Colors/warning/400"
@@ -20337,7 +22967,7 @@
      "SHAPE_FILL"
     ],
     "description": "Warning message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Warning message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-warning-surface)",
+    "web": "var(--warning-surface)",
     "values": {
      "Light": "→ Colors/warning/100",
      "Dark": "→ Colors/warning/900"
@@ -20350,7 +22980,7 @@
      "STROKE_COLOR"
     ],
     "description": "Warning border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Warning border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-warning-border)",
+    "web": "var(--warning-border)",
     "values": {
      "Light": "→ Colors/warning/500",
      "Dark": "→ Colors/warning/500"
@@ -20363,7 +22993,7 @@
      "TEXT_FILL"
     ],
     "description": "Info message text: 5.30:1 with info message background (SC 1.4.3, minimum 4.5:1)\nDark: Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-text)",
+    "web": "var(--info-text)",
     "values": {
      "Light": "→ Colors/info/600",
      "Dark": "→ Colors/info/400"
@@ -20377,7 +23007,7 @@
      "SHAPE_FILL"
     ],
     "description": "Info message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Info message background: 13.79:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
-    "web": "var(--semantic-info-surface)",
+    "web": "var(--info-surface)",
     "values": {
      "Light": "→ Colors/info/100",
      "Dark": "→ Colors/info/900"
@@ -20390,7 +23020,7 @@
      "STROKE_COLOR"
     ],
     "description": "Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
-    "web": "var(--semantic-info-border)",
+    "web": "var(--info-border)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -20404,7 +23034,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 1: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-1)",
+    "web": "var(--chart-1)",
     "values": {
      "Light": "→ Colors/error/500",
      "Dark": "→ Colors/error/500"
@@ -20418,7 +23048,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 2: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 2: 3.78:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-2)",
+    "web": "var(--chart-2)",
     "values": {
      "Light": "→ Colors/info/500",
      "Dark": "→ Colors/info/500"
@@ -20432,7 +23062,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-3)",
+    "web": "var(--chart-3)",
     "values": {
      "Light": "→ Colors/deep/800",
      "Dark": "→ Colors/error/300"
@@ -20446,7 +23076,7 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 4: 9.98:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 4: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-4)",
+    "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/warning/800",
      "Dark": "→ Colors/brand/300"
@@ -20460,10 +23090,660 @@
      "STROKE_COLOR"
     ],
     "description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
-    "web": "var(--semantic-chart-5)",
+    "web": "var(--chart-5)",
     "values": {
      "Light": "→ Colors/ink/600",
      "Dark": "→ Colors/ink/600"
+    }
+   },
+   {
+    "name": "Components/button/primary-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background",
+    "web": "var(--button-primary-background)",
+    "values": {
+     "Default": "→ Semantic/action/default"
+    }
+   },
+   {
+    "name": "Components/button/primary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button text",
+    "web": "var(--button-primary-text)",
+    "values": {
+     "Default": "→ Semantic/text/on-action"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background on hover",
+    "web": "var(--button-primary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/action/hover"
+    }
+   },
+   {
+    "name": "Components/button/primary-background-pressed",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Primary button background when pressed",
+    "web": "var(--button-primary-background-pressed)",
+    "values": {
+     "Default": "→ Semantic/action/pressed"
+    }
+   },
+   {
+    "name": "Components/button/secondary-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button text",
+    "web": "var(--button-secondary-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button border",
+    "web": "var(--button-secondary-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/button/secondary-background-hover",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary button background on hover",
+    "web": "var(--button-secondary-background-hover)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/button/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button background",
+    "web": "var(--button-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/button/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled button text",
+    "web": "var(--button-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/field/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field background",
+    "web": "var(--field-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/field/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field text",
+    "web": "var(--field-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/field/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border",
+    "web": "var(--field-border)",
+    "values": {
+     "Default": "→ Semantic/border/default"
+    }
+   },
+   {
+    "name": "Components/field/help-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field help text",
+    "web": "var(--field-help-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/field/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border in error",
+    "web": "var(--field-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/field/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field error message",
+    "web": "var(--field-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/field/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Field border when valid",
+    "web": "var(--field-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/field/disabled-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field background",
+    "web": "var(--field-disabled-background)",
+    "values": {
+     "Default": "→ Semantic/disabled/surface"
+    }
+   },
+   {
+    "name": "Components/field/disabled-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Disabled field text",
+    "web": "var(--field-disabled-text)",
+    "values": {
+     "Default": "→ Semantic/disabled/text"
+    }
+   },
+   {
+    "name": "Components/link/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Link text",
+    "web": "var(--link-text)",
+    "values": {
+     "Default": "→ Semantic/link/default"
+    }
+   },
+   {
+    "name": "Components/link/subtle-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary link text",
+    "web": "var(--link-subtle-text)",
+    "values": {
+     "Default": "→ Semantic/link/subtle"
+    }
+   },
+   {
+    "name": "Components/alert/body-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Alert body text",
+    "web": "var(--alert-body-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/alert/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert background",
+    "web": "var(--alert-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/alert/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert border and icon",
+    "web": "var(--alert-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/alert/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info alert title and icon",
+    "web": "var(--alert-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/alert/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert background",
+    "web": "var(--alert-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/alert/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert border and icon",
+    "web": "var(--alert-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/alert/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success alert title and icon",
+    "web": "var(--alert-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/alert/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert background",
+    "web": "var(--alert-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/alert/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert border and icon",
+    "web": "var(--alert-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/alert/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning alert title and icon",
+    "web": "var(--alert-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/alert/error-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert background",
+    "web": "var(--alert-error-background)",
+    "values": {
+     "Default": "→ Semantic/error/surface"
+    }
+   },
+   {
+    "name": "Components/alert/error-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert border and icon",
+    "web": "var(--alert-error-border)",
+    "values": {
+     "Default": "→ Semantic/error/border"
+    }
+   },
+   {
+    "name": "Components/alert/error-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Error alert title and icon",
+    "web": "var(--alert-error-text)",
+    "values": {
+     "Default": "→ Semantic/error/text"
+    }
+   },
+   {
+    "name": "Components/badge/info-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge background",
+    "web": "var(--badge-info-background)",
+    "values": {
+     "Default": "→ Semantic/info/surface"
+    }
+   },
+   {
+    "name": "Components/badge/info-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge border",
+    "web": "var(--badge-info-border)",
+    "values": {
+     "Default": "→ Semantic/info/border"
+    }
+   },
+   {
+    "name": "Components/badge/info-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Info badge text",
+    "web": "var(--badge-info-text)",
+    "values": {
+     "Default": "→ Semantic/info/text"
+    }
+   },
+   {
+    "name": "Components/badge/success-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge background",
+    "web": "var(--badge-success-background)",
+    "values": {
+     "Default": "→ Semantic/success/surface"
+    }
+   },
+   {
+    "name": "Components/badge/success-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge border",
+    "web": "var(--badge-success-border)",
+    "values": {
+     "Default": "→ Semantic/success/border"
+    }
+   },
+   {
+    "name": "Components/badge/success-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Success badge text",
+    "web": "var(--badge-success-text)",
+    "values": {
+     "Default": "→ Semantic/success/text"
+    }
+   },
+   {
+    "name": "Components/badge/warning-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge background",
+    "web": "var(--badge-warning-background)",
+    "values": {
+     "Default": "→ Semantic/warning/surface"
+    }
+   },
+   {
+    "name": "Components/badge/warning-border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge border",
+    "web": "var(--badge-warning-border)",
+    "values": {
+     "Default": "→ Semantic/warning/border"
+    }
+   },
+   {
+    "name": "Components/badge/warning-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Warning badge text",
+    "web": "var(--badge-warning-text)",
+    "values": {
+     "Default": "→ Semantic/warning/text"
+    }
+   },
+   {
+    "name": "Components/nav/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Navigation link",
+    "web": "var(--nav-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/nav/current-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Current page link",
+    "web": "var(--nav-current-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card background",
+    "web": "var(--card-background)",
+    "values": {
+     "Default": "→ Semantic/background/default"
+    }
+   },
+   {
+    "name": "Components/card/subtle-background",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Secondary card background",
+    "web": "var(--card-subtle-background)",
+    "values": {
+     "Default": "→ Semantic/background/subtle"
+    }
+   },
+   {
+    "name": "Components/card/border",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card border (decorative)",
+    "web": "var(--card-border)",
+    "values": {
+     "Default": "→ Semantic/border/subtle"
+    }
+   },
+   {
+    "name": "Components/card/text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card text",
+    "web": "var(--card-text)",
+    "values": {
+     "Default": "→ Semantic/text/default"
+    }
+   },
+   {
+    "name": "Components/card/muted-text",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Card secondary text",
+    "web": "var(--card-muted-text)",
+    "values": {
+     "Default": "→ Semantic/text/muted"
+    }
+   },
+   {
+    "name": "Components/focus/outline",
+    "type": "COLOR",
+    "scopes": [
+     "ALL_FILLS",
+     "STROKE_COLOR"
+    ],
+    "description": "Focus ring, shared by every component",
+    "web": "var(--focus-outline)",
+    "values": {
+     "Default": "→ Semantic/focus/ring"
     }
    },
    {

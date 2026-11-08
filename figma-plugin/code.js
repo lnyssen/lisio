@@ -79,8 +79,8 @@ const grade = (r, level = "AA") => level === "AAA"
 // Avec d = 2, le résultat est identique à l'ancien fmt(floor2(r)).
 const ratioTxt = (r, d = 2) => { return floorTo(r, d).toLocaleString("fr-FR", { minimumFractionDigits: d, maximumFractionDigits: d }); };
 const LISIO_W = { 100: ["Thin", "Hairline"], 200: ["ExtraLight", "Extra Light", "UltraLight", "Ultra Light"], 300: ["Light"], 400: ["Regular", "Normal", "Book", "Roman"], 500: ["Medium"], 600: ["SemiBold", "Semi Bold", "DemiBold", "Demi Bold"], 700: ["Bold"], 800: ["ExtraBold", "Extra Bold", "UltraBold", "Ultra Bold"], 900: ["Black", "Heavy"] };
-const LISIO_COL = { color: "Colors", semantic: "Semantic", font: "Typography", duration: "Motion", opacity: "Effects", blur: "Effects" };
-const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], icon: ["WIDTH_HEIGHT"], duration: [], font: ["FONT_FAMILY"], opacity: ["OPACITY"], blur: ["EFFECT_FLOAT"], ratio: [] };
+const LISIO_COL = { color: "Colors", semantic: "Semantic", component: "Components", font: "Typography", duration: "Motion", opacity: "Effects", blur: "Effects" };
+const LISIO_SCOPES = { layout: ["GAP", "WIDTH_HEIGHT"], color: ["ALL_FILLS", "STROKE_COLOR", "EFFECT_COLOR"], semantic: ["ALL_FILLS", "STROKE_COLOR"], component: ["ALL_FILLS", "STROKE_COLOR"], spacing: ["GAP", "WIDTH_HEIGHT"], radius: ["CORNER_RADIUS"], size: ["WIDTH_HEIGHT"], "border-width": ["STROKE_FLOAT"], icon: ["WIDTH_HEIGHT"], duration: [], font: ["FONT_FAMILY"], opacity: ["OPACITY"], blur: ["EFFECT_FLOAT"], ratio: [] };
 const LISIO_BP = [{ id: "mobile", name: "Mobile", width: 390 }, { id: "tablet", name: "Tablet", width: 768 }, { id: "desktop", name: "Desktop", width: 1024 }, { id: "xl", name: "Desktop XL", width: 1440 }];
 function lisioHex(hex) { const h = hex.replace("#", ""); return { r: parseInt(h.slice(0, 2), 16) / 255, g: parseInt(h.slice(2, 4), 16) / 255, b: parseInt(h.slice(4, 6), 16) / 255 }; }
 function lisioRgba(hex) { const c = lisioHex(hex), h = hex.replace("#", ""); return { r: c.r, g: c.g, b: c.b, a: h.length >= 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1 }; }
@@ -280,7 +280,8 @@ async function lisioImport(data, opts) {
     const v = getVar(col, name, tg.type); if (!v) continue;
     v.scopes = t.ext.scopes || LISIO_SCOPES[t.path[0]] || ["ALL_SCOPES"];
     if (t.desc) v.description = t.desc;
-    v.setVariableCodeSyntax("WEB", `var(--${t.path.join("-")})`);
+    // Même nom que le CSS exporté : --action-default, --button-primary-background (sans le groupe semantic ou component).
+    v.setVariableCodeSyntax("WEB", `var(--${(t.path[0] === "semantic" || t.path[0] === "component" ? t.path.slice(1) : t.path).join("-")})`);
     if (perBp) { v.scopes = t.path[1] === "columns" ? [] : ["GAP", "WIDTH_HEIGHT"]; LISIO_BP.forEach(bp => { const mid = layModes[bp.id], val = t.ext.breakpoints[bp.id]; if (mid && typeof val === "number") v.setValueForMode(mid, val); }); report.variables++; continue; }
     map[`{${t.path.join(".")}}`] = { v, t, col }; report.variables++;
   }

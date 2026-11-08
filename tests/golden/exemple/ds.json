@@ -1193,6 +1193,275 @@
       }
     }
   },
+  "component": {
+    "$description": "Component tokens. Each one is an alias to a semantic role; components take their colours from here only",
+    "button": {
+      "primary-background": {
+        "$type": "color",
+        "$value": "{semantic.action.default}",
+        "$description": "Primary button background"
+      },
+      "primary-text": {
+        "$type": "color",
+        "$value": "{semantic.text.on-action}",
+        "$description": "Primary button text"
+      },
+      "primary-background-hover": {
+        "$type": "color",
+        "$value": "{semantic.action.hover}",
+        "$description": "Primary button background on hover"
+      },
+      "primary-background-pressed": {
+        "$type": "color",
+        "$value": "{semantic.action.pressed}",
+        "$description": "Primary button background when pressed"
+      },
+      "secondary-text": {
+        "$type": "color",
+        "$value": "{semantic.text.default}",
+        "$description": "Secondary button text"
+      },
+      "secondary-border": {
+        "$type": "color",
+        "$value": "{semantic.border.default}",
+        "$description": "Secondary button border"
+      },
+      "secondary-background-hover": {
+        "$type": "color",
+        "$value": "{semantic.background.subtle}",
+        "$description": "Secondary button background on hover"
+      },
+      "disabled-background": {
+        "$type": "color",
+        "$value": "{semantic.disabled.surface}",
+        "$description": "Disabled button background"
+      },
+      "disabled-text": {
+        "$type": "color",
+        "$value": "{semantic.disabled.text}",
+        "$description": "Disabled button text"
+      }
+    },
+    "field": {
+      "background": {
+        "$type": "color",
+        "$value": "{semantic.background.default}",
+        "$description": "Field background"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{semantic.text.default}",
+        "$description": "Field text"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{semantic.border.default}",
+        "$description": "Field border"
+      },
+      "help-text": {
+        "$type": "color",
+        "$value": "{semantic.text.muted}",
+        "$description": "Field help text"
+      },
+      "error-border": {
+        "$type": "color",
+        "$value": "{semantic.error.border}",
+        "$description": "Field border in error"
+      },
+      "error-text": {
+        "$type": "color",
+        "$value": "{semantic.error.text}",
+        "$description": "Field error message"
+      },
+      "success-border": {
+        "$type": "color",
+        "$value": "{semantic.success.border}",
+        "$description": "Field border when valid"
+      },
+      "disabled-background": {
+        "$type": "color",
+        "$value": "{semantic.disabled.surface}",
+        "$description": "Disabled field background"
+      },
+      "disabled-text": {
+        "$type": "color",
+        "$value": "{semantic.disabled.text}",
+        "$description": "Disabled field text"
+      }
+    },
+    "link": {
+      "text": {
+        "$type": "color",
+        "$value": "{semantic.link.default}",
+        "$description": "Link text"
+      },
+      "subtle-text": {
+        "$type": "color",
+        "$value": "{semantic.link.subtle}",
+        "$description": "Secondary link text"
+      }
+    },
+    "alert": {
+      "body-text": {
+        "$type": "color",
+        "$value": "{semantic.text.default}",
+        "$description": "Alert body text"
+      },
+      "info-background": {
+        "$type": "color",
+        "$value": "{semantic.info.surface}",
+        "$description": "Info alert background"
+      },
+      "info-border": {
+        "$type": "color",
+        "$value": "{semantic.info.border}",
+        "$description": "Info alert border and icon"
+      },
+      "info-text": {
+        "$type": "color",
+        "$value": "{semantic.info.text}",
+        "$description": "Info alert title and icon"
+      },
+      "success-background": {
+        "$type": "color",
+        "$value": "{semantic.success.surface}",
+        "$description": "Success alert background"
+      },
+      "success-border": {
+        "$type": "color",
+        "$value": "{semantic.success.border}",
+        "$description": "Success alert border and icon"
+      },
+      "success-text": {
+        "$type": "color",
+        "$value": "{semantic.success.text}",
+        "$description": "Success alert title and icon"
+      },
+      "warning-background": {
+        "$type": "color",
+        "$value": "{semantic.warning.surface}",
+        "$description": "Warning alert background"
+      },
+      "warning-border": {
+        "$type": "color",
+        "$value": "{semantic.warning.border}",
+        "$description": "Warning alert border and icon"
+      },
+      "warning-text": {
+        "$type": "color",
+        "$value": "{semantic.warning.text}",
+        "$description": "Warning alert title and icon"
+      },
+      "error-background": {
+        "$type": "color",
+        "$value": "{semantic.error.surface}",
+        "$description": "Error alert background"
+      },
+      "error-border": {
+        "$type": "color",
+        "$value": "{semantic.error.border}",
+        "$description": "Error alert border and icon"
+      },
+      "error-text": {
+        "$type": "color",
+        "$value": "{semantic.error.text}",
+        "$description": "Error alert title and icon"
+      }
+    },
+    "badge": {
+      "info-background": {
+        "$type": "color",
+        "$value": "{semantic.info.surface}",
+        "$description": "Info badge background"
+      },
+      "info-border": {
+        "$type": "color",
+        "$value": "{semantic.info.border}",
+        "$description": "Info badge border"
+      },
+      "info-text": {
+        "$type": "color",
+        "$value": "{semantic.info.text}",
+        "$description": "Info badge text"
+      },
+      "success-background": {
+        "$type": "color",
+        "$value": "{semantic.success.surface}",
+        "$description": "Success badge background"
+      },
+      "success-border": {
+        "$type": "color",
+        "$value": "{semantic.success.border}",
+        "$description": "Success badge border"
+      },
+      "success-text": {
+        "$type": "color",
+        "$value": "{semantic.success.text}",
+        "$description": "Success badge text"
+      },
+      "warning-background": {
+        "$type": "color",
+        "$value": "{semantic.warning.surface}",
+        "$description": "Warning badge background"
+      },
+      "warning-border": {
+        "$type": "color",
+        "$value": "{semantic.warning.border}",
+        "$description": "Warning badge border"
+      },
+      "warning-text": {
+        "$type": "color",
+        "$value": "{semantic.warning.text}",
+        "$description": "Warning badge text"
+      }
+    },
+    "nav": {
+      "text": {
+        "$type": "color",
+        "$value": "{semantic.text.default}",
+        "$description": "Navigation link"
+      },
+      "current-text": {
+        "$type": "color",
+        "$value": "{semantic.text.default}",
+        "$description": "Current page link"
+      }
+    },
+    "card": {
+      "background": {
+        "$type": "color",
+        "$value": "{semantic.background.default}",
+        "$description": "Card background"
+      },
+      "subtle-background": {
+        "$type": "color",
+        "$value": "{semantic.background.subtle}",
+        "$description": "Secondary card background"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{semantic.border.subtle}",
+        "$description": "Card border (decorative)"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{semantic.text.default}",
+        "$description": "Card text"
+      },
+      "muted-text": {
+        "$type": "color",
+        "$value": "{semantic.text.muted}",
+        "$description": "Card secondary text"
+      }
+    },
+    "focus": {
+      "outline": {
+        "$type": "color",
+        "$value": "{semantic.focus.ring}",
+        "$description": "Focus ring, shared by every component"
+      }
+    }
+  },
   "spacing": {
     "0": {
       "$type": "dimension",

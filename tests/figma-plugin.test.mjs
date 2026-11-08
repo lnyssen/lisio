@@ -155,3 +155,14 @@ test("messages : en français, sans doublon, avec la typographie française", as
     const r = await imp(d, { board: false }), w = r.warnings.find(x => /inexistante/.test(x));
     assert.ok(w && /^Alias introuvable/.test(w) && frOk(w), r.warnings.join(" | ")); }
 });
+
+test("jetons de composants : une collection Components, chaque variable en alias vers Semantic, nom CSS identique", async () => {
+  const { figma, imp } = setup();
+  await imp(dsJson(), { board: false });
+  const c = col(figma, "Components"); assert.ok(c, "collection Components");
+  const v = vr(figma, "Components", "button/primary-background"), sem = vr(figma, "Semantic", "action/default");
+  const val = v.valuesByMode[c.modes[0].modeId];
+  assert.equal(val.type, "VARIABLE_ALIAS"); assert.equal(val.id, sem.id, "alias vers Semantic/action/default");
+  assert.equal(v.codeSyntax.WEB, "var(--button-primary-background)");
+  assert.equal(sem.codeSyntax.WEB, "var(--action-default)", "le rôle porte le même nom que dans le CSS");
+});
