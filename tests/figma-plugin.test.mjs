@@ -166,3 +166,16 @@ test("jetons de composants : une collection Components, chaque variable en alias
   assert.equal(v.codeSyntax.WEB, "var(--button-primary-background)");
   assert.equal(sem.codeSyntax.WEB, "var(--action-default)", "le rôle porte le même nom que dans le CSS");
 });
+
+test("correcteur du plugin : sans couleur de la palette qui passe, il garde la teinte avant de proposer noir ou blanc", () => {
+  const { p } = setup(), fix = p.get("lisioFix"), bg = rgb("#FFFFFF");
+  // Palette sans aucune nuance qui passe sur blanc : l'ancien correcteur proposait du noir.
+  const pal = [{ id: "v1", name: "Ciel/300", c: rgb("#7DD3FC") }];
+  const f = fix(rgb("#38BDF8"), bg, 4.5, pal, "Ciel");
+  assert.ok(f && f.hex !== "#000000" && f.hex !== "#FFFFFF", `proposé : ${f && f.hex}`);
+  assert.ok(ratio(f.hex, "#FFFFFF") >= 4.5, `ratio ${ratio(f.hex, "#FFFFFF")}`);
+  assert.match(f.name, /même teinte/);
+  // Une nuance de la palette qui passe reste préférée : elle garde le lien avec la variable.
+  const g = fix(rgb("#38BDF8"), bg, 4.5, [...pal, { id: "v2", name: "Ciel/700", c: rgb("#0369A1") }], "Ciel");
+  assert.equal(g.varId, "v2");
+});

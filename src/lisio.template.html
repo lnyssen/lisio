@@ -2470,7 +2470,7 @@ function renderWatch() {
   const act = (lab, fn, dot, pri) => { cwActs.push(fn); return `<button type="button" class="btn sm${pri ? " primary" : ""}" data-cw="${cwActs.length - 1}">${dot ? `<span class="dot" style="background:${dot}" aria-hidden="true"></span>` : ""}${lab}</button>`; };
   const look = (i, j) => act("Voir dans Contrastes", () => { sel = [i, j]; cmdGoView("matrice"); renderMx(); const t = $("pdTitle"); if (t) t.focus(); });
   let rows = lst.map(({ i, c, bj, br }) => { const p = palette[bj], fx = suggestFix(c.hex, p.hex, tN);
-    return `<li><span class="cw-sw" style="background:${c.hex}" aria-hidden="true"></span><span class="cw-t"><b>${esc(c.name)} <code>${c.hex}</code></b><span>Au mieux ${f2(br)}:1, avec ${esc(p.name)} : sous ${fmt(tN, 1).replace(",0", "")}:1, aucun texte courant possible.</span></span><span class="cw-a">${fx ? act(`Corriger : ${esc(c.name)} → ${fx}`, () => { palette[i].hex = fx; changed(); renderEditor(); toast(`${c.name} remplacé par ${fx}`); }, fx, true) : ""}${look(i, bj)}${leave(decorKey(c.hex), "Décorative : laisser telle quelle")}</span></li>`; }).join("");
+    return `<li><span class="cw-sw" style="background:${c.hex}" aria-hidden="true"></span><span class="cw-t"><b>${esc(c.name)} <code>${c.hex}</code></b><span>Au mieux ${f2(br)}:1, avec ${esc(p.name)} : sous ${fmt(tN, 1).replace(",0", "")}:1, aucun texte courant possible.</span></span><span class="cw-a">${fx ? act(`Corriger : ${esc(c.name)} → ${fx}`, () => { palette[i].hex = fx; changed(); renderEditor(); toast(`${c.name} remplacé par ${fx} : ${f2(ratio(fx, p.hex))}:1 avec ${p.name}`); }, fx, true) : ""}${look(i, bj)}${leave(decorKey(c.hex), "Décorative : laisser telle quelle")}</span></li>`; }).join("");
   rows += tw.map(([i, j, r]) => `<li><span class="cw-sw" style="background:linear-gradient(90deg,${palette[i].hex} 50%,${palette[j].hex} 50%)" aria-hidden="true"></span><span class="cw-t"><b>${esc(palette[i].name)} et ${esc(palette[j].name)}</b><span>Presque jumelles (${f2(r)}:1) : on ne les distingue pas l’une de l’autre. Gardez-en une, ou écartez-les.</span></span><span class="cw-a">${look(i, j)}${leave(decorKey(palette[i].hex, palette[j].hex), "Laisser telles quelles")}</span></li>`).join("");
   const kept = [...cwLoneAll().filter(x => decorOn(decorKey(x.c.hex))).map(x => [decorKey(x.c.hex), `${esc(x.c.name)} <code>${x.c.hex}</code>`, x.c.hex]),
     ...cwTwinsAll().filter(([i, j]) => decorOn(decorKey(palette[i].hex, palette[j].hex))).map(([i, j]) => [decorKey(palette[i].hex, palette[j].hex), `${esc(palette[i].name)} et ${esc(palette[j].name)}`, `linear-gradient(90deg,${palette[i].hex} 50%,${palette[j].hex} 50%)`])];
@@ -2514,8 +2514,8 @@ function renderDetail() {
   [[4.5, "AA"], [7, "AAA"]].forEach(([t, l]) => {
     if (r >= t) return;
     const a = suggestFix(fg.hex, bg.hex, t), b = suggestFix(bg.hex, fg.hex, t);
-    if (a) fixes.push(btn(`${fg.name} → ${a} (${l})`, () => { palette[i].hex = a; changed(); renderEditor(); toast(`${fg.name} remplacé par ${a}`); }, a));
-    if (b) fixes.push(btn(`${bg.name} → ${b} (${l})`, () => { palette[j].hex = b; changed(); renderEditor(); toast(`${bg.name} remplacé par ${b}`); }, b));
+    if (a) fixes.push(btn(`${fg.name} → ${a} (${l})`, () => { palette[i].hex = a; changed(); renderEditor(); toast(`${fg.name} remplacé par ${a} : ${f2(ratio(a, bg.hex))}:1`); }, a));
+    if (b) fixes.push(btn(`${bg.name} → ${b} (${l})`, () => { palette[j].hex = b; changed(); renderEditor(); toast(`${bg.name} remplacé par ${b} : ${f2(ratio(fg.hex, b))}:1`); }, b));
   });
   const ff = esc(fontCss(S.font));
   const lvA = S.level === "AAA", tN = lvA ? 7 : 4.5, crit = lvA ? "1.4.6" : "1.4.3";
@@ -2528,7 +2528,7 @@ function renderDetail() {
       const card = (t, f, b2, rr, on) => `<div class="ba${on ? " on" : ""}" style="background:${b2};color:${f};font-family:${ff}"><span class="bt">${t}</span><span class="bn">${esc(fg.name)}</span><span class="br">${f2(rr)}:1</span></div>`;
       ba = `<div class="pd-ba"><div class="ba-row">${card("Avant", fg.hex, bg.hex, r, false)}${card("Après", nf, nb, r2, true)}</div>
         <p class="pd-why">Une nuance plus ${dk ? "foncée" : "claire"} de ${esc(who.name)}, <code>${nx}</code>, passe le seuil de ${fmt(tN, 1).replace(",0", "")}:1 pour le texte courant (critère ${crit}). Appliquer remplace ${esc(who.name)} dans votre liste : toute la matrice est recalculée.</p>
-        ${btn("Appliquer la correction", () => { palette[mv].hex = nx; changed(); renderEditor(); toast(`${who.name} remplacé par ${nx}`); }, null, true).replace('class="btn sm primary"', 'class="btn primary pd-apply"')}
+        ${btn("Appliquer la correction", () => { palette[mv].hex = nx; changed(); renderEditor(); toast(`${who.name} remplacé par ${nx} : ${f2(r2)}:1`); }, null, true).replace('class="btn sm primary"', 'class="btn primary pd-apply"')}
         ${fixes.length > 1 ? `<details class="pd-more"><summary class="btn">Voir d’autres nuances</summary><div class="row" style="gap:6px;margin-top:10px">${fixes.join("")}</div></details>` : ""}</div>`;
     }
   }
@@ -2888,9 +2888,16 @@ function tsSpecimen(st) {
 }
 const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste consultable douze mois dans votre espace.", button: "Télécharger le PDF", label: "Dossier thématique" };
 const tsSample = d => d.id === "button" ? TS_SAMPLE.button : d.id === "label" ? TS_SAMPLE.label : TS_SAMPLE[d.role];
+// Correcteur (8 novembre 2026) : un style à couleur propre en échec reçoit la nuance la plus proche qui passe, de sa gamme d’abord.
+function tsColorFix(st) {
+  const v = tsVerdict(st); if (v.ok || !st.color) return null;
+  const h = tsInk(st), L = lum(h), bg = S.ts.bg, sc = scales.find(s => s.hex === h || s.sw.includes(h));
+  const near = list => list.filter(x => ratio(x, bg) >= v.need).sort((a, b) => Math.abs(lum(a) - L) - Math.abs(lum(b) - L))[0];
+  return near(sc ? sc.sw : []) || suggestFix(h, bg, v.need) || near(["#FFFFFF", "#000000"]) || null;
+}
 function tsMetaHtml(st) {
-  const d = tsDef(st.id), v = tsVerdict(st), w = tsVw(), sz = sizeAt(st, w);
-  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="ts-px">${Math.round(sz)}/${Math.round(Math.round(sz) * st.lh)}<small>px</small></span><span class="ts-range">${st.min} → ${st.max} px</span>${v.ok ? `<span class="ts-ok">✓ ${S.level}${v.large ? " grand texte" : ""}</span>` : `<span class="bd b-no">✕ ${fmt(floor2(v.r))}:1, ${fmt(v.need, 1)} requis</span>`}${v.warn.map(x => `<span class="ts-warn">⚠ ${x}</span>`).join("")}`;
+  const d = tsDef(st.id), v = tsVerdict(st), w = tsVw(), sz = sizeAt(st, w), fx = tsColorFix(st);
+  return `<b>${esc(d.name)}</b><code>${esc(d.tag)}</code><span class="ts-px">${Math.round(sz)}/${Math.round(Math.round(sz) * st.lh)}<small>px</small></span><span class="ts-range">${st.min} → ${st.max} px</span>${v.ok ? `<span class="ts-ok">✓ ${S.level}${v.large ? " grand texte" : ""}</span>` : `<span class="bd b-no">✕ ${fmt(floor2(v.r))}:1, ${fmt(v.need, 1)} requis</span>${fx ? `<button type="button" class="btn sm ts-fix" data-tsfix="${st.id}" data-v="${fx}"><span class="dot" style="background:${fx}" aria-hidden="true"></span>Corriger : ${fx}<span class="sr-only">, style ${esc(d.name)}, ${f2(ratio(fx, S.ts.bg))}:1</span></button>` : ""}`}${v.warn.map(x => `<span class="ts-warn">⚠ ${x}</span>`).join("")}`;
 }
 function tsVwPaint() {
   const w = tsVw(); $("tsVw").value = w; $("tsVwOut").textContent = `${w} px, ${bpName(w)}`;
@@ -2946,6 +2953,15 @@ $("tsView").addEventListener("click", e => { const b = e.target.closest("button[
 function tsVwUpdate() { tsVwPaint(); S.ts.styles.forEach(st => { const m = $("tsm-" + st.id), sp = $("tss-" + st.id); if (m) m.innerHTML = tsMetaHtml(st); if (sp) sp.setAttribute("style", tsSpecimen(st)); }); }
 $("tsVw").addEventListener("input", e => { S.ts.vw = +e.target.value; tsVwTouched = true; const b = BP.find(x => x.w === S.ts.vw); if (b) S.ts.view = b.id; tsVwUpdate(); });
 $("tsVw").addEventListener("change", () => { save(); sysDirty = true; });
+$("tsList").addEventListener("click", e => { const b = e.target.closest("[data-tsfix]"); if (!b) return;
+  const st = S.ts.styles.find(s => s.id === b.dataset.tsfix), v = normHex(b.dataset.v); if (!st || !v) return;
+  if (v === normHex(S.ts.fg)) delete st.color; else st.color = v;
+  save(); $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st));
+  const sel = $("tsList").querySelector(`.ts-row[data-id="${st.id}"] select[data-k=color]`);
+  if (sel) { if (![...sel.options].some(o => o.value === v)) sel.innerHTML = tsColorOptions(v); sel.value = v; tsColEnhance(st); }
+  const row = $("tsList").querySelector(`.ts-row[data-id="${st.id}"]`), back = row && [...row.querySelectorAll(".ts-col button, .ts-col select")].find(x => x.getClientRects().length); if (back) back.focus();
+  renderTsExport(); sysDirty = true; toast(`${tsDef(st.id).name} : ${v}, ${f2(ratio(v, S.ts.bg))}:1 sur le fond`);
+});
 $("tsList").addEventListener("click", e => { const b = e.target.closest(".ts-adj"); if (!b) return; const open = b.getAttribute("aria-expanded") !== "true"; b.setAttribute("aria-expanded", open); $(b.getAttribute("aria-controls")).hidden = !open; b.textContent = open ? "Fermer" : "Ajuster"; });
 const tsRegen = () => { S.ts.m = tsMobileFrom(S.ts.d); S.ts.styles.forEach(st => { const d = tsDef(st.id); st.min = Math.round(tsSize(d, S.ts.m.base, +S.ts.m.ratio)); st.max = Math.round(tsSize(d, S.ts.d.base, +S.ts.d.ratio)); }); save(); renderStyles(); };
 document.querySelectorAll(".ts-step button").forEach(b => b.addEventListener("click", () => { const i = $("tsBaseD"), v = Math.min(32, Math.max(10, (parseInt(i.value, 10) || S.ts.d.base) + +b.dataset.d)); if (v !== S.ts.d.base) { S.ts.d.base = v; tsRegen(); } }));
@@ -3599,7 +3615,10 @@ function tplBody(pg, R, badge) {
     const all = COMPONENTS.map(c => ({ c, st: compStatus(c, measure) })), n = compCounts(all.flatMap(x => x.st));
     const pl = (k, one, many) => `${k} ${k > 1 ? many : one}`;
     const ctk = c => COMP_TOKENS.filter(t => t.comp === c.id || (t.comp === "focus" && c.tokens.includes("focus/ring")));
-    const cell = st => `<div class="cmp-st st-${st.status}">${st.html}<span class="t-caption mut">${COMP_STATE_FR[st.s]}</span>${(st.check || []).map(k => badge(k)).join("")}${st.manual ? `<span class="t-caption cmp-man"><b>À vérifier à la main :</b> ${st.manual}</span>` : ""}</div>`;
+    // Correcteur sur les cartes (8 novembre 2026) : la carte en échec propose la nuance qui corrige le rôle ; Lisio l’applique et redessine.
+    const th = S.sysTheme === "dark" ? "dark" : "light";
+    const fixOf = st => { if (st.status !== "fail") return ""; const k = (st.check || []).find(x => measure(x) === "fail"), v = k && roleFix(k, R, th); return v ? `<button type="button" class="btn btn-secondary t-button cmp-fix" data-fix-role="${k}" data-fix-v="${v}" data-fix-m="${th}">Corriger : ${ROLE_FR[k][0].toLowerCase()} → ${v}</button>` : ""; };
+    const cell = st => `<div class="cmp-st st-${st.status}">${st.html}<span class="t-caption mut">${COMP_STATE_FR[st.s]}</span>${(st.check || []).map(k => badge(k)).join("")}${fixOf(st)}${st.manual ? `<span class="t-caption cmp-man"><b>À vérifier à la main :</b> ${st.manual}</span>` : ""}</div>`;
     return `<main class="page" id="main"><section><p class="t-label layer">Composants</p><h1 class="t-h1">Vos composants, état par état</h1><p class="t-body mut measure">Chaque composant est dessiné avec vos tokens, dans chacun de ses états : repos, survol, clavier, attente, erreur, vide. Lisio mesure les contrastes qu’il peut mesurer et liste ce qui reste à vérifier à la main.</p>
 <div class="tcard sub cmp-sum"><p class="t-body-strong">${pl(n.pass, "état mesuré", "états mesurés")} au-dessus du seuil, ${n.fail ? `<span class="cmp-fail">${pl(n.fail, "état en échec", "états en échec")}</span>` : "aucun état en échec"}, ${pl(n.manual, "point", "points")} à vérifier à la main.</p><p class="t-body mut">${COMP_LIMITS}</p></div></section>
 ${all.map(({ c, st }) => `<section class="cmp" data-cmp="${c.id}" aria-labelledby="cmp-h-${c.id}"><h2 class="t-h3" id="cmp-h-${c.id}">${c.name}</h2><p class="t-body cmp-use">${c.use}</p><details class="cmp-tok t-caption"><summary>Jetons du composant (${ctk(c).length})</summary><ul>${ctk(c).map(t => `<li><code>${compTokenVar(t)}</code> → <code>${t.role}</code> <span class="mut">${t.fr}</span></li>`).join("")}</ul></details>
@@ -3701,7 +3720,7 @@ ${TPL_CSS}`;
 <div class="ratios">${ratiosOn().map(([k, w, h, l]) => `<figure><div class="ph-img ratio-${k}" aria-hidden="true"></div><figcaption class="t-caption"><b>${l}</b> · ${w}:${h} · <code>.ratio-${k}</code></figcaption></figure>`).join("")}</div></section>
 <hr class="hr"><section><p class="t-label layer">Données</p><h2 class="t-h2">Palette de graphiques</h2><p class="t-body mut measure">${ch.length} séries à 3:1 minimum sur le fond (1.4.11), choisies pour rester distinctes en vision typique, protanopie, deutéranopie et tritanopie. Écart minimal entre deux séries : ${fmt(mins * 100, 1)} (OKLab ×100). Nommez toujours les séries en clair, sur le graphique.</p><div class="bars" role="img" aria-label="Exemple de graphique en barres, six séries">${bars}</div></section>
 </main>${gov}`;
-  const js = `<script>document.addEventListener("click",e=>{if(e.target.closest("a"))e.preventDefault()});
+  const js = `<script>document.addEventListener("click",e=>{if(e.target.closest("a"))e.preventDefault();const b=e.target.closest("[data-fix-role]");if(b)parent.postMessage({lisioFix:{k:b.dataset.fixRole,v:b.dataset.fixV,m:b.dataset.fixM}},"*")});
 const chk=()=>{const W=document.documentElement.clientWidth,bad=[];document.querySelectorAll("body *").forEach(el=>{if(el.closest(".gov,script,style,.sr-only"))return;const r=el.getBoundingClientRect();if(!r.width)return;const cs=getComputedStyle(el);if(r.right>W+1&&cs.position!=="absolute"&&!el.closest(".gridbox"))bad.push(el);else if(/hidden|clip/.test(cs.overflow+cs.overflowX+cs.overflowY)&&!el.closest(".sw")&&(el.scrollWidth>el.clientWidth+2||el.scrollHeight>el.clientHeight+2))bad.push(el)});const top=bad.filter(e=>!bad.includes(e.parentElement));return{n:top.length,list:top.slice(0,5).map(e=>(e.className&&typeof e.className==="string"?e.className.split(" ")[0]:e.tagName.toLowerCase())+(e.textContent?" « "+e.textContent.trim().slice(0,24)+" »":""))}};
 const post=()=>parent.postMessage({lisioSysH:document.documentElement.scrollHeight,lisioChk:chk()},"*");new ResizeObserver(post).observe(document.body);addEventListener("load",post);document.fonts&&document.fonts.ready.then(post);<\/script>`;
   const spacing = S.sysSpacing ? `<style id="tsp">*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}</style>` : "";
@@ -3726,6 +3745,11 @@ function renderSystem() {
   $("sysSpacing").setAttribute("aria-pressed", String(!!S.sysSpacing)); $("sysVision").value = S.sysVision || "normal"; $("sysChk").textContent = "";
   $("sysFrame").srcdoc = sysDoc(); sysScale();
 }
+addEventListener("message", e => { if (e.source !== $("sysFrame").contentWindow || !e.data || !e.data.lisioFix) return;
+  const { k, v, m } = e.data.lisioFix, h = normHex(v), mm = m === "dark" ? "dark" : "light"; if (!ROLE_FR[k] || !h) return;
+  roleApply(k, h, mm); save(); renderStyles(); renderJourney(curView()); sysDirty = true; if (!$("systeme").hidden) renderSystem();
+  const R = dsRoles(mm); toast(`${ROLE_FR[k][0]} : ${h}, ${f2(ratio(R[k], R[ROLE_FR[k][1]]))}:1`);
+});
 addEventListener("message", e => { if (e.source === $("sysFrame").contentWindow && e.data && typeof e.data.lisioSysH === "number") { sysH = Math.max(200, Math.ceil(e.data.lisioSysH)); sysScale(); sysReport(e.data.lisioChk); } });
 function sysReport(c) {
   if (!c) return; const bp = sysBp(), what = [bp.w === 320 ? "à 320 px (1.4.10)" : `à ${bp.w} px`, S.sysSpacing ? "avec l’espacement du texte élargi (1.4.12)" : ""].filter(Boolean).join(" ");
@@ -3763,7 +3787,9 @@ function roleFix(k, R, m) {
   const goal = k === "text/default" ? Math.max(req, 7) : req;
   const near = (list, mm) => list.filter(x => ratio(x, p) >= mm).sort((a, b) => Math.abs(lum(a) - L) - Math.abs(lum(b) - L))[0];
   const pick = list => near(list, goal) || near(list, req);
-  return pick([...(sc ? sc.sw : []), "#FFFFFF", "#000000"]) || pick(allScales().flatMap(s => s.sw)) || null;
+  // Couleur hors gamme (saisie à la main) : on garde d’abord sa teinte (suggestFix) avant de proposer blanc ou noir.
+  const own = sc ? null : suggestFix(h, p, goal) || suggestFix(h, p, req);
+  return own || pick([...(sc ? sc.sw : []), "#FFFFFF", "#000000"]) || pick(allScales().flatMap(s => s.sw)) || null;
 }
 function partnerFix(k, R, m) {
   R = R || dsRoles(m); const pair = ROLE_FR[k][1]; if (!pair || !roleNeed(k)) return null;

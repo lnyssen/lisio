@@ -382,6 +382,9 @@ function lisioFix(fg, bg, need, pal, fam) {
   const L = lisioLum(fg), pass = pal.filter(x => lisioRatio(x.c, bg) >= need), near = l => l.sort((a, b) => Math.abs(lisioLum(a.c) - L) - Math.abs(lisioLum(b.c) - L))[0];
   const best = (fam && near(pass.filter(x => x.name.split("/")[0] === fam))) || near(pass.slice());
   if (best) return { varId: best.id, name: best.name, hex: lisioToHex(best.c) };
+  // No palette colour passes: keep the hue (same corrector as Lisio, suggestFix) before falling back to black or white
+  const own = suggestFix(lisioToHex(fg), lisioToHex(bg), need);
+  if (own) return { hex: own, name: own + " (même teinte)" };
   const bw = [{ r: 0, g: 0, b: 0 }, { r: 1, g: 1, b: 1 }].filter(c => lisioRatio(c, bg) >= need).sort((a, b) => Math.abs(lisioLum(a) - L) - Math.abs(lisioLum(b) - L))[0];
   return bw ? { hex: lisioToHex(bw), name: lisioToHex(bw) === "#000000" ? "noir" : "blanc" } : null;
 }

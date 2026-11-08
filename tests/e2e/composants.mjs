@@ -59,6 +59,28 @@ async function open(state, w = 1440) {
   await ctx.close();
 }
 {
+  // Correcteur sur les cartes (8 novembre 2026) : un état en échec propose la correction du rôle, et la page se met à jour.
+  const { ctx, page, errors } = await open({ version: "2.2", level: "AA", ds: { roles: { "action/default": "#8FB3FF", "text/on-action": "#FFFFFF" } } });
+  await page.click('#sysPg button[data-v="states"]'); await page.waitForTimeout(700);
+  const f = page.frameLocator("#sysFrame"), fx = f.locator('.cmp[data-cmp="button"] .cmp-fix').first();
+  const n0 = await f.locator(".cmp-st.st-fail").count();
+  check(n0 > 0 && await fx.count() === 1, "état en échec : bouton « Corriger » sur la carte", `${n0} échecs, ${await f.locator(".cmp-fix").count()} boutons`);
+  check(/Corriger/.test(await fx.textContent().catch(() => "")) && /#[0-9A-F]{6}/i.test(await fx.textContent().catch(() => "")) && !/#000000|#FFFFFF/i.test(await fx.textContent().catch(() => "")), "le bouton dit le rôle et propose une nuance de la même teinte (ni noir ni blanc)", await fx.textContent().catch(() => ""));
+  // Comme une personne : on fait défiler l’aperçu (sa carte défile seule) jusqu’au bouton, puis on clique à l’écran (l’aperçu est une iframe mise à l’échelle).
+  // Position à l’écran = position de l’iframe + position dans l’iframe × échelle (boundingBox ne tient pas compte de la mise à l’échelle).
+  const at = async () => { const inner = await fx.evaluate(e => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
+    return page.evaluate(([x, y]) => { const f = document.getElementById("sysFrame"), r = f.getBoundingClientRect(), k = r.width / f.offsetWidth; return [r.left + x * k, r.top + y * k]; }, inner); };
+  let [x, y] = await at(); await page.evaluate(v => { const c = document.getElementById("sysFrame").closest(".sys-card"); if (c) c.scrollTop += v - c.getBoundingClientRect().top - 200; }, y); await page.waitForTimeout(300); [x, y] = await at();
+  await page.mouse.click(x, y); await page.waitForTimeout(900);
+  const n1 = await page.frameLocator("#sysFrame").locator(".cmp-st.st-fail").count();
+  check(n1 < n0, "après « Corriger », moins d’états en échec", `${n0} → ${n1}`);
+  const role = await page.evaluate(() => (JSON.parse(localStorage.getItem("lisio:state")).ds.roles || {})["action/default"]);
+  check(!!role && role !== "#8FB3FF", "le rôle corrigé est enregistré dans le projet", String(role));
+  check(/:1/.test(await page.locator("#toast, .toast").first().textContent().catch(() => "")), "le message dit le nouveau ratio");
+  check(!errors.length, "aucune erreur JavaScript", errors.join(" | "));
+  await ctx.close();
+}
+{
   const { ctx, page } = await open({ version: "2.2" }, 390);
   await page.click('#sysPg button[data-v="states"]'); await page.waitForTimeout(500);
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

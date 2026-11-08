@@ -35,6 +35,16 @@ check(/✕/.test(await row(id).locator(".ts-meta").textContent()), "couleur trop
 check(!/✕/.test(await row(head).locator(".ts-meta").textContent()), "les autres styles ne changent pas");
 const spec = await row(id).locator(".ts-spec").evaluate(e => getComputedStyle(e).color);
 check(/rgb/.test(spec) && spec !== "rgb(0, 0, 0)", "l’aperçu du style prend sa couleur", spec);
+// Correcteur (8 novembre 2026) : le style en échec propose la nuance la plus proche qui passe, en un clic.
+const fixB = row(id).locator(".ts-fix");
+check(await fixB.count() === 1 && /Corriger/.test(await fixB.textContent()), "style en échec : bouton « Corriger » dans sa ligne", await row(id).locator(".ts-meta").textContent());
+await fixB.click(); await page.waitForTimeout(400);
+check(/✓/.test(await row(id).locator(".ts-meta").textContent()), "après « Corriger », le style passe le test", await row(id).locator(".ts-meta").textContent());
+const fixed = await page.evaluate(i => JSON.parse(localStorage.getItem("lisio:state")).ts.styles.find(s => s.id === i).color, id);
+check(!!fixed && fixed !== light, "la couleur corrigée est enregistrée dans le projet", String(fixed));
+check(/:1/.test(await page.locator("#toast, .toast").first().textContent().catch(() => "")), "le message dit le nouveau ratio", await page.locator("#toast, .toast").first().textContent().catch(() => ""));
+check(await page.evaluate(() => document.activeElement && document.activeElement.closest && !!document.activeElement.closest("#tsList")), "le focus reste dans la liste des styles");
+await pick(id, light);
 const st1 = await page.evaluate(() => JSON.parse(localStorage.getItem("lisio:state")));
 check(st1.ts.styles.find(s => s.id === id).color === light, "couleur enregistrée dans le projet");
 // Choisir une couleur foncée : conforme au test.
