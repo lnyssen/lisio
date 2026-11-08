@@ -37,5 +37,6 @@ step "Rampes OKLCH (P2, F09)" node tests/e2e/oklch.mjs
 step "Composants état par état (P2, F13)" node tests/e2e/composants.mjs
 step "Projet démo et visite guidée (P2, F06)" node tests/e2e/demo.mjs
 step "Assistant de création en 3 étapes (Next-Level)" node tests/e2e/assistant.mjs
+step "Versions et décisions (P2)" node tests/e2e/versions.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail

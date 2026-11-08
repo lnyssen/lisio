@@ -36,6 +36,7 @@ export function reportMarkdown(m) {
     mdTable(["Point", "Critère", ...m.manual.screens], m.manual.items.map(i => [i.title, i.crit, ...i.results.map(statusTxt)])), "");
   out.push("## Points non testés", "", mdList(m.untested), "");
   out.push("## Exceptions", "", mdList(m.exceptions.length ? m.exceptions : ["Aucune exception utilisée dans ce projet."]), "");
+  out.push("## Décisions", "", mdList(m.decisions && m.decisions.length ? m.decisions : ["Aucune décision notée dans le journal du projet."]), "");
   out.push("## Méthodologie et version WCAG", "", mdList(m.method), "");
   out.push("## Limites du rapport", "", mdList(m.limits), "");
   return out.join("\n");

@@ -1048,13 +1048,22 @@ body{background:var(--bg)}
 .wiz-chk{display:flex;flex-direction:column;gap:8px;padding:12px 14px;border-radius:16px;background:var(--bg)}.wiz-chk h4{margin:0;font-size:14px}.wiz-chk ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .wiz-chk li{font-size:14px}.wiz-chk li>span:first-child{display:inline-block;width:1.4em;font-weight:700}.wiz-chk li.ok>span:first-child{color:var(--ok)}.wiz-chk li.ko>span:first-child{color:var(--bad)}.wiz-chk .btn{align-self:flex-start}.wiz-err{margin:0;color:var(--bad);font-weight:600}
 .wiz-seg{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;min-width:0}.wiz-seg legend{font-size:13px;font-weight:600;padding:0;margin-bottom:6px}
-.wiz-seg input{accent-color:var(--ink);width:auto;height:auto;min-height:0;margin:0;flex:none}.wiz-seg label{display:flex;flex-direction:row;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:12px;box-shadow:inset 0 0 0 1.5px var(--hair);font-size:14px;cursor:pointer}.wiz-seg label:has(input:checked){box-shadow:inset 0 0 0 2px var(--ink);font-weight:600}
+.wiz-seg input{accent-color:var(--ink);width:24px;height:24px;min-height:0;margin:0;flex:none}.wiz-seg label{display:flex;flex-direction:row;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:12px;box-shadow:inset 0 0 0 1.5px var(--hair);font-size:14px;cursor:pointer}.wiz-seg label:has(input:checked){box-shadow:inset 0 0 0 2px var(--ink);font-weight:600}
 .wiz-type{padding:16px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden;overflow-wrap:anywhere}.wiz-type p{margin:0 0 8px;line-height:1.5}.wiz-type .wt-h{line-height:1.15;font-weight:700}.wiz-type .wt-m{margin:0;font-family:var(--sans);font-size:12px;opacity:.8}
 .wiz-sum{margin:0;padding-left:20px}.wiz-rows{display:flex;flex-direction:column;gap:8px}
 .wiz-row{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr);gap:12px;align-items:center}.wiz-row .mono{font-size:12px;color:var(--muted)}.wiz-n{display:flex;flex-direction:column;min-width:0}
 .wiz-sw{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));height:32px;border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}.wiz-sw i{display:block}
 .wiz-foot{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}.wiz-nav{display:flex;gap:8px;margin-left:auto}
 @media (max-width:480px){.wiz-row{grid-template-columns:minmax(0,1fr)}.wiz-steps li{padding:6px 8px;font-size:12px}}
+.ver-form,.dec-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:12px;align-items:end}.ver-form .ex-name,.dec-form .ex-name{flex:none;min-width:0}.dec-form .dec-wide{grid-column:1 / -1}
+.ver-form .btn{justify-self:start;min-height:44px}.ex-name input[aria-invalid=true]{border-color:var(--bad)}.field-err,.dec-err{margin:0;color:var(--bad);font-weight:600;font-size:14px}.dec-err{padding-left:20px}
+.ver-list,.dec-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ver-list>li,.dec-list>li{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 14px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--hair)}
+.ver-list>li.ver-empty,.dec-list>li.ver-empty{display:block;color:var(--muted);box-shadow:none;background:var(--bg)}
+.ver-t,.dec-t{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}.ver-t small,.dec-t small{color:var(--muted)}
+.ver-conf{flex-basis:100%;padding:10px 12px;border-radius:12px;background:var(--bg)}.ver-conf p{margin:0 0 8px}
+.dec-tag{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--bg);font-size:12px;font-weight:700;margin-right:6px}.dec-due{background:var(--warn-bg);color:var(--ink)}
+.ver-diff{padding:12px 14px;border-radius:16px;background:var(--bg)}.ver-diff h3{margin:0 0 6px;font-size:15px}.ver-diff ul{margin:0;padding-left:20px}
 .pd-list li.pd-empty{display:block;color:var(--muted);box-shadow:none;background:var(--bg)}
 .pd-sw{display:flex}.pd-sw i{width:16px;height:16px;border-radius:50%;margin-right:-5px;box-shadow:0 0 0 2px var(--surface),inset 0 0 0 1px rgba(127,127,127,.4)}
 .pd-t{min-width:0}.pd-t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pd-t small{color:var(--muted);font-size:13px}
@@ -1720,6 +1729,30 @@ section .adv-hint{display:none!important}
       <div class="row" style="align-items:flex-end"><label class="ex-name" style="flex:1 1 280px">Lien de partage<input type="text" id="cmpLink" placeholder="https://lisio-psi.vercel.app/?p=…"></label><button class="btn primary" type="button" id="cmpGo">Comparer</button><button class="btn" type="button" id="cmpPick">Choisir un fichier</button><input type="file" id="cmpFile" accept=".json,application/json" hidden></div>
       <div id="cmpOut" aria-live="polite"></div>
     </div>
+    <div class="card-surface" id="verCard">
+      <h2>Versions du projet</h2>
+      <p class="note">Une version est une photo du projet : couleurs et réglages, à un moment donné. Enregistrez-en une avant un gros changement ou après une validation. Elle reste dans ce navigateur et dans le fichier du projet, pas dans le lien de partage, qui serait trop long.</p>
+      <div class="ver-form"><label class="ex-name">Nom de la version<input type="text" id="verName" maxlength="60" autocomplete="off" aria-describedby="verErr"></label><label class="ex-name">Note (facultatif)<input type="text" id="verNote" maxlength="300" autocomplete="off"></label><button class="btn primary" type="button" id="verSave">Enregistrer une version</button></div>
+      <p class="field-err" id="verErr" hidden></p>
+      <ul class="ver-list" id="verList"></ul>
+      <div id="verOut" aria-live="polite"></div>
+    </div>
+    <div class="card-surface" id="decCard">
+      <h2>Décisions et exceptions</h2>
+      <p class="note">Notez pourquoi une règle est suivie ou non. Une exception dit le problème, la raison, le contexte, qui a décidé, quand, et quand la revoir. Le journal part avec le projet, dans le lien et le fichier, et entre dans le rapport.</p>
+      <fieldset class="wiz-seg" id="decKindF"><legend>Type</legend><label><input type="radio" name="decKind" value="decision" checked>Décision</label><label><input type="radio" name="decKind" value="exception">Exception</label></fieldset>
+      <div class="dec-form">
+        <label class="ex-name dec-wide">Problème ou sujet<input type="text" id="decProblem" maxlength="500" autocomplete="off"></label>
+        <label class="ex-name dec-wide">Raison<input type="text" id="decReason" maxlength="500" autocomplete="off"></label>
+        <label class="ex-name dec-wide"><span>Contexte <span class="muted" id="decCtxH">(facultatif pour une décision)</span></span><input type="text" id="decContext" maxlength="500" autocomplete="off" aria-describedby="decCtxH"></label>
+        <label class="ex-name">Décidé par (rôle)<input type="text" id="decRole" maxlength="500" autocomplete="off"></label>
+        <label class="ex-name">Date de la décision<input type="date" id="decDate"></label>
+        <label class="ex-name">À revoir le (facultatif)<input type="date" id="decReview"></label>
+      </div>
+      <ul class="dec-err" id="decErr" hidden></ul>
+      <div class="row"><button class="btn primary" type="button" id="decAdd">Ajouter au journal</button><button class="btn" type="button" id="decCancel" hidden>Annuler la modification</button></div>
+      <ul class="dec-list" id="decList" aria-label="Journal des décisions et exceptions"></ul>
+    </div>
     
     <div class="card-surface">
       <h2>Ce que contient le fichier, et où il arrive dans Figma</h2>
@@ -2085,7 +2118,8 @@ const SETTING_FR = {
   "ts.styles[].ls": "Styles de texte, espacement des lettres", "ts.styles[].weight": "Styles de texte, graisse", ds: "Design system",
   sh: "Nuances", "sh.light": "Nuances, nuance 50", "sh.dark": "Nuances, nuance 950", "sh.sat": "Nuances, saturation", "sh.exact": "Nuances, couleur exacte", "sh.method": "Nuances, méthode",
   "ds.elevI": "Design system, intensité des ombres", "ds.elevB": "Design system, flou des ombres", "ds.elevY": "Design system, hauteur des ombres",
-  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile", "ds.scrimBlur": "Design system, flou sous le voile", decor: "Couleurs laissées pour le décor"
+  "ds.glassBlur": "Design system, flou du verre", "ds.scrimPlus": "Design system, voile", "ds.scrimBlur": "Design system, flou sous le voile", decor: "Couleurs laissées pour le décor",
+  manual: "Vérifications à la main", decisions: "Décisions et exceptions", versions: "Versions du projet"
 };
 // Nom d'un chemin : le plus précis connu, sinon le premier niveau, sinon « Un réglage ».
 const settingFr = path => { const parts = String(path || "").split("."); for (let i = parts.length; i > 0; i--) { const k = parts.slice(0, i).join("."); if (SETTING_FR[k]) return SETTING_FR[k]; } return "Un réglage"; };
@@ -2442,6 +2476,7 @@ function reportMarkdown(m) {
     mdTable(["Point", "Critère", ...m.manual.screens], m.manual.items.map(i => [i.title, i.crit, ...i.results.map(statusTxt)])), "");
   out.push("## Points non testés", "", mdList(m.untested), "");
   out.push("## Exceptions", "", mdList(m.exceptions.length ? m.exceptions : ["Aucune exception utilisée dans ce projet."]), "");
+  out.push("## Décisions", "", mdList(m.decisions && m.decisions.length ? m.decisions : ["Aucune décision notée dans le journal du projet."]), "");
   out.push("## Méthodologie et version WCAG", "", mdList(m.method), "");
   out.push("## Limites du rapport", "", mdList(m.limits), "");
   return out.join("\n");
@@ -2656,6 +2691,67 @@ function wizPalette(primary, bg) {
     { id: "primary-ui", label: "Principale sur le fond, en bouton ou icône", r: rp, need: 3, ok: rp >= 3 }
   ];
   return { colors, fg: ink, bg: b, checks, fixPrimary: rp < 4.5 ? suggestFix(p, b, 4.5) : null };
+}
+// Lisio, versions du projet et journal des décisions et exceptions (blueprint § 8 et § 9, P2.4). Données pures, testées par tests/journal.test.mjs.
+// Une exception doit dire : problème, raison, contexte, décisionnaire ou rôle, date, et éventuellement une date de révision (blueprint § 8).
+// Une version est une copie du projet (couleurs et réglages) : elle ne contient ni les autres versions ni le journal.
+const DEC_KINDS = { decision: "Décision", exception: "Exception" };
+const DEC_FIELDS = [["problem", "Problème ou sujet"], ["reason", "Raison"], ["context", "Contexte"], ["role", "Décidé par (rôle)"], ["date", "Date de la décision"], ["review", "À revoir le"]];
+const DEC_NEED = { decision: ["problem", "reason", "role", "date"], exception: ["problem", "reason", "context", "role", "date"] };
+const DEC_MAX = 50, VER_MAX = 20, DEC_TXT_MAX = 500, VER_NAME_MAX = 60, VER_NOTE_MAX = 300;
+const MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+// AAAA-MM-JJ, et une vraie date du calendrier (pas de 30 février).
+const isDay = s => { if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return false; const [y, m, d] = s.split("-").map(Number), t = new Date(Date.UTC(y, m - 1, d)); return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d; };
+const dateFr = s => { if (!isDay(String(s))) return String(s || ""); const [y, m, d] = s.split("-").map(Number); return `${d === 1 ? "1er" : d} ${MONTHS[m - 1]} ${y}`; };
+const txt = (v, max) => String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, max);
+// Vérifie et nettoie une entrée. missing : les champs à corriger, dans l'ordre du formulaire.
+function decCheck(e) {
+  const kind = e && e.kind, entry = { kind };
+  if (!DEC_NEED[kind]) return { ok: false, missing: ["kind"], errors: ["Choisissez : décision ou exception."], entry };
+  for (const [k] of DEC_FIELDS) entry[k] = txt(e[k], k === "date" || k === "review" ? 10 : DEC_TXT_MAX);
+  if (e.id) entry.id = txt(e.id, 40);
+  const missing = [], errors = [], lab = k => DEC_FIELDS.find(f => f[0] === k)[1];
+  for (const [k] of DEC_FIELDS) {
+    const v = entry[k];
+    if (k === "date") { if (!isDay(v)) { missing.push(k); errors.push(`${lab(k)} : une date réelle est demandée.`); } continue; }
+    if (k === "review") { if (v && (!isDay(v) || (isDay(entry.date) && v < entry.date))) { missing.push(k); errors.push(`${lab(k)} : une date réelle, après la date de la décision.`); } continue; }
+    if (DEC_NEED[kind].includes(k) && !v) { missing.push(k); errors.push(`${lab(k)} : à remplir pour une ${DEC_KINDS[kind].toLowerCase()}.`); }
+  }
+  return { ok: !missing.length, missing, errors, entry };
+}
+const decDue = (e, today) => !!(e && e.review && isDay(e.review) && e.review <= today);
+// Une ligne lisible, pour le rapport et pour copier.
+function decLine(e, today) {
+  const p = [`${DEC_KINDS[e.kind] || "Décision"} : ${e.problem}.`, `Raison : ${e.reason}.`];
+  if (e.context) p.push(`Contexte : ${e.context}.`);
+  p.push(`Décidé par : ${e.role}, le ${dateFr(e.date)}.`);
+  if (e.review) p.push(`Révision prévue le ${dateFr(e.review)}${decDue(e, today) ? " : à revoir maintenant" : ""}.`);
+  return p.join(" ");
+}
+const deepCopy = v => JSON.parse(JSON.stringify(v));
+function verSnapshot({ id, name, note, date, colors, state }) {
+  const st = deepCopy(state || {}); delete st.versions; delete st.decisions;
+  return { id: String(id), name: txt(name, VER_NAME_MAX), note: txt(note, VER_NOTE_MAX), date: String(date), colors: deepCopy(colors || []), state: st };
+}
+// Réglages d'affichage : ils ne changent pas le design system, la comparaison les ignore.
+const VIEW_KEYS = new Set(["versions", "decisions", "projectName", "figma", "sheet", "showFail", "mView", "mSample", "mVision", "sysTheme", "sysVision", "sysSpacing", "sysPg", "sysGrid", "demo"]);
+function flat(o, path, out) {
+  for (const k of Object.keys(o || {})) {
+    if (!path && VIEW_KEYS.has(k)) continue;
+    const v = o[k], p = path ? path + "." + k : k;
+    if (v && typeof v === "object" && !Array.isArray(v)) flat(v, p, out); else out[p] = JSON.stringify(v);
+  }
+  return out;
+}
+// a : la version, b : maintenant. Couleurs par nom ; réglages nommés comme dans l'interface, sans doublon.
+function verDiff(a, b) {
+  const A = new Map((a.colors || []).map(c => [c.name, c.hex])), B = new Map((b.colors || []).map(c => [c.name, c.hex]));
+  const colors = { changed: [], added: [], removed: [] };
+  for (const [n, h] of B) { if (!A.has(n)) colors.added.push(n); else if (A.get(n) !== h) colors.changed.push([n, A.get(n), h]); }
+  for (const n of A.keys()) if (!B.has(n)) colors.removed.push(n);
+  const fa = flat(a.state, "", {}), fb = flat(b.state, "", {}), settings = [];
+  for (const p of [...new Set([...Object.keys(fa), ...Object.keys(fb)])]) if (fa[p] !== fb[p]) { const l = settingFr(p.replace(/\.\d+(?=\.|$)/g, "[]")); if (!settings.includes(l)) settings.push(l); }
+  return { colors, settings, same: !colors.changed.length && !colors.added.length && !colors.removed.length && !settings.length };
 }
 // F09 (P2) : rampes perceptuelles OKLCH, une autre façon de décliner une couleur en 11 nuances.
 // La clarté OKLCH (L) descend à pas réguliers du 50 au 950 ; la teinte reste celle de la couleur de départ ;
@@ -5106,7 +5202,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "7441304";
+const LISIO_BUILD = "53f95fc";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
@@ -5117,6 +5213,8 @@ function reportModel() {
     const r = ratio(R[k], R[pair]); return { role: fr, color: col, pair: ROLE_FR[pair][0], ratio: rt(r), need: nd(n), status: r >= n ? "pass" : "fail" }; }); };
   const roleSets = [["mode clair", roles("light")], ["mode sombre", roles("dark")]];
   const exceptions = [];
+
+  const td = today();
   if (kinds.has("off")) exceptions.push("Composants inactifs (texte et fond désactivés) : exemptés de contraste par les critères 1.4.3 et 1.4.11.");
   if (kinds.has("deco")) exceptions.push("Éléments décoratifs (filet décoratif) : sans exigence de contraste, ils ne portent aucune information.");
   return { project: S.projectName || "Sans nom", date: new Date().toISOString().slice(0, 10), lisio: LISIO_BUILD, fingerprint: prjPrint(), wcag: S.version, level: lvl,
@@ -5127,7 +5225,7 @@ function reportModel() {
     styles: S.ts.styles.map(st => { const d = tsDef(st.id) || { name: st.id }, v = tsVerdict(st); return { name: d.name, size: `${st.min} → ${st.max} px`, ratio: rt(v.r), need: nd(v.need), status: v.r >= v.need ? "pass" : "fail" }; }),
     manual: { screens: Mn.screens.map(x => x.name || "Sans nom"), items: MANUAL.flatMap(([, it]) => it.map(([id, t, , c]) => ({ title: t, crit: c, results: Mn.screens.map(x => x.ok[id] ? "pass" : "untested") }))) },
     untested: [`Tous les critères WCAG ${S.version} absents du tableau des critères.`, `${mnAll - mnDone} point${mnAll - mnDone > 1 ? "s" : ""} de la check-list manuelle sur ${mnAll}, pas encore coché${mnAll - mnDone > 1 ? "s" : ""}.`, "Les écrans réels : images et alternatives, clavier, titres, formulaires, médias."],
-    exceptions,
+    exceptions: [...exceptions, ...decAll().filter(e => e.kind === "exception").map(e => decLine(e, td))], decisions: decAll().filter(e => e.kind === "decision").map(e => decLine(e, td)),
     method: [...(shOk() ? ["Nuances générées en OKLCH, clarté perçue à pas réguliers : un outil de génération, pas une validation. Chaque paire est mesurée par la formule ci-dessous."] : []), `Ratio de contraste : formule de luminance relative de WCAG ${S.version} (W3C), arrondi au centième inférieur.`, `Seuils : texte courant ${nd(need)}, grand texte et composants ${nd(needL)} (niveau ${lvl}).`, "Grand texte : 24 px et plus, ou 18,67 px et plus en gras.", "Styles de texte vérifiés à leur taille mobile (390 px).", "Rôles vérifiés en mode clair et en mode sombre, chacun avec son partenaire (texte et fond, bouton et libellé).", "Check-list manuelle : cochée par l’équipe dans Lisio, écran par écran."],
     limits: ["Ce rapport donne le résultat de tests précis. Il n’affirme pas la conformité du produit.", "Lisio teste des couleurs et des réglages, pas des pages : les écrans réels restent à vérifier.", "Les résultats valent pour la version de Lisio et l’empreinte du projet indiquées en tête."] };
 }
@@ -5168,6 +5266,7 @@ ul{padding-left:20px}li{margin:3px 0}a{color:#1E3A8A}
 <h2>Rôles, mode sombre</h2><table><thead><tr><th scope="col">Rôle</th><th scope="col">Couleur</th><th scope="col">Vérifié avec</th><th scope="col">Ratio</th><th scope="col">Seuil et verdict</th></tr></thead><tbody>${roleRows("dark")}</tbody></table>
 <h2>Styles de texte</h2><p>Texte ${esc(hexName(S.ts.fg))} <code>${S.ts.fg}</code> sur ${esc(hexName(S.ts.bg))} <code>${S.ts.bg}</code> : ${f2(ratio(S.ts.fg, S.ts.bg))} :1. Tailles de 390 à 1440 px.</p><table><thead><tr><th scope="col">Style</th><th scope="col">Taille</th><th scope="col">Graisse</th><th scope="col">Interligne</th><th scope="col">Catégorie et seuil</th><th scope="col">Verdict</th></tr></thead><tbody>${sty}</tbody></table>
 ${manualReport()}
+<h2>Décisions et exceptions</h2>${decAll().length ? `<ul>${decAll().map(e => `<li>${esc(decLine(e, today()))}</li>`).join("")}</ul>` : "<p>Aucune décision ni exception notée dans le journal du projet.</p>"}
 <h2>Ce que Lisio ne vérifie pas</h2><p>Ce rapport couvre les couleurs, la typographie et les composants de base. Il reste à vérifier sur les écrans réels : alternatives textuelles des images, navigation au clavier et ordre du focus, titres et repères, intitulés des champs et messages d’erreur, sous-titres des vidéos, compatibilité avec les lecteurs d’écran. Un audit complet suit le RGAA ou les WCAG critère par critère.</p>
 </body></html>`;
 }
@@ -5185,6 +5284,8 @@ $("repJson").addEventListener("click", () => saveFile(`lisio-rapport-${slug(S.pr
 // ---------- Projet partageable ----------
 const PRJ_BASE = "https://lisio-psi.vercel.app/";
 const prjData = () => ({ lisio: "project", v: 1, name: S.projectName || "", savedAt: new Date().toISOString(), colors: palette, state: S });
+// Le lien ne porte pas les versions : elles le rendraient trop long. Elles restent dans le navigateur et dans le fichier.
+const prjLinkData = () => { const o = prjData(); o.state = { ...S }; delete o.state.versions; return o; };
 const b64u = bytes => { let s = ""; bytes.forEach(b => { s += String.fromCharCode(b); }); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
 const unb64u = t => { const s = atob(t.replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(s, c => c.charCodeAt(0)); };
 async function packPrj(o) {
@@ -5219,7 +5320,7 @@ function prjOffer(r, from) {
 (async () => { const t = new URLSearchParams(location.search).get("p"); if (!t) return; let o; try { o = await unpackPrj(t); } catch (e) { toast(prjErr(e)); return; } const r = prjCheck(o); if (r.ok) prjOffer(r, "link"); else toast(prjWhy(r)); })();
 $("prjName").value = S.projectName || "";
 $("prjName").addEventListener("input", e => { S.projectName = e.target.value.trim(); save(); });
-$("prjLink").addEventListener("click", async () => { try { const t = await packPrj(prjData()), url = PRJ_BASE + "?p=" + t + "#matrice", n = url.length.toLocaleString("fr-FR");
+$("prjLink").addEventListener("click", async () => { try { const t = await packPrj(prjLinkData()), url = PRJ_BASE + "?p=" + t + "#matrice", n = url.length.toLocaleString("fr-FR");
   if (url.length > LINK_MAX) { $("prjNote").textContent = `Projet trop lourd pour un lien (${n} caractères, au-delà de ${LINK_MAX.toLocaleString("fr-FR")}) : certains navigateurs ou serveurs le couperaient. Utilisez « Enregistrer le projet » et envoyez le fichier.`; toast("Lien non créé : projet trop lourd, enregistrez-le en fichier"); return; }
   copy(url, "Lien copié : toute personne qui l’a peut ouvrir le projet"); $("prjNote").textContent = `Lien de ${n} caractères. Il contient tout le projet (nom, couleurs, polices, réglages${S.figma ? ", lien Figma" : ""}), rien n’est stocké sur un serveur. Toute personne qui a ce lien peut ouvrir le projet : ne le publiez pas si le projet est confidentiel. Il ouvre Lisio sur lisio-psi.vercel.app et y crée un nouveau projet. Le lien ne remplace pas une sauvegarde : gardez aussi le fichier (« Enregistrer le projet »).`; } catch (e) { toast("Lien impossible : enregistrez le projet en fichier"); } });
 $("prjSave").addEventListener("click", () => { const nm = slug(S.projectName || "projet"); saveFile(`lisio-projet-${nm}.json`, JSON.stringify(prjData(), null, 1), "application/json", "Projet enregistré : envoyez le fichier à vos collègues"); });
@@ -5351,6 +5452,85 @@ $("wizTpl").addEventListener("click", () => { const o = $("wizDlg").opener; $("w
 $("wizDlg").addEventListener("close", () => { if ($("prjDlg").open) return; const o = $("wizDlg").opener; ((o && o.offsetParent) ? o : $("prjB").offsetParent ? $("prjB") : $("moreB")).focus(); });
 $("prjWiz").addEventListener("click", () => { const o = $("prjDlg").opener; $("prjDlg").close(); wizOpen(o); });
 sheetSwipe($("wizDlg"), () => $("wizDlg").close(), ".sheet-grab,.pd-h");
+// ---------- Versions du projet et journal des décisions (P2 : versioning et documentation des décisions) ----------
+// Les versions vivent dans S.versions (navigateur et fichier ; retirées du lien de partage). Le journal vit dans S.decisions (partout).
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+const verAll = () => Array.isArray(S.versions) ? S.versions : [];
+const decAll = () => Array.isArray(S.decisions) ? S.decisions : [];
+const whenFr = iso => { const d = new Date(iso); return isNaN(d) ? "" : d.toLocaleString("fr-FR", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }); };
+function verRender() {
+  const L = verAll().slice().sort((a, b) => b.date.localeCompare(a.date));
+  $("verList").innerHTML = L.length ? L.map(v => `<li data-ver="${esc(v.id)}"><span class="pd-sw" aria-hidden="true">${v.colors.slice(0, 6).map(c => `<i style="background:${normHex(c.hex) || "#000"}"></i>`).join("")}</span><span class="ver-t"><b>${esc(v.name)}</b><small>${esc(whenFr(v.date))} · ${v.colors.length} couleur${v.colors.length > 1 ? "s" : ""}</small>${v.note ? `<span>${esc(v.note)}</span>` : ""}</span><button type="button" class="btn sm" data-ver-cmp="${esc(v.id)}">Comparer à maintenant<span class="sr-only"> : ${esc(v.name)}</span></button><button type="button" class="btn sm" data-ver-back="${esc(v.id)}" aria-expanded="false">Revenir à cette version<span class="sr-only"> : ${esc(v.name)}</span></button><button type="button" class="btn sm" data-ver-del="${esc(v.id)}">Supprimer<span class="sr-only"> la version ${esc(v.name)}</span></button><div class="ver-conf" data-ver-conf="${esc(v.id)}" hidden><p>Revenir à « ${esc(v.name)} » ? Les couleurs et les réglages de cette version remplacent ceux du projet. L’état actuel est d’abord enregistré en version : rien n’est perdu. Le journal des décisions ne change pas.</p><div class="row"><button type="button" class="btn primary sm" data-ver-ok="${esc(v.id)}">Revenir à cette version</button><button type="button" class="btn sm" data-ver-no="${esc(v.id)}">Annuler</button></div></div></li>`).join("")
+    : `<li class="ver-empty">Aucune version pour l’instant. Donnez un nom, puis « Enregistrer une version ».</li>`;
+}
+function verAdd(name, note) {
+  if (verAll().length >= VER_MAX) return false;
+  S.versions = [...verAll(), verSnapshot({ id: prjId(), name, note, date: new Date().toISOString(), colors: isExample ? EXAMPLE : palette, state: S })]; save(); return true;
+}
+$("verSave").addEventListener("click", () => {
+  const n = $("verName"), name = n.value.trim(), err = $("verErr");
+  const bad = !name ? "Donnez un nom à la version, par exemple « Validée par la marque »." : verAll().length >= VER_MAX ? `${VER_MAX} versions au plus : supprimez-en une avant d’en enregistrer une autre.` : "";
+  n.setAttribute("aria-invalid", String(!!bad)); err.hidden = !bad; err.textContent = bad; if (bad) { n.focus(); return; }
+  verAdd(name, $("verNote").value); n.value = ""; $("verNote").value = ""; verRender(); $("verOut").innerHTML = "";
+  toast(`Version « ${name} » enregistrée`);
+});
+$("verName").addEventListener("input", e => { if (e.target.value.trim()) { e.target.removeAttribute("aria-invalid"); $("verErr").hidden = true; } });
+function verDiffHtml(v) {
+  const d = verDiff(v, { colors: isExample ? EXAMPLE : palette, state: S });
+  if (d.same) return `<div class="ver-diff"><h3>« ${esc(v.name)} » et maintenant</h3><p>Aucune différence : le projet est identique à cette version.</p></div>`;
+  const li = [...d.colors.changed.map(([n, a, b]) => `<li>${esc(n)} modifiée : <span class="mono">${a}</span> → <span class="mono">${b}</span></li>`), ...d.colors.added.map(n => `<li>${esc(n)} ajoutée depuis</li>`), ...d.colors.removed.map(n => `<li>${esc(n)} retirée depuis</li>`), ...d.settings.map(s => `<li>${esc(s)} : réglage modifié</li>`)];
+  return `<div class="ver-diff"><h3>De « ${esc(v.name)} » à maintenant</h3><ul>${li.join("")}</ul></div>`;
+}
+function verBack(v) {
+  const P = prjSync(), e = P.list.find(x => x.id === P.cur), was = verAll().length;
+  if (was >= VER_MAX) { toast(`${VER_MAX} versions au plus : supprimez-en une, pour que l’état actuel soit gardé avant le retour`); return; }
+  verAdd(`Avant le retour à « ${v.name} »`, "Enregistrée automatiquement");
+  const st = { ...JSON.parse(JSON.stringify(v.state)), versions: S.versions, decisions: decAll(), projectName: S.projectName }; if (S.figma) st.figma = S.figma; else delete st.figma;
+  e.colors = JSON.parse(JSON.stringify(v.colors)); e.state = st; e.savedAt = new Date().toISOString();
+  if (!(store.set("projects", P) && store.set("colors", e.colors) && store.set("state", st))) { toast("Retour impossible : ce navigateur refuse d’enregistrer"); return; }
+  try { localStorage.setItem("lisio-ver-done", v.name); } catch (er) {}
+  prjLeaving = true; location.reload();
+}
+$("verList").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return; const id = b.dataset.verCmp || b.dataset.verBack || b.dataset.verDel || b.dataset.verOk || b.dataset.verNo, v = verAll().find(x => x.id === id); if (!v) return;
+  if (b.dataset.verCmp) { $("verOut").innerHTML = verDiffHtml(v); return; }
+  if (b.dataset.verBack) { const c = $("verList").querySelector(`[data-ver-conf="${CSS.escape(id)}"]`), open = c.hidden; c.hidden = !open; b.setAttribute("aria-expanded", String(open)); if (open) c.querySelector("[data-ver-ok]").focus(); return; }
+  if (b.dataset.verNo) { $("verList").querySelector(`[data-ver-conf="${CSS.escape(id)}"]`).hidden = true; const t = $("verList").querySelector(`[data-ver-back="${CSS.escape(id)}"]`); t.setAttribute("aria-expanded", "false"); t.focus(); return; }
+  if (b.dataset.verOk) { verBack(v); return; }
+  if (b.dataset.verDel) { S.versions = verAll().filter(x => x.id !== id); save(); verRender(); $("verOut").innerHTML = ""; toast(`Version « ${v.name} » supprimée`); ($("verList").querySelector("button") || $("verName")).focus(); }
+});
+// Journal : formulaire unique, pour ajouter ou modifier.
+const DEC_IDS = { problem: "decProblem", reason: "decReason", context: "decContext", role: "decRole", date: "decDate", review: "decReview" };
+let decEditing = null;
+const decKind = () => (document.querySelector('#decCard input[name="decKind"]:checked') || {}).value || "decision";
+function decCtxHint() { $("decCtxH").textContent = decKind() === "exception" ? "(demandé pour une exception)" : "(facultatif pour une décision)"; }
+function decFormReset() { decEditing = null; Object.values(DEC_IDS).forEach(id => { $(id).value = ""; $(id).removeAttribute("aria-invalid"); }); $("decDate").value = today(); $("decErr").hidden = true; $("decAdd").textContent = "Ajouter au journal"; $("decCancel").hidden = true; }
+function decRender() {
+  const td = today(), L = decAll().slice().sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  $("decList").innerHTML = L.length ? L.map(e => `<li data-dec="${esc(e.id)}"><span class="dec-t"><span><span class="dec-tag">${DEC_KINDS[e.kind]}</span>${decDue(e, td) ? '<span class="dec-tag dec-due">À revoir</span>' : ""}<b>${esc(e.problem)}</b></span><span>Raison : ${esc(e.reason)}</span>${e.context ? `<span>Contexte : ${esc(e.context)}</span>` : ""}<small>Décidé par ${esc(e.role)}, le ${esc(dateFr(e.date))}${e.review ? ` · révision prévue le ${esc(dateFr(e.review))}` : ""}</small></span><button type="button" class="btn sm" data-dec-edit="${esc(e.id)}">Modifier<span class="sr-only"> : ${esc(e.problem)}</span></button><button type="button" class="btn sm" data-dec-del="${esc(e.id)}">Supprimer<span class="sr-only"> : ${esc(e.problem)}</span></button></li>`).join("")
+    : `<li class="ver-empty">Le journal est vide. Une décision ou une exception notée ici entre dans le rapport.</li>`;
+}
+$("decAdd").addEventListener("click", () => {
+  const raw = { kind: decKind() }; for (const [k, id] of Object.entries(DEC_IDS)) raw[k] = $(id).value;
+  const r = decCheck(raw); Object.entries(DEC_IDS).forEach(([k, id]) => $(id).setAttribute("aria-invalid", String(r.missing.includes(k))));
+  if (!r.ok) { const E = $("decErr"); E.hidden = false; E.innerHTML = r.errors.map(x => `<li>${esc(x)}</li>`).join(""); const f = r.missing.find(k => DEC_IDS[k]); if (f) $(DEC_IDS[f]).focus(); return; }
+  if (!decEditing && decAll().length >= DEC_MAX) { toast(`${DEC_MAX} entrées au plus dans le journal : supprimez-en une`); return; }
+  const was = decEditing; r.entry.id = was || prjId();
+  S.decisions = was ? decAll().map(x => x.id === was ? r.entry : x) : [...decAll(), r.entry]; save();
+  decFormReset(); decRender(); toast(`${DEC_KINDS[r.entry.kind]} ${was ? "modifiée" : "ajoutée au journal"}`);
+  if (was) { const b = $("decList").querySelector(`[data-dec-edit="${CSS.escape(was)}"]`); if (b) b.focus(); } else $("decProblem").focus();
+});
+$("decCancel").addEventListener("click", () => { const was = decEditing; decFormReset(); const b = was && $("decList").querySelector(`[data-dec-edit="${CSS.escape(was)}"]`); (b || $("decProblem")).focus(); });
+$("decKindF").addEventListener("change", decCtxHint);
+Object.values(DEC_IDS).forEach(id => $(id).addEventListener("input", e => e.target.removeAttribute("aria-invalid")));
+$("decList").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return; const id = b.dataset.decEdit || b.dataset.decDel, x = decAll().find(y => y.id === id); if (!x) return;
+  if (b.dataset.decEdit) { decEditing = id; document.querySelector(`#decCard input[name="decKind"][value="${x.kind}"]`).checked = true; decCtxHint();
+    for (const [k, fid] of Object.entries(DEC_IDS)) { $(fid).value = x[k] || ""; $(fid).removeAttribute("aria-invalid"); } $("decErr").hidden = true;
+    $("decAdd").textContent = "Enregistrer la modification"; $("decCancel").hidden = false; $("decProblem").focus(); return; }
+  S.decisions = decAll().filter(y => y.id !== id); save(); if (decEditing === id) decFormReset(); decRender(); toast(`${DEC_KINDS[x.kind]} supprimée du journal`); ($("decList").querySelector("button") || $("decProblem")).focus();
+});
+decFormReset(); decCtxHint(); verRender(); decRender();
 // ---------- Projet démo et visite guidée (F06) : un projet à part, signalé, qu’on quitte d’un clic ----------
 // La démo ne remplace jamais un projet : elle est ajoutée à la liste (une seule fois), et « Quitter la démo » rend le projet d’avant.
 function demoOpen() {
@@ -5407,6 +5587,8 @@ function cmdSource() {
     { k: "Action", t: "Projets : ouvrir, créer, dupliquer", x: "projet sauvegarder enregistrer equipe", run: () => $("prjB").click() },
     { k: "Action", t: "Créer un projet avec l’assistant", x: "nouveau projet creer etapes", run: () => wizOpen(null) },
     { k: "Action", t: "Nouveau projet vide", x: "creer", run: () => $("prjNew").click() },
+    { k: "Action", t: "Enregistrer une version du projet", x: "historique sauvegarde photo", run: () => { cmdGoView("exporter"); setTimeout(() => $("verName").focus(), 50); } },
+    { k: "Action", t: "Noter une décision ou une exception", x: "journal justifier exception", run: () => { cmdGoView("exporter"); setTimeout(() => $("decProblem").focus(), 50); } },
     { k: "Action", t: "Affichage Essentiel", x: "mode simple debutant masquer", run: () => setMode("ess", true) },
     { k: "Action", t: "Affichage Avancé", x: "mode expert tout afficher reglages", run: () => setMode("adv", true) },
     { k: "Action", t: "Copier le lien de partage", x: "equipe collegue projet", run: () => $("prjLink").click() },
@@ -5489,6 +5671,7 @@ show(location.hash.slice(1));
 requestAnimationFrame(() => window.scrollTo(0, 0)); setTimeout(() => window.scrollTo(0, 0), 60);
 document.fonts.ready.then(renderMetrics);
 document.fonts.load(`${S.weight} 40px ${fontCss(S.font)}`).then(renderMetrics, () => {});
+try { const w = localStorage.getItem("lisio-ver-done"); if (w) { localStorage.removeItem("lisio-ver-done"); toast(`Retour à la version « ${w} » : l’état d’avant est gardé dans Versions du projet.`); } } catch (e) {}
 try { const w = localStorage.getItem("lisio-wiz-done"); if (w) { localStorage.removeItem("lisio-wiz-done"); toast(`« ${w} » créé : voici la grille des contrastes de départ.`); } } catch (e) {}
 window.__lisioReady = true;
 })();
