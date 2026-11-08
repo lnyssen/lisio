@@ -93,7 +93,24 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   check(box.ttAbove, `${lab} : « Retour en haut » au-dessus de la barre`, JSON.stringify(box));
   const items = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => a.getBoundingClientRect()).map(r => [Math.round(r.left), Math.round(r.right), Math.round(r.width), Math.round(r.height)]));
   check(items.every((r, k) => r[2] >= 24 && r[3] >= 24 && (!k || r[0] >= items[k - 1][1])), `${lab} : étapes sans chevauchement, cibles d’au moins 24 px`, JSON.stringify(items));
-  check(/Outils/.test(await p.textContent("#moreB")), `${lab} : le bouton s’appelle « Outils », comme sur ordinateur`);
+  check(/Outils/.test(await p.textContent("#moreB")), `${lab} : le bouton s’appelle « Outils » pour les lecteurs d’écran`);
+  // Retouches du 8 novembre 2026 : icônes rondes, pas de libellé « Outils », aucun dégradé, séparateurs de même hauteur.
+  const look = await p.evaluate(() => {
+    const cs = (el, ps) => getComputedStyle(el, ps), r = el => el.getBoundingClientRect();
+    const m = document.getElementById("moreB"), lab = m.querySelector("span"), lr = lab ? r(lab) : { width: 0 };
+    const round = el => { const b = r(el), c = cs(el); return b.width > 0 && Math.abs(b.width - b.height) <= 1 && parseFloat(c.borderTopLeftRadius) >= b.width / 2 - 1; };
+    const icons = [...document.querySelectorAll(".appbar button, .appbar .logo")].filter(el => { const b = r(el); return b.width > 0 && b.height > 0 && cs(el).display !== "none" && b.width <= b.height + 1; });
+    const logo = document.querySelector(".appbar .logo"), mark = logo && logo.querySelector(".logo-mark");
+    const fades = ["body::after", "body::before", "html::after", "html::before"].map(x => { const [sel, ps] = x.split("::"), c = cs(document.querySelector(sel), "::" + ps); return c.content !== "none" && c.backgroundImage !== "none" ? x : null; }).filter(Boolean);
+    const sep1 = cs(document.querySelector("#journey .j-prog"), "::after"), sep2 = cs(document.getElementById("stepNav"), "::before");
+    return { moreRound: round(m), labelHidden: lr.width <= 1, iconsRound: icons.filter(el => !round(el)).map(el => el.id || el.className), n: icons.length,
+      logoRound: !!logo && round(logo) && (cs(mark).clipPath.includes("circle") || cs(logo).overflow === "hidden"), fades, seps: [sep1.height, sep2.height], sepBorder: cs(document.querySelector("#journey .j-prog")).borderRightWidth };
+  });
+  check(look.moreRound && look.labelHidden, `${lab} : « Outils » est une icône ronde, sans libellé visible`, JSON.stringify(look));
+  check(look.n >= 3 && !look.iconsRound.length, `${lab} : toutes les icônes du haut sont rondes`, JSON.stringify(look.iconsRound));
+  check(look.logoRound, `${lab} : logo rond, sans carré derrière`, JSON.stringify(look));
+  check(!look.fades.length, `${lab} : aucun dégradé derrière les barres, ni en haut ni en bas`, look.fades.join(", "));
+  check(look.sepBorder === "0px" && look.seps[0] === look.seps[1] && look.seps[0] !== "auto", `${lab} : séparateurs verticaux de même hauteur`, JSON.stringify(look.seps) + " " + look.sepBorder);
   await p.click('#journey a[href="#tester"]'); await p.waitForTimeout(400);
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : toucher une étape l’ouvre`);
   await p.click("#moreB"); await p.waitForTimeout(400);

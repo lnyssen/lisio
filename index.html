@@ -1162,7 +1162,7 @@ body{background:var(--bg)}
 /* Rouille : orange foncé #C2410C avec texte blanc (5,2:1), pour qui veut du blanc sur orange. */
 :root[data-bar="rust"] .journey,:root[data-bar="rust"] .stepnav{--pl-fg:#FFFFFF;--pl-bg:#C2410C;--pl-soft:rgba(255,255,255,.2)}
 :root[data-bar="rust"] .journey{background:#C2410C}
-body::after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(var(--pillh) + 44px);z-index:29;pointer-events:none;background:linear-gradient(to bottom,color-mix(in srgb,var(--bg) 0%,transparent),var(--bg) 70%)}
+/* Pas de dégradé derrière la barre des étapes (Laurent, 8 novembre 2026) : la pilule flotte sur la page. */
 .journey .j-steps{gap:2px;flex-wrap:nowrap}
 /* 2.4.11 : un élément qui reçoit le focus ne passe pas sous la barre des étapes ni sous « Haut ». */
 html{scroll-padding-bottom:calc(var(--pillh) + 48px)!important}
@@ -1295,6 +1295,20 @@ section .adv-hint{display:none!important}
 .to-top:hover{background:var(--hover)}
 @media (max-width:760px){.to-top{bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 72px)}}
 @media (max-width:760px){.to-top{padding:0;width:44px;justify-content:center}.to-top .tt-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+
+/* ===== Retouches du 8 novembre 2026 : icônes rondes, logo rond, « Outils » sans libellé, séparateurs égaux ===== */
+:root:root .appbar .logo{border-radius:50%;overflow:hidden;flex:none;min-width:0}
+:root:root .appbar .logo-mark{clip-path:circle(50%)}
+@media (max-width:760px){:root:root .appbar .logo,:root:root .appbar .logo-mark{width:var(--ctl)!important;height:var(--ctl)!important;flex:none}}
+/* Un seul séparateur, dessiné de la même façon après l’anneau et avant « Outils » : 24 px, centré. */
+:root:root .j-prog{border-right:0!important;position:relative}
+:root:root .j-prog::after{content:"";position:absolute;right:0;top:50%;width:1px;height:24px;margin-top:-12px;background:var(--pl-soft)}
+@media (max-width:760px){
+  :root:root .stepnav::before{top:50%;bottom:auto;height:24px;margin-top:-12px}
+  :root:root .stepnav .more-b{width:40px;height:40px;border-radius:50%;gap:0}
+  :root:root .stepnav .more-b span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  :root:root .stepnav .more-b svg{width:22px;height:22px}
+}
 </style>
 </head>
 <body>
@@ -4950,7 +4964,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "4f860e3";
+const LISIO_BUILD = "f24eac4";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
