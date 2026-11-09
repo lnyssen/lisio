@@ -62,7 +62,7 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   const tools = await p.evaluate(() => { const e = document.getElementById("helpPop"), r = e.getBoundingClientRect(); return { open: !e.hidden, t: e.textContent, inside: r.left >= 0 && r.right <= innerWidth && r.top >= 0 }; });
   check(tools.open && tools.inside, "« Outils » s’ouvre dans l’écran", JSON.stringify({ open: tools.open, inside: tools.inside }));
   check(["Rédaction", "Guide", "S’entraîner", "Projets"].every(w => tools.t.includes(w)), "Outils : Rédaction, Guide, S’entraîner, Projets");
-  check(await p.evaluate(() => [...document.querySelectorAll("#helpPop .hp-h")].map(h => h.textContent).join("|")) === "Outils|Apprendre|Réglages", "Outils en trois groupes : Outils, Apprendre, Réglages");
+  check(await p.evaluate(() => [...document.querySelectorAll("#helpPop .hp-h")].map(h => h.textContent).join("|")) === "Espace de travail|Apprendre et aide|Réglages", "Outils en trois groupes : Espace de travail, Apprendre et aide, Réglages");
   const segs = await p.evaluate(() => [...document.querySelectorAll("#helpPop .mode-row .seg")].map(g => { const r = g.getBoundingClientRect(); return Math.round(r.width) + "x" + Math.round(r.height); }));
   check(segs.length === 3 && new Set(segs).size === 1, "Réglages : thème, barre et affichage de même largeur et même hauteur", segs.join(", "));
   await p.click('#helpPop [data-bar-set="orange"]'); await p.waitForTimeout(150);
@@ -124,7 +124,7 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : toucher une étape l’ouvre`);
   await p.click("#moreB"); await p.waitForTimeout(400);
   const more = await p.evaluate(() => ({ t: document.getElementById("moreSheet").textContent, h: [...document.querySelectorAll("#moreSheet .mh3")].map(h => h.textContent).join("|"), segs: [...document.querySelectorAll("#moreSheet .mmode .seg")].map(g => Math.round(g.getBoundingClientRect().width) + "x" + Math.round(g.getBoundingClientRect().height)) }));
-  check(more.h === "Outils|Apprendre|Réglages" && ["Rédaction", "Guide", "S’entraîner", "Projets", "Thème", "Essentiel", "Avancé"].every(w => more.t.includes(w)), `${lab} : « Outils » contient les mêmes groupes que sur ordinateur`, more.h);
+  check(more.h === "Espace de travail|Apprendre et aide|Réglages" && ["Rédaction", "Guide", "S’entraîner", "Projets", "Thème", "Essentiel", "Avancé"].every(w => more.t.includes(w)), `${lab} : « Outils » contient les mêmes groupes que sur ordinateur`, more.h);
   check(more.segs.length === 3 && new Set(more.segs).size === 1, `${lab} : réglages de même largeur et même hauteur`, more.segs.join(", "));
   if (AXE && lab === "iPhone 390 px") { await p.keyboard.press("Escape"); await p.waitForTimeout(200); await p.addScriptTag({ content: readFileSync(AXE, "utf8") });
     const v = await p.evaluate(async () => (await axe.run({ include: [["#journey"], ["#stepNav"]] }, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
