@@ -3697,7 +3697,7 @@ function sysPage() {
   const fonts = [S.ts.fonts.head, S.ts.fonts.body].filter(f => f.src === "google" && GFmap.get(f.family)).map(f => `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${gfQuery(GFmap.get(f.family), GFmap.get(f.family).weights)}&display=swap">`).join("");
   const mkBadge = R => k => { const [, pair, kind] = ROLE_FR[k]; if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; if (kind === "off") return `<span class="bdg">Exempté : composant inactif${pair ? `, ${fr(ratio(R[k], R[pair]))}:1` : ""}</span>`; const r = ratio(R[k], R[pair]), req = roleNeed(k), ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "(3:1 requis)" : S.level) : `(${fmt(req, 1)}:1 requis)`}</span>`; };
   const badge = mkBadge(R);
-  const prim = allScales().map(s => `<div class="scale"><p class="t-body-strong">${esc(s.name)}${s.slug !== s.name.toLowerCase() ? ` <code>${s.slug}</code>` : ""}</p><div class="sw">${s.sw.map((h, i) => `<div style="background:${h};color:${inkOn(h)}"><b>${STEPS[i]}</b><span>${h}</span></div>`).join("")}</div></div>`).join("");
+  const prim = allScales().map(s => `<div class="scale"><p class="t-body-strong">${esc(s.name)}${s.slug !== s.name.toLowerCase() ? ` <code>${s.slug}</code>` : ""}</p><div class="sw"><div class="sw-base" style="background:${s.hex};color:${inkOn(s.hex)}"><b>Base</b><span>${s.hex}</span></div>${s.sw.map((h, i) => `<div style="background:${h};color:${inkOn(h)}"><b>${STEPS[i]}</b><span>${h}</span></div>`).join("")}</div></div>`).join("");
   const chip = k => { const h = R[k], bg = R["background/default"], pair = ROLE_FR[k][1];
     if (k.startsWith("text") || k.startsWith("link") || /\/text$/.test(k)) return `<div class="chip" style="background:${R[pair] || bg};color:${h}">Aa</div>`;
     if (k.startsWith("background") || /\/surface$/.test(k)) return `<div class="chip" style="background:${h};color:${k === "disabled/surface" ? R["disabled/text"] : R["text/default"]}">Aa</div>`;
@@ -3723,10 +3723,11 @@ html{overflow:hidden}body{margin:0;overflow-wrap:break-word;hyphens:auto}
 .layer{color:var(--text-muted)}
 .hr{border:0;border-top:var(--border-width-default) solid var(--border-subtle);margin:0}
 .scale{display:flex;flex-direction:column;gap:var(--spacing-2)}
-.sw{display:grid;grid-template-columns:repeat(11,minmax(0,1fr));border-radius:var(--radius-md);overflow:hidden}
+.sw{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(11,minmax(0,1fr));border-radius:var(--radius-md);overflow:hidden}
+.sw .sw-base{margin-right:6px;border-radius:0 var(--radius-md) var(--radius-md) 0}.sw .sw-base+div{border-radius:var(--radius-md) 0 0 var(--radius-md)}
 .sw div{min-height:64px;padding:var(--spacing-2);display:flex;flex-direction:column;justify-content:flex-end;font-size:13px;line-height:1.3;min-width:0}
 .sw span{font-size:12px;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:767px){.sw{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:767px){.sw{grid-template-columns:repeat(4,minmax(0,1fr))}.sw .sw-base{grid-column:1 / -1;margin:0 0 6px;border-radius:0 0 var(--radius-md) var(--radius-md)}.sw .sw-base+div{border-radius:var(--radius-md) 0 0 0}}
 .roles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:var(--spacing-4)}
 .role{display:flex;gap:var(--spacing-3);align-items:flex-start;min-width:0}
 .chip{flex:none;width:56px;height:56px;border-radius:var(--radius-md);display:grid;place-items:center;font-weight:700;font-size:20px;box-shadow:inset 0 0 0 1px var(--border-subtle)}

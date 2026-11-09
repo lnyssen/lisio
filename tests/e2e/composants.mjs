@@ -108,6 +108,21 @@ async function open(state, w = 1440) {
   await ctx.close();
 }
 {
+  // Couche 1 · Primitives : la couleur de base vient en tête de chaque gamme, avant les 11 nuances.
+  const cols = [{ name: "Bleu", hex: "#2563EB" }, { name: "Orange", hex: "#D9480F" }];
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
+  const page = await ctx.newPage(); await page.goto(PAGE + "#systeme");
+  await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:colors", JSON.stringify(c)); localStorage.setItem("lisio:state", JSON.stringify({ version: "2.2" })); }, cols);
+  await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(700);
+  const f = page.frameLocator("#sysFrame"), sc = f.locator(".scale").first();
+  const first = sc.locator(".sw > div").first();
+  check(await first.evaluate(d => d.classList.contains("sw-base")) && /Base/.test(await first.textContent()) && /#2563EB/.test(await first.textContent()), "primitives : la couleur de base en premier, avec son code", await first.textContent());
+  check(await sc.locator(".sw > div").count() === 12, "puis les 11 nuances", String(await sc.locator(".sw > div").count()));
+  check(await first.evaluate(d => getComputedStyle(d).backgroundColor) === "rgb(37, 99, 235)", "la case de base a la couleur saisie");
+  { const nb = await f.locator(".scale .sw-base").count(), ns = await f.locator(".scale:has(.sw)").count(); check(nb === ns && nb === 6, "chaque gamme, couleurs d’état comprises, commence par sa base", `${nb} bases, ${ns} gammes`); }
+  await ctx.close();
+}
+{
   const { ctx, page } = await open({ version: "2.2" }, 390);
   await page.click('#sysPg button[data-v="states"]'); await page.waitForTimeout(500);
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
