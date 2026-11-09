@@ -15,7 +15,7 @@ const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + la
 const STAT = /Conforme au test|Échec du test|À vérifier manuellement|Non testé|Non applicable/;
 async function open(state, w = 1440) {
   const ctx = await browser.newContext({ viewport: { width: w, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
-  await ctx.addInitScript(s => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:state", JSON.stringify(s)); } } catch (e) {} }, state);
+  await ctx.addInitScript(s => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:state", JSON.stringify(s)); } } catch (e) {} }, state);
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + "#systeme"); await page.waitForTimeout(700); return { ctx, page, errors };
 }

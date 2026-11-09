@@ -13,7 +13,7 @@ let fails = 0;
 const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + label); else { fails++; console.log("ÉCHEC " + label + (extra ? " : " + extra : "")); } };
 const MEDIA = [{ name: "Marine", hex: "#0D1D45" }, { name: "Bleu", hex: "#2F6BFF" }, { name: "Turquoise", hex: "#00B3B0" }, { name: "Blanc", hex: "#FAF9F4" }];
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true }); await ctx.route(/^https?:/, r => r.abort());
-await ctx.addInitScript(m => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:colors", JSON.stringify(m)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Site Média", level: "AA", version: "2.2" })); } } catch (e) {} }, MEDIA);
+await ctx.addInitScript(m => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(m)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Site Média", level: "AA", version: "2.2" })); } } catch (e) {} }, MEDIA);
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto(PAGE + "#exporter"); await page.waitForTimeout(600);
 const grab = async sel => { const [d] = await Promise.all([page.waitForEvent("download"), page.click(sel)]); return { name: d.suggestedFilename(), text: readFileSync(await d.path(), "utf8") }; };

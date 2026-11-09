@@ -29,7 +29,7 @@ async function open(local, hash = "#matrice", query = "") {
   await ctx.addInitScript(() => { try { navigator.clipboard.writeText = t => { window.__copied = t; return Promise.resolve(); }; } catch (e) {} });
   const page = await ctx.newPage(); const errors = [];
   await page.goto("file://" + SEED);
-  await page.evaluate(l => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); for (const [k, v] of Object.entries(l)) localStorage.setItem(k, typeof v === "string" ? v : JSON.stringify(v)); }, local);
+  await page.evaluate(l => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); for (const [k, v] of Object.entries(l)) localStorage.setItem(k, typeof v === "string" ? v : JSON.stringify(v)); }, local);
   page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + query + hash); await page.waitForTimeout(500);
   return { ctx, page, errors };

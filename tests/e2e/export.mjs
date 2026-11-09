@@ -15,7 +15,7 @@ const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + la
 // Palette piège : deux « Bleu », un nom accentué avec barre oblique, une couleur nommée comme un état.
 const PAL = [{ name: "Bleu", hex: "#2F6BFF" }, { name: "bleu", hex: "#1E40AF" }, { name: "Été / 2026", hex: "#F5A00B" }, { name: "Error", hex: "#B42318" }, { name: "Encre", hex: "#0D1D45" }, { name: "Blanc", hex: "#FFFFFF" }];
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, acceptDownloads: true }); await ctx.route(/^https?:/, r => r.abort());
-await ctx.addInitScript(p => { try { navigator.clipboard.writeText = t => { window.__copied = t; return Promise.resolve(); }; if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:colors", JSON.stringify(p)); } } catch (e) {} }, PAL);
+await ctx.addInitScript(p => { try { navigator.clipboard.writeText = t => { window.__copied = t; return Promise.resolve(); }; if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(p)); } } catch (e) {} }, PAL);
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto(PAGE + "#exporter"); await page.waitForTimeout(600);
 const copied = () => page.evaluate(() => window.__copied || "");

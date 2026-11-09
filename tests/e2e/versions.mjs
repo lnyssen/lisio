@@ -17,7 +17,7 @@ async function open(opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, acceptDownloads: true, ...opts }); await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + "#exporter");
-  await page.evaluate(cols => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); }, MINE);
+  await page.evaluate(cols => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); }, MINE);
   await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); return { ctx, page, errors };
 }
 const ready = async page => { await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); };

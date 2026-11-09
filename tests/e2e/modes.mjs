@@ -59,10 +59,15 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   check(!page.errs.length, "aucune erreur JavaScript", page.errs.join(" | "));
   await ctx.close();
 }
-// 5. Utilisateur existant : rien ne change pour lui (Avancé).
+// 5. Essentiel par défaut pour tout le monde (brief « Allègement », 9 novembre 2026) ; un choix déjà fait est respecté.
 {
   const { ctx, page } = await open({ "lisio-welcome": "1" }, "palette");
-  check(await page.locator("#hello").count() === 0 && await page.locator("#shSet").isVisible(), "utilisateur existant : Avancé, sans accueil");
+  check(await page.locator("#hello").count() === 0 && await page.evaluate(() => document.documentElement.classList.contains("mode-ess")) && !(await page.locator("#shSet").isVisible()), "utilisateur existant sans choix : Essentiel, sans accueil");
+  await ctx.close();
+}
+{
+  const { ctx, page } = await open({ "lisio-welcome": "1", "lisio-mode": "adv" }, "palette");
+  check(await page.locator("#shSet").isVisible(), "utilisateur qui a choisi Avancé : son choix est gardé");
   await ctx.close();
 }
 // 6. « Créer mon projet » ouvre l’assistant ; « Ou partir d’un modèle » y mène aux modèles.

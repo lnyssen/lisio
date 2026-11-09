@@ -14,7 +14,7 @@ let fails = 0;
 const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + label); else { fails++; console.log("ÉCHEC " + label + (extra ? " : " + extra : "")); } };
 async function open(state, w = 1440) {
   const ctx = await browser.newContext({ viewport: { width: w, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
-  await ctx.addInitScript(s => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:state", JSON.stringify(s)); } } catch (e) {} }, state);
+  await ctx.addInitScript(s => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:state", JSON.stringify(s)); } } catch (e) {} }, state);
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + "#systeme"); await page.waitForTimeout(700); return { ctx, page, errors };
 }
@@ -112,7 +112,7 @@ async function open(state, w = 1440) {
   const cols = [{ name: "Bleu", hex: "#2563EB" }, { name: "Orange", hex: "#D9480F" }];
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage(); await page.goto(PAGE + "#systeme");
-  await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:colors", JSON.stringify(c)); localStorage.setItem("lisio:state", JSON.stringify({ version: "2.2" })); }, cols);
+  await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(c)); localStorage.setItem("lisio:state", JSON.stringify({ version: "2.2" })); }, cols);
   await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(700);
   const f = page.frameLocator("#sysFrame"), sc = f.locator(".scale").first();
   const first = sc.locator(".sw > div").first();

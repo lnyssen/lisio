@@ -19,7 +19,7 @@ const WORDS = ["Conforme au test", "Échec du test", "À vérifier manuellement"
 const BAD = /Pas conforme|(?<!partiellement )non conforme|✓ Conforme(?! au test)|recommandent 44|brouillon WCAG 3|\bRéussi\b|accessible à 100|certifié WCAG/i;
 async function open(view, init = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, acceptDownloads: true });
-  await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); } } catch (e) {} }, init);
+  await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); } } catch (e) {} }, init);
   await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); const errs = []; p.on("pageerror", e => errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForTimeout(600); p.errs = errs; p.ctx = ctx; return p;

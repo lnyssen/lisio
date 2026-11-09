@@ -71,7 +71,7 @@
 .b-lg{background:var(--lg-bg);color:var(--lg-ink);border-color:var(--lg-bg)}
 .b-no{background:var(--no-bg);color:var(--no-ink);border-color:var(--no-bg)}
 .mlayout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px 36px;align-items:start}
-.below-mx{margin-top:32px}
+.below-mx{margin-top:var(--sec-gap)}
 .palbar{margin-bottom:22px}
 .palbar>summary{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px;cursor:pointer}
 .palbar>summary::-webkit-details-marker{display:none}
@@ -172,7 +172,7 @@ a{color:inherit;text-underline-offset:.18em}
 .ts-dv{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.ts-dv>span:not(.arr){display:flex;flex-direction:column}.ts-dv small{font-size:12px;font-weight:600}.ts-dv b{font-size:22px;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums}.ts-dv .arr{font-size:22px;color:var(--muted)}.ts-why{font-size:13px}
 .ds-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
 .ds-col{display:flex;flex-direction:column;gap:24px;min-width:0}
-.ds-sec{display:flex;flex-direction:column;gap:12px;min-width:0}.ds-sec h3{font-size:16px;margin:0}
+.ds-sec{display:flex;flex-direction:column;gap:12px;min-width:0;padding:20px;border-radius:20px;box-shadow:inset 0 0 0 1px var(--hair)}.ds-sec h3{font-size:16px;margin:0}
 .ds-f{display:flex;flex-direction:column;gap:6px}.ds-l{font-size:13px;font-weight:600;color:var(--muted)}
 .ds-roles{display:flex;flex-direction:column;gap:18px}
 .ds-grp h4{font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--muted);margin:0 0 2px}
@@ -762,13 +762,14 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:160px}
 .qchip{font:inherit;font-size:13px;font-weight:600;min-height:32px;padding:4px 12px 4px 6px;border-radius:99px;border:1px dashed var(--field);background:transparent;color:var(--ink);cursor:pointer;display:inline-flex;gap:7px;align-items:center;text-align:left}
 .qchip::before{content:"?";flex:none;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--surface);display:grid;place-items:center;font-size:12px;font-weight:800}
 .qchip:hover,.qchip[aria-expanded="true"]{border-style:solid;background:var(--surface)}
-.qpop{position:fixed;z-index:80;background:var(--raised);color:var(--ink);border:1px solid var(--hair);border-radius:14px;padding:14px 16px 16px;box-shadow:0 14px 44px rgba(0,0,0,.22)}
+.qpop{position:fixed;z-index:80;top:0;right:0;bottom:0;width:min(400px,100vw);box-sizing:border-box;overflow:auto;overscroll-behavior:contain;background:var(--raised);color:var(--ink);border-left:1px solid var(--hair);border-radius:24px 0 0 24px;padding:24px 24px 32px;box-shadow:-14px 0 44px rgba(0,0,0,.18)}
+.qpop-r h4{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px;padding-top:16px;border-top:1px solid var(--hair)}.qpop-r ul{margin:0;padding-left:18px}.qpop-r li{margin:4px 0}.qpop-r a{color:var(--ink);font-weight:600}.qpop .qpop-src{font-size:13px;color:var(--muted)}
 .qpop[hidden]{display:none}
 .qpop-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .qpop h3{font-size:15px;line-height:1.3;margin:4px 0 0}
 .qpop .x{flex:none;border:0;background:var(--bg);color:var(--ink);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:15px}
 .qpop p{margin:8px 0 0;font-size:14px;line-height:1.55}
-@media (prefers-reduced-motion: no-preference){.qpop:not([hidden]){animation:qin .16s ease-out}@keyframes qin{from{opacity:0;transform:translateY(-4px)}}}
+@media (prefers-reduced-motion: no-preference){.qpop:not([hidden]){animation:qin .2s ease-out}@keyframes qin{from{opacity:0;transform:translateX(24px)}}}
 .ts-crfix{grid-column:1/-1}.ts-crfix[hidden]{display:none}
 .j-hello{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--hair)}.j-hello p{margin:0;font-size:14px;max-width:70ch}
 .jnext{margin-top:32px;padding-top:20px;border-top:1px solid var(--hair)}
@@ -790,9 +791,12 @@ body{background:var(--bg)}
 .mhead{--ink:#FFFFFF;--muted:#A7D7D2;--surface:#134C4D;--raised:#134C4D;--hair:#2F6A6B;--field:#8CC2BD;--primary:#FFFFFF;--primary-ink:#0B3C3D;--hover:#165758;--link:#FFFFFF;--bg:#0A3233;
   --aaa-bg:#FFFFFF;--aaa-ink:#0B2B2C;--aa-bg:#CCEBE7;--aa-bd:#CCEBE7;--aa-ink:#0B2B2C;--lg-bg:#FFE0C7;--lg-ink:#0B2B2C;--no-bg:#FF6A13;--no-ink:#1A0B00;
   --ok:#A7F3E4;--ok-bg:#134C4D;--warn:#FFD2AE;--warn-bg:#134C4D;--bad:#FFC2AE;--bad-bg:#134C4D;
-  background:var(--hero);color:var(--ink);border:0!important;border-radius:var(--tile);padding:clamp(20px,3vw,34px) clamp(20px,3vw,36px)!important;margin-bottom:16px!important;align-items:flex-end}
-.mhead h1{font-size:clamp(38px,6vw,76px);font-weight:600;letter-spacing:-.055em;line-height:.92}
-.mhead .lead{color:var(--muted)}
+  background:var(--hero);color:var(--ink);border:0!important;border-radius:var(--tile);padding:clamp(16px,2vw,22px) clamp(20px,2.6vw,28px)!important;margin-bottom:0!important;align-items:flex-end}
+/* Allègement : un écart régulier entre les grandes sections (40 px, 24 px sur mobile), le bandeau de titre plus bas. */
+:root{--sec-gap:40px}@media (max-width:760px){:root{--sec-gap:24px}}
+#matrice>.mhead{margin-bottom:var(--sec-gap)!important}
+.mhead h1{font-size:clamp(32px,3.4vw,48px);font-weight:600;letter-spacing:-.045em;line-height:1}
+.mhead .lead{color:var(--muted);font-size:16px}.phead .lead{max-width:min(100%,940px)}
 .mhead a{color:var(--link)}
 .count{border-radius:20px}
 .count b{font-family:var(--mono);font-weight:500;letter-spacing:-.03em}
@@ -845,7 +849,7 @@ body{background:var(--bg)}
   .prj-dlg{position:fixed;inset:auto 0 0 0;margin:0;width:auto;max-width:none;max-height:92dvh;overflow:auto;border-radius:28px 28px 0 0;padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px))}
   .prj-dlg .pd-h{position:sticky;top:-8px;z-index:2;background:var(--surface);padding:4px 0}
   .pop{top:auto;bottom:0;left:0;right:0;transform:none;width:auto;max-height:88dvh;border-radius:24px 24px 0 0;padding:8px 16px calc(16px + env(safe-area-inset-bottom,0px))}
-  .qpop{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;border-radius:24px 24px 0 0;padding:8px 18px calc(20px + env(safe-area-inset-bottom,0px))}
+  .qpop{left:0!important;right:0!important;top:auto!important;bottom:0!important;width:auto!important;max-width:none!important;max-height:88dvh;border-left:0;border-top:1px solid var(--hair);border-radius:24px 24px 0 0;padding:8px 18px calc(20px + env(safe-area-inset-bottom,0px))}
   input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea{font-size:16px!important}
   .dock{position:static!important;margin-top:10px}
   .dock-in{flex-wrap:nowrap;max-width:100%;padding:4px}.dock-in .stepper .sv{min-width:44px}.dock-in .dk{padding:6px}
@@ -886,13 +890,13 @@ body{background:var(--bg)}
 
 /* ===== Matrice façon C : case colorée par verdict, ratio, pastille « Aa » ===== */
 .mwrap{background:var(--surface);border-radius:var(--tile);padding:clamp(12px,2vw,22px)}
-.mgrid{gap:6px}
+.mgrid{gap:12px}
 .mcorner{font-size:12px;line-height:1.3}
 .mcol{display:grid;grid-template-columns:12px minmax(0,1fr);column-gap:7px;row-gap:0;align-items:center;align-self:end}
 .mcol .bar{width:12px;height:12px;border-radius:50%;grid-row:1}
 .mcol b{grid-column:2;font-size:14px}.mcol code{grid-column:2}
 .mrow .disc{width:14px;height:14px}
-.mcell{flex-direction:row;align-items:center;justify-content:space-between;gap:8px;min-height:68px;padding:8px 8px 8px 12px;border-radius:16px;border:0;box-shadow:none}
+.mcell{flex-direction:row;align-items:center;justify-content:space-between;gap:8px;min-height:72px;padding:12px 12px 12px 14px;border-radius:16px;border:0;box-shadow:none}
 .mcell.b-aa{box-shadow:inset 0 0 0 1.5px var(--aa-bd)}
 .mcell:hover{box-shadow:0 0 0 2px var(--ink)}
 .mcell[aria-pressed="true"]{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--ink)}
@@ -904,6 +908,11 @@ body{background:var(--bg)}
 .mcell .sample,.mlist .mcell .sample{flex:none;display:grid;place-items:center;min-width:40px;max-width:58%;height:40px;padding:0 8px;box-sizing:border-box;border-radius:11px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35);overflow:hidden;white-space:nowrap}
 .mcell .sample .big,.mlist .mcell .sample .big{font-size:18px;line-height:1;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 @container (max-width:110px){.mcell .sample{min-width:34px;height:34px}.mcell .mv .r{font-size:15px}}
+/* Allègement : le verdict seul, en badge ; le ratio apparaît au survol, au focus clavier et quand la case est choisie (toucher). Sa place est réservée : rien ne bouge. */
+.mcell .mv{gap:4px}.mcell .mv .vl{order:-1;align-self:flex-start;max-width:100%;box-sizing:border-box;font-size:13px;font-weight:700;padding:2px 9px;border-radius:999px;box-shadow:inset 0 0 0 1.5px currentColor}
+.mcell .mv .r{visibility:hidden;opacity:0;transition:opacity .15s}.mcell:hover .mv .r,.mcell:focus-visible .mv .r,.mcell[aria-pressed="true"] .mv .r{visibility:visible;opacity:1}
+@media (prefers-reduced-motion:reduce){.mcell .mv .r{transition:none}}
+.mwrap .mgrid.mcompact .mcell .mv .vl{align-self:center;padding:0;box-shadow:none;font-size:11px}
 .mdiag{border-radius:16px;background:var(--hover);min-height:68px;border:0;font-size:13px}
 .mcell.b-aaa{background:var(--aaa-bg);color:var(--aaa-ink)}.mcell.b-aa{background:var(--aa-bg);color:var(--aa-ink)}.mcell.b-lg{background:var(--lg-bg);color:var(--lg-ink)}.mcell.b-no{background:var(--no-bg);color:var(--no-ink)}
 .mlist .mgroup-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
@@ -1243,7 +1252,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 @media (max-width:1179px){.journey .j-steps a:not([aria-current]) .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}.journey .j-steps a:not([aria-current]){padding:6px!important;width:40px;justify-content:center}}
 /* Ligne d’aide repliable */
 section .adv-hint{display:none!important}
-.j-line{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.j-line{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;min-height:44px}.j-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.j-mode{flex-wrap:nowrap}.j-mode button{min-height:32px;padding:0 12px}
 .j-pos{margin:0;font-size:14px;color:var(--muted)}.j-pos b{color:var(--ink)}
 .j-help-b{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 6px;border:1px solid var(--hair);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:700;cursor:pointer;flex:none}
 .j-help-b:hover{background:var(--hover)}
@@ -1403,7 +1412,7 @@ section .adv-hint{display:none!important}
 
   <!-- MATRICE -->
   <!-- COULEURS -->
-  <section id="couleurs" aria-labelledby="tab-couleurs" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="couleurs" aria-labelledby="tab-couleurs" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">Votre palette de marque : saisissez-la, importez-la d’une image, puis corrigez tout de suite les couleurs qui ne se lisent avec aucune autre.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
         <div class="card-surface colors-edit" id="colorsCard">
           <div class="row between"><h2>Vos couleurs</h2><button class="btn sm" id="resetPalette" type="button">Revenir à l’exemple</button></div>
@@ -1460,7 +1469,8 @@ section .adv-hint{display:none!important}
           <h2>Seuils</h2>
           <div id="mLegend" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
-        <p class="small muted">Ratios calculés sur les valeurs hexadécimales, selon la formule de luminance relative du W3C. Cliquez une case pour voir la paire en détail et la corriger. Source : W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</p>
+        <p class="small muted m-short">Cliquez une case pour voir la paire en détail et la corriger. <button type="button" class="qchip" data-more="mCalcNote" aria-expanded="false" aria-controls="qPop">Comment Lisio calcule</button></p>
+        <p class="small muted" id="mCalcNote" hidden>Ratios calculés sur les valeurs hexadécimales, selon la formule de luminance relative du W3C. Cliquez une case pour voir la paire en détail et la corriger. Source : W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</p>
       </aside>
     </div>
   </section>
@@ -1517,7 +1527,7 @@ section .adv-hint{display:none!important}
   </section>
 
   <!-- STYLES -->
-  <section id="styles" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="styles" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1>Styles de texte</h1><p class="lead">Vos styles web, de H1 à la légende, vérifiés sur vos couleurs. Exportez-les avec la palette pour Figma ou le CSS.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : Text styles et collection Typography</p></div></header>
     <div class="card-surface">
       <h2>Réglages</h2><p class="note" style="margin-top:-6px">Deux polices, une taille de texte et une échelle pour le desktop. Lisio fait le reste.</p>
@@ -1555,20 +1565,20 @@ section .adv-hint{display:none!important}
     </div>
     <div class="card-surface">
       <div class="row between"><h2>Exporter pour Figma ou le code</h2><div class="row"><label for="tsFmt" class="sr">Format</label><select id="tsFmt"><option value="json">JSON pour Figma (W3C)</option><option value="css">CSS</option></select><button class="btn" id="tsCopy" type="button">Copier</button><button class="btn primary" id="tsDl" type="button">Télécharger</button></div></div>
-      <p class="note">Le même fichier que le bouton Exporter, au format W3C Design Tokens et en anglais : couleurs, rôles, typo fluide et dimensions. Ouvrez-le dans le <a href="#guide-export" onclick="location.hash='sources';setTimeout(()=>document.getElementById('guide-export').scrollIntoView(),50);return false">plugin Lisio pour Figma</a>. Le CSS contient les mêmes valeurs, avec les clamp().</p>
+      <p class="note">Le même fichier que le bouton Exporter. <button type="button" class="qchip" data-more="tsTokNote" aria-expanded="false" aria-controls="qPop">Le fichier de jetons</button></p><p class="note" id="tsTokNote" hidden>Le même fichier que le bouton Exporter, au format W3C Design Tokens et en anglais : couleurs, rôles, typo fluide et dimensions. Ouvrez-le dans le <a href="#guide-export" onclick="location.hash='sources';setTimeout(()=>document.getElementById('guide-export').scrollIntoView(),50);return false">plugin Lisio pour Figma</a>. Le CSS contient les mêmes valeurs, avec les clamp().</p>
       <details class="ts-code"><summary>Voir le code</summary><pre class="code" id="tsOut" tabindex="0"></pre></details>
     </div>
   </section>
 
   <!-- SYSTÈME -->
-  <section id="systeme" aria-labelledby="tab-systeme" hidden style="display:flex;flex-direction:column;gap:20px">
-    <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté. Passez du système à des pages types (accueil, formulaire, article, tableau de bord) avec les lois UX qui s’y appliquent, puis aux états des composants. Changez d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
+  <section id="systeme" aria-labelledby="tab-systeme" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
+    <header class="mhead phead"><div><h1>Design system</h1><p class="lead">Votre design system en situation, rendu uniquement avec le CSS exporté. Changez de page type ou d’écran : les tailles et la grille suivent.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : toutes les collections et les styles</p></div></header>
     <div class="card-surface ds-panel">
       <div class="row between"><div><h2>Personnaliser</h2><p class="note" id="dsState"></p></div><button class="btn sm" type="button" id="dsReset">Revenir au système de base</button></div>
-      <fieldset class="ds-inc" id="dsInc"><legend>Ce que contient votre design system</legend><p class="note">Toujours inclus : couleurs et nuances, rôles, espacements, tailles de cible et typographie. Décochez un bloc : il sort du fichier pour Figma et du CSS. L’aperçu le montre quand même, pour comparer.</p><div class="ds-incg" id="dsIncG"></div></fieldset>
+      <fieldset class="ds-inc" id="dsInc"><legend>Ce que contient votre design system</legend><p class="note">Décochez un bloc : il sort du fichier pour Figma et du CSS. <button type="button" class="qchip" data-more="dsIncNote" aria-expanded="false" aria-controls="qPop">Ce qui est inclus</button></p><p class="note" id="dsIncNote" hidden>Toujours inclus : couleurs et nuances, rôles, espacements, tailles de cible et typographie. Décochez un bloc : il sort du fichier pour Figma et du CSS. L’aperçu le montre quand même, pour comparer.</p><div class="ds-incg" id="dsIncG"></div></fieldset>
       <p class="adv-hint"><span>Mode Essentiel : grille par écran, effets et images sont masqués. Ils restent dans l’export s’ils sont cochés ci-dessus.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
       <div class="ds-grid">
-        <section class="ds-sec" aria-labelledby="dsColH"><h3 id="dsColH">Couleurs des rôles</h3><p class="note">Un rôle, c’est une couleur qui a un métier : le texte, le fond, le bouton. Chaque rôle est vérifié avec son partenaire (le texte avec son fond, le bouton avec son libellé). « Auto » laisse Lisio choisir une nuance qui passe. Dans Figma, ce sont les variables de la collection <b>Semantic</b>.</p><div class="ds-modebar"><div class="seg" role="group" aria-label="Mode à régler" id="dsModeSeg"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><p class="note" id="dsModeNote"></p></div><div id="dsFixAll" class="ds-fixall" hidden></div><div class="ds-roles" id="dsRoles"></div></section>
+        <section class="ds-sec" aria-labelledby="dsColH"><h3 id="dsColH">Couleurs des rôles</h3><p class="note">Chaque rôle est vérifié avec son partenaire. <button type="button" class="qchip" data-more="dsRoleNote" aria-expanded="false" aria-controls="qPop">Les rôles en détail</button></p><p class="note" id="dsRoleNote" hidden>Un rôle, c’est une couleur qui a un métier : le texte, le fond, le bouton. Chaque rôle est vérifié avec son partenaire (le texte avec son fond, le bouton avec son libellé). « Auto » laisse Lisio choisir une nuance qui passe. Dans Figma, ce sont les variables de la collection <b>Semantic</b>.</p><div class="ds-modebar"><div class="seg" role="group" aria-label="Mode à régler" id="dsModeSeg"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button></div><p class="note" id="dsModeNote"></p></div><div id="dsFixAll" class="ds-fixall" hidden></div><div class="ds-roles" id="dsRoles"></div></section>
         <section class="ds-sec" aria-labelledby="dsChH"><h3 id="dsChH">Graphiques</h3><div id="dsChart"></div></section>
         <div class="ds-col">
           <section class="ds-sec" aria-labelledby="dsShH"><h3 id="dsShH">Formes et tailles</h3>
@@ -1609,7 +1619,7 @@ section .adv-hint{display:none!important}
   </section>
 
   <!-- PALETTE -->
-  <section id="palette" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="palette" aria-labelledby="tab-palette" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1>Nuances</h1><p class="lead">11 nuances par couleur, alignées sur la même clarté : les contrastes se retiennent par numéros.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
     <p class="adv-hint"><span>Mode Essentiel : Lisio règle les 11 nuances pour vous. Le réglage fin est masqué.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
     <p class="ok-badge" id="shOkBadge" hidden><b>Nuances perceptuelles (OKLCH).</b> <span>Clarté à pas réguliers, contrastes non garantis : chaque paire reste mesurée.</span></p>
@@ -1678,11 +1688,11 @@ section .adv-hint{display:none!important}
 
   <!-- SOURCES -->
   <!-- EXPORTER -->
-  <section id="formation" role="region" aria-labelledby="fmH" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="formation" role="region" aria-labelledby="fmH" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1 id="fmH">S’entraîner</h1><p class="lead">Dix questions courtes sur les contrastes, les seuils et les rôles, avec vos propres couleurs. Chaque réponse est expliquée. Pour démarrer seul, ou pour une séance de formation en équipe, écran partagé.</p></div></header>
     <div class="card-surface fm" id="fmBox"></div>
   </section>
-  <section id="exporter" role="region" aria-labelledby="exH" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="exporter" role="region" aria-labelledby="exH" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1 id="exH">Exporter le design system</h1><p class="lead">Un seul fichier, <code>lisio-design-system.json</code>, contient tout ce que vous avez réglé dans Lisio. Le plugin Lisio le transforme en variables et en styles Figma, avec les mêmes noms pour toute l’équipe.</p></div></header>
     <div class="card-surface ex-hero">
       <div class="ex-file"><span class="ex-ico" aria-hidden="true">{ }</span><div><b>lisio-design-system.json</b><span class="muted" id="exSize"></span></div></div>
@@ -1775,7 +1785,7 @@ section .adv-hint{display:none!important}
     </div>
   </section>
 
-  <section id="sources" aria-labelledby="tab-sources" hidden style="display:flex;flex-direction:column;gap:20px">
+  <section id="sources" aria-labelledby="tab-sources" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1>Guide</h1><p class="lead">Comment marche chaque partie de Lisio, comment exporter vers Figma, et d’où viennent les règles.</p></div></header>
     <div class="card-surface guide">
       <div class="g-train"><div><h2>S’entraîner en dix questions</h2><p>Avant de commencer, ou pour former l’équipe : des questions courtes avec vos couleurs, et la réponse expliquée.</p></div><a class="btn primary" href="#formation">Commencer</a></div>
@@ -1903,7 +1913,7 @@ section .adv-hint{display:none!important}
 <button type="button" class="to-top" id="toTop" aria-label="Retour en haut de la page" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span class="tt-l">Haut</span></button>
 <dialog class="more-sheet" id="moreSheet" aria-labelledby="moreH"><span class="sheet-grab" aria-hidden="true"></span><div class="mh"><h2 id="moreH">Outils</h2><button type="button" class="mx" id="moreX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div><div class="mg" id="moreG"></div></dialog>
 <div class="side-tip" id="sideTip" role="tooltip" hidden></div>
-<div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><span class="sheet-grab" aria-hidden="true"></span><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><p id="qPopP"></p></div>
+<div class="qpop" id="qPop" role="dialog" aria-labelledby="qPopH" hidden><span class="sheet-grab" aria-hidden="true"></span><div class="qpop-h"><h3 id="qPopH"></h3><button class="x" type="button" data-qclose aria-label="Fermer">✕</button></div><div id="qPopP" class="qpop-b"></div><div class="qpop-r" id="qPopR" hidden></div></div>
 <div class="pop" id="popFont" hidden role="dialog" aria-modal="true" aria-label="Police" tabindex="-1">
           <span class="sheet-grab" aria-hidden="true"></span>
           <h3>Police <button class="x" type="button" data-close aria-label="Fermer">✕</button></h3>
@@ -2086,7 +2096,7 @@ let spacingOn = false, vision = "normal", scales = [], uploadN = 0, colorMode = 
 const save = () => { store.set("state", S); snapPush(); };
 // ---------- Affichage Essentiel / Avancé (P1, onboarding) : préférence de la personne, pas du projet ----------
 // Essentiel masque seulement des réglages fins (classe .adv) ; menus, vérifications et exports restent tous là.
-let uiMode = (() => { try { const m = localStorage.getItem("lisio-mode"); if (m === "ess" || m === "adv") return m; return localStorage.getItem("lisio-welcome") === "1" ? "adv" : "ess"; } catch (e) { return "adv"; } })();
+let uiMode = (() => { try { const m = localStorage.getItem("lisio-mode"); if (m === "ess" || m === "adv") return m; return "ess"; } catch (e) { return "ess"; } })();
 document.documentElement.classList.toggle("mode-ess", uiMode === "ess");
 function setMode(m, say) { uiMode = m; try { localStorage.setItem("lisio-mode", m); } catch (e) {} document.documentElement.classList.toggle("mode-ess", m === "ess");
   document.querySelectorAll(".mode-seg [data-mode]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
@@ -2466,7 +2476,7 @@ function renderMx() {
   const ws = fontWeights(S.font), w = ws.includes(700) ? 700 : ws[ws.length - 1], ff = esc(fontCss(S.font)), sample = esc(S.mSample || "Aa");
   $("palChips").innerHTML = `<span class="palh">Palette · ${palette.length}</span>` + palette.map(c => `<span class="palchip"><i style="background:${c.hex}"></i><span><b>${esc(c.name)}</b><code>${c.hex}</code></span></span>`).join("");
   const g = $("mgrid");
-  const rh = 112, avail = (g.parentElement.clientWidth || innerWidth) - rh - n * 8, useList = mxNarrow.matches || avail / n < (S.mView === "ok" ? 96 : 124);
+  const rh = 112, avail = (g.parentElement.clientWidth || innerWidth) - rh - n * 12, useList = mxNarrow.matches || avail / n < (S.mView === "ok" ? 96 : 124);
   mxMode = useList ? "list" : "grid";
   g.style.gridTemplateColumns = `${rh}px repeat(${n}, minmax(0, 1fr))`; g.style.minWidth = "";
   const aaa = S.level === "AAA", tN = aaa ? 7 : 4.5, tL = aaa ? 4.5 : 3, pass = ok => `<span class="pill ${ok ? "pass" : "fail"}">${ok ? "✓<span class=\"w\"> Passe</span>" : "✕<span class=\"w\"> Échec</span>"}</span>`;
@@ -4079,7 +4089,7 @@ function renderJourney(v) {
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
   const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`);
   NB.innerHTML = `
-  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b> <span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span></p><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b> <span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span></p><div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
   <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p><p class="j-legend"><span><i class="lg lg-done" aria-hidden="true">✓</i>Complétée</span><span><i class="lg lg-now" aria-hidden="true">4</i>En cours</span><span><i class="lg lg-warn" aria-hidden="true">!</i>À corriger</span><span><i class="lg lg-todo" aria-hidden="true">5</i>À commencer</span><span class="j-lg-note">« Complétée » : page ouverte, aucun problème détecté. Ce n’est pas un audit de conformité.</span></p>${adv ? adv.outerHTML : ""}</div>${hello}`;
   stepNavRender(i);
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
@@ -4118,19 +4128,23 @@ $("sumBar").addEventListener("click", e => { const a = e.target.closest("[data-s
   setTimeout(() => { const t = document.querySelector(sel) || document.querySelector(`#${v} h1`); if (!t) return; if (!t.matches("a,button,input,select,textarea,[tabindex]")) t.tabIndex = -1; t.focus(); }, 60); });
 let qBtn = null;
 function qClose(back) { $("qPop").hidden = true; if (qBtn) { qBtn.setAttribute("aria-expanded", "false"); if (back) qBtn.focus(); } qBtn = null; }
+// Règles W3C citées par chaque « ? » : numéro et titre officiel (en anglais), page « Understanding » de WCAG 2.2.
+const QRULE = { ratio: [["1.4.3", "Contrast (Minimum)", "contrast-minimum"]], aa: [["1.4.3", "Contrast (Minimum)", "contrast-minimum"], ["1.4.6", "Contrast (Enhanced)", "contrast-enhanced"]], pair: [["1.4.3", "Contrast (Minimum)", "contrast-minimum"]],
+  luminance: [["1.4.3", "Contrast (Minimum)", "contrast-minimum"]], sombre: [["1.4.3", "Contrast (Minimum)", "contrast-minimum"]], taille: [["1.4.4", "Resize Text", "resize-text"]], fluid: [["1.4.4", "Resize Text", "resize-text"]], zoom: [["1.4.4", "Resize Text", "resize-text"]],
+  focus: [["2.4.7", "Focus Visible", "focus-visible"], ["2.4.11", "Focus Not Obscured (Minimum)", "focus-not-obscured-minimum"]], cible: [["2.5.8", "Target Size (Minimum)", "target-size-minimum"]], lecture: [["3.1.5", "Reading Level", "reading-level"]],
+  reflow: [["1.4.10", "Reflow", "reflow"], ["1.4.12", "Text Spacing", "text-spacing"]], etat: [["1.4.1", "Use of Color", "use-of-color"]], role: [["1.4.11", "Non-text Contrast", "non-text-contrast"]] };
+// Volet d’aide (brief « Allègement ») : à droite sur grand écran, feuille en bas sur mobile. Non modal : Échap ou « Fermer » le ferment et rendent le focus.
 function qOpen(b) {
-  const q = QHELP[b.dataset.q]; if (!q) return; if (qBtn === b) return qClose(true);
+  const k = b.dataset.q, src = b.dataset.more && $(b.dataset.more), q = k ? QHELP[k] : src ? [b.textContent.trim(), ""] : null; if (!q) return; if (qBtn === b) return qClose(true);
   qClose(); qBtn = b; b.setAttribute("aria-expanded", "true");
-  $("qPopH").textContent = q[0]; $("qPopP").textContent = q[1];
-  const P = $("qPop"); P.hidden = false;
-  const r = b.getBoundingClientRect(), w = Math.min(360, innerWidth - 32), h = P.offsetHeight;
-  P.style.width = w + "px"; P.style.left = Math.max(16, Math.min(r.left, innerWidth - w - 16)) + "px";
-  P.style.top = (r.bottom + 8 + h > innerHeight && r.top - 8 - h > 0 ? r.top - 8 - P.offsetHeight : r.bottom + 8) + "px";
+  $("qPopH").textContent = q[0]; $("qPopP").innerHTML = src ? `<p>${src.innerHTML}</p>` : `<p>${esc(q[1])}</p>`;
+  const rl = k && QRULE[k], R = $("qPopR"); R.hidden = !rl;
+  R.innerHTML = rl ? `<h4>La règle</h4><ul>${rl.map(([n, t, u]) => `<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/${u}.html" target="_blank" rel="noopener">${n} ${t}<span class="sr-only">, page du W3C en anglais, nouvel onglet</span></a></li>`).join("")}</ul><p class="qpop-src">Texte officiel du W3C, en anglais.</p>` : "";
+  const P = $("qPop"); P.hidden = false; P.scrollTop = 0;
   P.querySelector("[data-qclose]").focus();
 }
-document.addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b) { e.preventDefault(); qOpen(b); return; } if (e.target.closest("[data-qclose]")) return qClose(true); if (qBtn && !e.target.closest("#qPop")) qClose(); });
+document.addEventListener("click", e => { const b = e.target.closest("[data-q],[data-more]"); if (b) { e.preventDefault(); qOpen(b); return; } if (e.target.closest("[data-qclose]")) return qClose(true); if (qBtn && !e.target.closest("#qPop")) qClose(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && qBtn) qClose(true); });
-addEventListener("scroll", () => { if (qBtn) qClose(); }, { passive: true });
 // ---------- À corriger avant l’export ----------
 function renderExFix() {
   const R = dsRoles("light"), iss = allIssues(), failT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
