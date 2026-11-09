@@ -780,7 +780,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:160px}
 .j-hello{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--hair)}.j-hello p{margin:0;font-size:14px;max-width:70ch}
 .jnext{margin-top:32px;padding-top:20px;border-top:1px solid var(--hair)}
 .jnext[hidden],.journey[hidden]{display:none}
-.jn-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.jn-go{min-height:48px;font-size:16px;padding:10px 22px}.jn-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .jn-warn{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:var(--bad-bg)}.jn-warn p{margin:0;color:var(--bad);font-size:14px;font-weight:600}
 a.btn{text-decoration:none}
 .exf{list-style:none;margin:10px 0 0;padding:0}
@@ -793,7 +793,7 @@ a.btn{text-decoration:none}
 /* ===== Design C : tuiles claires, menu Atelier, bandeau teal, accent orange ===== */
 body{background:var(--bg)}
 .logo-word{color:var(--ink)}
-.expbtn{background:var(--accent);color:var(--accent-ink)}
+.expbtn{background:var(--surface);color:var(--ink);border:1px solid var(--hair)}.expbtn:hover{background:var(--hover)}
 .mhead{--ink:#FFFFFF;--muted:#A7D7D2;--surface:#134C4D;--raised:#134C4D;--hair:#2F6A6B;--field:#8CC2BD;--primary:#FFFFFF;--primary-ink:#0B3C3D;--hover:#165758;--link:#FFFFFF;--bg:#0A3233;
   --aaa-bg:#FFFFFF;--aaa-ink:#0B2B2C;--aa-bg:#CCEBE7;--aa-bd:#CCEBE7;--aa-ink:#0B2B2C;--lg-bg:#FFE0C7;--lg-ink:#0B2B2C;--no-bg:#FF6A13;--no-ink:#1A0B00;
   --ok:#A7F3E4;--ok-bg:#134C4D;--warn:#FFD2AE;--warn-bg:#134C4D;--bad:#FFC2AE;--bad-bg:#134C4D;
@@ -4857,7 +4857,7 @@ function renderJourney(v) {
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm), nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
   const why = v === "couleurs" ? `${iss} couleur${iss > 1 ? "s" : ""} ne se lit avec aucune autre en texte courant.` : v === "styles" ? `Texte trop pâle sur le fond : ${nT} style${nT > 1 ? "s" : ""} sous le seuil ${S.level}.` : `${iss} rôle${iss > 1 ? "s" : ""} sous le seuil ${S.level}.`;
-  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn" href="#${pv[0]}">← ${pv[1]}</a>` : "<span></span>"}${nx ? `<a class="btn primary" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
+  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn" href="#${pv[0]}">← ${pv[1]}</a>` : "<span></span>"}${nx ? `<a class="btn primary jn-go" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
 }
 // ---------- Aide « ? » ----------
 // ---------- Résumé permanent du projet (F02, P0-5) ----------
@@ -5203,7 +5203,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "fe07459";
+const LISIO_BUILD = "fb8ef0b";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
