@@ -52,8 +52,11 @@ const axeOn = async (page, sel, lab) => { if (!AXE) return; if (!(await page.eva
 {
   const { ctx, page } = await open("#styles", { "lisio-mode": "" }, { ...devices["iPhone 13"] });
   const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-  const b = await page.locator('#jNowBox .j-mode [data-mode="adv"]').boundingBox();
-  check(ov <= 0 && b && b.height >= 24 && b.width >= 24, "mobile : bascule visible, cible de 24 px au moins, sans défilement horizontal", JSON.stringify({ ov, b }));
+  // Audit UX du 11 novembre 2026 : sur mobile, Essentiel / Avancé se règle dans Outils (feuille du bas), plus dans la ligne de l’étape.
+  await page.click("#moreB"); await page.waitForTimeout(300);
+  const b = await page.locator('#moreSheet [data-mode="adv"], dialog[open] [data-mode="adv"]').first().boundingBox();
+  check(ov <= 0 && b && b.height >= 24 && b.width >= 24, "mobile : bascule dans Outils, cible de 24 px au moins, sans défilement horizontal", JSON.stringify({ ov, b }));
+  await page.keyboard.press("Escape");
   await ctx.close();
 }
 {

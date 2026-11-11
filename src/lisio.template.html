@@ -1231,9 +1231,9 @@ section .adv-hint{display:none!important}
 /* ===== Refonte « suisse monochrome » (maquette Figma Make de Laurent, 10 novembre 2026) =====
    Noir sur blanc cassé, angles droits, filets noirs, ni ombre ni dégradé. La couleur ne sert plus qu’à l’information :
    les états des étapes et les verdicts de contraste. Le thème sombre n’est pas dans la maquette : il en est l’inverse. */
-/* Angles droits partout. Exceptions : une forme réglée par l’utilisateur (style en ligne) et les pastilles d’état ou de verdict. */
+/* Angles droits partout. Seule exception : une forme réglée par l’utilisateur (style en ligne). */
 *:not([style*="radius"]),*::before,*::after{border-radius:0!important}
-:root .j-s,:root .j-cst,:root .vl,:root .sum-c,:root .sum-s,:root .lv,:root .pill,:root .bd,:root .ds-own{border-radius:12px!important}
+/* Plus de pilules (Laurent, 11 novembre 2026, 20 h 44) : les pastilles d’état et de verdict sont carrées elles aussi. */
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 h1,h2,h3{letter-spacing:-.03em}
 /* Logo : le « i » au demi-disque, en noir et blanc, dans un carré. */
@@ -1433,7 +1433,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 .j-acts{margin-left:0}
 :root:root .mhead{margin-top:32px}
 #tester .mhead{margin-bottom:24px!important}
-#tester .dock{position:sticky;top:calc(var(--apph) + 52px);bottom:auto;margin:0 0 16px;justify-content:flex-start;z-index:12}
+#tester .dock{position:static;margin:0 0 16px;justify-content:flex-start}
 #tester .dock-in{box-shadow:none;border:1px solid var(--line)}
 @media (max-width:760px){
   .j-line{padding:8px 12px;gap:8px}
@@ -1489,6 +1489,43 @@ input[type=checkbox]{width:24px!important;height:24px!important}
   .sn-t{white-space:normal;line-height:1.15;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-align:center}
 }
 .pd-inv{color:var(--warn)}
+/* Retour de Laurent (11 novembre 2026, 20 h 38) : les sélecteurs prennent la largeur de leur contenu, pas toute la ligne. */
+.seg{width:fit-content;max-width:100%}
+/* Mouvement (même retour) : l’option choisie glisse d’un bouton à l’autre ; pages, menus et volets entrent en douceur.
+   Courbe et durée uniques ; tout s’arrête si le système demande moins d’animations (2.3.3). */
+:root{--ease:cubic-bezier(.2,.8,.2,1);--dur:.24s}
+.seg.has-ind{position:relative;isolation:isolate}
+.seg.has-ind>button{position:relative;z-index:1}
+.seg.has-ind>button[aria-pressed="true"]{background:none!important}
+.seg-ind{position:absolute;z-index:0;top:0;left:0;background:var(--primary);pointer-events:none}
+@media (prefers-reduced-motion:no-preference){
+  .seg-ind{transition:transform var(--dur) var(--ease),width var(--dur) var(--ease),height var(--dur) var(--ease)}
+  .seg.has-ind>button{transition:color var(--dur) var(--ease)}
+  @keyframes lisioIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @keyframes lisioSide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+  @keyframes lisioDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  #main>section:not([hidden]){animation:lisioIn .32s var(--ease)}
+  .ex-panel:not([hidden]){animation:lisioIn var(--dur) var(--ease)}
+  .help-pop:not([hidden]),.j-line .sumbar[open] .sum-body,.cmdk-list,.j-help:not([hidden]){animation:lisioDrop var(--dur) var(--ease)}
+  @media (min-width:761px){.qpop:not([hidden]){animation:lisioSide .28s var(--ease)}}
+  dialog[open]{animation:lisioIn .28s var(--ease)}
+  .btn,.j-steps a,.sn-a,.ex-tabs [role=tab]{transition:background-color .18s var(--ease),color .18s var(--ease),border-color .18s var(--ease),transform .18s var(--ease)}
+  .btn:active,.sn-a:active{transform:translateY(1px)}
+  .jn-go,.sn-go{overflow:hidden}
+  .jn-go:hover,.sn-go:hover{letter-spacing:.005em}
+}
+/* Audit UX, lot 5 : finitions.
+   « Haut » s’aligne sur le bord droit du contenu ; la barre du bas prend le fond de la page, un filet la sépare. */
+/* « Haut » reste au bord de la fenêtre : rentré sur la colonne, il masquait les boutons « Copier la ligne » au clavier (2.4.11). */
+.jn-row{background:var(--bg);border-image:linear-gradient(to bottom,var(--line) 1px,var(--bg) 1px) fill 0//0 100vmax}
+/* Projets : un bouton principal ; les actions de fichier en liens, plus légères. */
+#prjDlg [data-lite]{border-color:transparent;text-decoration:underline;text-underline-offset:3px;padding-inline:8px}
+#prjDlg [data-lite]:hover{border-color:var(--line)}
+/* Retour de Laurent (11 novembre 2026, 20 h 43) : en rangée compacte, la case noire et les filets montent jusqu’à la barre du haut. */
+.hsteps.compact .j-steps li{margin-top:-1px}.hsteps.compact .j-steps a{height:45px}
+/* Retour de Laurent (20 h 44) : quand les étapes se compactent, la ligne de l’étape se détache ; elle garde son filet du haut
+   (une ombre intérieure, pour ne pas changer la hauteur ni faire sauter la page). */
+.hsteps.compact+.j-nowbox .j-line{box-shadow:inset 0 1px 0 var(--line)}
 </style>
 
 <a class="app-skip" href="#main">Aller au contenu</a>
@@ -2038,7 +2075,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 <dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
 <div class="pd-cur"><label class="ex-name">Projet en cours<input type="text" id="prjCurName" maxlength="60"></label><label class="ex-name">Page Figma du projet<input type="url" id="prjFigU" inputmode="url" placeholder="https://www.figma.com/design/…" aria-describedby="prjFigE"></label><p class="note" id="prjFigE">Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier.</p><p class="note" id="prjCurMeta"></p>
-<div class="row"><button class="btn primary" type="button" id="prjWiz">Créer avec l’assistant</button><button class="btn" type="button" id="prjNew">Nouveau projet vide</button><button class="btn" type="button" id="prjDup">Dupliquer</button><button class="btn" type="button" id="prjShare">Copier le lien de partage</button><button class="btn" type="button" id="prjImp">Importer un fichier</button><button class="btn" type="button" id="prjExp">Télécharger le fichier</button></div></div>
+<div class="row"><button class="btn primary" type="button" id="prjWiz">Créer avec l’assistant</button><button class="btn" type="button" id="prjNew">Nouveau projet vide</button><button class="btn" type="button" id="prjDup" data-lite>Dupliquer</button><button class="btn" type="button" id="prjShare" data-lite>Copier le lien de partage</button><button class="btn" type="button" id="prjImp" data-lite>Importer un fichier</button><button class="btn" type="button" id="prjExp" data-lite>Télécharger le fichier</button></div></div>
 <h3 id="prjTH">Démarrer depuis un modèle</h3><p class="note" id="prjTplNote"></p><ul class="pd-list pd-tpl" id="prjTpl" aria-labelledby="prjTH"></ul>
 <h3 id="prjLH">Autres projets</h3><ul class="pd-list" id="prjList" aria-labelledby="prjLH"></ul></dialog>
 <dialog class="prj-dlg wiz-dlg" id="wizDlg" aria-labelledby="wizH" aria-describedby="wizStep"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><div><h2 id="wizH">Créer un projet</h2><p class="note" id="wizStep"></p></div><button type="button" class="mx" id="wizX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer l’assistant</span></button></div>
@@ -2687,7 +2724,7 @@ $("cWatch").addEventListener("click", e => { const a = e.target.closest("[data-d
 function renderKeep() {
   const C = palette, P = [], out = [], v21 = V() >= 21, nm = c => `<b>${esc(c.name)}</b>`;
   for (let i = 0; i < C.length; i++) for (let j = i + 1; j < C.length; j++) P.push({ a: C[i], b: C[j], r: ratio(C[i].hex, C[j].hex) });
-  P.filter(p => p.r < 1.5).sort((x, y) => x.r - y.r).slice(0, 2).forEach(p => out.push(`${nm(p.a)} et ${nm(p.b)} sont presque jumeaux (${f1(p.r)}:1) : on ne les distingue pas l’un de l’autre.`));
+  P.filter(p => p.r < 1.5).sort((x, y) => x.r - y.r).slice(0, 2).forEach(p => out.push(`${nm(p.a)} et ${nm(p.b)} sont presque jumeaux (${f2(p.r)}:1) : on ne les distingue pas l’un de l’autre.`));
   C.forEach(c => { if (!P.some(p => (p.a === c || p.b === c) && p.r >= 4.5)) out.push(`${nm(c)} ne passe en texte courant avec aucune autre couleur : gardez‑le pour le décor, les grands textes, ou ajustez‑le.`); });
   P.filter(p => p.r >= 3 && p.r < 4.5).sort((x, y) => y.r - x.r).slice(0, 2).forEach(p => out.push(`${nm(p.a)} avec ${nm(p.b)} (${f1(p.r)}:1) : grands textes${v21 ? " et composants" : ""} seulement.`));
   const okN = P.filter(p => p.r >= 4.5).length;
@@ -4304,6 +4341,16 @@ document.addEventListener("click", e => { const t = e.target.closest("[data-exta
 { let k = null; try { k = sessionStorage.getItem("lisio-extab"); } catch (e) {} if (k && document.querySelector(`[data-extab="${k}"]`)) exTab(k); }
 document.addEventListener("keydown", e => { const t = e.target.closest && e.target.closest("[data-extab]"); if (!t || !["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return; e.preventDefault();
   const all = [...document.querySelectorAll("[data-extab]")], i = all.indexOf(t), n = e.key === "Home" ? 0 : e.key === "End" ? all.length - 1 : (i + (e.key === "ArrowRight" ? 1 : -1) + all.length) % all.length; exTab(all[n].dataset.extab, true); });
+
+// ---------- Sélecteurs : l’option choisie glisse (retour de Laurent, 11 novembre 2026) ----------
+// Une seule pastille noire par sélecteur, posée sous le bouton pressé ; elle suit les changements d’état, de contenu et de taille.
+{ const sync = seg => { const on = seg.querySelector(':scope>button[aria-pressed="true"]'); let ind = seg.querySelector(":scope>.seg-ind");
+    if (!on || !on.offsetWidth) { if (ind) ind.style.opacity = "0"; return; }
+    if (!ind) { ind = document.createElement("span"); ind.className = "seg-ind"; ind.setAttribute("aria-hidden", "true"); seg.prepend(ind); seg.classList.add("has-ind"); ind.style.transition = "none"; requestAnimationFrame(() => requestAnimationFrame(() => { ind.style.transition = ""; })); }
+    ind.style.opacity = "1"; ind.style.width = on.offsetWidth + "px"; ind.style.height = on.offsetHeight + "px"; ind.style.transform = `translate(${on.offsetLeft}px,${on.offsetTop}px)`; };
+  let raf = 0; const all = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => document.querySelectorAll(".seg").forEach(sync)); };
+  new MutationObserver(all).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["aria-pressed"] });
+  addEventListener("resize", all); addEventListener("hashchange", all); document.addEventListener("toggle", all, true); document.addEventListener("click", all); if (document.fonts) document.fonts.ready.then(all); all(); }
 let qBtn = null;
 function qClose(back) { $("qPop").hidden = true; if (qBtn) { qBtn.setAttribute("aria-expanded", "false"); if (back) qBtn.focus(); } qBtn = null; }
 // Règles W3C citées par chaque « ? » : numéro et titre officiel (en anglais), page « Understanding » de WCAG 2.2.
