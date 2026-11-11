@@ -1488,6 +1488,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 @media (max-width:760px){
   .sn-t{white-space:normal;line-height:1.15;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-align:center}
 }
+.pd-inv{color:var(--warn)}
 </style>
 
 <a class="app-skip" href="#main">Aller au contenu</a>
@@ -2723,13 +2724,18 @@ function renderDetail() {
   const lvA = S.level === "AAA", tN = lvA ? 7 : 4.5, crit = lvA ? "1.4.6" : "1.4.3";
   let ba = "";
   if (r < tN) {
-    let mv = i, nx = suggestFix(fg.hex, bg.hex, tN);
-    if (!nx) { mv = j; nx = suggestFix(bg.hex, fg.hex, tN); }
+    // Audit UX du 11 novembre 2026 : on propose la correction qui change le moins la couleur, et de préférence sans la faire
+    // passer de l’autre côté de sa partenaire (un bleu marine qui deviendrait bleu ciel n’est plus la même couleur).
+    const flip = (o, n, p) => (lum(o) - lum(p)) * (lum(n) - lum(p)) < 0;
+    const cands = [[i, suggestFix(fg.hex, bg.hex, tN), fg.hex, bg.hex], [j, suggestFix(bg.hex, fg.hex, tN), bg.hex, fg.hex]].filter(c => c[1])
+      .map(([k, n, o, p]) => ({ k, n, inv: flip(o, n, p), d: Math.abs(lum(n) - lum(o)) })).sort((a, b) => (a.inv - b.inv) || (a.d - b.d));
+    let mv = cands.length ? cands[0].k : i, nx = cands.length ? cands[0].n : null, inv = cands.length ? cands[0].inv : false;
     if (nx) {
       const nf = mv === i ? nx : fg.hex, nb = mv === j ? nx : bg.hex, who = palette[mv], dk = lum(nx) < lum(who.hex), r2 = ratio(nf, nb);
       const card = (t, f, b2, rr, on) => `<div class="ba${on ? " on" : ""}" style="background:${b2};color:${f};font-family:${ff}"><span class="bt">${t}</span><span class="bn">${esc(fg.name)}</span><span class="br">${f2(rr)}:1</span></div>`;
       ba = `<div class="pd-ba"><div class="ba-row">${card("Avant", fg.hex, bg.hex, r, false)}${card("Après", nf, nb, r2, true)}</div>
-        <p class="pd-why">Une nuance plus ${dk ? "foncée" : "claire"} de ${esc(who.name)}, <code>${nx}</code>, passe le seuil de ${fmt(tN, 1).replace(",0", "")}:1 pour le texte courant (critère ${crit}). Appliquer remplace ${esc(who.name)} dans votre liste : toute la matrice est recalculée.</p>
+        <p class="pd-why">Une nuance plus ${dk ? "foncée" : "claire"} de ${esc(who.name)}, <code>${nx}</code>, passe le seuil de ${fmt(tN, 1).replace(",0", "")}:1 pour le texte courant (critère ${crit}). C’est la correction qui change le moins vos couleurs. Appliquer remplace ${esc(who.name)} dans votre liste : toute la matrice est recalculée.</p>
+        ${inv ? `<p class="pd-why pd-inv"><b>Attention :</b> ${esc(who.name)} passerait ${dk ? "plus foncée" : "plus claire"} que ${esc((mv === i ? bg : fg).name)} et changerait de rôle. Pour garder vos couleurs, utilisez plutôt cette paire en grand texte ou en décor, ou prenez une nuance plus bas.</p>` : ""}
         ${btn("Appliquer la correction", () => { palette[mv].hex = nx; changed(); renderEditor(); toast(`${who.name} remplacé par ${nx} : ${f2(r2)}:1`); }, null, true).replace('class="btn sm primary"', 'class="btn primary pd-apply"')}
         ${fixes.length > 1 ? `<details class="pd-more"><summary class="btn">Voir d’autres nuances</summary><div class="row" style="gap:6px;margin-top:10px">${fixes.join("")}</div></details>` : ""}</div>`;
     }
@@ -4991,6 +4997,14 @@ prjAll(); prjLabel();
 
 // ---------- Recherche (⌘K) : pages, actions, couleurs, aides ----------
 const CMD = { q: $("cmdQ"), pop: $("cmdPop"), list: $("cmdL"), ans: $("cmdAns"), st: $("cmdSt"), items: [], act: -1 };
+// Famille de teinte en français, pour chercher « bleu » ou « gris » (audit UX du 11 novembre 2026).
+function hueFr(hex) { const m = /^#?([0-9a-f]{6})$/i.exec(hex); if (!m) return ""; const n = parseInt(m[1], 16), r = (n >> 16 & 255) / 255, g = (n >> 8 & 255) / 255, b = (n & 255) / 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn, sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+  const tone = l < .3 ? " foncé fonce sombre" : l > .8 ? " clair pâle pale" : "";
+  if (sat < .15 || d < .06) return (l < .12 ? "noir " : l > .94 ? "blanc " : "") + "gris neutre" + tone;
+  let h = d === 0 ? 0 : mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360;
+  const fam = h < 15 || h >= 345 ? "rouge" : h < 45 ? "orange" : h < 70 ? "jaune" : h < 160 ? "vert" : h < 195 ? "turquoise cyan" : h < 255 ? "bleu" : h < 290 ? "violet" : "rose magenta";
+  return fam + tone; }
 const cmdNorm = t => String(t).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 function cmdGoView(v) { history.pushState(null, "", "#" + v); show(v); window.scrollTo(0, 0); }
 function cmdSource() {
@@ -5013,7 +5027,7 @@ function cmdSource() {
     { k: "Action", t: "Replier ou déplier le menu", x: "barre laterale", run: () => SIDEB.click() },
     { k: "Lien", t: "Guide de formation", x: "documentation", run: () => window.open("https://lisio-psi.vercel.app/guide", "_blank", "noopener") },
     { k: "Lien", t: "Slides de formation", x: "presentation diapositives", run: () => window.open("https://lisio-psi.vercel.app/slides", "_blank", "noopener") });
-  palette.forEach((c, i) => L.push({ k: "Couleur", t: `${c.name} ${c.hex}`, sw: c.hex, run: () => { cmdGoView("matrice"); const j = palette.findIndex((d, k) => k !== i); sel = [i, palette.reduce((m, d, k) => k !== i && ratio(c.hex, d.hex) > ratio(c.hex, palette[m].hex) ? k : m, j)]; renderMx(); const b = document.querySelector(".mcell[aria-pressed=\"true\"]"); if (b) { b.scrollIntoView({ block: "center" }); b.focus(); } } }));
+  palette.forEach((c, i) => L.push({ k: "Couleur", t: `${c.name} ${c.hex}`, x: hueFr(c.hex), sw: c.hex, run: () => { cmdGoView("matrice"); const j = palette.findIndex((d, k) => k !== i); sel = [i, palette.reduce((m, d, k) => k !== i && ratio(c.hex, d.hex) > ratio(c.hex, palette[m].hex) ? k : m, j)]; renderMx(); const b = document.querySelector(".mcell[aria-pressed=\"true\"]"); if (b) { b.scrollIntoView({ block: "center" }); b.focus(); } } }));
   Object.keys(QHELP).forEach(k => L.push({ k: "Aide", t: QHELP[k][0], help: QHELP[k] }));
   return L;
 }
