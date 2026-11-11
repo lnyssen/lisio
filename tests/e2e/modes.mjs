@@ -26,7 +26,8 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   const { ctx, page } = await open({});
   const h = page.locator("#hello");
   check(await h.isVisible(), "accueil affiché au premier lancement");
-  check(await h.locator("[data-hello=ess]").count() === 1 && await h.locator("[data-hello=adv]").count() === 1 && await h.locator("[data-hello=new]").count() === 1, "choix : Essentiel, Avancé, créer mon projet (plus la démo)");
+  // Audit UX du 11 novembre 2026 : deux choix (créer, démo) et « Fermer » ; Essentiel / Avancé se règle dans la ligne de l’étape.
+  check(await h.locator("[data-hello=new]").count() === 1 && await h.locator("[data-hello=demo]").count() === 1 && await h.locator("[data-hello=ess]").count() === 1 && await h.locator("[data-hello=adv]").count() === 0, "choix : créer mon projet, la démo, fermer");
   check(await page.evaluate(() => document.documentElement.classList.contains("mode-ess")), "nouveau venu : Essentiel par défaut");
   await go(page, "styles");
   check(await page.locator("#tsList").isVisible(), "on navigue sans répondre à l’accueil");
@@ -34,7 +35,7 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
     const v = await page.evaluate(async () => (await axe.run(document.querySelector("#hello"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id)); check(!v.length, "axe-core : accueil sans violation", v.join(", ")); }
   else await go(page, "couleurs");
   await h.locator("[data-hello=ess]").click(); await page.waitForTimeout(200);
-  check(await h.count() === 0 && await ls(page, "lisio-welcome") === "1" && await ls(page, "lisio-mode") === "ess", "« Je débute » : accueil fermé, Essentiel retenu");
+  check(await h.count() === 0 && await ls(page, "lisio-welcome") === "1" && await ls(page, "lisio-mode") === "ess", "« Fermer » : accueil fermé, Essentiel retenu");
   check(await page.evaluate(() => !!document.activeElement && document.activeElement !== document.body), "le focus reste dans la page");
   // 2. Essentiel : réglages fins masqués, une invitation à tout afficher sur chaque page concernée.
   const hidden = [["palette", "#shSet"], ["styles", "#tsFluCard"], ["systeme", 'section[aria-labelledby="dsElH"]'], ["exporter", "#exCssAdv"]];

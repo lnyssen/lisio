@@ -1469,6 +1469,25 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 .ex-tabs+.ex-panel,.ex-panel{margin-top:calc(24px - var(--sec-gap))}
 /* Design system sur mobile (audit UX, lot 2) : l’aperçu défile dans son cadre au lieu d’allonger la page de 14 000 px. */
 @media (max-width:760px){#sysWrap{max-height:70dvh;overflow:auto;overscroll-behavior:contain}}
+/* Audit UX du 11 novembre 2026, lot 3.
+   États de navigation en noir et blanc : la couleur reste aux verdicts (à corriger, échec, à vérifier). */
+.j-s,.j-cst{background:none!important;color:inherit!important;border-color:currentColor!important}
+.st-warn>.j-t .j-s{background:var(--st-warn-bg)!important;color:var(--st-warn-ink)!important;border-color:var(--st-warn-bd)!important}
+/* Matrice : cases blanches, le verdict est dans la pastille ; l’échantillon « Aa » redevient ce qu’on voit d’abord. */
+.mcell.b-aaa,.mcell.b-aa,.mcell.b-lg,.mcell.b-no{background:var(--surface)!important;color:var(--ink)!important;box-shadow:inset 0 0 0 1px var(--hair)!important}
+.mcell[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)!important}
+/* Typographie : 12 px au moins partout dans l’interface (Lisio prévient lui-même sous 12 px). */
+.mwrap .mgrid.mcompact .mcorner,.mwrap .mgrid.mcompact .mcol b,.mwrap .mgrid.mcompact .mcell .mv .r,.mwrap .mgrid.mcompact .mcell .mv .vl,.mcol code,.mrow code,.mcell .foot .bd,.ds-mbtn,.ds-own,.dk .k small,.fontlist .grp,.tag,.eyebrow,.swt code,.j-legend .lg,.cp-hx,.ty{font-size:12px!important}
+.ic p{font-size:14px}
+/* Cibles : 24 px au moins (2.5.8). */
+input[type=checkbox]{width:24px!important;height:24px!important}
+.ts-step input{min-width:44px}
+/* Accueil : deux choix et « Fermer ». */
+.j-hello .j-hello-x{border-color:transparent;text-decoration:underline;text-underline-offset:3px}
+/* Mobile : les noms d’étapes entiers, sur deux lignes au besoin. */
+@media (max-width:760px){
+  .sn-t{white-space:normal;line-height:1.15;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-align:center}
+}
 </style>
 
 <a class="app-skip" href="#main">Aller au contenu</a>
@@ -1568,14 +1587,14 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
     </div>
     <div class="mlayout below-mx">
       <div class="keep"><h2>À retenir</h2><div id="keep" style="display:flex;flex-direction:column;gap:10px"></div></div>
-      <aside class="maside">
+      <div class="maside">
         <div style="display:flex;flex-direction:column;gap:12px">
           <h2>Seuils</h2>
           <div id="mLegend" style="display:flex;flex-direction:column;gap:12px"></div>
         </div>
         <p class="small muted m-short">Cliquez une case pour voir la paire en détail et la corriger. <button type="button" class="qchip" data-more="mCalcNote" aria-expanded="false" aria-controls="qPop">Comment Lisio calcule</button></p>
         <p class="small muted" id="mCalcNote" hidden>Ratios calculés sur les valeurs hexadécimales, selon la formule de luminance relative du W3C. Cliquez une case pour voir la paire en détail et la corriger. Source : W3C, <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</p>
-      </aside>
+      </div>
     </div>
   </section>
 
@@ -4224,7 +4243,7 @@ function renderJourney(v) {
   if (i < 0) { const SB0 = $("sumBar"); if (NB.contains(SB0)) NB.after(SB0); const seen0 = jSeen(); J.innerHTML = jMob("", -1, seen0) + jProg("", seen0) + jCells("", -1, seen0); stepNavRender(-1); return; }
   const [, , say, qs] = JOURNEY[i], seen = jSeen();
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
-  const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm" data-hello="new">Créer mon projet</button></div></div>` : "";
+  const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes pour une palette, des polices et un design system lisibles. Chaque page vérifie votre travail et propose la correction ; les pastilles « ? » expliquent le jargon.</p><div class="row"><button type="button" class="btn primary sm" data-hello="new">Créer mon projet</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm j-hello-x" data-hello="ess">Fermer</button></div></div>` : "";
   J.innerHTML = jMob(v, i, seen) + jProg(v, seen) + jCells(v, i, seen);
   const SB = $("sumBar"); if (NB.contains(SB)) NB.after(SB);
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
@@ -4326,7 +4345,7 @@ $("jNowBox").addEventListener("click", e => { const b = e.target.closest("[data-
 function stepNavRender(i) {
   const pv = i > 0 ? JOURNEY[i - 1] : null, nx = i >= 0 && i < JOURNEY.length - 1 ? JOURNEY[i + 1] : null;
   $("snPrev").innerHTML = pv ? `<a class="sn-a" href="#${pv[0]}"><span aria-hidden="true">←</span><span class="sn-t"><span class="sr-only">Étape précédente : </span>${pv[1]}</span></a>` : "";
-  $("snNext").innerHTML = nx ? `<a class="sn-a sn-go" href="#${nx[0]}"><span class="sn-t"><span class="sr-only">Étape suivante : </span>${nx[1]}</span><span aria-hidden="true">→</span></a>` : "";
+  $("snNext").innerHTML = nx ? `<a class="sn-a sn-go" href="#${nx[0]}"><span class="sn-t"><span class="sr-only">Étape suivante : </span>${nx[1]}</span><span aria-hidden="true">→</span></a>` : i === JOURNEY.length - 1 ? `<a class="sn-a" href="#sources"><span class="sn-t">Lire le guide</span></a>` : "";
 }
 // Hauteur de la barre du haut : les étapes se collent juste dessous.
 { const AB = document.querySelector(".appbar"), setH = () => document.documentElement.style.setProperty("--apph", Math.round(AB.getBoundingClientRect().height) + "px"); setH(); if ("ResizeObserver" in window) new ResizeObserver(setH).observe(AB); addEventListener("resize", setH); }
