@@ -116,11 +116,11 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   for (const [v] of ORDER) { await go(p, v); const t = await p.evaluate(() => document.getElementById("journey").textContent + " " + document.getElementById("jNext").textContent); if (/conforme|conformité totale|certifi|100\s?%/i.test(t)) bad.push(v); }
   report(!bad.length, "aucun « conforme », « certifié » ni « 100 % » dans le parcours", bad.join(", ")); await p.ctx.close(); }
 
-// 7. Mobile : l'étape actuelle montre son nom et son état ; les autres gardent l'état dans leur nom ; pas de débordement.
+// 7. Mobile : le bouton collé en haut montre le nom et l'état de l'étape actuelle ; les autres gardent l'état dans leur nom ; pas de débordement.
 for (const w of [320, 390]) { const p = await open({ width: w, height: 800 }, "styles");
   const S = await steps(p), c = S.find(s => s.cur === "step"), sw = await p.evaluate(() => document.documentElement.scrollWidth);
-  const vis = await p.evaluate(() => { const e = document.querySelector("#jNowBox .j-cst"); return !!e && e.getBoundingClientRect().width > 1 && e.textContent; });
-  report(c && vis === c.state && S.every(s => s.name.includes(s.state)) && sw <= w, `mobile ${w} px : état de l'étape actuelle visible, aucun débordement`, `${c && c.state} ; largeur ${sw}`); await p.ctx.close(); }
+  const vis = await p.evaluate(() => { const e = document.querySelector("#hsMob .hs-s"); return !!e && e.getBoundingClientRect().width > 1 && e.textContent; });
+  report(c && vis && vis.includes(c.state) && S.every(s => s.name.includes(s.state)) && sw <= w, `mobile ${w} px : état de l'étape actuelle visible, aucun débordement`, `${c && c.state} ; largeur ${sw}`); await p.ctx.close(); }
 
 await browser.close();
 console.log(fails ? `\n${fails} contrôle(s) en échec` : "\nLe bandeau suit le parcours et dit l'état de chaque étape.");

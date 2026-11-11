@@ -101,8 +101,14 @@ const axe = async (p, include, label) => { if (!AXE) return; await p.addScriptTa
   await go(p, "lisibilite");
   check(await vis(p, "#journey .j-steps") && !(await p.evaluate(() => document.querySelector('#journey a[aria-current="step"]'))) && !(await vis(p, "#jNowBox")) && !(await vis(p, "#jNext .jn-row")), "hors parcours (Rédaction) : étapes visibles, aucune en cours, ni bandeau ni barre du bas");
   await go(p, "tester");
-  for (const w of [1440, 1100, 1024, 800]) { await p.setViewportSize({ width: w, height: 800 }); await p.waitForTimeout(200); const ov = await over(p), names = await p.evaluate(() => [...document.querySelectorAll("#journey .j-l")].every(l => l.getBoundingClientRect().width > 10 && l.scrollWidth <= l.clientWidth + 1));
+  for (const w of [1440, 1100, 1024]) { await p.setViewportSize({ width: w, height: 800 }); await p.waitForTimeout(200); const ov = await over(p), names = await p.evaluate(() => [...document.querySelectorAll("#journey .j-l")].every(l => l.getBoundingClientRect().width > 10 && l.scrollWidth <= l.clientWidth + 1) && [...document.querySelectorAll("#journey .j-steps a")].every(a => a.scrollWidth <= a.clientWidth + 1));
     check(ov <= 0 && names, `${w} px : pas de défilement horizontal, noms des étapes entiers`, `${ov} ${names}`); }
+  // Sous 1 000 px, les 7 cases ne tiennent plus : un bouton dit l’étape et déplie la liste.
+  await p.setViewportSize({ width: 800, height: 800 }); await p.waitForTimeout(250);
+  check(await over(p) <= 0 && await vis(p, "#hsMob") && !(await vis(p, "#journey .j-steps a")), "800 px : pas de défilement horizontal, l’étape devient un bouton, liste repliée", String(await over(p)));
+  await p.click("#hsMob"); await p.waitForTimeout(200);
+  check(await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].filter(a => a.getClientRects().length).length) === 7 && await vis(p, "#jNext .jn-row .btn.primary"), "800 px : le bouton déplie les 7 étapes ; la barre du bas reste celle de l’ordinateur");
+  await p.keyboard.press("Escape");
   await p.setViewportSize({ width: 1440, height: 900 }); await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
   await axe(p, [".appbar", "#journey", "#jNowBox", "#jNext"], "axe-core, thème clair : barre du haut, étapes, bandeau, barre du bas");
   check(!p.errs.length, "ordinateur : aucune erreur JavaScript", p.errs.join(" | "));

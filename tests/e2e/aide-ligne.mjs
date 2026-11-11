@@ -49,7 +49,8 @@ const go = async (p, v) => { await p.evaluate(v => { location.hash = v; }, v); a
 for (const [lab, o] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320 px", { viewport: { width: 320, height: 640 }, isMobile: true, hasTouch: true }]]) {
   const p = await open(o, "systeme");
   const h = await p.evaluate(() => Math.round(document.getElementById("jNowBox").getBoundingClientRect().height));
-  check(h <= 104 && await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${lab} : ligne d’aide sur deux rangées au plus (étape, puis affichage et aide), sans débordement`, h + " px");
+  // Refonte du 11 novembre 2026 : sur mobile, l’étape et son état sont dans le bouton collé en haut ; le bandeau garde l’affichage, l’aide et la prochaine action.
+  check(h <= 170 && await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${lab} : bandeau compact (affichage et aide, puis la prochaine action), sans débordement`, h + " px");
   await p.click("#jNowBox .j-help-b"); await p.waitForTimeout(200);
   check(await shown(p, "#jHelp .adv-hint") === 1 && await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${lab} : dépliée, invitation Essentiel visible, sans débordement`);
   await p.ctx.close(); }

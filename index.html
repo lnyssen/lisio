@@ -6,7 +6,7 @@
 <meta name="description" content="Lisio : contraste WCAG 2.0 à 2.2 de toutes vos paires de couleurs, essai typographique et lisibilité.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%230B3C3D%27/%3E%3Ccircle cx=%2716%27 cy=%279.6%27 r=%274.4%27 fill=%27none%27 stroke=%27white%27 stroke-width=%271.8%27/%3E%3Cpath d=%27M16 5.2a4.4 4.4 0 0 1 0 8.8z%27 fill=%27%23FF6A13%27/%3E%3Crect x=%2713.2%27 y=%2716.2%27 width=%275.6%27 height=%2710.6%27 rx=%272.8%27 fill=%27white%27/%3E%3C/svg%3E">
 <title>Lisio</title>
-<script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);var br=localStorage.getItem("lisio-bar");if(br==="orange"||br==="rust")document.documentElement.setAttribute("data-bar",br)}catch(e){}</script>
+<script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,38 +15,41 @@
 /* Layout : l'écran entier est l'épreuve. Une grande toile peinte aux couleurs testées, une barre d'outils flottante en bas, le verdict épinglé en haut. Le reste vit sous la toile. */
 
 :root{
-  --bg:#EEF3F2; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#0B2B2C; --muted:#4F6766; --hair:#D3E0DE; --field:#6F8886;
-  --primary:#0B3C3D; --primary-ink:#FFFFFF; --hover:#EEF3F2; --link:#0F766E;
-  --accent:#FF6A13; --accent-ink:#1A0B00; --accent-soft:#FFE0C7;
-  --nav-on:#0B3C3D; --nav-on-ink:#FFFFFF; --nav-on-ic:#FF6A13; --hero:#0B3C3D;
-  --aaa-bg:#0B3C3D; --aaa-ink:#FFFFFF; --aa-bd:#CCEBE7; --aa-bg:#CCEBE7; --aa-ink:#0B3C3D; --lg-bg:#FFE0C7; --lg-ink:#7A2E00; --no-bg:#FF6A13; --no-ink:#1A0B00;
-  --ok:#0F766E; --ok-bg:#DDF1EE; --warn:#7A2E00; --warn-bg:#FFF1E7; --bad:#B42318; --bad-bg:#FFE4DC;
-  --shadow:0 1px 2px rgba(11,43,44,.06), 0 10px 30px rgba(11,43,44,.10);
+  --bg:#F4F4F0; --surface:#FFFFFF; --raised:#FFFFFF; --ink:#050505; --muted:#4A4A4A; --hair:#D6D6D2; --field:#6E6E69; --line:#050505;
+  --primary:#050505; --primary-ink:#FFFFFF; --hover:#EAEAE5; --link:#050505;
+  --accent:#050505; --accent-ink:#FFFFFF; --accent-soft:#EAEAE5;
+  --nav-on:#050505; --nav-on-ink:#FFFFFF; --nav-on-ic:#FFFFFF;
+  --aaa-bg:#DFF3E7; --aaa-ink:#155A35; --aa-bd:#8FAED5; --aa-bg:#E1EDFF; --aa-ink:#174A87; --lg-bg:#FFF0D5; --lg-ink:#713700; --no-bg:#FDE8E7; --no-ink:#881F1F;
+  --ok:#175B35; --ok-bg:#E3F3E8; --warn:#713700; --warn-bg:#FFF0DC; --bad:#881F1F; --bad-bg:#FDE8E7;
+  --st-done-bg:#E3F3E8; --st-done-ink:#175B35; --st-done-bd:#86B89B; --st-now-bg:#E5EEFB; --st-now-ink:#174B87; --st-now-bd:#8FAED5; --st-todo-bg:#F0F0ED; --st-todo-ink:#3E3E3B; --st-todo-bd:#A8A8A3; --st-warn-bg:#FFF0DC; --st-warn-ink:#713700; --st-warn-bd:#D39A5C;
+  --shadow:0 0 0 1px var(--line);
   --sans:"Instrument Sans", "Helvetica Neue", system-ui, sans-serif;
-  --mono:"Geist Mono", ui-monospace, Menlo, monospace; --code:"JetBrains Mono", ui-monospace, Menlo, monospace;
-  --r:18px; --tile:28px;
+  --mono:"Instrument Sans", "Helvetica Neue", system-ui, sans-serif; --code:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:0px; --tile:0px;
   --gut:clamp(16px,2.6vw,40px);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%234F6766' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%234A4A4A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#061415; --surface:#0D2324; --raised:#132E2F; --ink:#E6F2F0; --muted:#93B3B0; --hair:#1F4546; --field:#6B918E;
-  --primary:#2DD4BF; --primary-ink:#04201E; --hover:#132E2F; --link:#5EEAD4;
-  --accent:#FF7A1A; --accent-ink:#1A0B00; --accent-soft:#3A1E08;
-  --nav-on:#FF7A1A; --nav-on-ink:#1A0B00; --nav-on-ic:#1A0B00; --hero:#0E3233;
-  --aaa-bg:#14B8A6; --aaa-ink:#04201E; --aa-bg:transparent; --aa-bd:#2DD4BF; --aa-ink:#5EEAD4; --lg-bg:#3A1E08; --lg-ink:#FDBA74; --no-bg:#FF7A1A; --no-ink:#1A0B00;
-  --ok:#5EEAD4; --ok-bg:#0F3B3A; --warn:#FDBA74; --warn-bg:#3A1E08; --bad:#FF9F7A; --bad-bg:#3A1208;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2393B3B0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --bg:#0A0A0A; --surface:#141414; --raised:#1C1C1C; --ink:#F4F4F0; --muted:#B4B4AE; --hair:#3A3A37; --field:#8A8A85; --line:#F4F4F0;
+  --primary:#F4F4F0; --primary-ink:#050505; --hover:#242424; --link:#F4F4F0;
+  --accent:#F4F4F0; --accent-ink:#050505; --accent-soft:#2A2A28;
+  --nav-on:#F4F4F0; --nav-on-ink:#050505; --nav-on-ic:#050505;
+  --aaa-bg:#12331F; --aaa-ink:#A6E3BD; --aa-bd:#3F6699; --aa-bg:#12263F; --aa-ink:#B3D0F7; --lg-bg:#3A2606; --lg-ink:#F7CF94; --no-bg:#3F1513; --no-ink:#F7B0AC;
+  --ok:#A6E3BD; --ok-bg:#12331F; --warn:#F7CF94; --warn-bg:#3A2606; --bad:#F7B0AC; --bad-bg:#3F1513;
+  --st-done-bg:#12331F; --st-done-ink:#A6E3BD; --st-done-bd:#2F6B48; --st-now-bg:#12263F; --st-now-ink:#B3D0F7; --st-now-bd:#3F6699; --st-todo-bg:#2A2A28; --st-todo-ink:#D6D6D2; --st-todo-bd:#5C5C58; --st-warn-bg:#3A2606; --st-warn-ink:#F7CF94; --st-warn-bd:#8A5A1F;
+  --shadow:0 0 0 1px var(--line);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23B4B4AE' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#061415; --surface:#0D2324; --raised:#132E2F; --ink:#E6F2F0; --muted:#93B3B0; --hair:#1F4546; --field:#6B918E;
-  --primary:#2DD4BF; --primary-ink:#04201E; --hover:#132E2F; --link:#5EEAD4;
-  --accent:#FF7A1A; --accent-ink:#1A0B00; --accent-soft:#3A1E08;
-  --nav-on:#FF7A1A; --nav-on-ink:#1A0B00; --nav-on-ic:#1A0B00; --hero:#0E3233;
-  --aaa-bg:#14B8A6; --aaa-ink:#04201E; --aa-bg:transparent; --aa-bd:#2DD4BF; --aa-ink:#5EEAD4; --lg-bg:#3A1E08; --lg-ink:#FDBA74; --no-bg:#FF7A1A; --no-ink:#1A0B00;
-  --ok:#5EEAD4; --ok-bg:#0F3B3A; --warn:#FDBA74; --warn-bg:#3A1E08; --bad:#FF9F7A; --bad-bg:#3A1208;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.5);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2393B3B0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --bg:#0A0A0A; --surface:#141414; --raised:#1C1C1C; --ink:#F4F4F0; --muted:#B4B4AE; --hair:#3A3A37; --field:#8A8A85; --line:#F4F4F0;
+  --primary:#F4F4F0; --primary-ink:#050505; --hover:#242424; --link:#F4F4F0;
+  --accent:#F4F4F0; --accent-ink:#050505; --accent-soft:#2A2A28;
+  --nav-on:#F4F4F0; --nav-on-ink:#050505; --nav-on-ic:#050505;
+  --aaa-bg:#12331F; --aaa-ink:#A6E3BD; --aa-bd:#3F6699; --aa-bg:#12263F; --aa-ink:#B3D0F7; --lg-bg:#3A2606; --lg-ink:#F7CF94; --no-bg:#3F1513; --no-ink:#F7B0AC;
+  --ok:#A6E3BD; --ok-bg:#12331F; --warn:#F7CF94; --warn-bg:#3A2606; --bad:#F7B0AC; --bad-bg:#3F1513;
+  --st-done-bg:#12331F; --st-done-ink:#A6E3BD; --st-done-bd:#2F6B48; --st-now-bg:#12263F; --st-now-ink:#B3D0F7; --st-now-bd:#3F6699; --st-todo-bg:#2A2A28; --st-todo-ink:#D6D6D2; --st-todo-bd:#5C5C58; --st-warn-bg:#3A2606; --st-warn-ink:#F7CF94; --st-warn-bd:#8A5A1F;
+  --shadow:0 0 0 1px var(--line);
+  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23B4B4AE' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   color-scheme:dark }
 /* image et pipette */
 .imgpanel{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--hair);padding-top:14px}
@@ -744,24 +747,6 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:160px}
 @media (max-width:760px){.sumbar>summary{padding:6px 10px}.sum-rows{grid-template-columns:minmax(0,1fr)}}
 
 /* Parcours, aides, à corriger */
-.journey{margin:20px 0 26px}
-.j-steps{list-style:none;margin:0;padding:0;display:flex;gap:4px}
-.j-steps li{flex:1 1 0;min-width:0}
-.j-steps a{display:flex;align-items:center;gap:8px;min-height:44px;padding:8px 6px 6px 0;border-top:3px solid var(--hair);color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;overflow:hidden}
-.j-steps a:hover{color:var(--ink)}
-.j-steps a.st-done{border-top-color:var(--muted);color:var(--ink)}
-.j-steps a.st-warn{border-top-color:var(--bad)}
-.j-steps a.st-na{border-top-style:dashed}
-.j-steps a[aria-current]{border-top-color:var(--ink);color:var(--ink)}
-.j-n{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;border:1.5px solid currentColor;font-size:12px;font-variant-numeric:tabular-nums}
-.j-steps a.st-done .j-n{background:var(--hair);border-color:transparent}
-.j-steps a.st-na .j-n{border-style:dashed}
-.j-steps a[aria-current] .j-n{background:var(--ink);color:var(--surface);border-color:var(--ink)}
-.j-t{display:flex;flex-direction:column;min-width:0;line-height:1.25}
-.j-l{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.j-s{font-size:12px;font-weight:500;color:var(--muted);overflow-wrap:anywhere}
-.j-steps a.st-warn .j-s{color:var(--bad);font-weight:600}
-.j-i{flex:none;background:var(--bad);color:var(--surface);border-radius:99px;font-size:11px;font-weight:700;line-height:18px;min-width:18px;padding:0 5px;text-align:center}
 .j-now{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 24px;margin-top:8px}
 .j-now>p{margin:0;font-size:14px;color:var(--muted)}.j-now>p b{color:var(--ink)}
 .qline{display:flex;flex-wrap:wrap;gap:6px;margin:0}
@@ -780,7 +765,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:160px}
 .ts-crfix{grid-column:1/-1}.ts-crfix[hidden]{display:none}
 .j-hello{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--hair)}.j-hello p{margin:0;font-size:14px;max-width:70ch}
 .jnext{margin-top:32px;padding-top:20px;border-top:1px solid var(--hair)}
-.jnext[hidden],.journey[hidden]{display:none}
+.jnext[hidden],.hsteps[hidden]{display:none}
 .jn-go{min-height:48px;font-size:16px;padding:10px 22px}.jn-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .jn-warn{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 14px;padding:12px 14px;border-radius:12px;background:var(--bad-bg)}.jn-warn p{margin:0;color:var(--bad);font-size:14px;font-weight:600}
 a.btn{text-decoration:none}
@@ -789,16 +774,12 @@ a.btn{text-decoration:none}
 .exf-it b{font-size:14px}
 .exf-ic{width:52px;height:40px;border-radius:9px;display:grid;place-items:center;background:var(--warn-bg);color:var(--warn);font-weight:800;font-size:18px}
 .exf-ok{display:flex;gap:16px;align-items:center}.exf-ok .pair{width:44px;height:44px}.exf-ok h2{margin:0}.exf-ok .note{margin:4px 0 0}
-@media (max-width:760px){.j-steps li{flex:0 0 auto}.j-steps li:has(a[aria-current]){flex:1 1 auto}.j-steps a{padding-right:4px}.j-steps a:not([aria-current]) .j-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.j-now>p{font-size:13px}.exf-it{grid-template-columns:52px minmax(0,1fr)}.exf-it>.btn,.exf-it>.ds-fixb{grid-column:2}.jn-row .btn{flex:1 1 auto;justify-content:center}}
+@media (max-width:760px){.j-now>p{font-size:13px}.exf-it{grid-template-columns:52px minmax(0,1fr)}.exf-it>.btn,.exf-it>.ds-fixb{grid-column:2}.jn-row .btn{flex:1 1 auto;justify-content:center}}
 
-/* ===== Design C : tuiles claires, menu Atelier, bandeau teal, accent orange ===== */
+/* ===== Design C : tuiles claires ===== */
 body{background:var(--bg)}
 .logo-word{color:var(--ink)}
 .expbtn{background:var(--surface);color:var(--ink);border:1px solid var(--hair)}.expbtn:hover{background:var(--hover)}
-.mhead{--ink:#FFFFFF;--muted:#A7D7D2;--surface:#134C4D;--raised:#134C4D;--hair:#2F6A6B;--field:#8CC2BD;--primary:#FFFFFF;--primary-ink:#0B3C3D;--hover:#165758;--link:#FFFFFF;--bg:#0A3233;
-  --aaa-bg:#FFFFFF;--aaa-ink:#0B2B2C;--aa-bg:#CCEBE7;--aa-bd:#CCEBE7;--aa-ink:#0B2B2C;--lg-bg:#FFE0C7;--lg-ink:#0B2B2C;--no-bg:#FF6A13;--no-ink:#1A0B00;
-  --ok:#A7F3E4;--ok-bg:#134C4D;--warn:#FFD2AE;--warn-bg:#134C4D;--bad:#FFC2AE;--bad-bg:#134C4D;
-  background:var(--hero);color:var(--ink);border:0!important;border-radius:var(--tile);padding:clamp(16px,2vw,22px) clamp(20px,2.6vw,28px)!important;margin-bottom:0!important;align-items:flex-end}
 /* Allègement : un écart régulier entre les grandes sections (40 px, 24 px sur mobile), le bandeau de titre plus bas. */
 :root{--sec-gap:40px}@media (max-width:760px){:root{--sec-gap:24px}}
 #matrice>.mhead{margin-bottom:var(--sec-gap)!important}
@@ -1194,56 +1175,7 @@ body{background:var(--bg)}
 :root{--side:0px!important;--apph:60px}
 #sideNav,.side-foot,#sideB,#sideTip{display:none!important}
 .wrap{margin-inline:auto!important}
-/* Étapes : une longue pilule flottante en bas de l’écran (retour de Laurent, 7 novembre 2026 : « en haut, c’est trop chargé »). */
-:root{--pillh:60px}
-.wrap{padding-bottom:calc(var(--pillh) + 48px)!important}
-.journey{position:fixed!important;z-index:30;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);margin:0!important;padding:5px!important;max-width:calc(100vw - 32px);box-sizing:border-box;background:var(--pl-bg);color:var(--surface);border:0;border-radius:999px;box-shadow:0 12px 32px rgba(0,0,0,.22),0 2px 6px rgba(0,0,0,.12)}
-/* Couleurs inversées : barre sombre sur page claire, claire sur page sombre (retour de Laurent, 7 novembre 2026). */
-.journey,.stepnav{--pl-fg:var(--surface);--pl-bg:var(--ink);--pl-soft:color-mix(in srgb,var(--surface) 14%,transparent)}
-/* Variante orange, au choix dans Réglages : texte --accent-ink sur --accent (7,3:1 en clair, 8:1 en sombre). */
-:root[data-bar="orange"] .journey,:root[data-bar="orange"] .stepnav{--pl-fg:var(--accent-ink);--pl-bg:var(--accent);--pl-soft:color-mix(in srgb,var(--accent-ink) 14%,transparent)}
-:root[data-bar="orange"] .journey{background:var(--accent)}
-/* Rouille : orange foncé #C2410C avec texte blanc (5,2:1), pour qui veut du blanc sur orange. */
-:root[data-bar="rust"] .journey,:root[data-bar="rust"] .stepnav{--pl-fg:#FFFFFF;--pl-bg:#C2410C;--pl-soft:rgba(255,255,255,.2)}
-:root[data-bar="rust"] .journey{background:#C2410C}
-/* Pas de dégradé derrière la barre des étapes (Laurent, 8 novembre 2026) : la pilule flotte sur la page. */
-.journey .j-steps{gap:2px;flex-wrap:nowrap}
-/* 2.4.11 : un élément qui reçoit le focus ne passe pas sous la barre des étapes ni sous « Haut ». */
-html{scroll-padding-bottom:calc(var(--pillh) + 48px)!important}
-html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)!important}
-.toast{bottom:calc(var(--pillh) + 32px)!important}
-@media (min-width:761px){.dock{bottom:calc(var(--pillh) + 30px)!important}}
-.journey .j-steps li,.journey .j-steps li:has(a[aria-current]){flex:none!important;min-width:0}
-.journey .j-steps a{border-top:0!important;min-height:0!important;height:40px;box-sizing:border-box;padding:6px 14px 6px 6px!important;border-radius:999px;gap:9px;color:var(--pl-fg)!important;align-items:center}
-/* Pastille concentrique : le rond (28 px) est à 6 px du bord en haut, en bas et à gauche, la pilule à 6 px de la barre. */
-.journey .j-steps a .j-n{width:28px!important;height:28px!important;font-size:13px;line-height:1;box-sizing:border-box}
-.journey .j-l{font-size:14px;line-height:1}
-.journey .j-steps a:hover{background:var(--pl-soft)}
-.journey .j-steps a[aria-current]{background:var(--pl-fg);color:var(--pl-bg)!important}
-.journey .j-steps a:focus-visible{outline:2px solid var(--pl-fg)!important;outline-offset:2px;box-shadow:none!important}
-.journey .j-steps a .j-n{border-color:currentColor!important;background:none!important;color:inherit!important}
-.journey .j-steps a.st-done .j-n{background:var(--pl-soft)!important;border-color:transparent!important}
-.journey .j-s{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap}
-.journey .j-t{flex-direction:row}
-.journey .j-steps a[aria-current] .j-n{background:var(--pl-bg)!important;color:var(--pl-fg)!important;border-color:var(--pl-bg)!important}
-.journey .j-i{box-shadow:0 0 0 2px var(--pl-bg)}
-.journey{display:flex;align-items:center;gap:4px;padding:6px!important}
-/* Barre du haut sans fond : seuls les boutons flottent (retour de Laurent, 7 novembre 2026). */
-:root:root .appbar{background:none!important;border-image:none!important;border-bottom:0!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;pointer-events:none}
-/* Pas de bande : un fondu, comme en bas, pour que le texte qui défile ne se mêle pas aux boutons. */
-/* Barre du haut : ni fond ni dégradé, seuls les contrôles ont une surface (demande du 7 novembre). */
 :root:root .appbar button,:root:root .appbar a,:root:root .appbar input,:root:root .appbar .cmdk,:root:root .appbar .hgrp,:root:root .appbar .logo,:root:root .appbar .cmd-pop{pointer-events:auto}
-.appbar .prj-b,.appbar .cmdk,.appbar .hgrp,.appbar .normchip,.appbar .tools-b,.appbar .expbtn,.appbar .cmd-mb,.appbar .themebtn,.appbar>.side-top .logo{box-shadow:0 2px 12px rgba(8,30,30,.12),0 0 0 1px color-mix(in srgb,var(--ink) 6%,transparent)}
-.j-prog{margin:0;padding:0 14px 0 0;font-size:13px;white-space:nowrap;color:var(--pl-fg);border-right:1px solid var(--pl-soft);align-self:stretch;display:flex;align-items:center;gap:8px}
-.j-ring{position:relative;width:40px;height:40px;flex:none;display:grid;place-items:center}
-.j-ring svg{position:absolute;inset:0;width:40px;height:40px;transform:rotate(-90deg);display:block}
-.j-ring b{position:relative;font-variant-numeric:tabular-nums;font-size:12px;font-weight:700;line-height:1;letter-spacing:-.02em}
-.j-ring circle{fill:none;stroke-width:3.5}
-.j-ring .tr{stroke:var(--pl-soft)}
-.j-ring .fg{stroke:var(--pl-fg);stroke-linecap:round}
-.journey .j-l{line-height:1.3!important;overflow:visible!important}
-.journey .j-i{display:none}
-.journey .j-steps a.st-warn:not([aria-current]) .j-n{font-weight:800}
 /* Légende des états, dans l’aide */
 .j-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0;font-size:13px;color:var(--muted);align-items:center}
 .j-legend>span{display:inline-flex;align-items:center;gap:6px}
@@ -1251,12 +1183,6 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--pillh) + 150px)
 .lg-done{background:var(--ink);color:var(--surface)}.lg-now{background:var(--surface);color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
 .lg-warn{background:var(--bad);color:var(--surface)}.lg-todo{border:1.5px dashed var(--muted);color:var(--muted)}
 .j-legend .j-lg-note{flex-basis:100%;font-size:12px}
-/* États : complétée = pastille pleine ✓ ; à vérifier = pastille rouge ; à faire = contour pointillé atténué. */
-.journey .j-steps a.st-done:not([aria-current]) .j-n{background:var(--pl-fg)!important;color:var(--pl-bg)!important;border-color:var(--pl-fg)!important;font-weight:800}
-.journey .j-steps a.st-warn:not([aria-current]) .j-n{background:var(--bad)!important;color:var(--surface)!important;border-color:var(--bad)!important}
-.journey .j-steps a.st-todo:not([aria-current]) .j-n,.journey .j-steps a.st-na:not([aria-current]) .j-n{border-style:dashed!important;opacity:.85}
-.journey .j-steps a.st-todo:not([aria-current]) .j-l{opacity:.85}
-@media (max-width:1179px){.journey .j-steps a:not([aria-current]) .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}.journey .j-steps a:not([aria-current]){padding:6px!important;width:40px;justify-content:center}}
 /* Ligne d’aide repliable */
 section .adv-hint{display:none!important}
 .j-line{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;min-height:44px}.j-acts{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.j-mode{flex-wrap:nowrap}.j-mode button{min-height:32px;padding:0 12px}
@@ -1274,7 +1200,6 @@ section .adv-hint{display:none!important}
 .j-help .adv-hint{margin:0}
 .j-cst{display:inline-block;margin:0 6px 0 4px;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:700;background:var(--hover);color:var(--ink);vertical-align:1px}.j-cst.st-warn{background:var(--bad-bg);color:var(--bad)}
 .j-nowbox{margin:0 0 16px}.j-nowbox[hidden]{display:none}.j-nowbox .j-now{margin-top:6px}
-.j-steps a{min-height:48px}
 /* Barre du haut : logo, projet, recherche, réglages, Affichage, Outils, Exporter */
 .mode-top{display:flex;align-items:center;gap:8px;flex:none}
 .mode-top-l{font-size:13px;font-weight:700;color:var(--muted)}
@@ -1313,24 +1238,6 @@ section .adv-hint{display:none!important}
 @media (max-width:760px){
   .mode-top,.tools-b{display:none!important}
   .help-pop{right:8px;left:8px!important;width:auto}
-  .journey{padding-top:2px}
-  .journey{left:12px;right:12px;transform:none;max-width:none;bottom:max(12px,env(safe-area-inset-bottom,0px));padding-right:64px!important}
-  .journey .j-steps{justify-content:space-between;gap:0;flex:1;min-width:0}
-  .j-prog .j-pl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .j-prog{padding:0 6px 0 0;gap:0}.j-ring,.j-ring svg{width:34px;height:34px}.j-ring b{font-size:11px}
-  .journey .j-steps a,.journey .j-steps a[aria-current],.journey .j-steps a:not([aria-current]){width:34px;height:34px;padding:4px!important;min-width:0;justify-content:center}
-  .journey .j-steps a[aria-current] .j-t{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important}
-  .journey .j-steps li:has(a[aria-current]){flex:none!important}
-  .journey .j-steps a .j-n{width:26px!important;height:26px!important}
-  .journey .j-l{font-size:13px}
-  .stepnav{position:fixed;right:17px;bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 3px);z-index:31;display:block}
-  .stepnav::before{content:"";position:absolute;left:-5px;top:12px;bottom:12px;width:1px;background:var(--pl-soft)}
-  .stepnav .sn-prev,.stepnav .sn-next{display:none}
-  .stepnav .more-b{position:static!important;display:inline-flex!important;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:54px;height:40px;border:0;background:none;color:var(--pl-fg);font:inherit;font-size:11px;font-weight:700;cursor:pointer;border-radius:999px;padding:0;box-shadow:none}
-  .stepnav .more-b:hover{background:var(--pl-soft)}
-  .stepnav .more-b:focus-visible{outline:2px solid var(--pl-fg);outline-offset:2px}
-  .stepnav .more-b svg{width:20px;height:20px;padding:0;background:none!important;color:inherit!important}
-  .stepnav .more-b.on{background:var(--pl-fg);color:var(--pl-bg)}
   nav.tabs{display:none!important}
 }
 .to-top{position:fixed;z-index:31;right:max(16px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:6px;height:44px;min-width:44px;padding:0 14px 0 12px;border:1px solid var(--hair);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
@@ -1340,39 +1247,153 @@ section .adv-hint{display:none!important}
 @media (max-width:760px){.to-top{bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + 72px)}}
 @media (max-width:760px){.to-top{padding:0;width:44px;justify-content:center}.to-top .tt-l{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
 
-/* ===== Retouches du 8 novembre 2026 : icônes rondes, logo rond, « Outils » sans libellé, séparateurs égaux ===== */
-:root:root .appbar .logo{border-radius:50%;overflow:hidden;flex:none;min-width:0}
-:root:root .appbar .logo-mark{clip-path:circle(50%)}
 @media (max-width:760px){:root:root .appbar .logo,:root:root .appbar .logo-mark{width:var(--ctl)!important;height:var(--ctl)!important;flex:none}}
-/* Un seul séparateur, dessiné de la même façon après l’anneau et avant « Outils » : 24 px, centré. */
-:root:root .j-prog{border-right:0!important;position:relative}
-:root:root .j-prog::after{content:"";position:absolute;right:0;top:50%;width:1px;height:24px;margin-top:-12px;background:var(--pl-soft)}
-@media (max-width:760px){
-  :root:root .stepnav::before{top:50%;bottom:auto;height:24px;margin-top:-12px}
-  :root:root .stepnav .more-b{width:40px;height:40px;border-radius:50%;gap:0}
-  :root:root .stepnav .more-b span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  :root:root .stepnav .more-b svg{width:22px;height:22px}
+/* ===== Refonte « suisse monochrome » (maquette Figma Make de Laurent, 10 novembre 2026) =====
+   Noir sur blanc cassé, angles droits, filets noirs, ni ombre ni dégradé. La couleur ne sert plus qu’à l’information :
+   les états des étapes et les verdicts de contraste. Le thème sombre n’est pas dans la maquette : il en est l’inverse. */
+/* Angles droits partout. Exceptions : une forme réglée par l’utilisateur (style en ligne) et les pastilles d’état ou de verdict. */
+*:not([style*="radius"]),*::before,*::after{border-radius:0!important}
+:root .j-s,:root .j-cst,:root .vl,:root .sum-c,:root .sum-s,:root .lv,:root .pill,:root .bd,:root .ds-own{border-radius:12px!important}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+h1,h2,h3{letter-spacing:-.03em}
+/* Logo : le « i » au demi-disque, en noir et blanc, dans un carré. */
+:root:root .appbar>.side-top{--primary:var(--line);--primary-ink:var(--bg)}
+:root:root .appbar .logo-mark{clip-path:none!important}.logo-mark path{fill:var(--primary-ink)}
+
+/* Barre du haut : une bande blanche pleine largeur, filet noir dessous, commandes à plat. */
+:root:root .appbar{--ctl:44px;position:sticky;top:0;height:68px;padding:0!important;margin:0!important;gap:12px!important;box-sizing:border-box;background:var(--surface)!important;border:0!important;border-image:linear-gradient(to top,var(--line) 1px,var(--surface) 1px) fill 0//0 100vmax!important;pointer-events:auto;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:root:root .appbar .prj-b,:root:root .appbar .cmdk,:root:root .appbar .normchip,:root:root .appbar .tools-b,:root:root .appbar .expbtn,:root:root .appbar .cmd-mb,:root:root .appbar .themebtn{box-shadow:none;border:1px solid var(--line)!important;background:var(--surface)}
+:root:root .appbar .hgrp{box-shadow:none;border:0!important;background:none;padding:0;gap:0}
+:root:root .appbar .hgrp .undobtn{width:40px;border:0!important}
+:root:root .appbar .prj-b:hover,:root:root .appbar .normchip:hover,:root:root .appbar .tools-b:hover,:root:root .appbar .expbtn:hover{background:var(--hover)}
+.appbar .cmdk kbd{background:var(--hover);border:1px solid var(--hair)}
+.appbar .normchip .lv{background:var(--ink);color:var(--surface);padding:2px 0}
+.expbtn[aria-current="page"]{box-shadow:none!important;background:var(--ink)!important;color:var(--surface)!important}
+:root:root .appbar .logo{overflow:visible}
+body::before{background:var(--surface)}
+
+/* Étapes : 7 cases égales sous la barre du haut. Chacune dit son nom, son état et un fait compté dans le projet. */
+.hsteps{position:relative;margin:24px 0 0}
+.hs-mob{display:none}
+.j-prog{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.j-prog b{color:var(--ink)}
+.j-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--line);background:var(--surface)}
+.j-steps li{min-width:0;border-left:1px solid var(--line)}.j-steps li:first-child{border-left:0}
+.j-steps a{display:flex;align-items:flex-start;gap:10px;height:100%;min-height:100px;box-sizing:border-box;padding:14px 12px 14px 14px;color:var(--ink);text-decoration:none}
+.j-steps a:hover{background:var(--hover)}
+.j-steps a:focus-visible{outline-offset:-6px}
+.j-steps a[aria-current]{background:var(--ink);color:var(--surface)}
+.j-steps a[aria-current]:focus-visible{outline-color:var(--surface)}
+.j-n{flex:none;width:28px;height:28px;display:grid;place-items:center;box-sizing:border-box;border:1px solid currentColor;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.j-steps a.st-done .j-n{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.j-steps a.st-warn .j-n{background:var(--bad);color:var(--surface);border-color:var(--bad)}
+.j-steps a.st-todo .j-n,.j-steps a.st-na .j-n{border-style:dashed}
+.j-steps a[aria-current] .j-n{background:var(--surface);color:var(--ink);border-color:var(--surface)}
+.j-t{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;flex:1}
+.j-l{max-width:100%;font-size:15px;font-weight:700;line-height:1.2;letter-spacing:-.015em;overflow-wrap:anywhere}
+.j-s,.j-cst{display:inline-block;max-width:100%;box-sizing:border-box;padding:2px 9px;border:1px solid var(--st-todo-bd);background:var(--st-todo-bg);color:var(--st-todo-ink);font-size:12px;font-weight:700;line-height:1.35;letter-spacing:0;text-transform:none}
+.st-done>.j-t .j-s,.j-cst.st-done{background:var(--st-done-bg);color:var(--st-done-ink);border-color:var(--st-done-bd)}
+.st-now>.j-t .j-s,.j-cst.st-now{background:var(--st-now-bg);color:var(--st-now-ink);border-color:var(--st-now-bd)}
+.st-warn>.j-t .j-s,.j-cst.st-warn{background:var(--st-warn-bg);color:var(--st-warn-ink);border-color:var(--st-warn-bd)}
+.st-na>.j-t .j-s,.j-cst.st-na{border-style:dashed}
+.j-d{max-width:100%;font-size:13px;line-height:1.3;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.j-steps a.st-warn .j-d{color:var(--bad);font-weight:700}
+.j-steps a[aria-current] .j-d{color:inherit}
+.j-i{font-weight:800}
+@media (min-width:1000px) and (max-width:1279px){.j-steps a{flex-direction:column;gap:8px;padding:12px 10px}.j-s{padding:2px 7px}}
+
+/* Bandeau de l’étape, accroché sous les cases : état, position, prochaine action ; affichage et aide à droite. */
+.j-nowbox{margin:0}
+.j-line{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;min-height:56px;box-sizing:border-box;padding:7px 14px;border:1px solid var(--line);border-top:0;background:var(--surface)}
+.j-pos{display:flex;align-items:center;gap:10px;margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);white-space:nowrap}.j-pos b{font-weight:700}
+.j-cst{margin:0;vertical-align:0}
+.j-todo{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;flex:1 1 320px;min-width:0;margin:0;padding-left:20px;border-left:1px solid var(--hair);font-size:14px;line-height:1.4}
+.j-todo-l{flex:none;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.j-acts{margin-left:auto}
+.j-help-b{min-height:40px;border-color:var(--line)}
+.j-mode{border-color:var(--line);padding:0}.j-mode button{min-height:38px}
+.j-help,.j-hello{margin:0;border:1px solid var(--line);border-top:0}
+.sumbar{margin:16px 0 0;background:none;border-color:var(--hair)}
+.sumbar[open]{background:var(--surface);border-color:var(--line)}
+
+/* Titre de page : plus de bandeau de couleur. Un grand titre noir, une phrase, un filet. */
+:root:root .mhead{background:none;color:var(--ink);border:0!important;border-bottom:1px solid var(--line)!important;padding:0 0 24px!important;margin-top:40px;margin-bottom:0!important;align-items:flex-end}
+.mhead h1{font-size:clamp(36px,4vw,52px);font-weight:600;letter-spacing:-.055em;line-height:1}
+.mhead .lead{color:var(--muted);font-size:17px}
+#tester{margin-top:24px}
+
+/* Bas de page : « Étape précédente » et « Étape suivante » restent à l’écran, sur une bande blanche pleine largeur. */
+:root{--barh:72px}
+.wrap{padding-bottom:0!important}
+html{scroll-padding-bottom:calc(var(--barh) + 24px)!important}
+html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!important}
+.toast{bottom:calc(var(--barh) + 24px)!important}
+@media (min-width:761px){.dock{bottom:calc(var(--barh) + 16px)!important}}
+.jnext,.jn-in{display:contents}
+.jnext[hidden]{display:none}
+.jn-warn{margin:40px 0 0;border:1px solid var(--st-warn-bd);background:var(--warn-bg)}.jn-warn p{color:var(--warn)}
+.jn-row{position:sticky;bottom:0;z-index:25;flex-wrap:nowrap;min-height:var(--barh);box-sizing:border-box;margin-top:40px;padding:12px 0;background:var(--surface);border-image:linear-gradient(to bottom,var(--line) 1px,var(--surface) 1px) fill 0//0 100vmax}
+.jn-warn+.jn-row{margin-top:16px}
+.jn-row .btn{min-height:48px;font-size:16px;padding:10px 22px}
+.appfoot{margin-top:0;border-top:0;padding:20px 0 24px}
+.to-top{bottom:calc(var(--barh) + 16px);border-color:var(--line);box-shadow:none}
+
+/* Surfaces : blanches, cernées d’un filet noir. */
+.card-surface,.palrow,.palbar>summary,.mwrap,.keep,.pairdetail,#sysFrame{border:1px solid var(--line)}
+.ds-sec{box-shadow:none;border:1px solid var(--hair)}
+/* Commandes : carrées, 44 px, filet noir. Le bouton principal est noir. */
+.btn{border:1px solid var(--line);min-height:44px;box-sizing:border-box;padding:8px 16px}
+.btn.sm{min-height:36px}
+.btn.primary{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+@media (hover:hover){.btn.primary:hover{opacity:1;background:var(--muted);border-color:var(--muted)}}
+.seg{padding:0;border-color:var(--line)}
+.qchip{border-style:solid;border-color:var(--field)}
+.qpop{border-left:1px solid var(--line);box-shadow:none}
+.pop,.help-pop,dialog{box-shadow:none;border:1px solid var(--line)}
+
+/* Sous 1 000 px, les 7 cases ne tiennent plus : l’étape devient un bouton qui déplie la liste. */
+@media (max-width:999px){
+  .hs-mob{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:60px;box-sizing:border-box;padding:8px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+  .hs-t{display:flex;flex-direction:column;min-width:0}
+  .hs-l{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+  .hs-s{font-size:13px;color:var(--muted)}
+  .hs-mob svg{flex:none;width:22px;height:22px}
+  .hs-mob[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .hsteps .j-prog,.hsteps .j-steps{display:none}
+  .hsteps.open .j-steps{display:block;position:absolute;z-index:40;left:0;right:0;top:100%;border-top:0;max-height:calc(100dvh - 150px);overflow:auto;overscroll-behavior:contain}
+  .j-steps li{border-left:0;border-top:1px solid var(--hair)}.j-steps li:first-child{border-top:0}
+  .j-steps a{align-items:center;min-height:60px;padding:8px 14px}
+  .j-t{flex-direction:row;flex-wrap:wrap;align-items:center;gap:2px 10px}
+  .j-l{flex:1 1 auto;max-width:none;font-size:16px}
+  .j-d{flex-basis:100%}
 }
-/* ===== Distances de la barre du bas, recalculées (Laurent, 8 novembre 2026, 14 h) =====
-   Ordinateur : le séparateur est au milieu, 14 px de chaque côté.
-   Mobile : 9 ronds de même taille (anneau, 7 étapes, Outils), 6 px de marge tout autour, et un seul écart --g
-   entre deux ronds comme de chaque côté des séparateurs. La barre fait au plus 440 px, centrée. */
-:root:root .journey{gap:0}
-:root:root .journey .j-steps{margin-left:8px}
+/* Mobile : l’étape reste collée en haut ; en bas, une barre pleine largeur : précédente, Outils, suivante. */
 @media (max-width:760px){
-  :root{--pw:min(calc(100vw - 24px), 440px);--c:min(34px, calc((var(--pw) - 14px) / 10.6));--g:calc((var(--pw) - 14px - 9 * var(--c)) / 10)}
-  :root:root .journey{left:50%;right:auto;transform:translateX(-50%);width:var(--pw);max-width:none;padding:6px calc(6px + var(--c) + 2 * var(--g) + 1px) 6px 6px!important}
-  :root:root .j-prog{padding:0 calc(var(--g) + 1px) 0 0!important;gap:0}
-  :root:root .j-prog::after{right:0}
-  :root:root .journey .j-steps{flex:none;justify-content:flex-start;gap:var(--g);margin-left:var(--g)}
-  :root:root .j-ring,:root:root .j-ring svg{width:var(--c);height:var(--c)}
-  :root:root .journey .j-steps a,:root:root .journey .j-steps a[aria-current],:root:root .journey .j-steps a:not([aria-current]){width:var(--c);height:var(--c);padding:0!important}
-  :root:root .journey .j-steps a .j-n{width:calc(var(--c) - 8px)!important;height:calc(var(--c) - 8px)!important}
-  :root:root .stepnav{display:flex;line-height:0;right:calc((100vw - var(--pw)) / 2 + 6px);bottom:calc(max(12px, env(safe-area-inset-bottom,0px)) + 6px)}
-  :root:root .stepnav::before{left:calc(-1 * var(--g) - 1px)}
-  :root:root .stepnav .more-b{width:var(--c);height:var(--c)}
+  :root{--barh:calc(64px + env(safe-area-inset-bottom,0px))}
+  :root:root .appbar{--ctl:36px;position:static;height:60px;gap:8px!important;border-image:none!important;background:none!important}
+  :root:root .appbar .prj-b,:root:root .appbar .cmdk,:root:root .appbar .normchip,:root:root .appbar .tools-b,:root:root .appbar .expbtn,:root:root .appbar .cmd-mb,:root:root .appbar .themebtn{border-color:var(--line)!important}
+  .hsteps{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin:0 calc(-1 * max(var(--gut),env(safe-area-inset-left,0px)))}
+  .hs-mob{border-width:1px 0;padding-inline:16px}
+  .hsteps.open .j-steps{border-width:0 0 1px;max-height:calc(100dvh - 60px - var(--barh))}
+  .j-steps a{padding-inline:16px}
+  .j-line{margin-top:16px;border-top:1px solid var(--line)}
+  .j-pos{display:none}.j-acts{margin-left:0;flex:1 1 auto;justify-content:space-between}
+  .j-todo{display:block;flex-basis:100%;order:3;padding:8px 0 0;border-left:0;border-top:1px solid var(--hair)}.j-todo-l{margin-right:8px}
+  :root:root .mhead{margin-top:28px;padding-bottom:18px!important}
+  .count{min-width:0;padding:10px 4px}.count b{font-size:26px}.count span{font-size:12px;white-space:nowrap}
+  .wrap{padding-bottom:var(--barh)!important}
+  .jn-row{display:none}
+  .jn-warn{margin-bottom:24px}
+  :root .stepnav{position:fixed;z-index:31;left:0;right:0;bottom:0;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;height:var(--barh);box-sizing:border-box;padding:8px max(12px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:var(--surface);border-top:1px solid var(--line)}
+  .stepnav .sn-prev,.stepnav .sn-next{display:flex;min-width:0}
+  .sn-a{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-width:0;height:48px;box-sizing:border-box;padding:0 10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:15px;font-weight:700;text-decoration:none}
+  .sn-t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sn-go{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+  :root .stepnav .more-b{position:static;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:64px;height:48px;padding:0;box-sizing:border-box;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+  :root .stepnav .more-b svg{width:20px;height:20px;padding:0;background:none;color:inherit}
+  :root .stepnav .more-b.on{background:var(--ink);color:var(--surface)}
+  .to-top{bottom:calc(var(--barh) + 12px)}
 }
-@media (max-width:359px){:root:root .j-ring b{font-size:10px}:root:root .journey .j-steps a .j-n{font-size:12px}}
+@media (prefers-reduced-motion:no-preference){.hs-mob svg{transition:transform .15s}}
 </style>
 </head>
 <body>
@@ -1382,7 +1403,7 @@ section .adv-hint{display:none!important}
 <div class="wrap">
   <header class="appbar">
     <div class="side-top">
-    <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--accent)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
+    <div class="logo" role="img" aria-label="Lisio"><svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--accent)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg><span class="logo-word" aria-hidden="true">lisio</span></div>
     <button type="button" class="side-b" id="sideB" aria-controls="sideNav" aria-expanded="true" aria-keyshortcuts="Control+Backslash Meta+Backslash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M9 4.5v15"/><path class="chev" d="M15 10l-2 2 2 2"/></svg><span class="sr-only">Menu latéral</span></button>
     </div>
     <nav class="tabs" id="sideNav" aria-label="Menu">
@@ -1416,9 +1437,9 @@ section .adv-hint{display:none!important}
   <main id="main" tabindex="-1">
   <div class="prj-in" id="prjIn" role="region" aria-label="Projet partagé" hidden></div>
   <section class="demo-bar" id="demoBar" aria-label="Projet démo" hidden></section>
-  <details class="sumbar" id="sumBar"><summary><span class="sum-t">Résumé du projet</span><span class="sum-line" id="sumLine"></span></summary><div class="sum-body"><ul class="sum-rows" id="sumRows"></ul></div></details>
-  <nav class="journey" id="journey" aria-label="Étapes"></nav>
+  <nav class="hsteps" id="journey" aria-label="Étapes"></nav>
   <div class="j-nowbox" id="jNowBox"></div>
+  <details class="sumbar" id="sumBar"><summary><span class="sum-t">Résumé du projet</span><span class="sum-line" id="sumLine"></span></summary><div class="sum-body"><ul class="sum-rows" id="sumRows"></ul></div></details>
 
   <!-- MATRICE -->
   <!-- COULEURS -->
@@ -1909,7 +1930,7 @@ section .adv-hint{display:none!important}
 <li><a href="#formation" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg><b>S’entraîner</b><small>Dix questions avec la réponse expliquée</small></a></li>
 <li><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><b>Guide de formation</b><small>Le support complet pour l’équipe</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 <li><a href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M12 16.5V20M8.5 20h7"/></svg><b>Slides</b><small>Pour animer une session</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
-<li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5z"/><path d="M9 12l2 2 4-4"/></svg><b>WCAG 2.2 (W3C)</b><small>Le texte officiel des règles</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li></ul><h3 class="hp-h">Réglages</h3><div class="mode-row"><span id="themeL">Thème</span><div class="seg" role="group" aria-labelledby="themeL" id="themeSeg"><button type="button" data-theme-set="light">Clair</button><button type="button" data-theme-set="dark">Sombre</button></div></div><div class="mode-row"><span id="barL">Barre du bas</span><div class="seg" role="group" aria-labelledby="barL" id="barSeg"><button type="button" data-bar-set="ink">Contraste</button><button type="button" data-bar-set="orange">Orange</button><button type="button" data-bar-set="rust">Rouille</button></div></div><div class="mode-row"><span id="modeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div></div>
+<li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5z"/><path d="M9 12l2 2 4-4"/></svg><b>WCAG 2.2 (W3C)</b><small>Le texte officiel des règles</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li></ul><h3 class="hp-h">Réglages</h3><div class="mode-row"><span id="themeL">Thème</span><div class="seg" role="group" aria-labelledby="themeL" id="themeSeg"><button type="button" data-theme-set="light">Clair</button><button type="button" data-theme-set="dark">Sombre</button></div></div><div class="mode-row"><span id="modeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div></div>
 <dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
 <div class="pd-cur"><label class="ex-name">Projet en cours<input type="text" id="prjCurName" maxlength="60"></label><label class="ex-name">Page Figma du projet<input type="url" id="prjFigU" inputmode="url" placeholder="https://www.figma.com/design/…" aria-describedby="prjFigE"></label><p class="note" id="prjFigE">Collez le lien d’une page ou d’un cadre Figma. Il voyage avec le projet, le lien de partage et le fichier.</p><p class="note" id="prjCurMeta"></p>
@@ -4842,8 +4863,32 @@ function jState(id, cur, seen) {
 }
 // Progression : étapes complétées sur 7, en chiffres et en barre (retour de Laurent : « bien montrer la progression »).
 function jProg(v, seen) { const st = JOURNEY.map(([id]) => jState(id, v, seen)), done = st.filter(x => x === "done").length, warn = st.filter(x => x === "warn").length, tot = JOURNEY.length;
-  const pct = Math.round(done / tot * 100);
-  return `<p class="j-prog"><span class="j-ring"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17.5" class="tr"/><circle cx="20" cy="20" r="17.5" class="fg" pathLength="100" stroke-dasharray="${pct} 100"/></svg><b>${done}/${tot}</b></span><span class="j-pl"> étapes complétées</span>${warn ? `<span class="sr-only">, ${warn} à corriger</span>` : ""}</p>`; }
+  return `<p class="j-prog"><b>${done}/${tot}</b><span class="j-pl"> étapes complétées</span>${warn ? `<span class="sr-only">, ${warn} à corriger</span>` : ""}</p>`; }
+// Résumé d’une étape, écrit dans sa case (refonte du 11 novembre 2026) : un fait compté dans le projet, jamais une promesse.
+const jCount = (n, w) => `${n} ${w}${n > 1 ? "s" : ""}`;
+function jDigest(id) {
+  const n = palette.length;
+  if (id === "couleurs") return jCount(n, "couleur");
+  if (id === "palette") return jCount(n, "gamme");
+  if (id === "tester") { const f = S.ts && S.ts.fonts ? [S.ts.fonts.head && S.ts.fonts.head.family, S.ts.fonts.body && S.ts.fonts.body.family] : [S.font.family]; return [...new Set(f.filter(Boolean))].join(" + ") || S.font.family; }
+  if (id === "styles") return jCount(S.ts.styles.length, "style");
+  if (id === "systeme") { const on = DS_GROUPS.filter(g => dsOn(g[0])).length; return `${on} bloc${on > 1 ? "s" : ""} sur ${DS_GROUPS.length}`; }
+  if (id === "matrice") return n < 2 ? "Aucune paire" : jCount(n * (n - 1) / 2, "paire");
+  return "Fichier et plugin";
+}
+// Prochaine action : ce qu’il reste à faire sur l’étape affichée, en une phrase.
+const J_TODO = { couleurs: "Saisissez vos couleurs, puis passez aux nuances.", palette: "Réglez les gammes, puis choisissez vos polices.", tester: "Choisissez la police, puis réglez les styles de texte.", styles: "Réglez les tailles, puis composez le design system.", systeme: "Attribuez les rôles, puis vérifiez les contrastes.", matrice: "Parcourez les paires, puis exportez.", exporter: "Téléchargez le fichier, puis importez-le dans Figma." };
+function jWhy(v, iss) { const nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
+  return v === "couleurs" ? `${iss} couleur${iss > 1 ? "s" : ""} ne se lit avec aucune autre en texte courant.` : v === "styles" ? `Texte trop pâle sur le fond : ${nT} style${nT > 1 ? "s" : ""} sous le seuil ${S.level}.` : `${iss} rôle${iss > 1 ? "s" : ""} sous le seuil ${S.level}.`; }
+function jCells(v, i, seen) {
+  return `<ol class="j-steps" id="jSteps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen);
+    return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span>${iss ? `<span class="j-d" aria-hidden="true"><b class="j-i">${iss}</b> à corriger</span>` : `<span class="sr">, </span><span class="j-d">${esc(jDigest(id))}</span>`}</span></a></li>`; }).join("")}</ol>`; }
+// Mobile : l’étape en cours est un bouton en haut de l’écran, qui déplie la liste des 7 étapes.
+function jMob(v, i, seen) { const lab = i < 0 ? "Étapes" : JOURNEY[i][1], sub = i < 0 ? `${JOURNEY.filter(([id]) => jState(id, "", seen) === "done").length}/${JOURNEY.length} complétées` : `${i + 1} sur ${JOURNEY.length} · ${J_STATE[jState(v, v, seen)]}`;
+  return `<button type="button" class="hs-mob" id="hsMob" aria-expanded="false" aria-controls="jSteps"><span class="hs-t"><span class="hs-l">${lab}</span><span class="sr-only"> : </span><span class="hs-s">${sub}</span><span class="sr-only">. Afficher les 7 étapes</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>`; }
+function jMobSet(on, back) { const b = $("hsMob"); if (!b) return; b.setAttribute("aria-expanded", String(on)); $("journey").classList.toggle("open", on); if (!on && back) b.focus(); }
+document.addEventListener("click", e => { const b = e.target.closest("#hsMob"); if (b) return jMobSet(b.getAttribute("aria-expanded") !== "true"); if ($("journey").classList.contains("open") && !e.target.closest("#journey")) jMobSet(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && $("journey").classList.contains("open")) { e.stopPropagation(); jMobSet(false, true); } }, true);
 // Une marque par état : ✓ complétée, ! à corriger, – sans objet, le numéro sinon.
 const jIcon = (st, n) => st === "done" ? "✓" : st === "warn" ? "!" : st === "na" ? "–" : n + 1;
 const jHelpOpen = () => { try { return localStorage.getItem("lisio-help") === "1"; } catch (e) { return false; } };
@@ -4853,21 +4898,22 @@ function renderJourney(v) {
   const i = JOURNEY.findIndex(x => x[0] === v || (x[4] || []).includes(v)), J = $("journey"), X = $("jNext"), NB = $("jNowBox");
   // Les étapes sont le menu (choix de Laurent, 7 novembre 2026) : toujours affichées, même hors parcours (Rédaction, Guide…).
   J.hidden = false; X.hidden = NB.hidden = i < 0;
-  if (i < 0) { const seen0 = jSeen(); J.innerHTML = jProg("", seen0) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, "", seen0); return `<li><a href="#${id}" class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`; stepNavRender(-1); return; }
+  J.classList.remove("open");
+  if (i < 0) { const seen0 = jSeen(); J.innerHTML = jMob("", -1, seen0) + jProg("", seen0) + jCells("", -1, seen0); stepNavRender(-1); return; }
   const [, , say, qs] = JOURNEY[i], seen = jSeen();
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
   const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm" data-hello="new">Créer mon projet</button></div></div>` : "";
-  J.innerHTML = jProg(v, seen) + `<ol class="j-steps">${JOURNEY.map(([id, lab], n) => { const iss = jStepIssues(id), st = jState(id, v, seen); return `<li><a href="#${id}"${n === i ? ' aria-current="step"' : ""} class="st-${st}" title="${lab} : ${J_STATE[st]}"><span class="j-n" aria-hidden="true">${jIcon(st, n)}</span><span class="j-t"><span class="j-l">${lab}</span><span class="sr"> : </span><span class="j-s">${J_STATE[st]}${iss ? `<span class="sr"> (${iss} à corriger)</span>` : ""}</span></span>${iss ? `<span class="j-i" aria-hidden="true" title="${iss} à corriger">${iss}</span>` : ""}</a></li>`; }).join("")}</ol>`;
+  J.innerHTML = jMob(v, i, seen) + jProg(v, seen) + jCells(v, i, seen);
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
-  const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`);
+  const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`), iss0 = v !== "exporter" && v !== "tester" ? jStepIssues(v) : 0;
   NB.innerHTML = `
-  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b> <span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span></p><div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
+  <div class="j-line"><p class="j-pos"><span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span> <b>Étape ${i + 1} sur ${JOURNEY.length}</b></p><p class="j-todo"><span class="j-todo-l">Prochaine action</span><span class="sr-only"> : </span><span class="j-todo-t">${iss0 ? jWhy(v, iss0) + " Corrigez ici, ou avancez et revenez-y." : J_TODO[v]}</span></p><div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
   <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p><p class="j-legend"><span><i class="lg lg-done" aria-hidden="true">✓</i>Complétée</span><span><i class="lg lg-now" aria-hidden="true">4</i>En cours</span><span><i class="lg lg-warn" aria-hidden="true">!</i>À corriger</span><span><i class="lg lg-todo" aria-hidden="true">5</i>À commencer</span><span class="j-lg-note">« Complétée » : page ouverte, aucun problème détecté. Ce n’est pas un audit de conformité.</span></p>${adv ? adv.outerHTML : ""}</div>${hello}`;
   stepNavRender(i);
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
-  const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm), nT = S.ts.styles.filter(st => !tsVerdict(st).ok).length;
-  const why = v === "couleurs" ? `${iss} couleur${iss > 1 ? "s" : ""} ne se lit avec aucune autre en texte courant.` : v === "styles" ? `Texte trop pâle sur le fond : ${nT} style${nT > 1 ? "s" : ""} sous le seuil ${S.level}.` : `${iss} rôle${iss > 1 ? "s" : ""} sous le seuil ${S.level}.`;
-  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn" href="#${pv[0]}">← ${pv[1]}</a>` : "<span></span>"}${nx ? `<a class="btn primary jn-go" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
+  const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm);
+  const why = jWhy(v, iss);
+  X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn jn-back" href="#${pv[0]}"><span aria-hidden="true">←</span><span>Étape précédente<span class="jn-pn"> : ${pv[1]}</span></span></a>` : "<span></span>"}${nx ? `<a class="btn primary jn-go" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
 }
 // ---------- Aide « ? » ----------
 // ---------- Résumé permanent du projet (F02, P0-5) ----------
@@ -4944,8 +4990,8 @@ $("jNowBox").addEventListener("click", e => { const b = e.target.closest("[data-
 // Barre du bas (mobile) : étape précédente, « Plus », étape suivante.
 function stepNavRender(i) {
   const pv = i > 0 ? JOURNEY[i - 1] : null, nx = i >= 0 && i < JOURNEY.length - 1 ? JOURNEY[i + 1] : null;
-  $("snPrev").innerHTML = pv ? `<a class="sn-a" href="#${pv[0]}"><span aria-hidden="true">←</span><span class="sr-only">Étape précédente : </span>${pv[1]}</a>` : "";
-  $("snNext").innerHTML = nx ? `<a class="sn-a" href="#${nx[0]}"><span class="sr-only">Étape suivante : </span>${nx[1]}<span aria-hidden="true">→</span></a>` : "";
+  $("snPrev").innerHTML = pv ? `<a class="sn-a" href="#${pv[0]}"><span aria-hidden="true">←</span><span class="sn-t"><span class="sr-only">Étape précédente : </span>${pv[1]}</span></a>` : "";
+  $("snNext").innerHTML = nx ? `<a class="sn-a sn-go" href="#${nx[0]}"><span class="sn-t"><span class="sr-only">Étape suivante : </span>${nx[1]}</span><span aria-hidden="true">→</span></a>` : "";
 }
 // Hauteur de la barre du haut : les étapes se collent juste dessous.
 { const AB = document.querySelector(".appbar"), setH = () => document.documentElement.style.setProperty("--apph", Math.round(AB.getBoundingClientRect().height) + "px"); setH(); if ("ResizeObserver" in window) new ResizeObserver(setH).observe(AB); addEventListener("resize", setH); }
@@ -4959,11 +5005,6 @@ function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v
 // Mode clair ou sombre : suit le système, jusqu’à ce qu’on choisisse
 const DARKQ = matchMedia("(prefers-color-scheme: dark)"), themeNow = () => document.documentElement.getAttribute("data-theme") || (DARKQ.matches ? "dark" : "light");
 function themeLabel() { const d = themeNow() === "dark"; document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.themeSet === "dark") === d))); $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
-const barNow = () => { const b = document.documentElement.getAttribute("data-bar"); return b === "orange" || b === "rust" ? b : "ink"; };
-function barSet(b) { if (b === "orange" || b === "rust") document.documentElement.setAttribute("data-bar", b); else document.documentElement.removeAttribute("data-bar"); try { localStorage.setItem("lisio-bar", b); } catch (e) {} barLabel(); }
-function barLabel() { const b = barNow(); document.querySelectorAll("[data-bar-set]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.barSet === b))); }
-document.addEventListener("click", e => { const x = e.target.closest("[data-bar-set]"); if (x) barSet(x.dataset.barSet); });
-barLabel();
 $("themeSeg").addEventListener("click", e => { const b = e.target.closest("[data-theme-set]"); if (b && b.dataset.themeSet !== themeNow()) $("themeB").click(); });
 $("themeB").addEventListener("click", () => { const t = themeNow() === "dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem("lisio-theme", t); } catch (e) {} themeLabel(); requestAnimationFrame(() => tabInk(true)); });
 DARKQ.addEventListener("change", themeLabel); themeLabel();
@@ -5008,7 +5049,6 @@ function moreRender() { const v = curView(), cur = n => n === v ? ' aria-current
     + (figmaUrlOk(S.figma || "") ? `<a class="mi" href="${esc(S.figma)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8.5 3.5v17M15.5 3.5v17M3.5 8.5h17M3.5 15.5h17"/></svg>Page Figma<small>Nouvel onglet</small></a>` : "")
     + `<h3 class="mh3">Apprendre et aide</h3><ul class="mdoc">${[...$("helpPop").querySelectorAll("a:not([data-tool])")].map(a => `<li>${a.outerHTML.replace("data-help", (a.getAttribute("href") === "#" + v ? 'aria-current="page" ' : "") + "data-help")}</li>`).join("")}</ul>`
     + `<h3 class="mh3">Réglages</h3><div class="mode-row mmode"><span id="mThemeL">Thème</span><div class="seg" role="group" aria-labelledby="mThemeL"><button type="button" data-theme-set="light" aria-pressed="${themeNow() === "light"}">Clair</button><button type="button" data-theme-set="dark" aria-pressed="${themeNow() === "dark"}">Sombre</button></div></div>`
-    + `<div class="mode-row mmode"><span id="mBarL">Barre du bas</span><div class="seg" role="group" aria-labelledby="mBarL"><button type="button" data-bar-set="ink" aria-pressed="${barNow() === "ink"}">Contraste</button><button type="button" data-bar-set="orange" aria-pressed="${barNow() === "orange"}">Orange</button><button type="button" data-bar-set="rust" aria-pressed="${barNow() === "rust"}">Rouille</button></div></div>`
     + `<div class="mode-row mmode"><span id="mModeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="mModeL"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div></div>`; }
 function moreClose() { if (MORES.open) MORES.close(); }
 MOREB.addEventListener("click", () => { moreRender(); MORES.showModal(); MOREB.setAttribute("aria-expanded", "true"); });
@@ -5217,7 +5257,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "86ef171";
+const LISIO_BUILD = "4c2dc19";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

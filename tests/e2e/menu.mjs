@@ -1,8 +1,8 @@
 // Navigation « les étapes sont le menu » (choix de Laurent, 7 novembre 2026) : plus de rail d’icônes.
-// Puis ses retours du même jour : les 7 étapes dans une longue pilule flottante en bas, toujours visible, aux couleurs inversées
-// (ou orange au choix), avec la progression ; barre du haut allégée ; menu « Outils » en trois groupes (Outils, Apprendre, Réglages),
-// le même sur mobile, où un bouton « Outils » est dans la pilule.
-// Essentiel / Avancé est visible dans la barre du haut. Un bouton « Retour en haut » apparaît quand on a défilé.
+// Refonte du 11 novembre 2026 (maquette Figma Make) : les 7 étapes sont en haut, dans 7 cases ; sur mobile, l’étape est un bouton
+// collé en haut qui déplie la liste, et « Outils » est dans la barre du bas, entre « précédente » et « suivante ».
+// Menu « Outils » en trois groupes (Espace de travail, Apprendre et aide, Réglages), le même sur mobile.
+// Un bouton « Retour en haut » apparaît quand on a défilé.
 //   node tests/e2e/menu.mjs
 import { createRequire } from "node:module";
 import { readFileSync } from "node:fs";
@@ -35,12 +35,10 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(steps.map(s => s.t).join("|") === STEPS.join("|"), "les 7 étapes dans l’ordre", steps.map(s => s.t).join(", "));
   check(steps.every(s => s.w > 20), "ordinateur : chaque étape montre son nom", JSON.stringify(steps.map(s => Math.round(s.w))));
   check(await p.evaluate(() => document.getElementById("journey").getAttribute("aria-label")) === "Étapes", "le menu des étapes est nommé « Étapes »");
+  const st = await p.evaluate(() => { const j = document.getElementById("journey"), r = j.getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect(); return { pos: getComputedStyle(j).position, top: Math.round(r.top), ab: Math.round(a.bottom) }; });
+  check(st.pos !== "fixed" && st.top >= st.ab && st.top < 140 && await vis(p, "#journey .j-steps"), "les étapes sont en haut de la page, sous la barre", JSON.stringify(st));
+  check(/\d\/7/.test(await p.textContent("#journey .j-prog")), "les étapes montrent la progression", await p.textContent("#journey .j-prog"));
   await bottom(p);
-  const st = await p.evaluate(() => { const j = document.getElementById("journey").getBoundingClientRect(); return { b: Math.round(innerHeight - j.bottom), mid: Math.round((j.left + j.right) / 2 - innerWidth / 2) }; });
-  check(st.b >= 8 && st.b <= 40 && Math.abs(st.mid) <= 2 && await vis(p, "#journey .j-steps"), "en bas de page, la pilule des étapes reste visible, centrée en bas", JSON.stringify(st));
-  const inv = await p.evaluate(() => { const j = getComputedStyle(document.getElementById("journey")), b = getComputedStyle(document.body); return [j.backgroundColor, b.backgroundColor]; });
-  check(inv[0] !== inv[1], "la pilule se détache de la page (couleurs inversées)", inv.join(" / "));
-  check(/\d\/7/.test(await p.textContent("#journey .j-prog")), "la pilule montre la progression", await p.textContent("#journey .j-prog"));
   check(await vis(p, "#toTop"), "après défilement, le bouton « Retour en haut » apparaît");
   check(/haut/i.test(await p.locator("#toTop").getAttribute("aria-label") || await p.locator("#toTop").textContent()), "le bouton dit ce qu’il fait");
   await p.click("#toTop"); await p.waitForTimeout(900);
@@ -64,10 +62,8 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(["Rédaction", "Guide", "S’entraîner", "Projets"].every(w => tools.t.includes(w)), "Outils : Rédaction, Guide, S’entraîner, Projets");
   check(await p.evaluate(() => [...document.querySelectorAll("#helpPop .hp-h")].map(h => h.textContent).join("|")) === "Espace de travail|Apprendre et aide|Réglages", "Outils en trois groupes : Espace de travail, Apprendre et aide, Réglages");
   const segs = await p.evaluate(() => [...document.querySelectorAll("#helpPop .mode-row .seg")].map(g => { const r = g.getBoundingClientRect(); return Math.round(r.width) + "x" + Math.round(r.height); }));
-  check(segs.length === 3 && new Set(segs).size === 1, "Réglages : thème, barre et affichage de même largeur et même hauteur", segs.join(", "));
-  await p.click('#helpPop [data-bar-set="orange"]'); await p.waitForTimeout(150);
-  check(await p.evaluate(() => document.documentElement.getAttribute("data-bar") === "orange" && localStorage.getItem("lisio-bar") === "orange"), "barre du bas orange au choix, mémorisée");
-  await p.click('#helpPop [data-bar-set="ink"]'); await p.click('#helpPop [data-theme-set="dark"]'); await p.waitForTimeout(150);
+  check(segs.length === 2 && new Set(segs).size === 1, "Réglages : thème et affichage de même largeur et même hauteur", segs.join(", "));
+  await p.click('#helpPop [data-theme-set="dark"]'); await p.waitForTimeout(150);
   check(await p.evaluate(() => document.documentElement.getAttribute("data-theme") === "dark" && document.querySelector('#helpPop [data-theme-set="dark"]').getAttribute("aria-pressed") === "true"), "thème sombre depuis Réglages, état annoncé");
   await p.click('#helpPop [data-theme-set="light"]'); await p.waitForTimeout(150);
   await p.click('#helpPop a[href="#lisibilite"]'); await p.waitForTimeout(300);
@@ -85,47 +81,33 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   const p = await open(opts, "palette");
   check(await over(p) <= 0, `${lab} : pas de défilement horizontal`, await over(p));
   await bottom(p);
-  check(await vis(p, "#journey .j-steps"), `${lab} : en bas de page, les étapes restent visibles`);
-  check(await p.evaluate(() => document.querySelectorAll("#journey .j-steps a").length) === 7, `${lab} : les 7 étapes`);
-  const box = await p.evaluate(() => { const j = document.getElementById("journey").getBoundingClientRect(), m = document.getElementById("moreB").getBoundingClientRect(), t = document.getElementById("toTop").getBoundingClientRect();
-    return { jl: Math.round(j.left), jr: Math.round(innerWidth - j.right), jb: Math.round(innerHeight - j.bottom), inPill: m.left >= j.left && m.right <= j.right && m.top >= j.top && m.bottom <= j.bottom, ttAbove: t.bottom <= j.top }; });
-  check(box.jl === box.jr && box.jb >= 8 && box.inPill, `${lab} : une seule barre en bas, marges égales, bouton « Outils » dedans`, JSON.stringify(box));
+  check(await vis(p, "#hsMob") && await p.evaluate(() => Math.round(document.getElementById("hsMob").getBoundingClientRect().top)) <= 2, `${lab} : en bas de page, l’étape reste visible, collée en haut`);
+  const box = await p.evaluate(() => { const n = document.getElementById("stepNav").getBoundingClientRect(), m = document.getElementById("moreB").getBoundingClientRect(), t = document.getElementById("toTop").getBoundingClientRect();
+    return { nl: Math.round(n.left), nr: Math.round(innerWidth - n.right), nb: Math.round(innerHeight - n.bottom), inBar: m.left >= n.left && m.right <= n.right && m.top >= n.top && m.bottom <= n.bottom, ttAbove: t.bottom <= n.top, mw: Math.round(m.width), mh: Math.round(m.height) }; });
+  check(box.nl === 0 && box.nr === 0 && box.nb === 0 && box.inBar && box.mw >= 44 && box.mh >= 44, `${lab} : une seule barre en bas, pleine largeur, bouton « Outils » dedans`, JSON.stringify(box));
   check(box.ttAbove, `${lab} : « Retour en haut » au-dessus de la barre`, JSON.stringify(box));
-  const items = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => a.getBoundingClientRect()).map(r => [Math.round(r.left), Math.round(r.right), Math.round(r.width), Math.round(r.height)]));
-  check(items.every((r, k) => r[2] >= 24 && r[3] >= 24 && (!k || r[0] >= items[k - 1][1])), `${lab} : étapes sans chevauchement, cibles d’au moins 24 px`, JSON.stringify(items));
-  check(/Outils/.test(await p.textContent("#moreB")), `${lab} : le bouton s’appelle « Outils » pour les lecteurs d’écran`);
-  // Retouches du 8 novembre 2026 : icônes rondes, pas de libellé « Outils », aucun dégradé, séparateurs de même hauteur.
+  check(/Outils/.test(await p.textContent("#moreB")), `${lab} : le bouton s’appelle « Outils »`);
+  // Refonte du 11 novembre 2026 : angles droits partout, logo carré, aucun dégradé.
   const look = await p.evaluate(() => {
     const cs = (el, ps) => getComputedStyle(el, ps), r = el => el.getBoundingClientRect();
-    const m = document.getElementById("moreB"), lab = m.querySelector("span"), lr = lab ? r(lab) : { width: 0 };
-    const round = el => { const b = r(el), c = cs(el); return b.width > 0 && Math.abs(b.width - b.height) <= 1 && parseFloat(c.borderTopLeftRadius) >= b.width / 2 - 1; };
-    const icons = [...document.querySelectorAll(".appbar button, .appbar .logo")].filter(el => { const b = r(el); return b.width > 0 && b.height > 0 && cs(el).display !== "none" && b.width <= b.height + 1; });
+    const icons = [...document.querySelectorAll(".appbar button, .appbar .logo, #moreB")].filter(el => { const b = r(el); return b.width > 0 && b.height > 0 && cs(el).display !== "none"; });
     const logo = document.querySelector(".appbar .logo"), mark = logo && logo.querySelector(".logo-mark");
     const fades = ["body::after", "body::before", "html::after", "html::before"].map(x => { const [sel, ps] = x.split("::"), c = cs(document.querySelector(sel), "::" + ps); return c.content !== "none" && c.backgroundImage !== "none" ? x : null; }).filter(Boolean);
-    const sep1 = cs(document.querySelector("#journey .j-prog"), "::after"), sep2 = cs(document.getElementById("stepNav"), "::before");
-    return { moreRound: round(m), labelHidden: lr.width <= 1, iconsRound: icons.filter(el => !round(el)).map(el => el.id || el.className), n: icons.length,
-      logoRound: !!logo && round(logo) && (cs(mark).clipPath.includes("circle") || cs(logo).overflow === "hidden"), fades, seps: [sep1.height, sep2.height], sepBorder: cs(document.querySelector("#journey .j-prog")).borderRightWidth };
+    return { rounded: icons.filter(el => parseFloat(cs(el).borderTopLeftRadius) > 0).map(el => el.id || el.className), n: icons.length, logoSquare: !!mark && cs(mark).clipPath === "none" && Math.abs(r(mark).width - r(mark).height) <= 1, fades };
   });
-  check(look.moreRound && look.labelHidden, `${lab} : « Outils » est une icône ronde, sans libellé visible`, JSON.stringify(look));
-  check(look.n >= 3 && !look.iconsRound.length, `${lab} : toutes les icônes du haut sont rondes`, JSON.stringify(look.iconsRound));
-  check(look.logoRound, `${lab} : logo rond, sans carré derrière`, JSON.stringify(look));
+  check(look.n >= 4 && !look.rounded.length, `${lab} : boutons du haut et « Outils » à angles droits`, JSON.stringify(look.rounded));
+  check(look.logoSquare, `${lab} : logo carré`, JSON.stringify(look));
   check(!look.fades.length, `${lab} : aucun dégradé derrière les barres, ni en haut ni en bas`, look.fades.join(", "));
-  check(look.sepBorder === "0px" && look.seps[0] === look.seps[1] && look.seps[0] !== "auto", `${lab} : séparateurs verticaux de même hauteur`, JSON.stringify(look.seps) + " " + look.sepBorder);
-  // Distances recalculées (8 novembre 2026, 14 h) : ronds de même taille, même écart partout, séparateurs au milieu, marges intérieures égales.
-  const sp = await p.evaluate(() => { const r = el => el.getBoundingClientRect(), J = r(document.getElementById("journey")), ring = r(document.querySelector("#journey .j-ring")), st = [...document.querySelectorAll("#journey .j-steps a")].map(r), m = r(document.getElementById("moreB")), sn = document.getElementById("stepNav");
-    const s1 = r(document.querySelector("#journey .j-prog")).right, x2 = r(sn).left + parseFloat(getComputedStyle(sn, "::before").left), q = v => Math.round(v * 10) / 10;
-    return { size: [ring.width, ...st.map(b => b.width), m.width].map(q), pads: [ring.left - J.left, ring.top - J.top, J.bottom - ring.bottom, J.right - m.right, m.top - J.top].map(q),
-      gaps: st.slice(1).map((b, k) => b.left - st[k].right).map(q), seps: [s1 - 1 - ring.right, st[0].left - s1, x2 - st[6].right, m.left - x2 - 1].map(q) }; });
-  const near = (xs, t) => Math.max(...xs) - Math.min(...xs) <= t;
-  check(near(sp.size, 1), `${lab} : anneau, étapes et « Outils » ont la même taille`, JSON.stringify(sp.size));
-  check(near(sp.pads, 1), `${lab} : même marge intérieure tout autour de la barre`, JSON.stringify(sp.pads));
-  check(near([...sp.gaps, ...sp.seps], 1.5) && Math.min(...sp.gaps) >= 2, `${lab} : même écart entre les ronds et de chaque côté des séparateurs`, JSON.stringify(sp));
+  await p.evaluate(() => scrollTo(0, 0)); await p.click("#hsMob"); await p.waitForTimeout(250);
+  check(await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].filter(a => a.getClientRects().length).length) === 7, `${lab} : le bouton d’étape déplie les 7 étapes`);
+  const items = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => a.getBoundingClientRect()).map(r => [Math.round(r.top), Math.round(r.bottom), Math.round(r.width), Math.round(r.height)]));
+  check(items.every((r, k) => r[2] >= 44 && r[3] >= 44 && (!k || r[0] >= items[k - 1][1] - 1)), `${lab} : étapes sans chevauchement, cibles d’au moins 44 px`, JSON.stringify(items));
   await p.click('#journey a[href="#tester"]'); await p.waitForTimeout(400);
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : toucher une étape l’ouvre`);
   await p.click("#moreB"); await p.waitForTimeout(400);
   const more = await p.evaluate(() => ({ t: document.getElementById("moreSheet").textContent, h: [...document.querySelectorAll("#moreSheet .mh3")].map(h => h.textContent).join("|"), segs: [...document.querySelectorAll("#moreSheet .mmode .seg")].map(g => Math.round(g.getBoundingClientRect().width) + "x" + Math.round(g.getBoundingClientRect().height)) }));
   check(more.h === "Espace de travail|Apprendre et aide|Réglages" && ["Rédaction", "Guide", "S’entraîner", "Projets", "Thème", "Essentiel", "Avancé"].every(w => more.t.includes(w)), `${lab} : « Outils » contient les mêmes groupes que sur ordinateur`, more.h);
-  check(more.segs.length === 3 && new Set(more.segs).size === 1, `${lab} : réglages de même largeur et même hauteur`, more.segs.join(", "));
+  check(more.segs.length === 2 && new Set(more.segs).size === 1, `${lab} : réglages de même largeur et même hauteur`, more.segs.join(", "));
   if (AXE && lab === "iPhone 390 px") { await p.keyboard.press("Escape"); await p.waitForTimeout(200); await p.addScriptTag({ content: readFileSync(AXE, "utf8") });
     const v = await p.evaluate(async () => (await axe.run({ include: [["#journey"], ["#stepNav"]] }, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
     check(!v.length, `${lab} : axe-core, étapes et barre du bas`, v.join(", ")); }
