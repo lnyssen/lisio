@@ -22,17 +22,6 @@
   --gut:clamp(16px,2.6vw,40px);
   --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%234A4A4A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0A0A0A; --surface:#141414; --raised:#1C1C1C; --ink:#F4F4F0; --muted:#B4B4AE; --hair:#3A3A37; --field:#8A8A85; --line:#F4F4F0;
-  --primary:#F4F4F0; --primary-ink:#050505; --hover:#242424; --link:#F4F4F0;
-  --accent:#F4F4F0; --accent-ink:#050505; --accent-soft:#2A2A28;
-  --nav-on:#F4F4F0; --nav-on-ink:#050505; --nav-on-ic:#050505;
-  --aaa-bg:#12331F; --aaa-ink:#A6E3BD; --aa-bd:#3F6699; --aa-bg:#12263F; --aa-ink:#B3D0F7; --lg-bg:#3A2606; --lg-ink:#F7CF94; --no-bg:#3F1513; --no-ink:#F7B0AC;
-  --ok:#A6E3BD; --ok-bg:#12331F; --warn:#F7CF94; --warn-bg:#3A2606; --bad:#F7B0AC; --bad-bg:#3F1513;
-  --st-done-bg:#12331F; --st-done-ink:#A6E3BD; --st-done-bd:#2F6B48; --st-now-bg:#12263F; --st-now-ink:#B3D0F7; --st-now-bd:#3F6699; --st-todo-bg:#2A2A28; --st-todo-ink:#D6D6D2; --st-todo-bd:#5C5C58; --st-warn-bg:#3A2606; --st-warn-ink:#F7CF94; --st-warn-bd:#8A5A1F;
-  --shadow:0 0 0 1px var(--line);
-  --chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%23B4B4AE' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#0A0A0A; --surface:#141414; --raised:#1C1C1C; --ink:#F4F4F0; --muted:#B4B4AE; --hair:#3A3A37; --field:#8A8A85; --line:#F4F4F0;
   --primary:#F4F4F0; --primary-ink:#050505; --hover:#242424; --link:#F4F4F0;
@@ -228,7 +217,7 @@ a{color:inherit;text-underline-offset:.18em}
 .gp{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center}
 .gp-l{font-size:13px;font-weight:700;line-height:1.15}.gp-l small{display:block;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
 .gp-f{height:40px;border-radius:6px;background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--muted) 22%,transparent) 0 1px,transparent 1px 6px);box-shadow:inset 0 0 0 1px var(--hair);box-sizing:border-box;display:flex;transition:width .35s cubic-bezier(.3,1.25,.4,1)}
-.gprev{--gpc:rgba(229,72,77,.2);--gpe:rgba(229,72,77,.6)}:root[data-theme="dark"] .gprev{--gpc:rgba(255,110,115,.28);--gpe:rgba(255,110,115,.75)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gprev{--gpc:rgba(255,110,115,.28);--gpe:rgba(255,110,115,.75)}}
+.gprev{--gpc:rgba(229,72,77,.2);--gpe:rgba(229,72,77,.6)}:root[data-theme="dark"] .gprev{--gpc:rgba(255,110,115,.28);--gpe:rgba(255,110,115,.75)}
 .gp-c{display:grid;flex:1;height:100%;background:var(--surface)}.gp-c span{background:var(--gpc);box-shadow:inset 1px 0 0 var(--gpe),inset -1px 0 0 var(--gpe)}
 .gp-key{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin:2px 0 0 74px}.gp-key i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
 @media (prefers-reduced-motion:reduce){.gp-f{transition:none}}
@@ -369,7 +358,6 @@ nav.tabs button[aria-current="page"]{color:var(--primary-ink);background:var(--p
 .appr .expbtn{min-height:0}
 .themebtn .i-sun{display:none}
 :root[data-theme="dark"] .themebtn .i-sun{display:block}:root[data-theme="dark"] .themebtn .i-moon{display:none}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .themebtn .i-sun{display:block}:root:not([data-theme="light"]) .themebtn .i-moon{display:none}}
 .themebtn svg{transition:transform .4s cubic-bezier(.3,1.25,.4,1)}.themebtn:active svg{transform:rotate(-30deg) scale(.9)}
 :root[data-theme="light"]{color-scheme:light}
 .undobtn{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);cursor:pointer;padding:0;flex:none}.undobtn svg{width:18px;height:18px}.undobtn:disabled{opacity:.45;cursor:default}
@@ -916,7 +904,6 @@ body{background:var(--bg)}
 .pd-more summary::-webkit-details-marker{display:none}
 /* ===== Menu façon C : tuile teal, page active orange, sans défilement ===== */
 :root{--rail:#0B3C3D;--rail-ink:#E3F3F0;--rail-muted:#A7D7D2;--rail-hover:#155152;--rail-on:#FF6A13;--rail-on-ink:#1A0B00}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--rail:#0D2324;--rail-hover:#173B3C;--rail-on:#FF7A1A}}
 :root[data-theme="dark"]{--rail:#0D2324;--rail-hover:#173B3C;--rail-on:#FF7A1A}
 @media (min-width:761px){
   :root{--sbtn:clamp(36px,5vh,44px);--st:68px;--sf:calc(3 * var(--sbtn) + 30px)}
@@ -4275,12 +4262,12 @@ $("helpPop").addEventListener("click", e => { if (e.target.closest("[data-prj-op
 // R2 · 2.4.2 : le titre de l'onglet du navigateur dit la page affichée.
 const VIEW_TITLE = { couleurs: "Couleurs", matrice: "Contrastes", palette: "Nuances", tester: "Polices", styles: "Styles de texte", systeme: "Design system", lisibilite: "Rédaction", sources: "Guide", exporter: "Exporter", formation: "S’entraîner" };
 function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "couleurs"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); VIEWS.forEach(n => { $(n).hidden = n !== v; }); document.querySelectorAll("nav.tabs button[data-view]").forEach(t => t.dataset.view === v ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); jMark(v); renderJourney(v); demoRender(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
-// Mode clair ou sombre : suit le système, jusqu’à ce qu’on choisisse
-const DARKQ = matchMedia("(prefers-color-scheme: dark)"), themeNow = () => document.documentElement.getAttribute("data-theme") || (DARKQ.matches ? "dark" : "light");
+// Mode clair par défaut, même si le système est en sombre ; le sombre vient seulement d’un choix enregistré
+const themeNow = () => document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
 function themeLabel() { const d = themeNow() === "dark"; document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.themeSet === "dark") === d))); $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
 $("themeSeg").addEventListener("click", e => { const b = e.target.closest("[data-theme-set]"); if (b && b.dataset.themeSet !== themeNow()) $("themeB").click(); });
 $("themeB").addEventListener("click", () => { const t = themeNow() === "dark" ? "light" : "dark"; document.documentElement.setAttribute("data-theme", t); try { localStorage.setItem("lisio-theme", t); } catch (e) {} themeLabel(); requestAnimationFrame(() => tabInk(true)); });
-DARKQ.addEventListener("change", themeLabel); themeLabel();
+themeLabel();
 // Pastille glissante : suit l’onglet actif, et une pastille claire suit le survol et le focus clavier
 const TABS = document.querySelector("nav.tabs"), INK = TABS.querySelector(".tab-ink"), HOV = TABS.querySelector(".tab-hov");
 TABS.classList.add("has-ink");

@@ -28,6 +28,7 @@ const browser = await chromium.launch();
 let fails = 0; const allowed = new Map();
 for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
   const page = await browser.newPage({ viewport: { width: w, height: h }, colorScheme: scheme });
+  if (scheme === "dark") await page.addInitScript(() => { try { localStorage.setItem("lisio-theme", "dark"); } catch (e) {} });
   await page.route(/^https?:/, r => r.abort());
   const errs = []; page.on("pageerror", e => errs.push(String(e)));
   await page.goto("file://" + PAGE + "#" + v); await page.waitForTimeout(900);
@@ -45,6 +46,7 @@ for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
 const OPEN = [["tester", "#dFont", "#popFont"], ["tester", "#dFg", "#popColor"], ["tester", "#dMore", "#popMore"], ["matrice", "#normChip", "#popNorm"], ["matrice", "#helpB", "#helpPop"], ["matrice", "CMDK", "#cmdk"]];
 for (const scheme of ["light", "dark"]) for (const [v, trig, zone] of OPEN) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, colorScheme: scheme });
+  if (scheme === "dark") await page.addInitScript(() => { try { localStorage.setItem("lisio-theme", "dark"); } catch (e) {} });
   await page.route(/^https?:/, r => r.abort());
   const errs = []; page.on("pageerror", e => errs.push(String(e)));
   await page.goto("file://" + PAGE + "#" + v); await page.waitForTimeout(700);

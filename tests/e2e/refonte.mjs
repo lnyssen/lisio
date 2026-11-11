@@ -144,6 +144,11 @@ for (const theme of ["light", "dark"]) for (const w of [1440, 1100, 1024, 800]) 
   await p.ctx.close(); }
 
 // ---------- 3. Thème sombre ----------
+// Mode clair par défaut, même si le système est en sombre ; le sombre ne vient que d'un choix enregistré.
+{ const p = await open({ viewport: { width: 1440, height: 900 }, colorScheme: "dark" }, "tester");
+  const d = await p.evaluate(() => ({ bg: getComputedStyle(document.body).backgroundColor, th: document.documentElement.getAttribute("data-theme"), cs: getComputedStyle(document.documentElement).colorScheme }));
+  check(d.bg === "rgb(244, 244, 240)" && d.th !== "dark" && !/dark/.test(d.cs), "mode clair par défaut, même quand le système est en sombre", JSON.stringify(d));
+  await p.ctx.close(); }
 { const p = await open({ viewport: { width: 1440, height: 900 } }, "tester", { "lisio-theme": "dark" });
   const d = await p.evaluate(() => { const b = getComputedStyle(document.body), c = getComputedStyle(document.querySelector('#journey a[aria-current="step"]')); return { bg: b.backgroundColor, ink: b.color, cbg: c.backgroundColor, cfg: c.color }; });
   check(Math.max(...rgb(d.bg)) < 30 && Math.min(...rgb(d.ink)) > 220 && Math.min(...rgb(d.cbg)) > 220 && Math.max(...rgb(d.cfg)) < 30, "thème sombre : fond noir, texte clair, étape en cours inversée", JSON.stringify(d));
