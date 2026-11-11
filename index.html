@@ -1418,6 +1418,49 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
   .to-top{bottom:calc(var(--barh) + 12px)}
 }
 @media (prefers-reduced-motion:no-preference){.hs-mob svg{transition:transform .15s}}
+
+/* Audit UX du 11 novembre 2026, lot 1 : un en-tête plus court.
+   Les cases d’étapes : nom et fait compté ; l’état est porté par la marque (✓, !, numéro en pointillé) et dit aux lecteurs d’écran.
+   Le résumé du projet rejoint la ligne de l’étape : une bande de moins avant le titre. */
+.hsteps{margin-top:16px}
+.hsteps .j-prog{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (min-width:761px){
+  .j-steps .j-s{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;border:0}
+  .j-steps a{padding:12px;align-items:center}
+  .j-t{gap:2px}
+}
+@media (min-width:761px) and (max-width:1279px){.j-steps a{flex-direction:row;padding:10px 8px;gap:8px}.j-n{width:22px;height:22px;font-size:12px}}
+.j-line{position:relative;gap:8px 16px;min-height:52px;padding:6px 8px 6px 14px}
+.j-todo{flex:1 1 300px;padding-left:16px}
+.j-line .sumbar{position:static;margin:0;border:0;background:none;flex:none}
+.j-line .sumbar>summary{min-height:40px;padding:0 6px 0 10px;border:1px solid var(--hair)}
+.j-line .sumbar[open]>summary{border-color:var(--line)}
+.j-line .sum-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.j-line .sum-body{position:absolute;z-index:16;left:-1px;right:-1px;top:100%;background:var(--surface);border:1px solid var(--line);padding:12px 14px}
+.j-acts{margin-left:0}
+:root:root .mhead{margin-top:32px}
+#tester .mhead{margin-bottom:24px!important}
+#tester .dock{position:sticky;top:calc(var(--apph) + 52px);bottom:auto;margin:0 0 16px;justify-content:flex-start;z-index:12}
+#tester .dock-in{box-shadow:none;border:1px solid var(--line)}
+@media (max-width:760px){
+  .j-line{padding:8px 12px;gap:8px}
+  /* Mobile : Essentiel / Avancé se règle dans Outils ; la ligne garde la prochaine action, le résumé et l’aide. */
+  .j-line .j-mode{display:none}
+  .j-todo{order:1;padding:0 0 8px;border-top:0;border-bottom:1px solid var(--hair)}
+  .j-line{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}
+  .j-line .j-todo{grid-column:1/-1;grid-row:1}
+  .j-line .sumbar{grid-column:1;grid-row:2;min-width:0}
+  .j-line .j-acts{grid-column:2;grid-row:2}
+  .j-line .sum-line{gap:4px}.j-line .sum-c{font-size:12px}
+  .j-line .j-help-b{padding-right:8px}
+  .j-line .sumbar>summary{min-height:44px;flex-wrap:nowrap;border:0;padding:0 4px 0 0}
+  .j-line .sum-line{flex-wrap:wrap}
+  .j-line .sum-c.st-info{display:none}
+  .j-line .j-acts{order:3;flex:none}
+  .j-line .sum-body{position:absolute;left:-1px;right:-1px;top:100%;border:1px solid var(--line);padding:8px 12px}
+  #tester .dock{position:static;margin:0 0 12px}
+  :root:root .mhead{margin-top:20px}
+}
 </style>
 </head>
 <body>
@@ -1533,17 +1576,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 
   <!-- TESTER -->
   <section id="tester" aria-labelledby="tab-tester" hidden>
-    <h1 class="sr-only">Polices</h1>
-    <div class="stage">
-      <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
-      <div class="canvas" id="canvas">
-        <div class="c-h" id="cH" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Titre d’essai, modifiable">Votre attestation est prête</div>
-        <p id="cP1" contenteditable="true" spellcheck="false" aria-label="Paragraphe d’essai, modifiable">Elle reste consultable douze mois dans votre espace personnel. Si une information vous semble erronée, contactez le service client avant la date limite. Cliquez ici pour écrire votre propre texte.</p>
-        <p id="cP2" contenteditable="true" spellcheck="false" aria-label="Deuxième paragraphe d’essai, modifiable">Frais d’envoi : 0,99 €, délai 3 à 5 jours. <a href="#tester" onclick="return false">Voir la notice</a></p>
-        <div class="c-ui"><button type="button" class="c-btn" tabindex="-1">Télécharger le PDF</button><span aria-hidden="true">✓ ✕ ★ → 1Il0O rn m</span></div>
-      </div>
-    </div>
-
+    <header class="mhead phead"><div><h1>Polices</h1><p class="lead">Essayez votre police sur vos couleurs, à la taille réelle. Chaque réglage de la barre met à jour le verdict de contraste.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Typography</p></div></header>
     <div class="dock">
       <div class="dock-in" id="dockIn">
         <button class="dk" id="dFont" type="button" data-pop="popFont" aria-expanded="false" aria-controls="popFont"><span style="font-size:22px;font-weight:700" id="dFontAa">Aa</span><span class="k"><small>Police</small><span id="dFontName">–</span></span></button>
@@ -1561,6 +1594,16 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
         <span class="dk-sep" aria-hidden="true"></span>
         <button class="dk" id="dMore" type="button" data-pop="popMore" aria-expanded="false" aria-controls="popMore"><svg class="dk-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg><span class="dk-lbl">Réglages</span></button>
 
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
+      <div class="canvas" id="canvas">
+        <div class="c-h" id="cH" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Titre d’essai, modifiable">Votre attestation est prête</div>
+        <p id="cP1" contenteditable="true" spellcheck="false" aria-label="Paragraphe d’essai, modifiable">Elle reste consultable douze mois dans votre espace personnel. Si une information vous semble erronée, contactez le service client avant la date limite. Cliquez ici pour écrire votre propre texte.</p>
+        <p id="cP2" contenteditable="true" spellcheck="false" aria-label="Deuxième paragraphe d’essai, modifiable">Frais d’envoi : 0,99 €, délai 3 à 5 jours. <a href="#tester" onclick="return false">Voir la notice</a></p>
+        <div class="c-ui"><button type="button" class="c-btn" tabindex="-1">Télécharger le PDF</button><span aria-hidden="true">✓ ✕ ★ → 1Il0O rn m</span></div>
       </div>
     </div>
 
@@ -4924,16 +4967,19 @@ function renderJourney(v) {
   // Les étapes sont le menu (choix de Laurent, 7 novembre 2026) : toujours affichées, même hors parcours (Rédaction, Guide…).
   J.hidden = false; X.hidden = NB.hidden = i < 0;
   J.classList.remove("open");
-  if (i < 0) { const seen0 = jSeen(); J.innerHTML = jMob("", -1, seen0) + jProg("", seen0) + jCells("", -1, seen0); stepNavRender(-1); return; }
+  if (i < 0) { const SB0 = $("sumBar"); if (NB.contains(SB0)) NB.after(SB0); const seen0 = jSeen(); J.innerHTML = jMob("", -1, seen0) + jProg("", seen0) + jCells("", -1, seen0); stepNavRender(-1); return; }
   const [, , say, qs] = JOURNEY[i], seen = jSeen();
   let welcomed = true; try { welcomed = localStorage.getItem("lisio-welcome") === "1"; } catch (e) {}
   const hello = !welcomed ? `<div class="j-hello" id="hello" role="region" aria-label="Bienvenue dans Lisio"><p><b>Bienvenue dans Lisio !</b> Sept étapes, dans l’ordre ou non, et chaque page vérifie votre travail et propose la correction. Les pastilles « ? » expliquent le jargon. Choisissez l’affichage, modifiable à tout moment avec « Affichage » :</p><div class="row"><button type="button" class="btn primary sm" data-hello="ess">Je débute, affichage Essentiel</button><button type="button" class="btn sm" data-hello="adv">Je connais, tout afficher</button><button type="button" class="btn sm" data-hello="demo">Essayer avec un projet démo</button><button type="button" class="btn sm" data-hello="new">Créer mon projet</button></div></div>` : "";
   J.innerHTML = jMob(v, i, seen) + jProg(v, seen) + jCells(v, i, seen);
+  const SB = $("sumBar"); if (NB.contains(SB)) NB.after(SB);
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
   const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`), iss0 = v !== "exporter" && v !== "tester" ? jStepIssues(v) : 0;
   NB.innerHTML = `
-  <div class="j-line"><p class="j-pos"><span class="j-cst st-${jState(v, v, seen)}">${J_STATE[jState(v, v, seen)]}</span> <b>Étape ${i + 1} sur ${JOURNEY.length}</b></p><p class="j-todo"><span class="j-todo-l">Prochaine action</span><span class="sr-only"> : </span><span class="j-todo-t">${iss0 ? jWhy(v, iss0) + " Corrigez ici, ou avancez et revenez-y." : J_TODO[v]}</span></p><div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
+  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b><span class="sr-only"> : ${J_STATE[jState(v, v, seen)]}</span></p><p class="j-todo"><span class="j-todo-l">Prochaine action</span><span class="sr-only"> : </span><span class="j-todo-t">${iss0 ? jWhy(v, iss0) + " Corrigez ici, ou avancez et revenez-y." : J_TODO[v]}</span></p><div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
   <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p><p class="j-legend"><span><i class="lg lg-done" aria-hidden="true">✓</i>Complétée</span><span><i class="lg lg-now" aria-hidden="true">4</i>En cours</span><span><i class="lg lg-warn" aria-hidden="true">!</i>À corriger</span><span><i class="lg lg-todo" aria-hidden="true">5</i>À commencer</span><span class="j-lg-note">« Complétée » : page ouverte, aucun problème détecté. Ce n’est pas un audit de conformité.</span></p>${adv ? adv.outerHTML : ""}</div>${hello}`;
+  // Audit UX du 11 novembre 2026 : le résumé rejoint la ligne de l’étape, une bande de moins avant le titre.
+  { const L = NB.querySelector(".j-line"); if (L) L.insertBefore(SB, L.querySelector(".j-acts")); }
   stepNavRender(i);
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm);
@@ -5289,7 +5335,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "7b0aa78";
+const LISIO_BUILD = "55cf6f0";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

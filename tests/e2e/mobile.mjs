@@ -61,10 +61,10 @@ const phone = { ...devices["iPhone 13"] };
   check(await page.locator("#popColor .sheet-grab").isVisible(), "couleur : poignée visible");
   await swipe(page, "#popColor h3", 180);
   check(await page.locator("#popColor").isHidden(), "couleur : glisser vers le bas ferme");
-  // Aperçu de la page Polices : la barre ne le recouvre plus, et tient sur une ligne.
-  await page.evaluate(() => document.getElementById("canvas").scrollIntoView({ block: "start" })); await page.waitForTimeout(200);
-  const dk = await page.evaluate(() => { const c = document.getElementById("canvas").getBoundingClientRect(), d = document.getElementById("dockIn").getBoundingClientRect(); return { cb: Math.round(c.bottom), dt: Math.round(d.top), dh: Math.round(d.height), dr: Math.round(d.right), vw: innerWidth }; });
-  check(dk.dt >= dk.cb, "Polices : la barre d’outils ne recouvre pas l’aperçu", JSON.stringify(dk));
+  // Aperçu de la page Polices : la barre est au-dessus (audit UX du 11 novembre 2026) et ne le recouvre pas ; elle tient sur une ligne.
+  await page.evaluate(() => document.getElementById("dockIn").scrollIntoView({ block: "start" })); await page.waitForTimeout(200);
+  const dk = await page.evaluate(() => { const c = document.querySelector("#tester .stage").getBoundingClientRect(), d = document.getElementById("dockIn").getBoundingClientRect(); return { ct: Math.round(c.top), db: Math.round(d.bottom), dh: Math.round(d.height), dr: Math.round(d.right), vw: innerWidth }; });
+  check(dk.db <= dk.ct, "Polices : la barre d’outils ne recouvre pas l’aperçu", JSON.stringify(dk));
   check(dk.dh <= 64 && dk.dr <= dk.vw, "Polices : barre d’outils sur une ligne, sans débordement", JSON.stringify(dk));
   check(/Texte/.test(await page.locator("#dFg").evaluate(e => e.textContent)), "pastille « Texte » toujours nommée pour le lecteur d’écran");
   // Aide « ? » : volet, glisser pour fermer.

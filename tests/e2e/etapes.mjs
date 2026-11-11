@@ -41,8 +41,9 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   const KEY = { "À commencer": "todo", "En cours": "now", "Complété": "done", "Attention requise": "warn", "Non applicable": "na" };
   const bad = S.filter(s => !STATES.some(t => s.state.startsWith(t)) || !s.name.includes(s.state) || !s.cls.includes("st-" + KEY[STATES.find(t => s.state.startsWith(t))]));
   report(!bad.length, "chaque étape : état en toutes lettres dans son nom, et marque visible propre à l'état", JSON.stringify(bad.slice(0, 2)));
-  const now = await p.evaluate(() => { const c = document.querySelector("#jNowBox .j-cst"); if (!c) return null; const r = c.getBoundingClientRect(); return r.width > 1 ? c.textContent : null; });
-  report(now === "En cours", "l'état de l'étape actuelle est écrit, visible, sous le titre", String(now));
+  // Audit UX du 11 novembre 2026 : plus de pastille « En cours » en double ; la case noire le montre, le bandeau le dit aux lecteurs d'écran.
+  const now = await p.evaluate(() => { const c = document.querySelector("#jNowBox .j-pos"), a = document.querySelector('#journey .j-steps a[aria-current="step"]'); return c && a && /En cours/.test(c.textContent) && getComputedStyle(a).backgroundColor !== getComputedStyle(document.querySelector('#journey .j-steps a:not([aria-current])')).backgroundColor ? "En cours" : null; });
+  report(now === "En cours", "l'état de l'étape actuelle : case noire, et dit dans le bandeau", String(now));
   const prog = await p.evaluate(() => { const e = document.querySelector("#journey .j-prog"); return e && e.textContent; });
   report(/^\d\/7/.test(prog || ""), "la barre montre la progression (étapes complétées sur 7)", String(prog));
   const cur = S.filter(s => s.cur === "step");
