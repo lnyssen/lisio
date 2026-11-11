@@ -73,19 +73,21 @@ const axe = async (p, include, label) => { if (!AXE) return; await p.addScriptTa
   check(J.pos !== "fixed" && J.top >= J.abBottom && J.top < 140, "les étapes sont en haut, sous la barre, et non plus dans une pilule flottante", JSON.stringify({ pos: J.pos, top: J.top }));
   const ws = J.cells.map(c => c.w);
   check(J.cells.length === 7 && Math.max(...ws) - Math.min(...ws) <= 2 && new Set(J.cells.map(c => c.top)).size === 1, "7 cases de même largeur, sur une seule rangée", ws.join(", "));
-  // Cases compactes (Laurent, 11 novembre 2026) : le nom et le résumé se voient ; l’état est porté par la marque du numéro et dit aux lecteurs d’écran.
-  check(J.cells.every(c => c.l > 20 && c.d > 10 && c.dt.length > 2 && c.dw), "chaque case montre le nom et un résumé entier", JSON.stringify(J.cells.map(c => c.dt)));
+  check(J.cells.every(c => c.l > 20 && c.s > 20 && c.d > 10 && c.dt.length > 2 && c.dw), "en haut de page, chaque case montre le nom, l’état et un résumé entier", JSON.stringify(J.cells.map(c => c.dt)));
   const cur = J.cells.filter(c => c.cur === "step");
   check(cur.length === 1 && rgb(cur[0].bg).join() === "5,5,5" && rgb(cur[0].fg).join() === "255,255,255", "l’étape en cours : case noire, texte blanc", JSON.stringify(cur));
-  // Retours de Laurent, 11 novembre 2026, 15 h 29 : « Mon projet » de la même hauteur que « WCAG » ; les étapes restent collées en haut, plus compactes.
-  const hh = await p.evaluate(() => [".appbar .prj-b", ".appbar .normchip", ".appbar .cmdk", ".appbar .tools-b", ".appbar .expbtn"].map(s => Math.round(document.querySelector(s).getBoundingClientRect().height)));
-  check(new Set(hh).size === 1 && hh[0] >= 44, "barre du haut : « Mon projet », recherche, WCAG, Outils et Exporter ont la même hauteur", hh.join(", "));
-  const ch = await p.evaluate(() => Math.round(document.querySelector("#journey .j-steps").getBoundingClientRect().height));
-  check(ch <= 66, "les cases des étapes sont compactes (66 px au plus)", ch + " px");
-  await p.evaluate(() => scrollTo(0, 700)); await p.waitForTimeout(250);
-  const sk = await p.evaluate(() => { const j = document.querySelector("#journey .j-steps").getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect(), t = document.elementFromPoint(innerWidth / 2, j.top + j.height / 2); return { top: Math.round(j.top), ab: Math.round(a.bottom), onTop: !!t && !!t.closest("#journey") }; });
-  check(Math.abs(sk.top - sk.ab) <= 1 && sk.onTop, "après défilement, les 7 étapes restent collées sous la barre du haut", JSON.stringify(sk));
-  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
+  // Retours de Laurent, 11 novembre 2026, 15 h 43 : les étapes de gauche à droite, complètes en haut de page, compactes au défilement.
+  const full = await p.evaluate(() => ({ h: Math.round(document.querySelector("#journey .j-steps").getBoundingClientRect().height), sh: document.documentElement.scrollHeight }));
+  await p.evaluate(() => scrollTo(0, 700)); await p.waitForTimeout(300);
+  const sk = await p.evaluate(() => { const S = document.querySelector("#journey .j-steps"), j = S.getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect(), t = document.elementFromPoint(innerWidth / 2, j.top + j.height / 2), as = [...S.querySelectorAll("a")];
+    return { top: Math.round(j.top), ab: Math.round(a.bottom), h: Math.round(j.height), onTop: !!t && !!t.closest("#journey"), row: new Set(as.map(x => Math.round(x.getBoundingClientRect().top))).size, names: as.every(x => { const l = x.querySelector(".j-l").getBoundingClientRect(); return l.width > 20 && l.bottom <= j.bottom; }), pills: as.filter(x => x.querySelector(".j-s").getBoundingClientRect().width > 1).length, sh: document.documentElement.scrollHeight }; });
+  check(Math.abs(sk.top - sk.ab) <= 1 && sk.onTop && sk.row === 1, "au défilement, les 7 étapes restent collées sous la barre du haut, sur une rangée", JSON.stringify(sk));
+  check(sk.h <= 48 && sk.h < full.h - 20 && sk.names && !sk.pills, "au défilement, la rangée devient compacte (48 px au plus) : numéro et nom", `${full.h} → ${sk.h} px`);
+  check(Math.abs(sk.sh - full.sh) <= 2, "passer en compact ne fait pas sauter la page", `${full.sh} / ${sk.sh}`);
+  const jump = await p.evaluate(() => new Promise(r => { scrollTo(0, 0); setTimeout(() => { scrollTo(0, 500); const y0 = scrollY, n0 = document.getElementById("jNowBox").getBoundingClientRect().top; setTimeout(() => r({ y0, y1: scrollY, d: Math.round(document.getElementById("jNowBox").getBoundingClientRect().top - n0) }), 300); }, 300); }));
+  check(jump.y0 === jump.y1 && jump.d === 0, "au passage en compact, la position de défilement et le contenu ne bougent pas", JSON.stringify(jump));
+  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(300);
+  check(await p.evaluate(() => Math.round(document.querySelector("#journey .j-steps").getBoundingClientRect().height)) === full.h, "revenu en haut, les cases sont de nouveau complètes");
   const small = await p.evaluate(() => { const out = []; for (const e of document.querySelectorAll("#journey *, #jNowBox *, #jNext *")) { if (!e.getClientRects().length || e.closest("svg")) continue; const own = [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()); if (!own) continue; const r = e.getBoundingClientRect(); if (r.width <= 1 || r.height <= 1) continue; const f = parseFloat(getComputedStyle(e).fontSize); if (f < 12) out.push(e.className + " " + f); } return out; });
   check(!small.length, "navigation : aucun texte sous 12 px", small.slice(0, 5).join(", "));
   const D = await p.evaluate(() => { const b = document.getElementById("jNowBox"), a = b.querySelector(".j-todo"); return { pos: (b.querySelector(".j-pos") || {}).textContent || "", cst: (b.querySelector(".j-cst") || {}).textContent || "", lab: a ? (a.querySelector(".j-todo-l") || {}).textContent || "" : "", say: a ? (a.querySelector(".j-todo-t") || {}).textContent || "" : "", mode: !!b.querySelector('.j-mode [data-mode="ess"]'), help: !!b.querySelector(".j-help-b") }; });
@@ -111,21 +113,34 @@ const axe = async (p, include, label) => { if (!AXE) return; await p.addScriptTa
   await go(p, "lisibilite");
   check(await vis(p, "#journey .j-steps") && !(await p.evaluate(() => document.querySelector('#journey a[aria-current="step"]'))) && !(await vis(p, "#jNowBox")) && !(await vis(p, "#jNext .jn-row")), "hors parcours (Rédaction) : étapes visibles, aucune en cours, ni bandeau ni barre du bas");
   await go(p, "tester");
-  for (const w of [1440, 1280, 1180]) { await p.setViewportSize({ width: w, height: 800 }); await p.waitForTimeout(200); const ov = await over(p), names = await p.evaluate(() => [...document.querySelectorAll("#journey .j-l")].every(l => l.getBoundingClientRect().width > 10 && l.scrollWidth <= l.clientWidth + 1) && [...document.querySelectorAll("#journey .j-steps a")].every(a => a.scrollWidth <= a.clientWidth + 1));
-    check(ov <= 0 && names, `${w} px : pas de défilement horizontal, noms des étapes entiers`, `${ov} ${names}`); }
-  // Sous 1 180 px, les 7 cases ne tiennent plus : un bouton dit l’étape et déplie la liste.
-  await p.setViewportSize({ width: 800, height: 800 }); await p.waitForTimeout(250);
-  check(await over(p) <= 0 && await vis(p, "#hsMob") && !(await vis(p, "#journey .j-steps a")), "800 px : pas de défilement horizontal, l’étape devient un bouton, liste repliée", String(await over(p)));
-  await p.evaluate(() => scrollTo(0, 700)); await p.waitForTimeout(250);
-  const sk8 = await p.evaluate(() => [Math.round(document.getElementById("hsMob").getBoundingClientRect().top), Math.round(document.querySelector(".appbar").getBoundingClientRect().bottom)]);
-  check(Math.abs(sk8[0] - sk8[1]) <= 1, "800 px : après défilement, le bouton d’étape reste collé sous la barre du haut", sk8.join(" / "));
-  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
-  await p.click("#hsMob"); await p.waitForTimeout(200);
-  check(await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].filter(a => a.getClientRects().length).length) === 7 && await vis(p, "#jNext .jn-row .btn.primary"), "800 px : le bouton déplie les 7 étapes ; la barre du bas reste celle de l’ordinateur");
-  await p.keyboard.press("Escape");
+  // Les étapes restent en ligne, de gauche à droite, à toutes les largeurs d’ordinateur et de tablette.
+  for (const w of [1440, 1280, 1100, 1024, 900, 800]) { await p.setViewportSize({ width: w, height: 800 }); await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(250);
+    const r = await p.evaluate(() => { const as = [...document.querySelectorAll("#journey .j-steps a")]; return { ov: document.documentElement.scrollWidth - innerWidth, n: as.filter(a => a.getClientRects().length && a.getBoundingClientRect().width > 40).length, row: new Set(as.map(a => Math.round(a.getBoundingClientRect().top))).size, fit: as.every(a => a.scrollWidth <= a.clientWidth + 1) && [...document.querySelectorAll("#journey .j-l, #journey .j-s")].every(e => e.scrollWidth <= e.clientWidth + 1), btn: !!document.getElementById("hsMob") && document.getElementById("hsMob").getClientRects().length > 0 }; });
+    check(r.ov <= 0 && r.n === 7 && r.row === 1 && r.fit && !r.btn, `${w} px : les 7 étapes de gauche à droite, sur une rangée, textes entiers, sans défilement horizontal`, JSON.stringify(r));
+    await p.evaluate(() => scrollTo(0, 700)); await p.waitForTimeout(300);
+    const c = await p.evaluate(() => { const S = document.querySelector("#journey .j-steps"), j = S.getBoundingClientRect(), as = [...S.querySelectorAll("a")]; return { h: Math.round(j.height), top: Math.round(j.top), ab: Math.round(document.querySelector(".appbar").getBoundingClientRect().bottom), fit: as.every(a => a.scrollWidth <= a.clientWidth + 1) }; });
+    check(c.h <= 48 && Math.abs(c.top - c.ab) <= 1 && c.fit, `${w} px : au défilement, rangée compacte collée en haut`, JSON.stringify(c)); }
   await p.setViewportSize({ width: 1440, height: 900 }); await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
   await axe(p, [".appbar", "#journey", "#jNowBox", "#jNext"], "axe-core, thème clair : barre du haut, étapes, bandeau, barre du bas");
   check(!p.errs.length, "ordinateur : aucune erreur JavaScript", p.errs.join(" | "));
+  await p.ctx.close(); }
+
+// ---------- 2 bis. Barre du haut : hauteurs, carrés, écarts, icônes centrées (Laurent, 11 novembre 2026, 15 h 43) ----------
+for (const theme of ["light", "dark"]) for (const w of [1440, 1100, 1024, 800]) {
+  const p = await open({ viewport: { width: w, height: 800 } }, "couleurs", { "lisio-theme": theme });
+  const B = await p.evaluate(() => { const ctl = [...document.querySelectorAll(".appbar .logo,.appbar .prj-b,.appbar .cmdk,.appbar .undobtn,.appbar .themebtn,.appbar .normchip,.appbar .tools-b,.appbar .expbtn")].filter(e => e.getClientRects().length && getComputedStyle(e).display !== "none" && e.getBoundingClientRect().width > 0).sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+    const bar = document.querySelector(".appbar").getBoundingClientRect(), mid = bar.top + bar.height / 2;
+    return ctl.map(e => { const r = e.getBoundingClientRect(), c = getComputedStyle(e), sv = [...e.querySelectorAll(":scope > svg, :scope > .logo-mark")].filter(x => x.getBoundingClientRect().width > 0), lab = [...e.children].some(x => x.tagName === "SPAN" && !x.classList.contains("sr-only") && x.getBoundingClientRect().width > 4 && getComputedStyle(x).position !== "absolute");
+      return { id: e.id || e.className.split(" ")[0], l: r.left, r: r.right, w: Math.round(r.width), h: Math.round(r.height), mid: Math.abs(r.top + r.height / 2 - mid), bd: c.borderTopStyle !== "none" && parseFloat(c.borderTopWidth) >= 1 || e.classList.contains("logo") || !!e.closest(".hgrp"), icons: sv.map(x => { const q = x.getBoundingClientRect(); return { cv: x.classList.contains("cv"), s: Math.round(q.width), dy: Math.abs(q.top + q.height / 2 - (r.top + r.height / 2)), dx: Math.abs(q.left + q.width / 2 - (r.left + r.width / 2)) }; }), lab }; }); });
+  const tag = `${theme === "dark" ? "sombre" : "clair"} ${w} px`;
+  check(B.every(b => b.h === 44 && b.mid <= 1), `${tag} : toutes les commandes du haut font 44 px et sont centrées sur la barre`, JSON.stringify(B.map(b => b.id + " " + b.h)));
+  const sq = B.filter(b => !b.lab && b.id !== "cmdk" && b.id !== "normChip");
+  check(sq.length >= 3 && sq.every(b => b.w === 44 && b.bd), `${tag} : les boutons sans texte sont des carrés de 44 px cernés d’un filet`, JSON.stringify(sq.map(b => b.id + " " + b.w + (b.bd ? "" : " sans filet"))));
+  check(sq.every(b => b.id === "logo" || b.icons.every(i => i.s === 20 && i.dx <= 0.6 && i.dy <= 0.6)) && B.filter(b => b.lab).every(b => b.icons.every(i => i.s === (i.cv ? 16 : 20) && i.dy <= 0.6)), `${tag} : icônes de 20 px, centrées dans leur bouton`, JSON.stringify(B.map(b => b.id + ":" + b.icons.map(i => i.s + "/" + i.dx.toFixed(1) + "/" + i.dy.toFixed(1)).join(","))));
+  const gaps = B.slice(1).map((b, k) => Math.round(b.l - B[k].r)), cut = B.findIndex(b => b.id === "cmdk");
+  const fixed = gaps.filter((g, k) => k !== cut && !(B[k].id === "undoB" && B[k + 1].id === "redoB"));
+  check(fixed.every(g => g === 8) && (B.findIndex(b => b.id === "redoB") < 0 || gaps[B.findIndex(b => b.id === "undoB")] === -1), `${tag} : 8 px entre deux commandes ; Annuler et Rétablir accolés, filet commun`, JSON.stringify(gaps));
+  check(await over(p) <= 0, `${tag} : pas de défilement horizontal`);
   await p.ctx.close(); }
 
 // ---------- 3. Thème sombre ----------
