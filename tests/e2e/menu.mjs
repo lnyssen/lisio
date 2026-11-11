@@ -38,6 +38,8 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   const st = await p.evaluate(() => { const j = document.getElementById("journey"), r = j.getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect(); return { pos: getComputedStyle(j).position, top: Math.round(r.top), ab: Math.round(a.bottom) }; });
   check(st.pos !== "fixed" && st.top >= st.ab && st.top < 140 && await vis(p, "#journey .j-steps"), "les étapes sont en haut de la page, sous la barre", JSON.stringify(st));
   check(/\d\/7/.test(await p.textContent("#journey .j-prog")), "les étapes montrent la progression", await p.textContent("#journey .j-prog"));
+  // Couleurs tient presque dans l’écran depuis l’en-tête plus court (audit UX, 11 novembre 2026) : on teste sur Nuances, plus longue.
+  await p.evaluate(() => { location.hash = "palette"; }); await p.waitForTimeout(400);
   await bottom(p);
   check(await vis(p, "#toTop"), "après défilement, le bouton « Retour en haut » apparaît");
   check(/haut/i.test(await p.locator("#toTop").getAttribute("aria-label") || await p.locator("#toTop").textContent()), "le bouton dit ce qu’il fait");
@@ -47,12 +49,15 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(!(await vis(p, "#toTop")), "en haut de page, le bouton disparaît");
   await p.click('#journey .j-steps a[href="#tester"]'); await p.waitForTimeout(400);
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)) && await p.evaluate(() => document.querySelector('#journey a[aria-current="step"]').getAttribute("href")) === "#tester", "cliquer une étape ouvre sa page et la marque comme en cours");
-  // Essentiel / Avancé : retiré de la barre du haut (Laurent, 7 novembre 2026, 11 h), reste dans Outils › Réglages.
+  // Essentiel / Avancé : retiré de la barre du haut (Laurent, 7 novembre 2026, 11 h). Audit UX du 11 novembre 2026 : un seul endroit
+  // sur ordinateur, la ligne de l’étape ; Outils › Réglages ne le répète plus (il y reste sur mobile).
   check(!(await p.evaluate(() => !!document.querySelector(".appbar [data-mode]"))), "Essentiel / Avancé n’est plus dans la barre du haut");
   await p.click("#helpB"); await p.waitForTimeout(200);
-  check(/Affichage/.test(await p.evaluate(() => { const g = document.getElementById("modeSeg"); return document.getElementById(g.getAttribute("aria-labelledby")).textContent; })), "Outils › Réglages : le choix est nommé « Affichage »");
-  await p.click('#modeSeg [data-mode="adv"]'); await p.waitForTimeout(200);
-  check(await p.evaluate(() => localStorage.getItem("lisio-mode") === "adv") && await p.getAttribute('#modeSeg [data-mode="adv"]', "aria-pressed") === "true", "Outils › Réglages : « Avancé » change l’affichage, état annoncé");
+  check(!(await vis(p, "#modeSeg")), "Outils › Réglages ne répète pas Essentiel / Avancé sur ordinateur");
+  await p.keyboard.press("Escape"); await p.waitForTimeout(150);
+  await p.click('#jNowBox .j-mode [data-mode="adv"]'); await p.waitForTimeout(200);
+  check(await p.evaluate(() => localStorage.getItem("lisio-mode") === "adv") && await p.getAttribute('#jNowBox .j-mode [data-mode="adv"]', "aria-pressed") === "true", "ligne de l’étape : « Avancé » change l’affichage, état annoncé");
+  await p.click("#helpB"); await p.waitForTimeout(200);
   await p.keyboard.press("Escape"); await p.waitForTimeout(150);
   // Outils
   check(await vis(p, "#helpB") && /Outils/.test(await p.textContent("#helpB")), "bouton « Outils » dans la barre du haut");
@@ -61,8 +66,9 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(tools.open && tools.inside, "« Outils » s’ouvre dans l’écran", JSON.stringify({ open: tools.open, inside: tools.inside }));
   check(["Rédaction", "Guide", "S’entraîner", "Projets"].every(w => tools.t.includes(w)), "Outils : Rédaction, Guide, S’entraîner, Projets");
   check(await p.evaluate(() => [...document.querySelectorAll("#helpPop .hp-h")].map(h => h.textContent).join("|")) === "Espace de travail|Apprendre et aide|Réglages", "Outils en trois groupes : Espace de travail, Apprendre et aide, Réglages");
-  const segs = await p.evaluate(() => [...document.querySelectorAll("#helpPop .mode-row .seg")].map(g => { const r = g.getBoundingClientRect(); return Math.round(r.width) + "x" + Math.round(r.height); }));
-  check(segs.length === 2 && new Set(segs).size === 1, "Réglages : thème et affichage de même largeur et même hauteur", segs.join(", "));
+  // Audit UX du 11 novembre 2026 : sur ordinateur, Réglages ne garde que le thème ; Essentiel / Avancé est dans la ligne de l’étape.
+  const segs = await p.evaluate(() => [...document.querySelectorAll("#helpPop .mode-row .seg")].filter(g => g.getClientRects().length).map(g => { const r = g.getBoundingClientRect(); return Math.round(r.width) + "x" + Math.round(r.height); }));
+  check(segs.length === 1 && /x44$/.test(segs[0]), "Réglages : le thème seul, 44 px de haut", segs.join(", "));
   await p.click('#helpPop [data-theme-set="dark"]'); await p.waitForTimeout(150);
   check(await p.evaluate(() => document.documentElement.getAttribute("data-theme") === "dark" && document.querySelector('#helpPop [data-theme-set="dark"]').getAttribute("aria-pressed") === "true"), "thème sombre depuis Réglages, état annoncé");
   await p.click('#helpPop [data-theme-set="light"]'); await p.waitForTimeout(150);

@@ -50,10 +50,9 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   await page.locator("#jHelp .adv-hint button").click(); await page.waitForTimeout(200);
   check(await page.locator("#shSet").isVisible() && await ls(page, "lisio-mode") === "adv", "« Afficher les réglages avancés » : tout réapparaît");
   check(await page.locator("nav.tabs a, nav.tabs button").count() === navEss, "même menu dans les deux modes");
-  // 4. Bascule dans Aide et formation.
-  await page.evaluate(() => document.getElementById("helpB").click()); await page.waitForTimeout(200);
-  const ess = page.locator('#modeSeg button[data-mode="ess"]');
-  check(await ess.isVisible() && (await page.locator('#modeSeg button[data-mode="adv"]').getAttribute("aria-pressed")) === "true", "Aide et formation : choix de l’affichage, état annoncé");
+  // 4. Bascule dans la ligne de l’étape (audit UX du 11 novembre 2026 : un seul endroit sur ordinateur).
+  const ess = page.locator('#jNowBox .j-mode button[data-mode="ess"]');
+  check(await ess.isVisible() && (await page.locator('#jNowBox .j-mode button[data-mode="adv"]').getAttribute("aria-pressed")) === "true", "ligne de l’étape : choix de l’affichage, état annoncé");
   await ess.click(); await page.waitForTimeout(200);
   check(await ls(page, "lisio-mode") === "ess" && (await ess.getAttribute("aria-pressed")) === "true", "retour en Essentiel depuis le menu");
   check(!page.errs.length, "aucune erreur JavaScript", page.errs.join(" | "));

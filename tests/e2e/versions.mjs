@@ -18,7 +18,9 @@ async function open(opts = {}) {
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + "#exporter");
   await page.evaluate(cols => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); }, MINE);
-  await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); return { ctx, page, errors };
+  await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500);
+  // Audit UX du 11 novembre 2026 : versions et décisions sont dans la partie « Historique » de la page Exporter.
+  await page.click("#exTabHist"); await page.waitForTimeout(150); return { ctx, page, errors };
 }
 const ready = async page => { await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); };
 const axeOn = async (page, sel, lab) => { if (!AXE) return; if (!(await page.evaluate(() => typeof axe !== "undefined"))) await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
@@ -42,7 +44,7 @@ const stored = page => page.evaluate(() => ({ s: JSON.parse(localStorage.getItem
   // On change une couleur.
   await page.goto(PAGE + "#couleurs"); await ready(page);
   await page.fill("#ph0", "#1D4ED8"); await page.press("#ph0", "Tab"); await page.waitForTimeout(300);
-  await page.goto(PAGE + "#exporter"); await ready(page);
+  await page.goto(PAGE + "#exporter"); await ready(page); await page.click("#exTabHist"); await page.waitForTimeout(150);
   await page.click("#verList [data-ver-cmp]"); await page.waitForTimeout(300);
   const cmp = await page.textContent("#verOut");
   check(/Bleu/.test(cmp) && /#2563EB/.test(cmp) && /#1D4ED8/.test(cmp), "comparer : la couleur modifiée, avant et après", cmp);
@@ -83,7 +85,7 @@ const stored = page => page.evaluate(() => ({ s: JSON.parse(localStorage.getItem
   check(await page.locator("#decList li[data-dec]").count() === 2 && /Comité accessibilité/.test(await page.textContent("#decList")), "la modification remplace l’entrée, sans doublon");
   await axeOn(page, "#decCard", "décisions");
   // Le journal part avec le projet et dans le rapport ; les versions restent hors du lien.
-  const [d] = await Promise.all([page.waitForEvent("download"), page.click("#repMd")]);
+  const [d] = await Promise.all([page.waitForEvent("download"), (async () => { await page.click("#exTabDeliver"); await page.click("#repMd"); })()]);
   const md = readFileSync(await d.path(), "utf8");
   check(/## Exceptions[\s\S]*Orange illisible en texte courant[\s\S]*Direction artistique/.test(md), "rapport Markdown : l’exception, avec son rôle", md.slice(md.indexOf("## Exceptions"), md.indexOf("## Exceptions") + 400));
   check(/## Décisions[\s\S]*Niveau AA visé/.test(md), "rapport Markdown : la section Décisions");

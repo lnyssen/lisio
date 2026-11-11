@@ -1461,6 +1461,21 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
   #tester .dock{position:static;margin:0 0 12px}
   :root:root .mhead{margin-top:20px}
 }
+
+/* Exporter en trois parties (audit UX, lot 2) */
+.ex-tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line);gap:0}
+.ex-tabs [role=tab]{min-height:48px;padding:10px 20px;border:1px solid transparent;border-bottom:0;margin-bottom:-1px;background:none;color:var(--muted);font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.ex-tabs [role=tab][aria-selected=true]{color:var(--ink);background:var(--surface);border-color:var(--line);border-bottom:1px solid var(--surface)}
+.ex-tabs [role=tab]:hover{color:var(--ink)}
+.ex-panel{display:flex;flex-direction:column;gap:var(--sec-gap)}.ex-panel[hidden]{display:none}
+@media (max-width:760px){.ex-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.ex-tabs [role=tab]{padding:8px 6px;font-size:14px;line-height:1.2}}
+/* Doublons retirés (audit UX, lot 2) : Essentiel / Avancé se règle dans la ligne de l’étape sur ordinateur, dans Outils sur mobile ;
+   le thème se règle dans Outils, partout. */
+@media (min-width:761px){#helpPop .mode-row:has(#modeSeg){display:none!important}}
+:root:root .appbar .themebtn{display:none!important}
+.ex-tabs+.ex-panel,.ex-panel{margin-top:calc(24px - var(--sec-gap))}
+/* Design system sur mobile (audit UX, lot 2) : l’aperçu défile dans son cadre au lieu d’allonger la page de 14 000 px. */
+@media (max-width:760px){#sysWrap{max-height:70dvh;overflow:auto;overscroll-behavior:contain}}
 </style>
 </head>
 <body>
@@ -1712,7 +1727,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
       <div class="row between"><div class="seg" role="group" aria-label="Largeur d’écran de l’aperçu" id="sysView"><button type="button" data-v="w320">320</button><button type="button" data-v="mobile">Mobile<span class="dsk"> 390</span></button><button type="button" data-v="tablet">Tablet<span class="dsk"> 768</span></button><button type="button" data-v="desktop">Desktop<span class="dsk"> 1024</span></button><button type="button" data-v="xl">XL<span class="dsk"> 1440</span></button></div><button class="btn sm" type="button" id="sysCss">Copier le CSS</button></div>
       <div class="row sys-tools"><div class="seg" role="group" aria-label="Mode de l’aperçu" id="sysTheme"><button type="button" data-v="light">Clair</button><button type="button" data-v="dark">Sombre</button><button type="button" data-v="split">Côte à côte</button></div><label class="sys-vis" for="sysVision">Vision<select id="sysVision"><option value="normal">Typique</option><option value="protan">Protanopie (rouge)</option><option value="deutan">Deutéranopie (vert)</option><option value="tritan">Tritanopie (bleu)</option><option value="achro">Achromatopsie (gris)</option><option value="blur">Vision floue</option></select></label><button class="btn sm" type="button" id="sysGrid" aria-pressed="false">Afficher la grille</button><button class="btn sm" type="button" id="sysSpacing" aria-pressed="false">Tester l’espacement du texte</button><button type="button" class="qchip" data-q="reflow" aria-expanded="false" aria-controls="qPop">Pourquoi 320 px et l’espacement ?</button></div>
       <p class="note" id="sysNote"></p><p class="sys-chk" id="sysChk" role="status"></p>
-      <div class="sys-wrap" id="sysWrap"><iframe id="sysFrame" title="Aperçu du design system" sandbox="allow-scripts" scrolling="no"></iframe></div>
+      <div class="sys-wrap" id="sysWrap" role="region" aria-label="Aperçu du design system, défilable" tabindex="0"><iframe id="sysFrame" title="Aperçu du design system" sandbox="allow-scripts" scrolling="no"></iframe></div>
       <section class="laws" id="sysLaws" aria-labelledby="sysLawsH" hidden></section>
     </div>
   </section>
@@ -1793,6 +1808,13 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
   </section>
   <section id="exporter" role="region" aria-labelledby="exH" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1 id="exH">Exporter le design system</h1><p class="lead">Un seul fichier, <code>lisio-design-system.json</code>, contient tout ce que vous avez réglé dans Lisio. Le plugin Lisio le transforme en variables et en styles Figma, avec les mêmes noms pour toute l’équipe.</p></div></header>
+    <!-- Audit UX du 11 novembre 2026 : la page Exporter en trois parties, au lieu de treize cartes à la suite. -->
+    <div class="ex-tabs" role="tablist" aria-label="Parties de la page Exporter">
+      <button type="button" role="tab" id="exTabDeliver" aria-controls="exPanDeliver" aria-selected="true" data-extab="deliver">Livrer</button>
+      <button type="button" role="tab" id="exTabCheck" aria-controls="exPanCheck" aria-selected="false" tabindex="-1" data-extab="check">Vérifier à la main</button>
+      <button type="button" role="tab" id="exTabHist" aria-controls="exPanHist" aria-selected="false" tabindex="-1" data-extab="hist">Historique</button>
+    </div>
+    <div class="ex-panel" role="tabpanel" id="exPanDeliver" aria-labelledby="exTabDeliver">
     <div class="card-surface ex-hero">
       <div class="ex-file"><span class="ex-ico" aria-hidden="true">{ }</span><div><b>lisio-design-system.json</b><span class="muted" id="exSize"></span></div></div>
       <div class="row"><button class="btn primary" type="button" id="exDl">Télécharger le fichier</button><button class="btn" type="button" id="exCopy">Copier pour le plugin</button><a class="btn" href="https://lisio-psi.vercel.app/lisio-figma-plugin.zip" download>Plugin Figma (.zip)</a></div>
@@ -1805,6 +1827,44 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
       <div class="row"><button class="btn primary" type="button" id="prjLink">Copier le lien de partage</button><button class="btn" type="button" id="prjSave">Enregistrer le projet</button><button class="btn" type="button" id="prjOpen">Ouvrir un projet</button><input type="file" id="prjFile" accept=".json,application/json" hidden></div>
       <p class="note" id="prjNote"></p>
     </div>
+    <div class="card-surface" id="exReport">
+      <h2>Rapport d’accessibilité</h2>
+      <p class="note">Une page à imprimer ou à enregistrer en PDF : vos couleurs, chaque paire, chaque rôle en clair et en sombre, chaque style de texte, avec le ratio, le seuil et le verdict. Pratique pour une revue, un client ou un dossier de conformité. Il dit aussi ce que Lisio ne vérifie pas.</p>
+      <div class="row"><button class="btn primary" type="button" id="repOpen">Ouvrir le rapport</button><button class="btn" type="button" id="repDl">Télécharger le rapport (.html)</button><button class="btn" type="button" id="repMd">Télécharger en Markdown (.md)</button><button class="btn" type="button" id="repJson">Télécharger en JSON</button></div>
+      <p class="note">Le Markdown se colle dans un ticket, un wiki ou un dépôt de code. Le JSON se relit par un outil. Les trois formats donnent les mêmes résultats, avec la version de Lisio et l’empreinte du projet : mêmes réglages, même rapport.</p>
+    </div>
+    <div class="card-surface">
+      <h2>Ce que contient le fichier, et où il arrive dans Figma</h2>
+      <p class="note">Les valeurs ci-dessous sont celles de votre design system actuel. Tout est en anglais dans Figma, pour coller aux noms utilisés par les développeurs.</p>
+      <div class="ex-map" id="exMap"></div>
+    </div>
+    <div class="card-surface">
+      <h2>L’importer dans Figma</h2>
+      <ol class="g-steps">
+        <li><a href="https://lisio-psi.vercel.app/lisio-figma-plugin.zip" download>Téléchargez le plugin</a> et décompressez-le.</li>
+        <li>Dans l’application Figma pour ordinateur, ouvrez un fichier, puis le menu Figma en haut à gauche, <b>Plugins › Development › Import new plugin from manifest…</b>, et choisissez <code>manifest.json</code>. À faire une seule fois.</li>
+        <li>Lancez <b>Plugins › Development › Lisio</b>, collez avec Ctrl ou Cmd + V (ou déposez le fichier), puis <b>Importer</b>.</li>
+      </ol>
+      <p class="note">Le plugin ajoute aussi trois planches de présentation : Color palette, Semantic colors et Fluid typography. Relancer l’import met à jour l’existant, sans doublons. Son onglet <b>Vérifier les contrastes</b> mesure chaque texte d’une maquette existante contre son fond, propose pour chaque échec la couleur de votre design system qui passe (un clic, ou « Tout corriger »), et liste les couleurs qui sortent du système. Cochez « Créer aussi les composants » pour obtenir Bouton, Champ et Alerte, déjà reliés aux variables, sur une page « Lisio components ».</p>
+    </div>
+    <div class="card-surface">
+      <h2>Lisio, Figma, code : les mêmes noms</h2>
+      <div class="ex-tw"><table class="flu ex-gl" id="exGloss"></table></div>
+    </div>
+    <div class="card-surface" id="exCssCard">
+      <div class="row between"><h2>Pour les développeurs : le CSS</h2><div class="row"><button class="btn sm" type="button" id="exCss">Copier tout le CSS</button><button class="btn sm" type="button" id="exCssVars">Copier les variables seules</button><button class="btn sm" type="button" id="exCssDl">Télécharger lisio.css</button></div></div>
+      <p class="note">Les mêmes valeurs en variables CSS, rangées en quatre couches : primitives, rôles, layout, typographie. Plus une classe <code>.t-</code> par style de texte et les règles de focus et de liens. Choisissez une catégorie pour copier une variable, une ligne ou toute la catégorie.</p>
+      <p class="adv-hint"><span>Mode Essentiel : la copie variable par variable est masquée. « Copier tout le CSS » suffit pour commencer.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
+      <div class="adv" id="exCssAdv">
+      <div class="seg ex-cat" role="group" aria-label="Catégorie du CSS" id="exCat"></div>
+      <div class="row between"><p class="note" id="exCatN" style="margin:0"></p><button class="btn sm" type="button" id="exCatCopy">Copier la catégorie</button></div>
+      <div class="ex-tw ex-vw" tabindex="0" role="region" aria-label="Variables de la catégorie, défilables"><table class="flu ex-vars" id="exVars"></table></div>
+      </div>
+      <details class="ts-code"><summary>Voir le CSS</summary><pre class="code" id="exCssOut" tabindex="0"></pre></details>
+    </div>
+    </div>
+
+    <div class="ex-panel" role="tabpanel" id="exPanCheck" aria-labelledby="exTabCheck" hidden>
     <div class="card-surface" id="exManual">
       <div class="row between"><h2>À vérifier à la main, écran par écran</h2><p class="note" id="mnCount" style="margin:0"></p></div>
       <p class="note">Lisio mesure les couleurs, la typographie et les composants de base. Le reste se vérifie sur les vrais écrans, au clavier et avec un lecteur d’écran. Ajoutez vos écrans, cochez au fur et à mesure : tout est repris dans le rapport.</p>
@@ -1812,12 +1872,9 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
       <div class="mn-edit"><label class="ex-name">Nom de cet écran<input type="text" id="mnName" maxlength="40"></label><button class="btn sm" type="button" id="mnDel">Retirer cet écran</button></div>
       <div id="mnList" class="mn-list"></div>
     </div>
-    <div class="card-surface" id="exReport">
-      <h2>Rapport d’accessibilité</h2>
-      <p class="note">Une page à imprimer ou à enregistrer en PDF : vos couleurs, chaque paire, chaque rôle en clair et en sombre, chaque style de texte, avec le ratio, le seuil et le verdict. Pratique pour une revue, un client ou un dossier de conformité. Il dit aussi ce que Lisio ne vérifie pas.</p>
-      <div class="row"><button class="btn primary" type="button" id="repOpen">Ouvrir le rapport</button><button class="btn" type="button" id="repDl">Télécharger le rapport (.html)</button><button class="btn" type="button" id="repMd">Télécharger en Markdown (.md)</button><button class="btn" type="button" id="repJson">Télécharger en JSON</button></div>
-      <p class="note">Le Markdown se colle dans un ticket, un wiki ou un dépôt de code. Le JSON se relit par un outil. Les trois formats donnent les mêmes résultats, avec la version de Lisio et l’empreinte du projet : mêmes réglages, même rapport.</p>
     </div>
+
+    <div class="ex-panel" role="tabpanel" id="exPanHist" aria-labelledby="exTabHist" hidden>
     <div class="card-surface" id="exHist">
       <div class="row between"><h2>Depuis le dernier export</h2><button class="btn sm" type="button" id="histCopy" hidden>Copier le résumé pour l’équipe</button></div>
       <div id="histOut"></div>
@@ -1852,35 +1909,6 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
       <div class="row"><button class="btn primary" type="button" id="decAdd">Ajouter au journal</button><button class="btn" type="button" id="decCancel" hidden>Annuler la modification</button></div>
       <ul class="dec-list" id="decList" aria-label="Journal des décisions et exceptions"></ul>
     </div>
-    
-    <div class="card-surface">
-      <h2>Ce que contient le fichier, et où il arrive dans Figma</h2>
-      <p class="note">Les valeurs ci-dessous sont celles de votre design system actuel. Tout est en anglais dans Figma, pour coller aux noms utilisés par les développeurs.</p>
-      <div class="ex-map" id="exMap"></div>
-    </div>
-    <div class="card-surface">
-      <h2>L’importer dans Figma</h2>
-      <ol class="g-steps">
-        <li><a href="https://lisio-psi.vercel.app/lisio-figma-plugin.zip" download>Téléchargez le plugin</a> et décompressez-le.</li>
-        <li>Dans l’application Figma pour ordinateur, ouvrez un fichier, puis le menu Figma en haut à gauche, <b>Plugins › Development › Import new plugin from manifest…</b>, et choisissez <code>manifest.json</code>. À faire une seule fois.</li>
-        <li>Lancez <b>Plugins › Development › Lisio</b>, collez avec Ctrl ou Cmd + V (ou déposez le fichier), puis <b>Importer</b>.</li>
-      </ol>
-      <p class="note">Le plugin ajoute aussi trois planches de présentation : Color palette, Semantic colors et Fluid typography. Relancer l’import met à jour l’existant, sans doublons. Son onglet <b>Vérifier les contrastes</b> mesure chaque texte d’une maquette existante contre son fond, propose pour chaque échec la couleur de votre design system qui passe (un clic, ou « Tout corriger »), et liste les couleurs qui sortent du système. Cochez « Créer aussi les composants » pour obtenir Bouton, Champ et Alerte, déjà reliés aux variables, sur une page « Lisio components ».</p>
-    </div>
-    <div class="card-surface">
-      <h2>Lisio, Figma, code : les mêmes noms</h2>
-      <div class="ex-tw"><table class="flu ex-gl" id="exGloss"></table></div>
-    </div>
-    <div class="card-surface" id="exCssCard">
-      <div class="row between"><h2>Pour les développeurs : le CSS</h2><div class="row"><button class="btn sm" type="button" id="exCss">Copier tout le CSS</button><button class="btn sm" type="button" id="exCssVars">Copier les variables seules</button><button class="btn sm" type="button" id="exCssDl">Télécharger lisio.css</button></div></div>
-      <p class="note">Les mêmes valeurs en variables CSS, rangées en quatre couches : primitives, rôles, layout, typographie. Plus une classe <code>.t-</code> par style de texte et les règles de focus et de liens. Choisissez une catégorie pour copier une variable, une ligne ou toute la catégorie.</p>
-      <p class="adv-hint"><span>Mode Essentiel : la copie variable par variable est masquée. « Copier tout le CSS » suffit pour commencer.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
-      <div class="adv" id="exCssAdv">
-      <div class="seg ex-cat" role="group" aria-label="Catégorie du CSS" id="exCat"></div>
-      <div class="row between"><p class="note" id="exCatN" style="margin:0"></p><button class="btn sm" type="button" id="exCatCopy">Copier la catégorie</button></div>
-      <div class="ex-tw ex-vw" tabindex="0" role="region" aria-label="Variables de la catégorie, défilables"><table class="flu ex-vars" id="exVars"></table></div>
-      </div>
-      <details class="ts-code"><summary>Voir le CSS</summary><pre class="code" id="exCssOut" tabindex="0"></pre></details>
     </div>
   </section>
 
@@ -1994,10 +2022,8 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 <div class="help-pop" id="helpPop" role="region" aria-labelledby="helpH" hidden><h2 id="helpH" class="sr-only">Outils</h2><h3 class="hp-h">Espace de travail</h3><ul><li><a href="#lisibilite" data-help data-tool><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg><b>Rédaction</b><small>Textes clairs : phrases, liens, boutons, erreurs</small></a></li>
 <li><button type="button" class="hp-b" data-prj-open><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><b>Projets</b><small>Ouvrir, dupliquer, partager, importer</small></button></li>
 <li><button type="button" class="hp-b" data-share-link><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><b>Copier le lien du projet</b><small>Tout le projet dans un lien, sans serveur</small></button></li></ul><h3 class="hp-h">Apprendre et aide</h3><ul><li><a href="#demo" data-help data-demo><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><b>Projet démo</b><small>Une palette exemple et la visite guidée des 7 étapes</small></a></li>
-<li><a href="#sources" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><b>Guide de Lisio</b><small>Chaque page expliquée, l’export vers Figma, les sources</small></a></li>
+<li><a href="#sources" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12.5h6M9 16h4"/></svg><b>Guide de Lisio</b><small>Chaque page expliquée, l’export vers Figma, la formation de l’équipe (guide et slides)</small></a></li>
 <li><a href="#formation" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8" fill="currentColor"/></svg><b>S’entraîner</b><small>Dix questions avec la réponse expliquée</small></a></li>
-<li><a href="https://lisio-psi.vercel.app/guide" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><b>Guide de formation</b><small>Le support complet pour l’équipe</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
-<li><a href="https://lisio-psi.vercel.app/slides" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="12" rx="2"/><path d="M12 16.5V20M8.5 20h7"/></svg><b>Slides</b><small>Pour animer une session</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li>
 <li><a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener" data-help><svg class="hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9v-5z"/><path d="M9 12l2 2 4-4"/></svg><b>WCAG 2.2 (W3C)</b><small>Le texte officiel des règles</small><svg class="ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M17 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h4"/></svg><span class="sr-only">, nouvel onglet</span></a></li></ul><h3 class="hp-h">Réglages</h3><div class="mode-row"><span id="themeL">Thème</span><div class="seg" role="group" aria-labelledby="themeL" id="themeSeg"><button type="button" data-theme-set="light">Clair</button><button type="button" data-theme-set="dark">Sombre</button></div></div><div class="mode-row"><span id="modeL">Affichage</span><div class="seg mode-seg" role="group" aria-labelledby="modeL" id="modeSeg"><button type="button" data-mode="ess">Essentiel</button><button type="button" data-mode="adv">Avancé</button></div></div></div>
 <dialog class="prj-dlg" id="prjDlg" aria-labelledby="prjDH"><span class="sheet-grab" aria-hidden="true"></span><div class="pd-h"><h2 id="prjDH">Projets</h2><button type="button" class="mx" id="prjX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span class="sr-only">Fermer</span></button></div>
 <p class="note">Vos projets sont enregistrés automatiquement dans ce navigateur. Pour travailler à plusieurs, envoyez un lien ou un fichier : vos collègues l’ouvrent dans Lisio et le retrouvent dans leur liste.</p>
@@ -5014,7 +5040,17 @@ function renderSummary() {
 $("sumBar").addEventListener("click", e => { const a = e.target.closest("[data-sumgo]"); if (!a) return; e.preventDefault();
   const v = a.getAttribute("href").slice(1), sel = SUM_FOCUS[a.dataset.sumgo] || `#${v} h1`; $("sumBar").open = false;
   if (location.hash !== "#" + v) location.hash = v; else show(v);
-  setTimeout(() => { const t = document.querySelector(sel) || document.querySelector(`#${v} h1`); if (!t) return; if (!t.matches("a,button,input,select,textarea,[tabindex]")) t.tabIndex = -1; t.focus(); }, 60); });
+  setTimeout(() => { const t = document.querySelector(sel) || document.querySelector(`#${v} h1`); if (!t) return; exReveal(t); if (!t.matches("a,button,input,select,textarea,[tabindex]")) t.tabIndex = -1; t.focus(); }, 60); });
+
+// ---------- Exporter en trois parties (audit UX du 11 novembre 2026) ----------
+function exTab(k, focus) { try { sessionStorage.setItem("lisio-extab", k); } catch (e) {} document.querySelectorAll("[data-extab]").forEach(t => { const on = t.dataset.extab === k; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; const p = document.getElementById(t.getAttribute("aria-controls")); if (p) p.hidden = !on; if (on && focus) t.focus(); }); }
+// Ouvre la partie qui contient un élément caché (lien du résumé, recherche).
+function exReveal(el) { const p = el && el.closest && el.closest(".ex-panel[hidden]"); if (p) exTab(document.querySelector(`[aria-controls="${p.id}"]`).dataset.extab); }
+document.addEventListener("click", e => { const t = e.target.closest("[data-extab]"); if (t) exTab(t.dataset.extab); });
+// La partie choisie reste ouverte le temps de la session, même après un rechargement (retour à une version).
+{ let k = null; try { k = sessionStorage.getItem("lisio-extab"); } catch (e) {} if (k && document.querySelector(`[data-extab="${k}"]`)) exTab(k); }
+document.addEventListener("keydown", e => { const t = e.target.closest && e.target.closest("[data-extab]"); if (!t || !["ArrowRight", "ArrowLeft", "Home", "End"].includes(e.key)) return; e.preventDefault();
+  const all = [...document.querySelectorAll("[data-extab]")], i = all.indexOf(t), n = e.key === "Home" ? 0 : e.key === "End" ? all.length - 1 : (i + (e.key === "ArrowRight" ? 1 : -1) + all.length) % all.length; exTab(all[n].dataset.extab, true); });
 let qBtn = null;
 function qClose(back) { $("qPop").hidden = true; if (qBtn) { qBtn.setAttribute("aria-expanded", "false"); if (back) qBtn.focus(); } qBtn = null; }
 // Règles W3C citées par chaque « ? » : numéro et titre officiel (en anglais), page « Understanding » de WCAG 2.2.
@@ -5335,7 +5371,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "55cf6f0";
+const LISIO_BUILD = "89fcede";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
