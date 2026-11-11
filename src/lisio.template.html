@@ -1256,6 +1256,7 @@ h1,h2,h3{letter-spacing:-.03em}
 /* Barre du haut : une bande blanche pleine largeur, filet noir dessous, commandes à plat. */
 :root:root .appbar{--ctl:44px;position:sticky;top:0;height:68px;padding:0!important;margin:0!important;gap:12px!important;box-sizing:border-box;background:var(--surface)!important;border:0!important;border-image:linear-gradient(to top,var(--line) 1px,var(--surface) 1px) fill 0//0 100vmax!important;pointer-events:auto;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 :root:root .appbar .prj-b,:root:root .appbar .cmdk,:root:root .appbar .normchip,:root:root .appbar .tools-b,:root:root .appbar .expbtn,:root:root .appbar .cmd-mb,:root:root .appbar .themebtn{box-shadow:none;border:1px solid var(--line)!important;background:var(--surface)}
+:root:root .appbar .prj-b{height:var(--ctl);box-sizing:border-box}
 :root:root .appbar .hgrp{box-shadow:none;border:0!important;background:none;padding:0;gap:0}
 :root:root .appbar .hgrp .undobtn{width:40px;border:0!important}
 :root:root .appbar .prj-b:hover,:root:root .appbar .normchip:hover,:root:root .appbar .tools-b:hover,:root:root .appbar .expbtn:hover{background:var(--hover)}
@@ -1266,22 +1267,26 @@ h1,h2,h3{letter-spacing:-.03em}
 body::before{background:var(--surface)}
 
 /* Étapes : 7 cases égales sous la barre du haut. Chacune dit son nom, son état et un fait compté dans le projet. */
-.hsteps{position:relative;margin:24px 0 0}
+/* Elles restent collées sous la barre du haut (Laurent, 11 novembre 2026) : la ligne de progression glisse dessous, les cases restent. */
+.hsteps{position:sticky;z-index:14;top:calc(var(--apph) - 26px);margin:24px 0 0}
 .hs-mob{display:none}
-.j-prog{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.j-prog b{color:var(--ink)}
+.j-prog{margin:0;height:26px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}.j-prog b{color:var(--ink)}
 .j-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--line);background:var(--surface)}
 .j-steps li{min-width:0;border-left:1px solid var(--line)}.j-steps li:first-child{border-left:0}
-.j-steps a{display:flex;align-items:flex-start;gap:10px;height:100%;min-height:100px;box-sizing:border-box;padding:14px 12px 14px 14px;color:var(--ink);text-decoration:none}
+.j-steps a{display:flex;align-items:center;gap:10px;height:100%;box-sizing:border-box;padding:8px 10px;color:var(--ink);text-decoration:none}
 .j-steps a:hover{background:var(--hover)}
 .j-steps a:focus-visible{outline-offset:-6px}
 .j-steps a[aria-current]{background:var(--ink);color:var(--surface)}
 .j-steps a[aria-current]:focus-visible{outline-color:var(--surface)}
-.j-n{flex:none;width:28px;height:28px;display:grid;place-items:center;box-sizing:border-box;border:1px solid currentColor;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.j-n{flex:none;width:26px;height:26px;display:grid;place-items:center;box-sizing:border-box;border:1px solid currentColor;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
 .j-steps a.st-done .j-n{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .j-steps a.st-warn .j-n{background:var(--bad);color:var(--surface);border-color:var(--bad)}
 .j-steps a.st-todo .j-n,.j-steps a.st-na .j-n{border-style:dashed}
 .j-steps a[aria-current] .j-n{background:var(--surface);color:var(--ink);border-color:var(--surface)}
-.j-t{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;flex:1}
+.j-t{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:3px 8px;min-width:0;flex:1}
+.j-l{grid-column:1/-1}
+/* Cases compactes : le nom, puis le résumé. L’état se lit à la marque du numéro (✓ plein, ! rouge, pointillés) et reste écrit pour les lecteurs d’écran. */
+@media (min-width:1180px){.j-steps .j-s{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;border:0}}
 .j-l{max-width:100%;font-size:15px;font-weight:700;line-height:1.2;letter-spacing:-.015em;overflow-wrap:anywhere}
 .j-s,.j-cst{display:inline-block;max-width:100%;box-sizing:border-box;padding:2px 9px;border:1px solid var(--st-todo-bd);background:var(--st-todo-bg);color:var(--st-todo-ink);font-size:12px;font-weight:700;line-height:1.35;letter-spacing:0;text-transform:none}
 .st-done>.j-t .j-s,.j-cst.st-done{background:var(--st-done-bg);color:var(--st-done-ink);border-color:var(--st-done-bd)}
@@ -1292,7 +1297,6 @@ body::before{background:var(--surface)}
 .j-steps a.st-warn .j-d{color:var(--bad);font-weight:700}
 .j-steps a[aria-current] .j-d{color:inherit}
 .j-i{font-weight:800}
-@media (min-width:1000px) and (max-width:1279px){.j-steps a{flex-direction:column;gap:8px;padding:12px 10px}.j-s{padding:2px 7px}}
 
 /* Bandeau de l’étape, accroché sous les cases : état, position, prochaine action ; affichage et aide à droite. */
 .j-nowbox{margin:0}
@@ -1317,7 +1321,7 @@ body::before{background:var(--surface)}
 /* Bas de page : « Étape précédente » et « Étape suivante » restent à l’écran, sur une bande blanche pleine largeur. */
 :root{--barh:72px}
 .wrap{padding-bottom:0!important}
-html{scroll-padding-bottom:calc(var(--barh) + 24px)!important}
+html{scroll-padding-top:calc(var(--apph) + 84px)!important;scroll-padding-bottom:calc(var(--barh) + 24px)!important}
 html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!important}
 .toast{bottom:calc(var(--barh) + 24px)!important}
 @media (min-width:761px){.dock{bottom:calc(var(--barh) + 16px)!important}}
@@ -1343,25 +1347,28 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 .qpop{border-left:1px solid var(--line);box-shadow:none}
 .pop,.help-pop,dialog{box-shadow:none;border:1px solid var(--line)}
 
-/* Sous 1 000 px, les 7 cases ne tiennent plus : l’étape devient un bouton qui déplie la liste. */
-@media (max-width:999px){
+/* Sous 1 180 px, les 7 cases ne tiennent plus : l’étape devient un bouton qui déplie la liste. */
+@media (max-width:1179px){
   .hs-mob{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:60px;box-sizing:border-box;padding:8px 14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer}
   .hs-t{display:flex;flex-direction:column;min-width:0}
   .hs-l{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
   .hs-s{font-size:13px;color:var(--muted)}
   .hs-mob svg{flex:none;width:22px;height:22px}
   .hs-mob[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .hsteps{top:var(--apph)}
   .hsteps .j-prog,.hsteps .j-steps{display:none}
   .hsteps.open .j-steps{display:block;position:absolute;z-index:40;left:0;right:0;top:100%;border-top:0;max-height:calc(100dvh - 150px);overflow:auto;overscroll-behavior:contain}
   .j-steps li{border-left:0;border-top:1px solid var(--hair)}.j-steps li:first-child{border-top:0}
   .j-steps a{align-items:center;min-height:60px;padding:8px 14px}
-  .j-t{flex-direction:row;flex-wrap:wrap;align-items:center;gap:2px 10px}
-  .j-l{flex:1 1 auto;max-width:none;font-size:16px}
-  .j-d{flex-basis:100%}
+  .j-t{grid-template-columns:minmax(0,1fr) auto}
+  .j-l{grid-column:1;font-size:16px}
+  .j-s{grid-column:2;grid-row:1}
+  .j-d{grid-column:1/-1}
 }
 /* Mobile : l’étape reste collée en haut ; en bas, une barre pleine largeur : précédente, Outils, suivante. */
 @media (max-width:760px){
   :root{--barh:calc(64px + env(safe-area-inset-bottom,0px))}
+  html{scroll-padding-top:76px!important}
   :root:root .appbar{--ctl:36px;position:static;height:60px;gap:8px!important;border-image:none!important;background:none!important}
   :root:root .appbar .prj-b,:root:root .appbar .cmdk,:root:root .appbar .normchip,:root:root .appbar .tools-b,:root:root .appbar .expbtn,:root:root .appbar .cmd-mb,:root:root .appbar .themebtn{border-color:var(--line)!important}
   .hsteps{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin:0 calc(-1 * max(var(--gut),env(safe-area-inset-left,0px)))}

@@ -68,14 +68,24 @@ const axe = async (p, include, label) => { if (!AXE) return; await p.addScriptTa
 { const p = await open({ viewport: { width: 1440, height: 900 } }, "tester");
   const J = await p.evaluate(() => { const j = document.getElementById("journey"), r = j.getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect();
     const cells = [...j.querySelectorAll(".j-steps a")].map(x => { const b = x.getBoundingClientRect(), s = x.querySelector(".j-s"), d = x.querySelector(".j-d"), l = x.querySelector(".j-l"); const w = e => e ? Math.round(e.getBoundingClientRect().width) : 0;
-      return { w: Math.round(b.width), top: Math.round(b.top), l: w(l), s: w(s), d: w(d), dt: d ? d.textContent.trim() : "", cur: x.getAttribute("aria-current"), bg: getComputedStyle(x).backgroundColor, fg: getComputedStyle(x).color }; });
+      return { w: Math.round(b.width), top: Math.round(b.top), l: w(l), s: w(s), d: w(d), dw: !!d && d.scrollWidth <= d.clientWidth + 1, dt: d ? d.textContent.trim() : "", cur: x.getAttribute("aria-current"), bg: getComputedStyle(x).backgroundColor, fg: getComputedStyle(x).color }; });
     return { pos: getComputedStyle(j).position, top: Math.round(r.top), abBottom: Math.round(a.bottom), cells }; });
   check(J.pos !== "fixed" && J.top >= J.abBottom && J.top < 140, "les étapes sont en haut, sous la barre, et non plus dans une pilule flottante", JSON.stringify({ pos: J.pos, top: J.top }));
   const ws = J.cells.map(c => c.w);
   check(J.cells.length === 7 && Math.max(...ws) - Math.min(...ws) <= 2 && new Set(J.cells.map(c => c.top)).size === 1, "7 cases de même largeur, sur une seule rangée", ws.join(", "));
-  check(J.cells.every(c => c.l > 20 && c.s > 20 && c.d > 10 && c.dt.length > 2), "chaque case montre le nom, l’état et un résumé", JSON.stringify(J.cells.map(c => c.dt)));
+  // Cases compactes (Laurent, 11 novembre 2026) : le nom et le résumé se voient ; l’état est porté par la marque du numéro et dit aux lecteurs d’écran.
+  check(J.cells.every(c => c.l > 20 && c.d > 10 && c.dt.length > 2 && c.dw), "chaque case montre le nom et un résumé entier", JSON.stringify(J.cells.map(c => c.dt)));
   const cur = J.cells.filter(c => c.cur === "step");
   check(cur.length === 1 && rgb(cur[0].bg).join() === "5,5,5" && rgb(cur[0].fg).join() === "255,255,255", "l’étape en cours : case noire, texte blanc", JSON.stringify(cur));
+  // Retours de Laurent, 11 novembre 2026, 15 h 29 : « Mon projet » de la même hauteur que « WCAG » ; les étapes restent collées en haut, plus compactes.
+  const hh = await p.evaluate(() => [".appbar .prj-b", ".appbar .normchip", ".appbar .cmdk", ".appbar .tools-b", ".appbar .expbtn"].map(s => Math.round(document.querySelector(s).getBoundingClientRect().height)));
+  check(new Set(hh).size === 1 && hh[0] >= 44, "barre du haut : « Mon projet », recherche, WCAG, Outils et Exporter ont la même hauteur", hh.join(", "));
+  const ch = await p.evaluate(() => Math.round(document.querySelector("#journey .j-steps").getBoundingClientRect().height));
+  check(ch <= 66, "les cases des étapes sont compactes (66 px au plus)", ch + " px");
+  await p.evaluate(() => scrollTo(0, 700)); await p.waitForTimeout(250);
+  const sk = await p.evaluate(() => { const j = document.querySelector("#journey .j-steps").getBoundingClientRect(), a = document.querySelector(".appbar").getBoundingClientRect(), t = document.elementFromPoint(innerWidth / 2, j.top + j.height / 2); return { top: Math.round(j.top), ab: Math.round(a.bottom), onTop: !!t && !!t.closest("#journey") }; });
+  check(Math.abs(sk.top - sk.ab) <= 1 && sk.onTop, "après défilement, les 7 étapes restent collées sous la barre du haut", JSON.stringify(sk));
+  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
   const small = await p.evaluate(() => { const out = []; for (const e of document.querySelectorAll("#journey *, #jNowBox *, #jNext *")) { if (!e.getClientRects().length || e.closest("svg")) continue; const own = [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()); if (!own) continue; const r = e.getBoundingClientRect(); if (r.width <= 1 || r.height <= 1) continue; const f = parseFloat(getComputedStyle(e).fontSize); if (f < 12) out.push(e.className + " " + f); } return out; });
   check(!small.length, "navigation : aucun texte sous 12 px", small.slice(0, 5).join(", "));
   const D = await p.evaluate(() => { const b = document.getElementById("jNowBox"), a = b.querySelector(".j-todo"); return { pos: (b.querySelector(".j-pos") || {}).textContent || "", cst: (b.querySelector(".j-cst") || {}).textContent || "", lab: a ? (a.querySelector(".j-todo-l") || {}).textContent || "" : "", say: a ? (a.querySelector(".j-todo-t") || {}).textContent || "" : "", mode: !!b.querySelector('.j-mode [data-mode="ess"]'), help: !!b.querySelector(".j-help-b") }; });
@@ -101,11 +111,15 @@ const axe = async (p, include, label) => { if (!AXE) return; await p.addScriptTa
   await go(p, "lisibilite");
   check(await vis(p, "#journey .j-steps") && !(await p.evaluate(() => document.querySelector('#journey a[aria-current="step"]'))) && !(await vis(p, "#jNowBox")) && !(await vis(p, "#jNext .jn-row")), "hors parcours (Rédaction) : étapes visibles, aucune en cours, ni bandeau ni barre du bas");
   await go(p, "tester");
-  for (const w of [1440, 1100, 1024]) { await p.setViewportSize({ width: w, height: 800 }); await p.waitForTimeout(200); const ov = await over(p), names = await p.evaluate(() => [...document.querySelectorAll("#journey .j-l")].every(l => l.getBoundingClientRect().width > 10 && l.scrollWidth <= l.clientWidth + 1) && [...document.querySelectorAll("#journey .j-steps a")].every(a => a.scrollWidth <= a.clientWidth + 1));
+  for (const w of [1440, 1280, 1180]) { await p.setViewportSize({ width: w, height: 800 }); await p.waitForTimeout(200); const ov = await over(p), names = await p.evaluate(() => [...document.querySelectorAll("#journey .j-l")].every(l => l.getBoundingClientRect().width > 10 && l.scrollWidth <= l.clientWidth + 1) && [...document.querySelectorAll("#journey .j-steps a")].every(a => a.scrollWidth <= a.clientWidth + 1));
     check(ov <= 0 && names, `${w} px : pas de défilement horizontal, noms des étapes entiers`, `${ov} ${names}`); }
-  // Sous 1 000 px, les 7 cases ne tiennent plus : un bouton dit l’étape et déplie la liste.
+  // Sous 1 180 px, les 7 cases ne tiennent plus : un bouton dit l’étape et déplie la liste.
   await p.setViewportSize({ width: 800, height: 800 }); await p.waitForTimeout(250);
   check(await over(p) <= 0 && await vis(p, "#hsMob") && !(await vis(p, "#journey .j-steps a")), "800 px : pas de défilement horizontal, l’étape devient un bouton, liste repliée", String(await over(p)));
+  await p.evaluate(() => scrollTo(0, 700)); await p.waitForTimeout(250);
+  const sk8 = await p.evaluate(() => [Math.round(document.getElementById("hsMob").getBoundingClientRect().top), Math.round(document.querySelector(".appbar").getBoundingClientRect().bottom)]);
+  check(Math.abs(sk8[0] - sk8[1]) <= 1, "800 px : après défilement, le bouton d’étape reste collé sous la barre du haut", sk8.join(" / "));
+  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
   await p.click("#hsMob"); await p.waitForTimeout(200);
   check(await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].filter(a => a.getClientRects().length).length) === 7 && await vis(p, "#jNext .jn-row .btn.primary"), "800 px : le bouton déplie les 7 étapes ; la barre du bas reste celle de l’ordinateur");
   await p.keyboard.press("Escape");
