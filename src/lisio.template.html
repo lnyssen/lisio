@@ -2036,6 +2036,11 @@ input[type=checkbox]{width:24px!important;height:24px!important}
       </div>
       <details class="ts-code"><summary>Voir le CSS</summary><pre class="code" id="exCssOut" tabindex="0"></pre></details>
     </div>
+    <div class="card-surface" id="exTwCard">
+      <div class="row between"><h2>Pour les développeurs : Tailwind</h2><div class="row"><button class="btn sm" type="button" id="exTw">Copier la configuration</button><button class="btn sm" type="button" id="exTwDl">Télécharger tailwind.config.js</button></div></div>
+      <p class="note">Pour les équipes qui codent avec Tailwind : chaque gamme devient une couleur, avec ses 11 nuances. Par exemple <code>bg-nuit-500</code> pour un fond ou <code>text-nuit-700</code> pour un texte.</p>
+      <details class="ts-code"><summary>Voir la configuration</summary><pre class="code" id="exTwOut" tabindex="0"></pre></details>
+    </div>
     </div>
 
     <div class="ex-panel" role="tabpanel" id="exPanCheck" aria-labelledby="exTabCheck" hidden>
@@ -2761,11 +2766,13 @@ function renderRules() {
   const g45 = gapFor(4.5), g3 = gapFor(3), rule = (t, v, x) => `<div class="rule"><span class="small muted">${t}</span><b>${v ?? "aucun"}</b><span class="small">${x}</span></div>`;
   $("rules").innerHTML = rule("Texte sur fond blanc", firstW(4.5) ? `nuances ${firstW(4.5)} à 950` : null, `Passe en AA. En AAA : à partir de ${firstW(7) ?? "–"}.`) + rule("Texte sur fond noir", lastB(4.5) ? `nuances 50 à ${lastB(4.5)}` : null, `Passe en AA. En AAA : jusqu’à ${lastB(7) ?? "–"}.`) + rule("Texte sur une autre nuance", g45 ? `${g45} crans d’écart` : null, `Ex. texte ${STEPS[Math.min(STEPS.length - 1, 1 + g45)] ?? "–"} sur fond 100 : 4,5:1 garanti, quelles que soient les couleurs.`) + rule("Bordures, icônes", g3 ? `${g3} crans d’écart` : null, `Ex. ${STEPS[Math.min(STEPS.length - 1, 1 + g3)] ?? "–"} sur fond 100 : 3:1 garanti. Sur blanc : à partir de ${firstW(3) ?? "–"}.`);
 }
+// Configuration Tailwind : une couleur par gamme, 11 nuances (bg-nuit-500, text-nuit-700…).
+function twConfig() { return "// tailwind.config.js\nmodule.exports = {\n  theme: { extend: { colors: {\n" + scales.map(s => `    "${s.slug}": {\n` + s.sw.map((h, i) => `      ${STEPS[i]}: "${h}",`).join("\n") + "\n    },").join("\n") + "\n  } } }\n};\n"; }
 function renderExport() {
   const f = $("exportFmt").value; let out = "";
   if (f === "css") out = ":root {\n" + scales.map(s => s.sw.map((h, i) => `  --${s.slug}-${STEPS[i]}: ${h};`).join("\n")).join("\n\n") + "\n}\n";
   else if (f === "json") { const o = { color: {} }; scales.forEach(s => { o.color[s.slug] = {}; s.sw.forEach((h, i) => { o.color[s.slug][STEPS[i]] = { $type: "color", $value: h, $description: `Contraste ${fmt(floor2(ratio(h, "#FFFFFF")))}:1 sur blanc` }; }); }); out = JSON.stringify(o, null, 2); }
-  else out = "// tailwind.config.js\nmodule.exports = {\n  theme: { extend: { colors: {\n" + scales.map(s => `    "${s.slug}": {\n` + s.sw.map((h, i) => `      ${STEPS[i]}: "${h}",`).join("\n") + "\n    },").join("\n") + "\n  } } }\n};\n";
+  else out = twConfig();
   $("exportOut").textContent = out;
 }
 $("vision").addEventListener("change", e => { vision = e.target.value; renderScales(); });
@@ -4373,6 +4380,9 @@ $("exVars").addEventListener("click", e => { const b = e.target.closest("[data-c
   b.textContent = "Copié ✓"; clearTimeout(b._t); b._t = setTimeout(() => { b.textContent = b.dataset.l; }, 1600); });
 $("exCssVars").addEventListener("click", () => copy(cssVarsOnly(tsCss()), "Variables CSS copiées"));
 $("exCssDl").addEventListener("click", () => saveFile("lisio.css", tsCss(), "text/css", "lisio.css téléchargé"));
+$("exTw").addEventListener("click", () => copy(twConfig(), "Configuration Tailwind copiée"));
+$("exTwDl").addEventListener("click", () => saveFile("tailwind.config.js", twConfig(), "text/javascript", "tailwind.config.js téléchargé"));
+$("exTwCard").querySelector("details").addEventListener("toggle", e => { if (e.target.open) $("exTwOut").textContent = twConfig(); });
 
 // ---------- Onglets ----------
 const VIEWS = ["couleurs", "palette", "matrice", "tester", "styles", "systeme", "lisibilite", "sources"];

@@ -62,6 +62,17 @@ check(/@media/.test(vo) && !/font-family:/.test(vo) && /--text-default:/.test(vo
 // 6. Téléchargement.
 const [d] = await Promise.all([page.waitForEvent("download"), page.click("#exCssDl")]);
 check(d.suggestedFilename() === "lisio.css" && readFileSync(await d.path(), "utf8") === full, "téléchargement de lisio.css identique au CSS copié");
+// Tailwind (remis dans Exporter le 12 novembre 2026, demande de Laurent).
+await page.click("#exTw"); await page.waitForTimeout(150);
+const tw = await copied();
+const twObj = await page.evaluate(src => { const module = {}; new Function("module", src)(module); return module.exports; }, tw);
+const twCol = twObj && twObj.theme && twObj.theme.extend && twObj.theme.extend.colors || {};
+check(["bleu", "bleu-2", "ete-2026", "encre"].every(k => twCol[k] && Object.keys(twCol[k]).length === 11), "Tailwind : une couleur par gamme, 11 nuances, configuration exécutable", Object.keys(twCol).join(", "));
+check(/^#[0-9A-F]{6}$/i.test(twCol.bleu && twCol.bleu[500] || ""), "Tailwind : valeurs hexadécimales");
+const [dt] = await Promise.all([page.waitForEvent("download"), page.click("#exTwDl")]);
+check(dt.suggestedFilename() === "tailwind.config.js" && readFileSync(await dt.path(), "utf8") === tw, "téléchargement de tailwind.config.js identique à la copie");
+await page.click("#exTwCard summary"); await page.waitForTimeout(150);
+check((await page.locator("#exTwOut").textContent()) === tw, "Tailwind : configuration visible dans la carte");
 if (AXE) { await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
   const v = await page.evaluate(async () => (await axe.run(document.querySelector("#exCssCard"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
   check(!v.length, "axe-core : aucune violation", v.join(", ")); }
