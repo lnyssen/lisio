@@ -369,8 +369,6 @@ nav.tabs button[aria-current="page"]{color:var(--primary-ink);background:var(--p
 :root[data-theme="light"]{color-scheme:light}
 .undobtn{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;border:1.5px solid var(--hair);background:var(--surface);color:var(--ink);cursor:pointer;padding:0;flex:none}.undobtn svg{width:18px;height:18px}.undobtn:disabled{opacity:.45;cursor:default}
 @media (hover:hover){.undobtn:not(:disabled):hover{background:var(--hover)}}
-@media (max-width:480px){#redoB{display:none}}
-@media (min-width:761px) and (max-width:1000px){#redoB{display:none}}
 .expbtn{font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;border:0;background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:7px 14px 7px 11px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
 .expbtn svg{width:17px;height:17px}
 @media (max-width:480px){.expbtn span{display:none}.expbtn{padding:0 9px;min-width:var(--ctl);justify-content:center}}
@@ -1772,10 +1770,10 @@ input[type=checkbox]{width:24px!important;height:24px!important}
     <div class="stage">
       <div class="verdict" id="verdict" role="status" aria-live="polite"></div>
       <div class="canvas" id="canvas">
-        <div class="c-h" id="cH" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Titre d’essai, modifiable">Votre attestation est prête</div>
-        <p id="cP1" contenteditable="true" spellcheck="false" aria-label="Paragraphe d’essai, modifiable">Elle reste consultable douze mois dans votre espace personnel. Si une information vous semble erronée, contactez le service client avant la date limite. Cliquez ici pour écrire votre propre texte.</p>
-        <p id="cP2" contenteditable="true" spellcheck="false" aria-label="Deuxième paragraphe d’essai, modifiable">Frais d’envoi : 0,99 €, délai 3 à 5 jours. <a href="#tester" onclick="return false">Voir la notice</a></p>
-        <div class="c-ui"><button type="button" class="c-btn" tabindex="-1">Télécharger le PDF</button><span aria-hidden="true">✓ ✕ ★ → 1Il0O rn m</span></div>
+        <div class="c-h" id="cH" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Titre d’essai, modifiable">Une palette que tout le monde peut lire</div>
+        <p id="cP1" contenteditable="true" spellcheck="false" aria-label="Paragraphe d’essai, modifiable">Chaque couleur du design system a son rôle : fond, texte, action, alerte. Les nuances vont du plus clair au plus foncé, et chaque paire texte-fond est testée avant de partir dans Figma. Cliquez ici pour écrire votre propre texte.</p>
+        <p id="cP2" contenteditable="true" spellcheck="false" aria-label="Deuxième paragraphe d’essai, modifiable">Corps 16 px, interligne 1,5, contraste 7,2:1. <a href="#tester" onclick="return false">Voir les styles de texte</a></p>
+        <div class="c-ui"><button type="button" class="c-btn" tabindex="-1">Exporter les variables</button><span aria-hidden="true">✓ ✕ ★ → 1Il0O rn m</span></div>
       </div>
     </div>
 
@@ -4069,7 +4067,7 @@ function tsSpecimen(st) {
   const d = tsDef(st.id), f = tsFont(st), w = tsVw();
   return `font-family:${esc(fontCss(f))};font-size:${r1(sizeAt(st, w))}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;${d.italic ? "font-style:italic;" : ""}${d.upper ? "text-transform:uppercase;" : ""}color:${tsInk(st)};background:${S.ts.bg}`;
 }
-const TS_SAMPLE = { head: "Votre attestation est prête", body: "Elle reste consultable douze mois dans votre espace.", button: "Télécharger le PDF", label: "Dossier thématique" };
+const TS_SAMPLE = { head: "Une palette que tout le monde peut lire", body: "Chaque paire texte-fond est testée avant de partir dans Figma.", button: "Exporter les variables", label: "Design system" };
 const tsSample = d => d.id === "button" ? TS_SAMPLE.button : d.id === "label" ? TS_SAMPLE.label : TS_SAMPLE[d.role];
 // Correcteur (8 novembre 2026) : un style à couleur propre en échec reçoit la nuance la plus proche qui passe, de sa gamme d’abord.
 function tsColorFix(st) {
@@ -4899,7 +4897,7 @@ ${TPL_CSS}`;
 <div class="comps">
 <div class="comp"><h3 class="t-h5">Bouton, ses états</h3><div class="states"><div><button class="btn btn-primary t-button" type="button">Envoyer</button><span class="t-caption mut">Repos</span></div><div><button class="btn btn-primary t-button is-hover" type="button" tabindex="-1">Envoyer</button><span class="t-caption mut">Survol</span></div><div><button class="btn btn-primary t-button is-active" type="button" tabindex="-1">Envoyer</button><span class="t-caption mut">Appuyé</span></div><div><button class="btn btn-primary t-button is-focus" type="button" tabindex="-1">Envoyer</button><span class="t-caption mut">Focus</span></div><div><button class="btn btn-primary t-button" type="button" disabled>Envoyer</button><span class="t-caption mut">Désactivé</span></div><div><button class="btn btn-secondary t-button" type="button">Annuler</button><span class="t-caption mut">Secondaire</span></div></div><ul><li>${dsCfg("btn")} px de haut : cible confortable (2.5.5).</li><li>Texte sur bouton : ${fr(ratio(R["text/on-action"], R["action/default"]))}:1, ${fr(ratio(R["text/on-action"], R["action/hover"]))}:1 au survol, ${fr(ratio(R["text/on-action"], R["action/pressed"]))}:1 appuyé.</li><li>Désactivé : exempté de contraste (1.4.3), mais dites pourquoi il l’est.</li></ul></div>
 <div class="comp"><h3 class="t-h5">Champ, avec erreur</h3><div class="field"><label for="f1" class="t-body-strong">Adresse e-mail</label><p id="f1h" class="field-help t-caption">Nous ne l’utiliserons que pour ce dossier.</p><input id="f1" type="email" autocomplete="email" aria-describedby="f1h"></div><div class="field"><label for="f2" class="t-body-strong">Numéro de dossier</label><input id="f2" type="text" value="12-AB" aria-invalid="true" aria-describedby="f2e"><p id="f2e" class="field-error t-caption">Le numéro compte 8 chiffres, par exemple 20261105.</p></div><div class="field"><label for="f3" class="t-body-strong">Code postal</label><input id="f3" type="text" value="75011" disabled></div><ul><li>Étiquette visible, aide reliée par aria-describedby.</li><li>Erreur dite en mots, avec une icône et une bordure de 2 px (1.4.1, 3.3.1).</li><li>Bordure à ${fr(ratio(R["border/default"], R["background/default"]))}:1 sur le fond (1.4.11).</li></ul></div>
-<div class="comp"><h3 class="t-h5">Liens</h3><p class="t-body measure">Votre attestation est <a href="#" class="t-link">disponible dans votre espace</a> pendant douze mois. <a href="#" class="t-link link-subtle">Mentions légales</a></p><p><a href="#" class="t-link link-arrow">Voir toutes les démarches</a></p><ul><li>Lien : ${fr(ratio(R["link/default"], R["background/default"]))}:1. Lien secondaire : ${fr(ratio(R["link/subtle"], R["background/default"]))}:1.</li><li>${dsCfg("link") === "solid" ? "Soulignés" : "Soulignés en pointillé"} : la couleur seule ne suffit pas (1.4.1).</li><li>Lien isolé : flèche et zone de clic d’au moins 24 px (2.5.8).</li></ul></div>
+<div class="comp"><h3 class="t-h5">Liens</h3><p class="t-body measure">Les jetons de couleur sont <a href="#" class="t-link">documentés dans le guide</a>, avec leur rôle et leurs contrastes. <a href="#" class="t-link link-subtle">Mentions légales</a></p><p><a href="#" class="t-link link-arrow">Voir toutes les démarches</a></p><ul><li>Lien : ${fr(ratio(R["link/default"], R["background/default"]))}:1. Lien secondaire : ${fr(ratio(R["link/subtle"], R["background/default"]))}:1.</li><li>${dsCfg("link") === "solid" ? "Soulignés" : "Soulignés en pointillé"} : la couleur seule ne suffit pas (1.4.1).</li><li>Lien isolé : flèche et zone de clic d’au moins 24 px (2.5.8).</li></ul></div>
 <div class="comp"><h3 class="t-h5">Icônes</h3><div class="icons"><div><span class="icon icon-sm icon-info" aria-hidden="true"></span><code>icon-sm 16</code></div><div><span class="icon icon-success" aria-hidden="true"></span><code>icon-md 20</code></div><div><span class="icon icon-lg icon-warning" aria-hidden="true"></span><code>icon-lg 24</code></div><div><button class="btn btn-secondary ibtn" type="button" aria-label="Plus d’informations"><span class="icon icon-info" aria-hidden="true"></span></button><code>bouton icône</code></div></div><ul><li>Icône seule : un nom accessible, ici aria-label (1.1.1).</li><li>Icône porteuse de sens : 3:1 sur son fond (1.4.11).</li><li>Bouton icône : 24 px minimum (2.5.8).</li></ul></div>
 <div class="comp"><h3 class="t-h5">Étiquette et carte</h3><span class="tag t-label">Dossier</span><div class="card"><h4 class="t-h4">Carte de séjour</h4><p class="t-body">Les pièces à fournir et les délais, en une page.</p><a href="#" class="t-link link-arrow">Lire le dossier</a></div><ul><li>Texte sur la surface à ${fr(ratio(R["text/default"], R["background/subtle"]))}:1.</li><li>L’étiquette est un mot, jamais une couleur seule.</li></ul></div>
 </div></section>
@@ -5540,7 +5538,7 @@ function fmRender(focus) {
   const q = fmQ[fmI];
   B.innerHTML = `<div class="fm-top"><p class="fm-prog">Question ${fmI + 1} sur ${n} · ${fmOk} bonne${fmOk > 1 ? "s" : ""} réponse${fmOk > 1 ? "s" : ""}</p><button class="btn sm" type="button" id="fmRestart">Recommencer</button></div><div class="fm-bar" aria-hidden="true"><i style="width:${fmI / n * 100}%"></i></div>
     <p class="fm-kind">${q.kind}</p><h2 class="fm-q" id="fmQ" tabindex="-1">${esc(q.q)}</h2>
-    ${q.smp ? `<div class="fm-smp" style="background:${q.smp.bg};color:${q.smp.fg}" aria-hidden="true"><b>Votre attestation est prête</b><span>Téléchargez-la avant le 30 juin, depuis votre espace personnel.</span></div>` : ""}
+    ${q.smp ? `<div class="fm-smp" style="background:${q.smp.bg};color:${q.smp.fg}" aria-hidden="true"><b>Une palette que tout le monde peut lire</b><span>Chaque nuance a son rôle : fond, texte, action ou alerte.</span></div>` : ""}
     <div class="fm-as" role="group" aria-labelledby="fmQ">${q.opts.map((o, i) => `<button type="button" class="fm-a" data-i="${i}">${esc(o)}<span class="m" aria-hidden="true"></span></button>`).join("")}</div>
     <p class="fm-fb" id="fmFb" role="status"></p><div class="row" id="fmNav" hidden><button class="btn primary" type="button" id="fmNext">${fmI + 1 < n ? "Question suivante" : "Voir le résultat"}</button></div>`;
   $("fmRestart").onclick = () => { fmStart(); $("fmQ").focus(); };
@@ -5635,7 +5633,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "9f81831";
+const LISIO_BUILD = "d0132cc";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

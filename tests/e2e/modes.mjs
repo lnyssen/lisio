@@ -49,7 +49,7 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   // À chaque ouverture, sauf si l’on coche « Ne plus afficher ».
   await page.reload(); await page.waitForTimeout(500);
   check(await page.evaluate(() => document.getElementById("home").open), "rechargé : l’accueil revient (à chaque ouverture)");
-  await page.check("#homeOff"); await h.locator("[data-home=skip]").click(); await page.reload(); await page.waitForTimeout(500);
+  await page.check("#homeOff"); await h.locator("[data-home=skip]").click(); await page.waitForFunction(() => localStorage.getItem("lisio-home") === "off"); await page.reload(); await page.waitForLoadState("load"); await page.waitForTimeout(800);
   check(!(await page.evaluate(() => document.getElementById("home").open)) && await ls(page, "lisio-home") === "off", "« Ne plus afficher au démarrage » est respecté");
   await go(page, "couleurs");
   // 2. Essentiel : réglages fins masqués, une invitation à tout afficher sur chaque page concernée.

@@ -143,6 +143,13 @@ for (const theme of ["light", "dark"]) for (const w of [1440, 1100, 1024, 800]) 
   check(fixed.every(g => g === 8) && (B.findIndex(b => b.id === "redoB") < 0 || gaps[B.findIndex(b => b.id === "undoB")] === -1), `${tag} : 8 px entre deux commandes ; Annuler et Rétablir accolés, filet commun`, JSON.stringify(gaps));
   check(await over(p) <= 0, `${tag} : pas de défilement horizontal`);
   await p.ctx.close(); }
+// 12 novembre 2026 : « Rétablir » aussi sur mobile, à côté d’« Annuler ».
+for (const w of [320, 390]) {
+  const p = await open({ viewport: { width: w, height: 760 } }, "couleurs");
+  const R = await p.evaluate(() => { const u = document.getElementById("undoB").getBoundingClientRect(), r = document.getElementById("redoB").getBoundingClientRect(); return { vis: r.width > 0 && getComputedStyle(document.getElementById("redoB")).display !== "none", gap: Math.round(r.left - u.right), right: Math.round(r.right), h: Math.round(r.height) }; });
+  check(R.vis && R.gap <= 0 && R.right <= w && R.h >= 24, `${w} px : « Rétablir » visible, accolé à « Annuler »`, JSON.stringify(R));
+  check(await over(p) <= 0, `${w} px : pas de défilement horizontal avec « Rétablir »`);
+  await p.ctx.close(); }
 
 // ---------- 3. Thème sombre ----------
 // Mode clair par défaut, même si le système est en sombre ; le sombre ne vient que d'un choix enregistré.
