@@ -584,7 +584,10 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
 @media (prefers-reduced-motion:reduce){.swc{transition:none}}
 .swt .base{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%}
 .swt .sw-r{position:absolute;left:8px;bottom:6px;font-size:11px;font-weight:700;letter-spacing:.02em;line-height:1}
-.scale-name{flex-direction:column;gap:4px}.scale-name code{font-family:var(--code);font-size:11.5px;font-weight:400;color:var(--muted)}
+.scale-name{flex-direction:column;gap:6px}.scale-name code{font-family:var(--code);font-size:11.5px;font-weight:400;color:var(--muted)}
+.scale-name .src{display:flex;align-items:center;gap:6px;min-width:0}.scale-name .src i{flex:none;width:22px;height:22px;border:1px solid var(--line)}.scale-name .src>span{display:flex;flex-direction:column;line-height:1.2}.scale-name .src b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.swt .src-tag{position:absolute;top:6px;left:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;line-height:1;padding:2px 4px;border:1px solid}
+.swt.near .swc{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--ink)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
 .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
 .nu-intro{display:flex;flex-direction:column;gap:14px;border-bottom:1px solid var(--hair);padding-bottom:18px}
@@ -1950,7 +1953,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
         </ol>
         <div class="nu-demo-wrap"><p class="small muted" id="nuDemoLead"></p><div class="nu-demo" id="nuDemo"></div></div>
       </div>
-      <span class="legend"><span><b>Texte</b> : se lit en texte sur blanc (4,5:1 ou plus)</span><span><b>Fond</b> : pour les fonds, avec un texte foncé</span><span>● la plus proche de votre couleur, dont le code est sous le nom</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
+      <span class="legend"><span><b>Texte</b> : se lit en texte sur blanc (4,5:1 ou plus)</span><span><b>Fond</b> : pour les fonds, avec un texte foncé</span><span><b>Source</b> : votre couleur telle que saisie, sous le nom. Dans la gamme, la nuance encadrée est la plus proche.</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
       <div class="scales"><div class="scale-table" id="scales"></div></div>
       <h3>Règles à retenir</h3>
       <div class="rules" id="rules"></div>
@@ -3554,8 +3557,8 @@ function changed() { isExample = false; store.set("colors", palette); snapPush()
 function renderScales() {
   let h = "";
   scales.forEach(sc => {
-    h += `<div class="scale-name" title="${esc(sc.name)}"><span>${esc(sc.name)}</span><code>${sc.hex}</code></div>`;
-    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); const cl = sc.clip && sc.clip[i]; h += `<button type="button" class="swt${cl ? " clip" : ""}" data-hex="${hex}" aria-label="${esc(sc.name)}, ${rw >= 4.5 ? "Texte" : "Fond"} ${STEPS[i]} ${hex}${i === sc.nearest ? ", la plus proche de votre couleur" : ""}${cl ? ", chroma réduite (hors gamut sRGB)" : ""}, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir${cl ? " · chroma réduite, hors gamut sRGB" : ""}"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}<span class="sw-r" style="color:${textOn(shown)}">${rw >= 4.5 ? "Texte" : "Fond"}</span></span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
+    h += `<div class="scale-name" title="${esc(sc.name)}"><span>${esc(sc.name)}</span><span class="src"><i style="background:${simulate(sc.hex, vision)}" aria-hidden="true"></i><span><b>Source</b><code>${sc.hex}</code></span></span></div>`;
+    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); const cl = sc.clip && sc.clip[i]; h += `<button type="button" class="swt${cl ? " clip" : ""}${i === sc.nearest ? " near" : ""}" data-hex="${hex}" aria-label="${esc(sc.name)}, ${i === sc.nearest ? "Source " : ""}${rw >= 4.5 ? "Texte" : "Fond"} ${STEPS[i]} ${hex}${i === sc.nearest ? (hex.toUpperCase() === sc.hex.toUpperCase() ? ", votre couleur source exacte" : `, la plus proche de votre couleur source ${sc.hex}`) : ""}${cl ? ", chroma réduite (hors gamut sRGB)" : ""}, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir${cl ? " · chroma réduite, hors gamut sRGB" : ""}"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="src-tag" style="color:${textOn(shown)};border-color:${textOn(shown)}">Source</span>` : ""}<span class="sw-r" style="color:${textOn(shown)}">${rw >= 4.5 ? "Texte" : "Fond"}</span></span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
   });
   $("scales").innerHTML = h;
   const iT = STEPS.indexOf(700), iB = STEPS.indexOf(100), rs = scales.map(sc => floor2(ratio(sc.sw[iT], sc.sw[iB])));
@@ -5679,7 +5682,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "ed1576b";
+const LISIO_BUILD = "d00ab54";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
