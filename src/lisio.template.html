@@ -1569,6 +1569,9 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 .ds-sw li b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ds-sw .sw{width:20px;height:20px;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
 .ds-notes{margin:0;padding-left:18px}
+.pc-steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
+.pc-steps li{line-height:1.5}
+.pc-bm{display:inline-flex;margin-left:6px;cursor:grab;vertical-align:middle}
 .chip-note{flex-basis:100%;grid-column:1/-1;margin:2px 0 0;color:var(--warn,var(--ink));padding-left:10px;border-left:3px solid currentColor}
 @media (prefers-reduced-motion:no-preference){.chip-note:not([hidden]){animation:lisioDrop var(--dur) var(--ease)}}
 @media (prefers-reduced-motion:no-preference){.ds-sw li{animation:lisioIn .3s var(--ease) both;animation-delay:var(--d,0ms)}}
@@ -2060,6 +2063,17 @@ input[type=checkbox]{width:24px!important;height:24px!important}
     </div>
 
     <div class="ex-panel" role="tabpanel" id="exPanCheck" aria-labelledby="exTabCheck" hidden>
+    <div class="card-surface" id="pcCard">
+      <div class="row between"><h2>Vérifier une page en ligne</h2><button class="btn sm" type="button" id="pcTry">Essayer sur Lisio</button></div>
+      <p class="note">Un favori qui mesure, sur n’importe quel site, chaque texte visible contre son vrai fond, et signale les couleurs qui ne viennent pas de cette palette. Tout se passe dans votre navigateur : rien n’est envoyé.</p>
+      <ol class="pc-steps">
+        <li>Glissez ce bouton dans la barre de favoris : <a class="btn primary pc-bm" id="pcLink" href="#" draggable="true">Lisio · vérifier</a></li>
+        <li>Ouvrez la page à vérifier (maquette en ligne, préproduction, site), puis cliquez sur le favori. Un deuxième clic referme le panneau.</li>
+      </ol>
+      <p class="note" id="pcNote"></p>
+      <div class="row"><button class="btn sm" type="button" id="pcCopy">Copier le code du favori</button><span class="small muted">Si le glisser ne marche pas : créez un favori et collez ce code comme adresse.</span></div>
+      <p class="small muted">Test automatique partiel : texte sur fond uni seulement. Un texte sur image ou dégradé est listé « à vérifier à l’œil ». Certains sites peuvent bloquer les favoris de ce type.</p>
+    </div>
     <div class="card-surface" id="exManual">
       <div class="row between"><h2>À vérifier à la main, écran par écran</h2><p class="note" id="mnCount" style="margin:0"></p></div>
       <p class="note">Lisio mesure les couleurs, la typographie et les composants de base. Le reste se vérifie sur les vrais écrans, au clavier et avec un lecteur d’écran. Ajoutez vos écrans, cochez au fur et à mesure : tout est repris dans le rapport.</p>
@@ -2358,6 +2372,7 @@ const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur 
 /*@core:color*/
 /*@core:importds*/
 /*@core:naming*/
+/*@core:pagecheck*/
 /*@core:wcag*/
 /*@core:project*/
 /*@core:status*/
@@ -4383,7 +4398,7 @@ $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset
 $("dsReset").addEventListener("click", () => { S.ds = JSON.parse(JSON.stringify(DS_BASE)); buildStatus(); dsChanged(); toast("Système de base rétabli"); });
 
 // ---------- Page Exporter ----------
-function renderExport2() {
+function renderExport2() { try { pcRefresh(); } catch (e) { /* favori : jamais bloquant */ }
   renderManual();
   const txt = tsJson(), o = JSON.parse(txt), n = obj => { let c = 0; (function w(x) { for (const k in x) { const v = x[k]; if (k[0] === "$" || !v || typeof v !== "object") continue; if ("$value" in v) c++; else w(v); } })(obj); return c; };
   const nCol = n(o.color), nSem = n(o.semantic), nTy = Object.keys(o.typography).length, nLay = n(o.layout) - 1, nDim = n({ s: o.spacing, r: o.radius, z: o.size, b: o["border-width"] }) + 1;
@@ -4437,6 +4452,21 @@ $("exCssDl").addEventListener("click", () => saveFile("lisio.css", tsCss(), "tex
 $("exTw").addEventListener("click", () => copy(twConfig(), "Configuration Tailwind copiée"));
 $("exTwDl").addEventListener("click", () => saveFile("tailwind.config.js", twConfig(), "text/javascript", "tailwind.config.js téléchargé"));
 $("exTwCard").querySelector("details").addEventListener("toggle", e => { if (e.target.open) $("exTwOut").textContent = twConfig(); });
+// « Vérifier une page en ligne » : le favori embarque la palette (toutes les nuances, rôles clair et sombre) et le niveau visé.
+function pcConf() {
+  const pal = new Set(["#FFFFFF", "#000000"]);
+  allScales().forEach(sc => { pal.add(sc.hex); sc.sw.forEach(h => pal.add(h)); });
+  ["light", "dark"].forEach(m => Object.values(dsRoles(m)).forEach(h => pal.add(h)));
+  return { level: S.level, name: S.projectName || "", palette: [...pal] };
+}
+function pcRefresh() {
+  const c = pcConf(), url = pageCheckBookmarklet(c);
+  $("pcLink").href = url; $("pcLink").dataset.len = url.length;
+  $("pcNote").textContent = `Ce favori connaît ${c.palette.length} couleurs (vos gammes, leurs nuances et les rôles du design system) et le niveau ${c.level === "AAA" ? "AAA" : "AA"}. Si la palette change, glissez‑le à nouveau.`;
+}
+$("pcLink").addEventListener("click", e => { e.preventDefault(); toast("Glissez ce bouton dans la barre de favoris, puis cliquez dessus sur la page à vérifier"); });
+$("pcCopy").addEventListener("click", () => { pcRefresh(); copy($("pcLink").href, "Code du favori copié"); });
+$("pcTry").addEventListener("click", () => { const r = lisioPageCheck(pcConf()); if (r) toast(`${r.tested} textes mesurés sur cette page, ${r.fails.length} paire${r.fails.length > 1 ? "s" : ""} en échec`); });
 
 // ---------- Onglets ----------
 const VIEWS = ["couleurs", "palette", "matrice", "tester", "styles", "systeme", "lisibilite", "sources"];

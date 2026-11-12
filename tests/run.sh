@@ -41,6 +41,7 @@ step "Versions et décisions (P2)" node tests/e2e/versions.mjs
 step "Audit UX du 11 novembre 2026 : corrections P1 à P3, sélecteurs, mouvement" node tests/e2e/audit-ux.mjs
 step "Allègement visuel : boutons, Essentiel, matrice, volet d’aide, espacements" node tests/e2e/allegement.mjs
 step "Importer un design system existant" node tests/e2e/import-ds.mjs
+step "Vérifier une page en ligne (favori)" node tests/e2e/pagecheck.mjs
 step "Refonte suisse monochrome : style, étapes en haut, barre du bas, mobile" node tests/e2e/refonte.mjs
 printf '\n%s\n' "$([ $fail -eq 0 ] && echo 'Tous les contrôles passent (contrôles partiels, pas un audit).' || echo "$fail étape(s) en échec.")"
 exit $fail
