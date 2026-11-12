@@ -12,7 +12,7 @@ try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e)
 
 // Ordre du blueprint (Couleurs, Typographie, Interaction, Vérification, Export) posé sur les pages de Lisio, dans l'ordre du menu (Nuances ajoutées par P0-4).
 const ORDER = [["couleurs", "Couleurs"], ["palette", "Nuances"], ["tester", "Polices"], ["styles", "Styles de texte"], ["systeme", "Design system"], ["matrice", "Contrastes"], ["exporter", "Exporter"]];
-const STATES = ["À commencer", "En cours", "Complété", "Attention requise", "Non applicable"];
+const STATES = ["À commencer", "En cours", "Vue", "Validée", "Attention requise", "Non applicable"];
 const browser = await chromium.launch();
 let fails = 0;
 const report = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok ? "ok   " : "ÉCHEC"} ${label}${detail ? " : " + detail : ""}`); };
@@ -38,14 +38,14 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   report(got === want, "ordre du parcours : Couleurs, Nuances, Polices, Styles, Design system, Contrastes, Exporter", got === want ? "" : got);
   // Barre des étapes en pilule (choix de Laurent, 7 novembre 2026) : l'état de chaque étape est dans son nom accessible et se voit
   // par une marque propre (pastille pleine ✓, rouge, pointillés) ; l'état de l'étape actuelle est écrit en toutes lettres sous le titre.
-  const KEY = { "À commencer": "todo", "En cours": "now", "Complété": "done", "Attention requise": "warn", "Non applicable": "na" };
+  const KEY = { "À commencer": "todo", "En cours": "now", "Vue": "seen", "Validée": "done", "Attention requise": "warn", "Non applicable": "na" };
   const bad = S.filter(s => !STATES.some(t => s.state.startsWith(t)) || !s.name.includes(s.state) || !s.cls.includes("st-" + KEY[STATES.find(t => s.state.startsWith(t))]));
   report(!bad.length, "chaque étape : état en toutes lettres dans son nom, et marque visible propre à l'état", JSON.stringify(bad.slice(0, 2)));
   // Audit UX du 11 novembre 2026 : plus de pastille « En cours » en double ; la case noire le montre, le bandeau le dit aux lecteurs d'écran.
   const now = await p.evaluate(() => { const c = document.querySelector("#jNowBox .j-pos"), a = document.querySelector('#journey .j-steps a[aria-current="step"]'); return c && a && /En cours/.test(c.textContent) && getComputedStyle(a).backgroundColor !== getComputedStyle(document.querySelector('#journey .j-steps a:not([aria-current])')).backgroundColor ? "En cours" : null; });
   report(now === "En cours", "l'état de l'étape actuelle : case noire, et dit dans le bandeau", String(now));
   const prog = await p.evaluate(() => { const e = document.querySelector("#journey .j-prog"); return e && e.textContent; });
-  report(/^\d\/7/.test(prog || ""), "la barre montre la progression (étapes complétées sur 7)", String(prog));
+  report(/^\d\/7 étapes? validées?/.test(prog || ""), "la barre compte les étapes validées sur 7", String(prog));
   const cur = S.filter(s => s.cur === "step");
   report(cur.length === 1 && cur[0].id === "matrice" && stOf(S, "matrice") === "En cours", "une seule étape actuelle (aria-current=step), dite « En cours »", JSON.stringify(cur));
   // Mise en page : nom et état collés au numéro, pour chaque étape (une classe d'état ne doit pas hériter d'un autre bloc).
@@ -60,7 +60,7 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
 // 2. Les états suivent le travail réel, pas la position dans le parcours.
 { const p = await open({ width: 1440, height: 900 });
   await go(p, "tester"); await go(p, "couleurs"); let S = await steps(p);
-  report(stOf(S, "tester") === "Complété" && stOf(S, "styles") === "À commencer", "étape ouverte puis quittée : « Complété » ; étape suivante jamais ouverte : « À commencer »", `${stOf(S, "tester")} / ${stOf(S, "styles")}`);
+  report(stOf(S, "tester") === "Vue" && stOf(S, "styles") === "À commencer", "étape ouverte puis quittée : « Vue », jamais « Validée » (audit P0) ; étape jamais ouverte : « À commencer »", `${stOf(S, "tester")} / ${stOf(S, "styles")}`);
   await go(p, "matrice"); S = await steps(p);
   report(stOf(S, "couleurs") === "À commencer", "Couleurs reste « À commencer » tant que la palette est celle de l'exemple", stOf(S, "couleurs"));
   await p.ctx.close(); }
@@ -68,7 +68,7 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
 // 2 bis. Couleurs saisies, puis un défaut réel : contour de focus blanc sur fond de page clair.
 { const p = await open({ width: 1440, height: 900 }, "couleurs", { "lisio:colors": JSON.stringify([{ name: "Encre", hex: "#0E1B4D" }, { name: "Corail", hex: "#F4A261" }]) });
   await go(p, "matrice"); let S = await steps(p);
-  report(stOf(S, "couleurs") === "Complété", "Couleurs « Complété » une fois ses propres couleurs saisies", stOf(S, "couleurs"));
+  report(stOf(S, "couleurs") === "Vue", "Couleurs « Vue » une fois ses propres couleurs saisies, pas encore validée", stOf(S, "couleurs"));
   await go(p, "systeme");
   const sel = 'select[data-role="focus/ring"]';
   const ok = await p.locator(sel).count();
@@ -87,7 +87,7 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   report(await p.evaluate(() => !document.getElementById("exporter").hidden), "saut direct vers Exporter depuis le bandeau, rien ne bloque");
   // Après rechargement, les états restent (enregistrés pour ce projet).
   await p.reload(); await p.waitForTimeout(600); S = await steps(p);
-  report(stOf(S, "tester") === "Complété", "après rechargement, les étapes ouvertes le restent", stOf(S, "tester"));
+  report(stOf(S, "tester") === "Vue", "après rechargement, les étapes ouvertes le restent", stOf(S, "tester"));
   report(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | ")); await p.ctx.close(); }
 
 // 3. Non applicable : une seule couleur, aucune paire à vérifier.

@@ -45,9 +45,9 @@ test("contrôles automatiques : réussis sur total, rôles et styles", () => {
   assert.match(row(s, "auto").value, /^39 conformes au test sur 42/);
 });
 
-test("accord : 1 étape complétée, 2 étapes complétées", () => {
-  assert.equal(row(projectSummary({ ...base, stepsDone: 1 }), "progress").value, "1 étape sur 7 complétée");
-  assert.equal(row(projectSummary({ ...base, stepsDone: 2 }), "progress").value, "2 étapes sur 7 complétées");
+test("accord : 1 étape validée, 2 étapes validées", () => {
+  assert.equal(row(projectSummary({ ...base, stepsDone: 1 }), "progress").value, "1 étape sur 7 validée");
+  assert.equal(row(projectSummary({ ...base, stepsDone: 2 }), "progress").value, "2 étapes sur 7 validées");
 });
 
 test("le résumé parle avec les cinq statuts du blueprint (P0-3 bis)", () => {

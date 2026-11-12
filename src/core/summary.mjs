@@ -29,10 +29,11 @@ export function projectSummary(d) {
   const left = d.manualAll - d.manualDone;
   add("manual", "Vérifications à la main", left ? `${left} sur ${d.manualAll} pas encore vérifiés` : `${d.manualAll} points cochés par l’équipe`,
     left ? "untested" : "ok", "#exporter", `${pl(d.screens, "écran", "écrans")}. Une case vide veut dire « pas encore vérifié », pas « en échec ».`);
-  add("progress", "Configuration", `${d.stepsDone} ${d.stepsDone > 1 ? "étapes" : "étape"} sur ${d.stepsAll} ${d.stepsDone > 1 ? "complétées" : "complétée"}`, "info", "#couleurs",
-    "Avancement de la configuration, pas la conformité.");
+  // Audit UX du 11 novembre 2026, P0 : un seul compteur, les étapes validées par l’équipe (src/core/steps.mjs), plus « Configuration ».
+  add("progress", "Étapes validées", `${d.stepsDone} ${d.stepsDone > 1 ? "étapes" : "étape"} sur ${d.stepsAll} ${d.stepsDone > 1 ? "validées" : "validée"}`, "info", "#couleurs",
+    "Validées par vous, une à une. C’est l’avancement, pas la conformité.");
   const counts = { fail: d.roleFails + d.styleFails, check: (d.styleWarns || 0) + colorIssues, untested: left };
-  const line = [{ status: "info", text: `Configuration ${d.stepsDone}/${d.stepsAll}` }];
+  const line = [{ status: "info", text: `${d.stepsDone}/${d.stepsAll} ${d.stepsDone > 1 ? "validées" : "validée"}` }];
   if (counts.fail) line.push({ status: "fail", text: pl(counts.fail, "échec", "échecs") });
   if (counts.check) line.push({ status: "check", text: `${counts.check} à vérifier` });
   if (counts.untested) line.push({ status: "untested", text: pl(counts.untested, "non testé", "non testés") });

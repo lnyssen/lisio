@@ -93,6 +93,33 @@ const h1Top = p => p.evaluate(() => { const h = [...document.querySelectorAll("#
   check(parseFloat(r.ind) === 0 && r.sec === "none", "moins d’animations demandé : rien ne glisse ni n’apparaît en fondu (2.3.3)", JSON.stringify(r));
   await p.ctx.close(); }
 
+// ---------- P0 (12 novembre 2026) : des états qui disent la vérité ----------
+const stateOf = (p, id) => p.evaluate(id => { const a = document.querySelector(`#journey .j-steps a[href="#${id}"] .j-s`); return a ? a.textContent.replace(/\(.*$/, "").trim() : ""; }, id);
+{ const own = { "lisio:colors": JSON.stringify([{ name: "Encre", hex: "#0E1B4D" }, { name: "Corail", hex: "#F4A261" }, { name: "Blanc", hex: "#FFFFFF" }]) };
+  const p = await open({ viewport: { width: 1440, height: 900 } }, "tester", own);
+  await go(p, "styles"); check(await stateOf(p, "tester") === "Vue", "ouvrir puis quitter une étape : « Vue », pas « Validée »", await stateOf(p, "tester"));
+  await go(p, "tester"); await p.click('[data-jval="tester"]'); await p.waitForTimeout(250);
+  const v = await p.evaluate(() => ({ pr: document.querySelector('[data-jval="tester"]').getAttribute("aria-pressed"), prog: document.querySelector("#journey .j-prog").textContent, line: document.getElementById("sumLine").textContent, foc: document.activeElement.dataset.jval }));
+  check(v.pr === "true" && await stateOf(p, "tester") === "Validée" && v.foc === "tester", "« Valider l’étape » : l’étape passe à « Validée », le focus reste sur le bouton", JSON.stringify(v));
+  check(/^1\/7 étape validée/.test(v.prog) && /1\/7 validée/.test(v.line) && !/Configuration/.test(v.line), "un seul compteur, le même partout : 1/7 validée", `${v.prog} | ${v.line}`);
+  await p.reload(); await p.waitForFunction(() => window.__lisioReady === true); await p.waitForTimeout(300);
+  check(await stateOf(p, "tester") === "Validée", "la validation survit au rechargement");
+  await p.click('[data-jval="tester"]'); await p.waitForTimeout(250);
+  check(await stateOf(p, "tester") === "Vue", "on peut retirer la validation");
+  await go(p, "exporter"); const ex = await p.evaluate(() => document.getElementById("exFix").textContent);
+  check(!/Tout est prêt|sereinement/.test(ex) && /Export possible|À corriger|À vérifier/.test(ex), "Exporter ne dit plus « Tout est prêt »", ex.trim().slice(0, 120));
+  check(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | "));
+  await p.ctx.close(); }
+{ const twins = { "lisio:colors": JSON.stringify([{ name: "Encre", hex: "#0E1B4D" }, { name: "Blanc", hex: "#FFFFFF" }, { name: "Neige", hex: "#FBFBFB" }]) };
+  const p = await open({ viewport: { width: 1440, height: 900 } }, "couleurs", twins);
+  check(await stateOf(p, "couleurs") === "Attention requise" && await stateOf(p, "palette") === "Attention requise", "couleurs presque jumelles : Couleurs et Nuances « Attention requise »", `${await stateOf(p, "couleurs")} / ${await stateOf(p, "palette")}`);
+  const b = await p.evaluate(() => { const x = document.querySelector('[data-jval="couleurs"]'), w = document.getElementById("jValWhy"); return { dis: x.getAttribute("aria-disabled"), why: w && w.textContent }; });
+  check(b.dis === "true" && /à régler avant de valider/.test(b.why || ""), "valider est refusé tant qu’un point reste, et la raison est écrite", JSON.stringify(b));
+  await p.ctx.close(); }
+{ const p = await open({ viewport: { width: 1440, height: 900 } }, "matrice");
+  check(await stateOf(p, "couleurs") === "À commencer" && await stateOf(p, "palette") !== "Attention requise", "palette d’exemple : Couleurs « À commencer », aucune alerte allumée d’office");
+  await p.ctx.close(); }
+
 await browser.close();
 console.log(fails ? `\n${fails} échec(s).` : "\nTous les contrôles passent.");
 process.exit(fails ? 1 : 0);
