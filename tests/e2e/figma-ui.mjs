@@ -55,7 +55,7 @@ const waitDone = f => f.waitForFunction(() => /Import terminé/.test(document.ge
 for (const consent of [false, true]) {
   let strVar, baseVar, oldBoard;
   const { figma, f, errs, page } = await open(fg => {
-    const c = fg.variables.createVariableCollection("Colors"); strVar = fg.variables.createVariable("ink/main", c, "STRING"); baseVar = fg.variables.createVariable("brand/base", c, "COLOR");
+    const c = fg.variables.createVariableCollection("Colors"); strVar = fg.variables.createVariable("encre/main", c, "STRING"); baseVar = fg.variables.createVariable("marque/base", c, "COLOR");
     oldBoard = fg.createFrame(); oldBoard.name = "Color palette"; oldBoard.width = 600;
   });
   await f.uncheck("#comps"); await loadJson(f);
@@ -65,10 +65,10 @@ for (const consent of [false, true]) {
   if (CAP && !consent) { await f.evaluate(() => document.querySelectorAll("#plan details").forEach((d, i) => { d.open = i > 0; })); await f.locator("#plan").screenshot({ path: join(CAP, "figma-apercu-conflits.png") }); }
   if (consent) { await f.check("#okDel"); await f.check("#okRen"); }
   await f.click("#go"); await waitDone(f);
-  const kept = !strVar.removed && !oldBoard.removed && baseVar.name === "brand/base";
+  const kept = !strVar.removed && !oldBoard.removed && baseVar.name === "marque/base";
   const done = await f.evaluate(() => document.getElementById("sum").textContent);
   if (!consent) report(kept && /non importée/.test(done), "sans accord : variable, planche et nom gardés, et le bilan le dit", done.slice(0, 200));
-  else report(strVar.removed && oldBoard.removed && baseVar.name === "brand/main", "avec accord : remplacement, suppression et renommage faits");
+  else report(strVar.removed && oldBoard.removed && baseVar.name === "marque/main", "avec accord : remplacement, suppression et renommage faits");
   report(!errs.length, `aucune erreur JavaScript (${consent ? "avec" : "sans"} accord)`, errs.join(" | ")); }
 
 await browser.close();

@@ -27,8 +27,8 @@ const nav = async (p, fn, want) => { await fn(); await p.waitForFunction(w => do
 {
   // Première visite : le bandeau d’accueil propose la démo et la création.
   const { ctx, page } = await open({}, { welcomed: false, mine: false });
-  const t = await page.locator("#hello").textContent();
-  check(/Essayer avec un projet démo/.test(t), "accueil : « Essayer avec un projet démo »", t);
+  const t = await page.locator("#home").textContent();
+  check(/Essayer la démo/.test(t), "accueil : « Essayer la démo »", t);
   check(/Créer mon projet/.test(t), "accueil : « Créer mon projet »", t);
   check(!/100\s?%|accessible à/i.test(t), "accueil : aucune promesse de conformité");
   await ctx.close();

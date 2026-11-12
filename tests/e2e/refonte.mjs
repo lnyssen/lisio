@@ -163,19 +163,19 @@ for (const theme of ["light", "dark"]) for (const w of [1440, 1100, 1024, 800]) 
 for (const [lab, vp] of [["390 px", { width: 390, height: 800 }], ["320 px", { width: 320, height: 640 }]]) {
   const p = await open({ viewport: vp, isMobile: true, hasTouch: true }, "tester");
   check(await over(p) <= 0, `${lab} : pas de défilement horizontal`, await over(p));
-  const H = await p.evaluate(() => { const b = document.getElementById("hsMob"); if (!b) return null; const r = b.getBoundingClientRect(); return { t: b.textContent.replace(/\s+/g, " ").trim(), exp: b.getAttribute("aria-expanded"), ctl: b.getAttribute("aria-controls"), h: Math.round(r.height), w: Math.round(r.width) }; });
-  check(!!H && /Polices/.test(H.t) && /3 sur 7/.test(H.t) && H.exp === "false" && H.h >= 44, `${lab} : en haut, un bouton dit l’étape (« Polices », « 3 sur 7 »)`, JSON.stringify(H));
-  check(!(await vis(p, "#journey .j-steps a")), `${lab} : la liste des étapes est repliée`);
+  // 12 novembre 2026 (retour de Laurent) : plus de liste déroulante ; les 7 étapes en bande qui défile au doigt, l’étape en cours centrée dès l’ouverture.
+  const strip = () => p.evaluate(() => { const L = document.getElementById("jSteps"), as = [...L.querySelectorAll("a")], cur = L.querySelector('a[aria-current="step"]'), r = cur.getBoundingClientRect(), lr = L.getBoundingClientRect();
+    return { n: as.length, scroll: getComputedStyle(L).overflowX, snap: getComputedStyle(L).scrollSnapType, h: Math.round(Math.min(...as.map(a => a.getBoundingClientRect().height))), cur: cur.getAttribute("href"), mid: Math.round(Math.abs((r.left + r.right) / 2 - (lr.left + lr.right) / 2)), inside: r.left >= -1 && r.right <= innerWidth + 1, st: (cur.querySelector(".j-s") || {}).textContent, top: Math.round(lr.top) }; });
+  const H = await strip();
+  check(H.n === 7 && H.scroll === "auto" && /x/.test(H.snap) && H.h >= 44, `${lab} : les 7 étapes en bande qui défile, cases de 44 px au moins`, JSON.stringify(H));
+  check(H.cur === "#tester" && H.inside && H.mid <= 4 && /En cours/.test(H.st || ""), `${lab} : dès l’ouverture, l’étape en cours est centrée, avec son état`, JSON.stringify(H));
+  check(!(await vis(p, "#hsMob")), `${lab} : plus de bouton qui déplie une liste`);
   await p.evaluate(() => scrollTo(0, 500)); await p.waitForTimeout(250);
-  const stick = await p.evaluate(() => Math.round(document.getElementById("hsMob").getBoundingClientRect().top));
-  check(stick >= 0 && stick <= 2, `${lab} : après défilement, l’étape reste en haut de l’écran`, String(stick));
-  await p.click("#hsMob"); await p.waitForTimeout(250);
-  const L = await p.evaluate(() => { const b = document.getElementById("hsMob"), as = [...document.querySelectorAll("#journey .j-steps a")].map(a => { const r = a.getBoundingClientRect(); return { h: Math.round(r.height), in: r.left >= 0 && r.right <= innerWidth + 0.5 && r.top >= 0 && r.bottom <= innerHeight, s: (a.querySelector(".j-s") || {}).textContent || "" }; }); return { exp: b.getAttribute("aria-expanded"), n: as.length, ok: as.every(a => a.h >= 44 && a.in && a.s.length > 3), cur: (document.querySelector('#journey a[aria-current="step"]') || { getAttribute() { return ""; } }).getAttribute("href") }; });
-  check(L.exp === "true" && L.n === 7 && L.ok && L.cur === "#tester", `${lab} : toucher le bouton ouvre les 7 étapes, avec leur état, cibles de 44 px au moins`, JSON.stringify(L));
-  await p.keyboard.press("Escape"); await p.waitForTimeout(200);
-  check(await p.evaluate(() => document.getElementById("hsMob").getAttribute("aria-expanded") === "false" && document.activeElement.id === "hsMob"), `${lab} : Échap referme la liste et rend le focus au bouton`);
-  await p.click("#hsMob"); await p.waitForTimeout(200); await p.click('#journey .j-steps a[href="#styles"]'); await p.waitForTimeout(350);
-  check(await p.evaluate(() => !document.getElementById("styles").hidden && document.getElementById("hsMob").getAttribute("aria-expanded") === "false" && /Styles de texte/.test(document.getElementById("hsMob").textContent)), `${lab} : toucher une étape l’ouvre et referme la liste`);
+  const stick = (await strip()).top;
+  check(stick >= 0 && stick <= 2, `${lab} : après défilement, la bande reste en haut de l’écran`, String(stick));
+  await p.evaluate(() => scrollTo(0, 0)); await p.click('#journey .j-steps a[href="#styles"]'); await p.waitForTimeout(700);
+  const S2 = await strip();
+  check(await p.evaluate(() => !document.getElementById("styles").hidden) && S2.cur === "#styles" && S2.mid <= 4, `${lab} : toucher une étape l’ouvre, et la bande glisse pour la centrer`, JSON.stringify(S2));
   const N = await p.evaluate(() => { const n = document.getElementById("stepNav"), r = n.getBoundingClientRect(), box = s => { const e = n.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { l: Math.round(b.left), r: Math.round(b.right), h: Math.round(b.height), w: Math.round(b.width), t: e.textContent.replace(/\s+/g, " ").trim() }; };
     return { pos: getComputedStyle(n).position, gap: Math.round(innerHeight - r.bottom), full: Math.round(r.left) === 0 && Math.round(r.right) === innerWidth, pv: box("#snPrev a"), more: box("#moreB"), nx: box("#snNext a") }; });
   const seq = N.pv && N.more && N.nx ? N.pv.r <= N.more.l && N.more.r <= N.nx.l : false;
@@ -186,7 +186,7 @@ for (const [lab, vp] of [["390 px", { width: 390, height: 800 }], ["320 px", { w
   check(tt.shown && tt.above, `${lab} : « Retour en haut » au-dessus de la barre du bas`, JSON.stringify(tt));
   await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(200);
   if (lab === "390 px") { await axe(p, ["#journey", "#jNowBox", "#stepNav"], `${lab} : axe-core, étapes, bandeau et barre du bas`);
-    await p.click("#hsMob"); await p.waitForTimeout(200); await axe(p, ["#journey"], `${lab} : axe-core, liste des étapes ouverte`); }
+    }
   check(!p.errs.length, `${lab} : aucune erreur JavaScript`, p.errs.join(" | "));
   await p.ctx.close(); }
 

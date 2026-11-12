@@ -18,7 +18,7 @@ async function open(opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...opts }); await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + "#couleurs");
-  await page.evaluate(cols => { localStorage.clear(); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); }, MINE);
+  await page.evaluate(cols => { localStorage.clear(); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); }, MINE);
   await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); return { ctx, page, errors };
 }
 const axeDlg = async (page, lab) => { if (!AXE) return; if (!(await page.evaluate(() => typeof axe !== "undefined"))) await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
@@ -27,8 +27,9 @@ const axeDlg = async (page, lab) => { if (!AXE) return; if (!(await page.evaluat
 const setHex = (page, sel, v) => page.evaluate(([s, v]) => { const e = document.querySelector(s); e.value = v; e.dispatchEvent(new Event("input", { bubbles: true })); }, [sel, v]);
 {
   const { ctx, page, errors } = await open();
-  const hello = page.locator("#hello [data-hello=new]");
-  check(/Créer mon projet/.test(await hello.textContent()), "accueil : « Créer mon projet »");
+  await page.click("#homeB"); await page.waitForTimeout(200);
+  const hello = page.locator("#home [data-home=new]");
+  check(/Créer mon projet|Nouveau projet/.test(await hello.textContent()), "accueil : « Créer mon projet » ou « Nouveau projet »");
   await hello.click(); await page.waitForTimeout(300);
   check(await page.locator("#wizDlg").evaluate(d => d.open), "l’assistant s’ouvre");
   check(await page.evaluate(() => document.activeElement && document.activeElement.id === "wizName"), "focus sur le nom du projet");

@@ -87,7 +87,7 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   const p = await open(opts, "palette");
   check(await over(p) <= 0, `${lab} : pas de défilement horizontal`, await over(p));
   await bottom(p);
-  check(await vis(p, "#hsMob") && await p.evaluate(() => Math.round(document.getElementById("hsMob").getBoundingClientRect().top)) <= 2, `${lab} : en bas de page, l’étape reste visible, collée en haut`);
+  check(await vis(p, "#jSteps a[aria-current]") && await p.evaluate(() => Math.round(document.getElementById("jSteps").getBoundingClientRect().top)) <= 2, `${lab} : en bas de page, les étapes restent visibles, collées en haut`);
   const box = await p.evaluate(() => { const n = document.getElementById("stepNav").getBoundingClientRect(), m = document.getElementById("moreB").getBoundingClientRect(), t = document.getElementById("toTop").getBoundingClientRect();
     return { nl: Math.round(n.left), nr: Math.round(innerWidth - n.right), nb: Math.round(innerHeight - n.bottom), inBar: m.left >= n.left && m.right <= n.right && m.top >= n.top && m.bottom <= n.bottom, ttAbove: t.bottom <= n.top, mw: Math.round(m.width), mh: Math.round(m.height) }; });
   check(box.nl === 0 && box.nr === 0 && box.nb === 0 && box.inBar && box.mw >= 44 && box.mh >= 44, `${lab} : une seule barre en bas, pleine largeur, bouton « Outils » dedans`, JSON.stringify(box));
@@ -104,10 +104,11 @@ for (const [lab, opts] of [["iPhone 390 px", { ...devices["iPhone 13"] }], ["320
   check(look.n >= 4 && !look.rounded.length, `${lab} : boutons du haut et « Outils » à angles droits`, JSON.stringify(look.rounded));
   check(look.logoSquare, `${lab} : logo carré`, JSON.stringify(look));
   check(!look.fades.length, `${lab} : aucun dégradé derrière les barres, ni en haut ni en bas`, look.fades.join(", "));
-  await p.evaluate(() => scrollTo(0, 0)); await p.click("#hsMob"); await p.waitForTimeout(250);
-  check(await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].filter(a => a.getClientRects().length).length) === 7, `${lab} : le bouton d’étape déplie les 7 étapes`);
-  const items = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => a.getBoundingClientRect()).map(r => [Math.round(r.top), Math.round(r.bottom), Math.round(r.width), Math.round(r.height)]));
-  check(items.every((r, k) => r[2] >= 44 && r[3] >= 44 && (!k || r[0] >= items[k - 1][1] - 1)), `${lab} : étapes sans chevauchement, cibles d’au moins 44 px`, JSON.stringify(items));
+  // 12 novembre 2026 : bande d’étapes qui défile (plus de liste à déplier).
+  await p.evaluate(() => scrollTo(0, 0)); await p.waitForTimeout(150);
+  check(await p.evaluate(() => document.querySelectorAll("#journey .j-steps a").length) === 7, `${lab} : les 7 étapes dans la bande`);
+  const items = await p.evaluate(() => [...document.querySelectorAll("#journey .j-steps a")].map(a => a.getBoundingClientRect()).map(r => [Math.round(r.left), Math.round(r.right), Math.round(r.width), Math.round(r.height)]));
+  check(items.every((r, k) => r[2] >= 44 && r[3] >= 44 && (!k || r[0] >= items[k - 1][1] - 1)), `${lab} : étapes côte à côte sans chevauchement, cibles d’au moins 44 px`, JSON.stringify(items));
   await p.click('#journey a[href="#tester"]'); await p.waitForTimeout(400);
   check(!(await p.evaluate(() => document.getElementById("tester").hidden)), `${lab} : toucher une étape l’ouvre`);
   await p.click("#moreB"); await p.waitForTimeout(400);

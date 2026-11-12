@@ -1297,9 +1297,19 @@ html,body{overflow-anchor:none}
 .j-val .btn[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .j-val .btn[aria-disabled="true"]{color:var(--muted);border-style:dashed;cursor:not-allowed}
 .j-val-why{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.j-val .btn{gap:6px}.j-val-ic{display:none}.j-val .btn[aria-pressed="true"] .j-val-ic{display:inline}
+.j-val .btn{gap:6px}.j-val-ic{display:none}.j-val-s{display:none}@media (max-width:760px){.j-val-s{display:inline}}.j-val .btn[aria-pressed="true"] .j-val-ic{display:inline}
 @media (max-width:760px){.j-line{grid-template-columns:minmax(0,1fr) auto auto!important}.j-line .j-val{grid-column:2;grid-row:2}.j-line .j-acts{grid-column:3!important}
-  .j-val .btn{width:44px;min-width:44px;height:44px;padding:0;justify-content:center}.j-val-ic{display:inline!important;font-size:18px}.j-val-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+  :root:root .j-val .btn{min-height:44px;height:44px;padding:0 12px}
+  .j-val .j-val-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  :root:root .j-line .sumbar>summary{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:6px}
+  :root:root .j-line .sum-c{white-space:nowrap}
+  /* Un seul menu déroulant visible (retour de Laurent, 12 novembre 2026) : le résumé et sa flèche forment un bloc, « Aide » devient un carré « ? ». */
+  :root:root .j-line .sumbar>summary{border:1px solid var(--line);padding:4px 6px 4px 8px;min-height:44px;box-sizing:border-box}
+  :root:root .j-line .j-help-b{width:44px;min-width:44px;min-height:44px;padding:0;justify-content:center;font-size:0;gap:0}
+  :root:root .j-line .j-help-b svg{display:none}
+  :root:root .j-line .j-help-q{font-size:18px;width:28px;height:28px;background:none;color:inherit}
+  :root:root .j-line .j-help-b{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+  :root:root .j-line .sumbar>summary{padding-right:14px}}
 .j-steps a[aria-current] .j-n{background:var(--surface);color:var(--ink);border-color:var(--surface)}
 .j-t{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;flex:1}
 .j-l{max-width:100%;font-size:15px;font-weight:700;line-height:1.2;letter-spacing:-.015em;overflow-wrap:anywhere}
@@ -1568,13 +1578,13 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 .hm-steps li{position:relative;z-index:1}
 .hm-steps a{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:0 10px 10px 0;text-decoration:none;color:inherit}
 .hm-n{font-size:12px;font-weight:700;color:var(--muted);height:18px}
-.hm-p{display:grid;place-items:center;width:52px;height:52px;background:var(--surface);border:1px solid var(--line);font-style:normal;box-shadow:0 0 0 6px var(--bg);transition:transform .25s var(--ease,ease),background-color .25s,color .25s}
+.hm-p{display:grid;place-items:center;justify-content:center;align-content:center;box-sizing:border-box;width:52px;height:52px;background:var(--surface);border:1px solid var(--line);font-style:normal;box-shadow:0 0 0 6px var(--bg);transition:transform .25s var(--ease,ease),background-color .25s,color .25s}
 .hm-steps a:hover .hm-p,.hm-steps a:focus-visible .hm-p{transform:translateY(-4px);background:var(--ink);color:var(--surface)}
 .hm-steps b{font-size:15px;line-height:1.2}.hm-steps small{font-size:13px;color:var(--muted);line-height:1.3}
 .hm-sw{grid-template-columns:repeat(3,10px);gap:3px}.hm-sw b{display:block;width:10px;height:22px}
-.hm-rp{background:linear-gradient(90deg,#EEF2FF,#B9C6F5,#6E86E6,#2447D1,#16297D,#0A1240) content-box;padding:15px 8px}
+.hm-rp{background:linear-gradient(90deg,#EEF2FF,#B9C6F5,#6E86E6,#2447D1,#16297D,#0A1240) content-box;padding:15px 9px}
 .hm-aa{font-size:21px;font-weight:700;letter-spacing:-.02em}
-.hm-ty{grid-template-rows:repeat(3,auto);gap:4px;justify-items:start;padding:0 10px}.hm-ty b{display:block;height:5px;background:currentColor}.hm-ty b:nth-child(1){width:30px;height:8px}.hm-ty b:nth-child(2){width:22px}.hm-ty b:nth-child(3){width:26px}
+.hm-ty{grid-template-columns:30px;grid-template-rows:repeat(3,auto);gap:4px;justify-items:start}.hm-ty b{display:block;height:5px;background:currentColor}.hm-ty b:nth-child(1){width:30px;height:8px}.hm-ty b:nth-child(2){width:22px}.hm-ty b:nth-child(3){width:26px}
 .hm-ds{grid-template-columns:repeat(2,13px);gap:4px}.hm-ds b{display:block;width:13px;height:13px;border:2px solid currentColor}.hm-ds b:nth-child(1){background:currentColor}
 .hm-ct{font-size:13px;font-weight:700;letter-spacing:-.02em}
 .hm-fg svg{width:24px;height:24px}
@@ -2178,9 +2188,9 @@ input[type=checkbox]{width:24px!important;height:24px!important}
     <header class="hm-top"><span class="hm-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="var(--ink)"/><circle cx="16" cy="9.6" r="4.4" fill="var(--bg)"/><rect x="11.6" y="16" width="8.8" height="11" fill="var(--bg)"/></svg>Lisio</span><button type="button" class="hm-skip" data-home="skip">Aller à l’outil<span aria-hidden="true"> →</span></button></header>
     <div class="hm-hero">
       <div class="hm-txt">
-        <p class="hm-eye">Accessibilité des couleurs, en 7 étapes</p>
-        <h1 id="homeH">Des couleurs que tout le monde peut lire.</h1>
-        <p class="hm-lead" id="homeLead">Lisio teste vos contrastes, fabrique vos nuances et vos styles de texte, puis envoie le tout dans Figma. Sans jargon : chaque problème vient avec sa correction.</p>
+        <p class="hm-eye">Couleurs, typographie, design system</p>
+        <h1 id="homeH">Un design system lisible par tous.</h1>
+        <p class="hm-lead" id="homeLead">Vos couleurs deviennent des nuances, vos polices des styles de texte, le tout un design system. Lisio vérifie chaque contraste au passage, propose la correction, puis envoie le tout dans Figma et dans le code.</p>
         <div class="hm-acts" id="homeActs"></div>
         <label class="hm-off"><input type="checkbox" id="homeOff"> Ne plus afficher au démarrage</label>
       </div>
@@ -4388,17 +4398,27 @@ function jCells(v, i, seen) {
 function jMob(v, i, seen) { const lab = i < 0 ? "Étapes" : JOURNEY[i][1], sub = i < 0 ? stepsLine(stepsCount(JOURNEY.map(([id]) => jState(id, "", seen)))) : `${i + 1} sur ${JOURNEY.length} · ${J_STATE[jState(v, v, seen)]}`;
   return `<button type="button" class="hs-mob" id="hsMob" aria-expanded="false" aria-controls="jSteps"><span class="hs-t"><span class="hs-l">${lab}</span><span class="sr-only"> : </span><span class="hs-s">${sub}</span><span class="sr-only">. Afficher les 7 étapes</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>`; }
 // Mobile : la bande d’étapes défile pour garder l’étape en cours au centre (depuis la précédente position, d’où le glissement).
-let jStripX = 0;
-function jCenter() { const L = $("jSteps"); if (!L || getComputedStyle(L).overflowX !== "auto") return; const a = L.querySelector("[aria-current]"); L.style.scrollBehavior = "auto"; L.scrollLeft = jStripX; L.style.scrollBehavior = "";
-  if (!a) return; const li = a.parentElement; requestAnimationFrame(() => { L.scrollTo({ left: li.offsetLeft - (L.clientWidth - li.offsetWidth) / 2 }); });
-  L.addEventListener("scroll", () => { jStripX = L.scrollLeft; }, { passive: true }); }
+let jStripX = null;
+function jCenter(still) { const L = $("jSteps"); if (!L || getComputedStyle(L).overflowX !== "auto") return; const a = L.querySelector("[aria-current]");
+  const to = a ? a.parentElement.offsetLeft - (L.clientWidth - a.parentElement.offsetWidth) / 2 : 0;
+  L.style.scrollBehavior = "auto";
+  if (jStripX === null || still) { L.scrollLeft = to; L.style.scrollBehavior = ""; }
+  else { L.scrollLeft = jStripX; L.style.scrollBehavior = ""; requestAnimationFrame(() => L.scrollTo({ left: to })); }
+  jStripX = to; L.addEventListener("scroll", () => { jStripX = L.scrollLeft; }, { passive: true }); }
+// Les polices arrivent après le premier rendu et changent la largeur des cases : on recentre sans glisser.
+try { document.fonts.ready.then(() => jCenter(true)); } catch (e) {}
+// Au clavier, l’étape qui reçoit le focus entre dans la bande (2.4.11 : jamais cachée).
+document.addEventListener("focusin", e => { const a = e.target.closest && e.target.closest("#jSteps a"); if (!a) return; const L = $("jSteps"); if (getComputedStyle(L).overflowX !== "auto") return;
+  const li = a.parentElement, l = li.offsetLeft, r = l + li.offsetWidth; L.style.scrollBehavior = "auto";
+  if (l < L.scrollLeft) L.scrollLeft = l; else if (r > L.scrollLeft + L.clientWidth) L.scrollLeft = r - L.clientWidth; L.style.scrollBehavior = ""; jStripX = L.scrollLeft; });
+addEventListener("resize", () => jCenter(true));
 function jMobSet(on, back) { const b = $("hsMob"); if (!b) return; b.setAttribute("aria-expanded", String(on)); $("journey").classList.toggle("open", on); if (!on && back) b.focus(); }
 document.addEventListener("click", e => { const b = e.target.closest("#hsMob"); if (b) return jMobSet(b.getAttribute("aria-expanded") !== "true"); if ($("journey").classList.contains("open") && !e.target.closest("#journey")) jMobSet(false); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && $("journey").classList.contains("open")) { e.stopPropagation(); jMobSet(false, true); } }, true);
 // Une marque par état : ✓ complétée, ! à corriger, – sans objet, le numéro sinon.
 // Valider une étape : un geste de l’équipe, refusé tant que Lisio voit un problème (la raison est dite, pas seulement grisée).
 function jValBtn(v, seen) { const f = jFacts(v, v, seen); if (f.na) return ""; const on = f.valid.includes(v) && stepState(f) === "done", can = stepCanValidate(f);
-  return `<div class="j-val"><button type="button" class="btn sm${on ? " on" : ""}" data-jval="${v}" aria-pressed="${on}"${!on && !can.ok ? ' aria-disabled="true" aria-describedby="jValWhy"' : ""}><span class="j-val-ic" aria-hidden="true">✓</span><span class="j-val-t">${on ? "Étape validée" : "Valider l’étape"}</span></button>${!on && !can.ok ? `<span class="j-val-why" id="jValWhy">${esc(can.why)}</span>` : ""}</div>`; }
+  return `<div class="j-val"><button type="button" class="btn sm${on ? " on" : ""}" data-jval="${v}" aria-pressed="${on}"${!on && !can.ok ? ' aria-disabled="true" aria-describedby="jValWhy"' : ""}><span class="j-val-ic" aria-hidden="true">✓</span><span class="j-val-t">${on ? "Étape validée" : "Valider l’étape"}</span><span class="j-val-s" aria-hidden="true">${on ? "Validée" : "Valider"}</span></button>${!on && !can.ok ? `<span class="j-val-why" id="jValWhy">${esc(can.why)}</span>` : ""}</div>`; }
 document.addEventListener("click", e => { const b = e.target.closest("[data-jval]"); if (!b) return; const v = b.dataset.jval;
   if (b.getAttribute("aria-disabled") === "true") { toast(stepCanValidate(jFacts(v, v, jSeen())).why); return; }
   const on = b.getAttribute("aria-pressed") !== "true"; jValidSet(v, on); renderJourney(curView());
@@ -4421,14 +4441,14 @@ function renderJourney(v) {
   jCenter();
   const SB = $("sumBar"); if (NB.contains(SB)) NB.after(SB);
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
-  const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`), iss0 = v !== "exporter" && v !== "tester" ? jStepIssues(v) : 0;
+  const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`), iss0 = v !== "exporter" && v !== "tester" ? jFacts(v, v, seen).issues : 0;
   NB.innerHTML = `
   <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b><span class="sr-only"> : ${J_STATE[jState(v, v, seen)]}</span></p><p class="j-todo"><span class="j-todo-l">Prochaine action</span><span class="sr-only"> : </span><span class="j-todo-t">${iss0 ? jWhy(v, iss0) + (v === "palette" ? "" : " Corrigez ici, ou avancez et revenez-y.") : J_TODO[v]}</span></p>${jValBtn(v, seen)}<div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
   <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p><p class="j-legend"><span><i class="lg lg-done" aria-hidden="true">✓</i>Validée</span><span><i class="lg lg-seen" aria-hidden="true">3</i>Vue</span><span><i class="lg lg-now" aria-hidden="true">4</i>En cours</span><span><i class="lg lg-warn" aria-hidden="true">!</i>Attention requise</span><span><i class="lg lg-todo" aria-hidden="true">5</i>À commencer</span><span class="j-lg-note">« Validée » : vous l’avez validée et Lisio n’y détecte rien. Ce n’est pas un audit de conformité.</span></p>${adv ? adv.outerHTML : ""}</div>${hello}`;
   // Audit UX du 11 novembre 2026 : le résumé rejoint la ligne de l’étape, une bande de moins avant le titre.
   { const L = NB.querySelector(".j-line"); if (L) L.insertBefore(SB, L.querySelector(".j-acts")); }
   stepNavRender(i);
-  const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = jStepIssues(v);
+  const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = v === "palette" ? 0 : jFacts(v, v, seen).issues;
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm);
   const why = jWhy(v, iss);
   X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn jn-back" href="#${pv[0]}"><span aria-hidden="true">←</span><span>Étape précédente<span class="jn-pn"> : ${pv[1]}</span></span></a>` : "<span></span>"}${nx ? `<a class="btn primary jn-go" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;

@@ -27,7 +27,7 @@ const ALLOW = [
 const browser = await chromium.launch();
 let fails = 0; const allowed = new Map();
 for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
-  const page = await browser.newPage({ viewport: { width: w, height: h }, colorScheme: scheme });
+  const page = await browser.newPage({ viewport: { width: w, height: h }, colorScheme: scheme }); await page.addInitScript(() => { try { localStorage.setItem("lisio-home", "off"); } catch (e) {} });
   if (scheme === "dark") await page.addInitScript(() => { try { localStorage.setItem("lisio-theme", "dark"); } catch (e) {} });
   await page.route(/^https?:/, r => r.abort());
   const errs = []; page.on("pageerror", e => errs.push(String(e)));
@@ -45,7 +45,7 @@ for (const [label, w, h, scheme] of SETUPS) for (const v of VIEWS) {
 // Fenêtres ouvertes (police, couleur, réglages, norme, aide, recherche) : axe sur leur contenu, en clair et en sombre.
 const OPEN = [["tester", "#dFont", "#popFont"], ["tester", "#dFg", "#popColor"], ["tester", "#dMore", "#popMore"], ["matrice", "#normChip", "#popNorm"], ["matrice", "#helpB", "#helpPop"], ["matrice", "CMDK", "#cmdk"]];
 for (const scheme of ["light", "dark"]) for (const [v, trig, zone] of OPEN) {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, colorScheme: scheme });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, colorScheme: scheme }); await page.addInitScript(() => { try { localStorage.setItem("lisio-home", "off"); } catch (e) {} });
   if (scheme === "dark") await page.addInitScript(() => { try { localStorage.setItem("lisio-theme", "dark"); } catch (e) {} });
   await page.route(/^https?:/, r => r.abort());
   const errs = []; page.on("pageerror", e => errs.push(String(e)));
@@ -62,7 +62,7 @@ for (const scheme of ["light", "dark"]) for (const [v, trig, zone] of OPEN) {
 // 1.4.10 (redistribution) : pas de défilement horizontal, et la barre du haut ne chevauche pas le logo.
 for (const w of [320, 360, 375, 390, 430]) for (const v of VIEWS) {
   if (w !== 320 && v !== "matrice") continue;
-  const page = await browser.newPage({ viewport: { width: w, height: 640 } });
+  const page = await browser.newPage({ viewport: { width: w, height: 640 } }); await page.addInitScript(() => { try { localStorage.setItem("lisio-home", "off"); } catch (e) {} });
   await page.route(/^https?:/, r => r.abort());
   await page.goto("file://" + PAGE + "#" + v); await page.waitForTimeout(600);
   const r = await page.evaluate(() => { const lg = document.querySelector(".appbar .logo"), ap = document.querySelector(".appbar .appr");
