@@ -566,7 +566,7 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
   .dock-in{gap:2px;padding:6px;border-radius:18px;justify-content:center}.dk{padding:6px 8px;gap:6px}.dk .k small,.dk-sep{display:none}.dk .k span{max-width:92px}.stepper .sv{min-width:52px}.stepper button{width:32px;height:32px}
   .eyebrow{font-size:11px;letter-spacing:.04em}}
 .scales{overflow-x:auto;padding-bottom:4px}
-.scale-table{display:grid;grid-template-columns:110px repeat(12,minmax(64px,1fr));gap:22px 8px;min-width:980px}
+.scale-table{display:grid;grid-template-columns:110px repeat(11,minmax(64px,1fr));gap:22px 8px;min-width:900px}
 .swt.main .swc{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent),0 0 0 2px var(--surface),0 0 0 3.5px var(--ink)}
 .scale-name{font-weight:700;font-size:15px;display:flex;align-items:flex-start;padding-top:2px;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .swt{border:0;background:none;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;font:inherit;text-align:left;min-width:0;border-radius:6px}
@@ -576,6 +576,8 @@ label,.lbl{font-size:13px;font-weight:700;color:var(--muted);display:flex;flex-d
 @media (hover:hover){.swt:hover .swc{transform:translateY(-2px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 10%,transparent),0 6px 14px -6px rgba(11,43,44,.35)}}.swc{transition:transform .12s,box-shadow .12s}
 @media (prefers-reduced-motion:reduce){.swc{transition:none}}
 .swt .base{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%}
+.swt .sw-r{position:absolute;left:8px;bottom:6px;font-size:11px;font-weight:700;letter-spacing:.02em;line-height:1}
+.scale-name{flex-direction:column;gap:4px}.scale-name code{font-family:var(--code);font-size:11.5px;font-weight:400;color:var(--muted)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted)}
 .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
 .nu-intro{display:flex;flex-direction:column;gap:14px;border-bottom:1px solid var(--hair);padding-bottom:18px}
@@ -1461,11 +1463,6 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
   :root:root.cmd-m .appbar>.cmdk{display:flex!important;position:fixed;z-index:50;top:8px;left:50%;transform:translateX(-50%);width:min(640px,calc(100vw - 32px));max-width:none;height:52px;box-shadow:var(--shadow)}
   :root:root .appbar .cmd-mb{display:grid!important;width:var(--ctl,44px);height:var(--ctl,44px)}
   :root:root .j-line .j-todo{border-left:0;padding-left:6px}
-}
-/* Nuances : le cadre de Main n’est plus coupé en haut par le défilement horizontal du tableau. */
-.scales{padding-top:5px;padding-left:5px}
-/* 761 à 980 px : le résumé du haut garde le compteur et les échecs, la liste complète reste au clic. */
-@media (min-width:761px) and (max-width:980px){.appbar>.sumbar .sum-c:not(:first-child):not(.st-fail){display:none}
   .appbar>.sumbar{grid-column:3!important;grid-row:1;justify-self:start;align-self:center;position:relative;margin:0;border:0;background:none;min-width:0;max-width:100%}
   .appbar>.sumbar>summary{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;height:var(--ctl,44px);min-height:0;padding:0 14px 0 4px;border:1px solid var(--line);background:var(--surface);box-sizing:border-box}
   .appbar>.sumbar>summary::after{margin-left:8px}
@@ -1474,6 +1471,10 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
   .appbar>.sumbar .sum-body{position:absolute;z-index:16;left:0;top:calc(100% + 6px);width:min(620px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);padding:12px 14px;box-sizing:border-box}
 }
 @media (min-width:761px) and (max-width:1100px){.appbar>.sumbar .sum-c.st-untested{display:none}}
+/* Nuances : le cadre de la nuance la plus proche n’est plus coupé en haut par le défilement horizontal du tableau. */
+.scales{padding-top:5px;padding-left:5px}
+/* 761 à 980 px : le résumé du haut garde le compteur et les échecs, la liste complète reste au clic. */
+@media (min-width:761px) and (max-width:980px){.appbar>.sumbar .sum-c:not(:first-child):not(.st-fail){display:none}}
 :root:root .mhead{margin-top:32px}
 #tester .mhead{margin-bottom:24px!important}
 #tester .dock{position:static;margin:0 0 16px;justify-content:flex-start}
@@ -1939,7 +1940,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
         </ol>
         <div class="nu-demo-wrap"><p class="small muted" id="nuDemoLead"></p><div class="nu-demo" id="nuDemo"></div></div>
       </div>
-      <span class="legend"><span><b>Main</b> : votre couleur, telle que saisie</span><span>● nuance la plus proche de Main</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
+      <span class="legend"><span><b>Texte</b> : se lit en texte sur blanc (4,5:1 ou plus)</span><span><b>Fond</b> : pour les fonds, avec un texte foncé</span><span>● la plus proche de votre couleur, dont le code est sous le nom</span><span>Cliquez une nuance pour copier son code</span><span>Survolez-la pour voir son contraste sur blanc et sur noir</span></span>
       <div class="scales"><div class="scale-table" id="scales"></div></div>
       <h3>Règles à retenir</h3>
       <div class="rules" id="rules"></div>
@@ -1949,7 +1950,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
         <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
       </details>
     </div>
-    <div class="card-surface">
+    <div class="card-surface" hidden>
       <div class="row between"><h2>Exporter</h2><div class="row"><label for="exportFmt" class="sr">Format</label><select id="exportFmt"><option value="css">Variables CSS</option><option value="json">Design tokens (W3C DTCG)</option><option value="tw">Tailwind</option></select><button class="btn primary" id="copyExport" type="button">Copier</button></div></div>
       <pre class="code" id="exportOut" tabindex="0"></pre>
     </div>
@@ -2736,9 +2737,8 @@ function changed() { isExample = false; store.set("colors", palette); snapPush()
 function renderScales() {
   let h = "";
   scales.forEach(sc => {
-    h += `<div class="scale-name" title="${esc(sc.name)}">${esc(sc.name)}</div>`;
-    { const hex = sc.hex, shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); h += `<button type="button" class="swt main" data-hex="${hex}" aria-label="${esc(sc.name)} Main ${hex}, votre couleur principale, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="Couleur principale · ${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir"><span class="swc" style="background:${shown}"></span><b>Main</b><code>${hex}</code></button>`; }
-    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); const cl = sc.clip && sc.clip[i]; h += `<button type="button" class="swt${cl ? " clip" : ""}" data-hex="${hex}" aria-label="${esc(sc.name)} ${STEPS[i]} ${hex}${i === sc.nearest ? ", votre couleur d’origine" : ""}${cl ? ", chroma réduite (hors gamut sRGB)" : ""}, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir${cl ? " · chroma réduite, hors gamut sRGB" : ""}"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}</span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
+    h += `<div class="scale-name" title="${esc(sc.name)}"><span>${esc(sc.name)}</span><code>${sc.hex}</code></div>`;
+    sc.sw.forEach((hex, i) => { const shown = simulate(hex, vision), rw = ratio(hex, "#FFFFFF"), rb = ratio(hex, "#000000"); const cl = sc.clip && sc.clip[i]; h += `<button type="button" class="swt${cl ? " clip" : ""}" data-hex="${hex}" aria-label="${esc(sc.name)}, ${rw >= 4.5 ? "Texte" : "Fond"} ${STEPS[i]} ${hex}${i === sc.nearest ? ", la plus proche de votre couleur" : ""}${cl ? ", chroma réduite (hors gamut sRGB)" : ""}, ${ratioTxt(rw)} pour 1 sur blanc, ${ratioTxt(rb)} pour 1 sur noir. Copier." title="${ratioTxt(rw, 1)}:1 sur blanc · ${ratioTxt(rb, 1)}:1 sur noir${cl ? " · chroma réduite, hors gamut sRGB" : ""}"><span class="swc" style="background:${shown}">${i === sc.nearest ? `<span class="base" style="background:${textOn(shown)}" aria-hidden="true"></span>` : ""}<span class="sw-r" style="color:${textOn(shown)}">${rw >= 4.5 ? "Texte" : "Fond"}</span></span><b>${STEPS[i]}</b><code>${hex}</code></button>`; });
   });
   $("scales").innerHTML = h;
   const iT = STEPS.indexOf(700), iB = STEPS.indexOf(100), rs = scales.map(sc => floor2(ratio(sc.sw[iT], sc.sw[iB])));
