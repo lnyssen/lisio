@@ -22,6 +22,7 @@ writeFileSync(SITE, `<!doctype html><html lang="fr"><title>Site</title><body sty
 <div style="background:linear-gradient(#000,#333);padding:8px"><p id="img" style="color:#FFFFFF">Texte sur un dégradé.</p></div>
 <p style="color:oklch(0.55 0.2 29)">Texte en oklch.</p>
 <p style="display:none">Caché, jamais mesuré.</p>
+<div style="position:relative;width:200px;height:40px"><span style="position:absolute;inset:0;background:#0E1B4D;pointer-events:none;z-index:0"></span><button style="position:relative;z-index:1;background:none;border:0;color:#FFFFFF;font:16px sans-serif">Option choisie</button></div>
 </body></html>`);
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
@@ -54,9 +55,10 @@ await site.goto("file://" + SITE);
 await site.evaluate(code => { (0, eval)(code); }, decodeURIComponent(href.slice("javascript:".length)));
 await site.waitForTimeout(300);
 const r = await site.evaluate(() => window.__lisioPageCheck);
-check(r && r.tested === 6, "6 textes visibles mesurés (le caché est ignoré)", JSON.stringify(r && r.tested));
+check(r && r.tested === 7, "7 textes visibles mesurés (le caché est ignoré)", JSON.stringify(r && r.tested));
 const f = r.fails.map(x => x.fg + "/" + x.bg);
 check(f.includes("#777777/#FFFFFF"), "gris 4,48:1 en échec", f.join());
+check(!f.includes("#FFFFFF/#FFFFFF"), "fond posé par un calque frère (indicateur glissant) pris en compte", f.join());
 check(!f.includes("#888888/#FFFFFF"), "grand texte à 3,54:1 accepté en AA");
 check(r.offPalette.some(o => /^#8[67]8[CDE]A[56]/.test(o.hex)) && !f.some(x => x.startsWith("#FFFFFF/#0E1B4D")), "blanc à 50 % mélangé au fond (environ #878DA6) puis mesuré", JSON.stringify(r.offPalette.map(o => o.hex)));
 check(r.check === 1, "texte sur dégradé : à vérifier à l’œil", String(r.check));

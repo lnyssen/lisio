@@ -21,9 +21,27 @@ export function lisioPageCheck(cfg) {
   const lum = c => 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]);
   const ratio = (a, b) => { const A = lum(a), B = lum(b); return (Math.max(A, B) + 0.05) / (Math.min(A, B) + 0.05); };
   // Fond réel derrière un élément : on remonte les ancêtres jusqu’à un fond opaque. Image ou dégradé = à vérifier.
+  // Fond réel : on remonte les ancêtres, et à chaque niveau on compte aussi un calque frère posé dessous en position
+  // absolue (indicateur qui glisse sous l’option choisie, fond décoratif), même s’il ignore la souris.
+  const chainOf = el => {
+    const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, out = [];
+    for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
+      out.push(e);
+      const par = e.parentElement; if (!par) break;
+      const z = parseInt(getComputedStyle(e).zIndex) || 0;
+      for (const sib of par.children) {
+        if (sib === e || (host && sib === host)) continue;
+        const cs = getComputedStyle(sib); if (cs.position !== "absolute" && cs.position !== "fixed") continue;
+        if ((parseInt(cs.zIndex) || 0) > z || cs.visibility === "hidden" || +cs.opacity < 0.05) continue;
+        const q = sib.getBoundingClientRect(); if (x >= q.left && x <= q.right && y >= q.top && y <= q.bottom && !sib.contains(el)) out.push(sib);
+      }
+    }
+    return out;
+  };
+  let host = null;
   const bgOf = el => {
     const layers = []; let img = false;
-    for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
+    for (const e of chainOf(el)) {
       const cs = getComputedStyle(e);
       if (cs.backgroundImage && cs.backgroundImage !== "none") img = true;
       const b = rgba(cs.backgroundColor); if (b[3] > 0) { layers.push(b); if (b[3] >= 1) break; }
@@ -53,7 +71,7 @@ export function lisioPageCheck(cfg) {
   const result = { tested, pairs: all.length, fails: fails.map(p => ({ fg: p.fh, bg: p.bh, ratio: Math.floor(p.r * 100) / 100, min: p.min, large: p.large, count: p.els.length })), check: check.length, offPalette: offPal.map(([h, n]) => ({ hex: h, count: n })) };
   window.__lisioPageCheck = result;
   // Panneau (Shadow DOM : le style de la page ne le touche pas, et il ne touche pas la page)
-  const host = document.createElement("div"); host.id = ID; host.style.cssText = "all:initial;position:fixed;z-index:2147483647;top:12px;right:12px;";
+  host = document.createElement("div"); host.id = ID; host.style.cssText = "all:initial;position:fixed;z-index:2147483647;top:12px;right:12px;";
   const sh = host.attachShadow({ mode: "open" });
   const f2 = v => v.toFixed(2).replace(".", ",");
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -82,8 +100,8 @@ li{display:flex;align-items:center;gap:8px}
 <div class="p" role="dialog" aria-label="Lisio : vérification de cette page" tabindex="-1">
 <div class="h"><b>Lisio · cette page</b><button type="button" data-x aria-label="Fermer">Fermer</button></div>
 <div class="s"><dl class="k"><div><dt>Textes testés</dt><dd>${tested}</dd></div><div><dt>Paires en échec</dt><dd class="${fails.length ? "bad" : ""}">${fails.length}</dd></div><div><dt>Hors palette</dt><dd>${pal.size ? offPal.length : "–"}</dd></div></dl>
-<p class="n">Niveau ${cfg.level === "AAA" ? "AAA" : "AA"} · ${need[0]}:1 texte courant, ${need[1]}:1 grand texte (critère 1.4.3${cfg.level === "AAA" ? " et 1.4.6" : ""}). Test automatique partiel : il ne remplace pas un audit.</p></div>
-<div class="s"><h3>À corriger</h3>${fails.length ? `<ul>${fails.slice(0, 40).map((p, i) => `<li>${sw(p.fh)}${sw(p.bh)}<span class="g"><span class="bad">${f2(Math.floor(p.r * 100) / 100)}:1</span> <span class="n">/ ${p.min}:1${p.large ? ", grand texte" : ""}</span><br><span class="m">${p.fh} sur ${p.bh}</span> <span class="n">· ${p.els.length} texte${p.els.length > 1 ? "s" : ""}</span></span><button type="button" data-f="${i}">Montrer</button></li>`).join("")}</ul>` : `<p>Aucune paire texte et fond uni sous le seuil.</p>`}</div>
+<p class="n">Niveau ${cfg.level === "AAA" ? "AAA" : "AA"} · ${String(need[0]).replace(".", ",")}:1 texte courant, ${String(need[1]).replace(".", ",")}:1 grand texte (critère 1.4.3${cfg.level === "AAA" ? " et 1.4.6" : ""}). Test automatique partiel : il ne remplace pas un audit.</p></div>
+<div class="s"><h3>À corriger</h3>${fails.length ? `<ul>${fails.slice(0, 40).map((p, i) => `<li>${sw(p.fh)}${sw(p.bh)}<span class="g"><span class="bad">${f2(Math.floor(p.r * 100) / 100)}:1</span> <span class="n">/ ${String(p.min).replace(".", ",")}:1${p.large ? ", grand texte" : ""}</span><br><span class="m">${p.fh} sur ${p.bh}</span> <span class="n">· ${p.els.length} texte${p.els.length > 1 ? "s" : ""}</span></span><button type="button" data-f="${i}">Montrer</button></li>`).join("")}</ul>` : `<p>Aucune paire texte et fond uni sous le seuil.</p>`}</div>
 ${check.length ? `<div class="s"><h3>À vérifier à l’œil</h3><p class="n">${check.length} paire${check.length > 1 ? "s" : ""} sur une image ou un dégradé : Lisio ne peut pas mesurer ce fond.</p><ul>${check.slice(0, 20).map((p, i) => `<li>${sw(p.fh)}<span class="g m">${p.fh} · ${p.els.length} texte${p.els.length > 1 ? "s" : ""}</span><button type="button" data-c="${i}">Montrer</button></li>`).join("")}</ul></div>` : ""}
 ${pal.size ? `<div class="s"><h3>Hors palette ${esc(cfg.name ? "« " + cfg.name + " »" : "")}</h3>${offPal.length ? `<ul>${offPal.slice(0, 24).map(([h, n]) => `<li>${sw(h)}<span class="g m">${h}</span><span class="n">${n} usage${n > 1 ? "s" : ""}</span></li>`).join("")}</ul>` : `<p>Toutes les couleurs de texte et de fond viennent de la palette.</p>`}</div>` : ""}
 </div>`;
