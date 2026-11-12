@@ -1561,6 +1561,15 @@ input[type=checkbox]{width:24px!important;height:24px!important}
   .jn-go,.sn-go{overflow:hidden}
   .jn-go:hover,.sn-go:hover{letter-spacing:.005em}
 }
+/* Import d’un design system existant : ce que Lisio a lu, avant de remplacer. */
+.ds-report{border:var(--border-width-default,1px) solid var(--line);background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.ds-report p{margin:0}
+.ds-sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 14px}
+.ds-sw li{display:flex;align-items:center;gap:8px;font-size:14px;min-width:0}
+.ds-sw li b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ds-sw .sw{width:20px;height:20px;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.ds-notes{margin:0;padding-left:18px}
+@media (prefers-reduced-motion:no-preference){.ds-sw li{animation:lisioIn .3s var(--ease) both;animation-delay:var(--d,0ms)}}
 /* Audit UX, lot 5 : finitions.
    « Haut » s’aligne sur le bord droit du contenu ; la barre du bas prend le fond de la page, un filet la sépare. */
 /* « Haut » reste au bord de la fenêtre : rentré sur la colonne, il masquait les boutons « Copier la ligne » au clavier (2.4.11). */
@@ -1707,16 +1716,18 @@ input[type=checkbox]{width:24px!important;height:24px!important}
     <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">Votre palette de marque : saisissez-la, importez-la d’une image, puis corrigez tout de suite les couleurs qui ne se lisent avec aucune autre.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
         <div class="card-surface colors-edit" id="colorsCard">
           <div class="row between"><h2>Vos couleurs</h2><button class="btn sm" id="resetPalette" type="button">Revenir à l’exemple</button></div>
-          <p class="small muted">De 2 à 12 couleurs. Ajoutez‑les une à une, depuis une image (bouton, glisser‑déposer ou Ctrl+V), ou collez une liste.</p>
+          <p class="small muted">De 2 à 12 couleurs. Ajoutez‑les une à une, depuis une image (bouton, glisser‑déposer ou Ctrl+V), ou importez un design system existant (variables CSS, Tailwind, jetons JSON).</p>
           <div class="editor-inline" id="editor"></div>
           <div class="row">
             <button class="btn primary" id="addColor" type="button">+ Ajouter une couleur</button>
             <span class="btn filebtn"><input type="file" id="imgFile" accept="image/*" aria-label="Extraire les couleurs d’une image">Depuis une image</span>
             <button class="btn" id="eyedrop" type="button" hidden>Pipette d’écran</button>
-            <button class="btn" id="pasteToggle" type="button" aria-expanded="false" aria-controls="pasteBox">Coller une liste</button>
+            <button class="btn" id="pasteToggle" type="button" aria-expanded="false" aria-controls="pasteBox">Importer un design system</button>
           </div>
           <div id="pasteBox" hidden style="display:flex;flex-direction:column;gap:8px">
-            <label for="pasteText">Une couleur par ligne, avec ou sans nom : « Marque #2447D1 »<textarea id="pasteText" rows="4" placeholder="Nuit #0E1B4D&#10;Marque #2447D1&#10;#F5B800"></textarea></label>
+            <label for="pasteText">Collez vos variables CSS, votre configuration Tailwind, vos jetons JSON (DTCG, Tokens Studio) ou une simple liste « Marque #2447D1 »<textarea id="pasteText" rows="6" spellcheck="false" placeholder=":root {&#10;  --color-brand-500: #2447D1;&#10;  --color-night: #0E1B4D;&#10;}"></textarea></label>
+            <div class="row"><span class="btn filebtn"><input type="file" id="dsFile" accept=".css,.scss,.json,.js,.mjs,.cjs,.ts,.txt,text/css,application/json,text/plain" aria-label="Importer un fichier de design system">Ouvrir un fichier</span><span class="small muted">.css, .json, tailwind.config.js</span></div>
+            <div id="dsReport" class="ds-report" aria-live="polite" hidden></div>
             <div class="row"><button class="btn primary" id="pasteApply" type="button">Remplacer mes couleurs</button></div>
           </div>
           <div class="imgpanel" id="imgPanel" hidden>
@@ -2343,6 +2354,7 @@ const QHELP = {"ratio": ["C’est quoi, un ratio de contraste ?", "Il compare l
 const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur qui ne se lit avec aucune autre se corrige ici, en un clic.", ["ratio", "luminance", "aa", "etape"]], ["palette", "Nuances", "Chaque couleur devient une gamme de 11 nuances, de 50 à 950. Réglez la plus claire, la plus foncée et la saturation.", ["nuance", "ratio", "etape"]], ["tester", "Polices", "Choisissez votre police et testez-la sur un vrai texte, avec vos couleurs.", ["taille", "aa", "etape"]], ["styles", "Styles de texte", "Réglez le desktop, Lisio calcule le mobile et vérifie chaque style.", ["fluid", "echelle", "zoom", "etape"]], ["systeme", "Design system", "Rôles, formes, effets, images : réglez tout, et cochez ce qui entre dans votre design system.", ["role", "sombre", "focus", "cible", "etape"]], ["matrice", "Contrastes", "Vérifiez toutes les paires : la matrice dit quel texte se lit sur quel fond, et une paire retenue peut devenir un rôle.", ["ratio", "aa", "pair", "etape"]], ["exporter", "Exporter", "Un fichier, un plugin, et tout arrive dans Figma.", ["plugin", "variable", "etape"]]];
 // ---------- Couleur ----------
 /*@core:color*/
+/*@core:importds*/
 /*@core:wcag*/
 /*@core:project*/
 /*@core:status*/
@@ -2958,17 +2970,40 @@ function renderDetail() {
 $("pairDetail").addEventListener("click", e => { const b = e.target.closest("[data-dact]"); if (b && dActs[+b.dataset.dact]) dActs[+b.dataset.dact](); });
 // Coller une liste
 $("pasteToggle").addEventListener("click", e => { const box = $("pasteBox"); box.hidden = !box.hidden; e.currentTarget.setAttribute("aria-expanded", !box.hidden); });
+let dsLast = null;
+function dsAnalyze() {
+  const t = $("pasteText").value, box = $("dsReport"), btn = $("pasteApply");
+  if (!t.trim()) { dsLast = null; box.hidden = true; btn.textContent = "Remplacer mes couleurs"; return; }
+  let r; try { r = analyzeImport(t); } catch { r = null; }
+  dsLast = r;
+  if (!r || !r.colors.length) { box.hidden = false; box.innerHTML = `<p class="small"><b>Aucune couleur reconnue.</b> Lisio lit les codes #hex, rgb(), hsl() et oklch().</p>`; btn.textContent = "Remplacer mes couleurs"; return; }
+  const notes = [];
+  if (r.families) notes.push(`${r.families} famille${r.families > 1 ? "s" : ""} de nuances : Lisio garde la nuance la plus proche du 500 et recalcule les autres à l’étape Nuances`);
+  if (r.aliases) notes.push(`${r.aliases} alias (var() ou {…}) ignorés : ils pointent vers une couleur déjà lue`);
+  if (r.duplicates) notes.push(`${r.duplicates} doublon${r.duplicates > 1 ? "s" : ""} exact${r.duplicates > 1 ? "s" : ""} retiré${r.duplicates > 1 ? "s" : ""}`);
+  if (r.dropped.some(d => d.why === "max")) notes.push(`${r.dropped.filter(d => d.why === "max").length} couleur(s) au‑delà de 12 laissées de côté`);
+  if (r.unreadable) notes.push(`${r.unreadable} valeur(s) illisibles`);
+  r.close.forEach(([a, b]) => notes.push(`${esc(a)} et ${esc(b)} sont presque identiques : une seule suffit peut‑être`));
+  box.hidden = false;
+  box.innerHTML = `<p class="small"><b>Reconnu : ${FORMAT_LABEL[r.format]}.</b> ${r.found} couleur${r.found > 1 ? "s" : ""} trouvée${r.found > 1 ? "s" : ""}, ${r.colors.length} gardée${r.colors.length > 1 ? "s" : ""}.</p>`
+    + `<ul class="ds-sw">${r.colors.map((c, k) => `<li style="--d:${k * 40}ms"><span class="sw" style="background:${c.hex}"></span><b>${esc(c.name)}</b> <span class="mono">${c.hex}</span>${c.family ? ` <span class="muted">· 1 sur ${c.family}</span>` : ""}</li>`).join("")}</ul>`
+    + (notes.length ? `<ul class="small muted ds-notes">${notes.map(n => `<li>${n}</li>`).join("")}</ul>` : "");
+  btn.textContent = r.colors.length >= 2 ? `Remplacer mes couleurs par ces ${r.colors.length}` : "Remplacer mes couleurs";
+}
+let dsTimer = 0;
+$("pasteText").addEventListener("input", () => { clearTimeout(dsTimer); dsTimer = setTimeout(dsAnalyze, 160); });
+$("dsFile").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  if (f.size > 2e6) { toast("Fichier trop lourd (2 Mo maximum)"); e.target.value = ""; return; }
+  f.text().then(t => { $("pasteText").value = t; dsAnalyze(); toast(`${f.name} lu`); e.target.value = ""; });
+});
 $("pasteApply").addEventListener("click", () => {
-  const list = [];
-  $("pasteText").value.split(/\n|;/).forEach((line, k) => {
-    const m = line.match(/#?\b([0-9a-f]{6}|[0-9a-f]{3})\b/i); if (!m) return;
-    const hex = normHex(m[1]); if (!hex) return;
-    const name = line.replace(m[0], "").replace(/[:=,–-]+\s*$/, "").trim() || "Couleur " + (list.length + 1);
-    list.push({ name: name.slice(0, 30), hex });
-  });
+  dsAnalyze();
+  const list = dsLast ? dsLast.colors.map(({ name, hex }) => ({ name, hex })) : [];
   if (list.length < 2) { toast("Il faut au moins deux couleurs, ex. « Marque #2447D1 »"); return; }
+  const fmt = dsLast.format;
   palette = list.slice(0, 12); sel = null; changed(); renderEditor(); $("pasteBox").hidden = true; $("pasteToggle").setAttribute("aria-expanded", "false");
-  toast(`${palette.length} couleurs chargées`);
+  toast(fmt === "liste" ? `${palette.length} couleurs chargées` : `${palette.length} couleurs importées depuis vos ${FORMAT_LABEL[fmt]} : l’audit est à jour dans Contrastes`);
 });
 
 // ---------- Noms automatiques ----------

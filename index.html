@@ -1568,6 +1568,15 @@ input[type=checkbox]{width:24px!important;height:24px!important}
   .jn-go,.sn-go{overflow:hidden}
   .jn-go:hover,.sn-go:hover{letter-spacing:.005em}
 }
+/* Import d’un design system existant : ce que Lisio a lu, avant de remplacer. */
+.ds-report{border:var(--border-width-default,1px) solid var(--line);background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.ds-report p{margin:0}
+.ds-sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 14px}
+.ds-sw li{display:flex;align-items:center;gap:8px;font-size:14px;min-width:0}
+.ds-sw li b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ds-sw .sw{width:20px;height:20px;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.ds-notes{margin:0;padding-left:18px}
+@media (prefers-reduced-motion:no-preference){.ds-sw li{animation:lisioIn .3s var(--ease) both;animation-delay:var(--d,0ms)}}
 /* Audit UX, lot 5 : finitions.
    « Haut » s’aligne sur le bord droit du contenu ; la barre du bas prend le fond de la page, un filet la sépare. */
 /* « Haut » reste au bord de la fenêtre : rentré sur la colonne, il masquait les boutons « Copier la ligne » au clavier (2.4.11). */
@@ -1717,16 +1726,18 @@ input[type=checkbox]{width:24px!important;height:24px!important}
     <header class="mhead phead"><div><h1>Couleurs</h1><p class="lead">Votre palette de marque : saisissez-la, importez-la d’une image, puis corrigez tout de suite les couleurs qui ne se lisent avec aucune autre.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Colors</p></div></header>
         <div class="card-surface colors-edit" id="colorsCard">
           <div class="row between"><h2>Vos couleurs</h2><button class="btn sm" id="resetPalette" type="button">Revenir à l’exemple</button></div>
-          <p class="small muted">De 2 à 12 couleurs. Ajoutez‑les une à une, depuis une image (bouton, glisser‑déposer ou Ctrl+V), ou collez une liste.</p>
+          <p class="small muted">De 2 à 12 couleurs. Ajoutez‑les une à une, depuis une image (bouton, glisser‑déposer ou Ctrl+V), ou importez un design system existant (variables CSS, Tailwind, jetons JSON).</p>
           <div class="editor-inline" id="editor"></div>
           <div class="row">
             <button class="btn primary" id="addColor" type="button">+ Ajouter une couleur</button>
             <span class="btn filebtn"><input type="file" id="imgFile" accept="image/*" aria-label="Extraire les couleurs d’une image">Depuis une image</span>
             <button class="btn" id="eyedrop" type="button" hidden>Pipette d’écran</button>
-            <button class="btn" id="pasteToggle" type="button" aria-expanded="false" aria-controls="pasteBox">Coller une liste</button>
+            <button class="btn" id="pasteToggle" type="button" aria-expanded="false" aria-controls="pasteBox">Importer un design system</button>
           </div>
           <div id="pasteBox" hidden style="display:flex;flex-direction:column;gap:8px">
-            <label for="pasteText">Une couleur par ligne, avec ou sans nom : « Marque #2447D1 »<textarea id="pasteText" rows="4" placeholder="Nuit #0E1B4D&#10;Marque #2447D1&#10;#F5B800"></textarea></label>
+            <label for="pasteText">Collez vos variables CSS, votre configuration Tailwind, vos jetons JSON (DTCG, Tokens Studio) ou une simple liste « Marque #2447D1 »<textarea id="pasteText" rows="6" spellcheck="false" placeholder=":root {&#10;  --color-brand-500: #2447D1;&#10;  --color-night: #0E1B4D;&#10;}"></textarea></label>
+            <div class="row"><span class="btn filebtn"><input type="file" id="dsFile" accept=".css,.scss,.json,.js,.mjs,.cjs,.ts,.txt,text/css,application/json,text/plain" aria-label="Importer un fichier de design system">Ouvrir un fichier</span><span class="small muted">.css, .json, tailwind.config.js</span></div>
+            <div id="dsReport" class="ds-report" aria-live="polite" hidden></div>
             <div class="row"><button class="btn primary" id="pasteApply" type="button">Remplacer mes couleurs</button></div>
           </div>
           <div class="imgpanel" id="imgPanel" hidden>
@@ -2405,6 +2416,149 @@ function suggestFix(moveHex, otherHex, target) {
   const { L: L0, C, h } = hexToOklch(moveHex); let best = null, bestD = Infinity;
   for (let k = 0; k <= 400; k++) { const L = k / 400, hex = linToHex(oklchToLin(L, maxChroma(L, h, C), h).map(clamp01)); if (ratio(hex, otherHex) >= target) { const d = Math.abs(L - L0); if (d < bestD) { bestD = d; best = hex; } } }
   return best;
+}
+// Lisio, import d’un design system existant : variables CSS, configuration Tailwind, jetons JSON (DTCG, Tokens Studio,
+// export de variables), ou simple liste « Nom #hex ». Fonctions pures, testées par tests/importds.test.mjs.
+// Lisio garde au plus 12 couleurs : une par famille de nuances (la plus proche du 500), puis les couleurs seules.
+
+const IMP_MAX = 12;
+const impNum = s => { s = String(s).trim(); return s.endsWith("%") ? parseFloat(s) / 100 : parseFloat(s); };
+function impHsl(h, s, l) {
+  h = ((h % 360) + 360) % 360; const a = s * Math.min(l, 1 - l);
+  const f = n => { const k = (n + h / 30) % 12; return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); };
+  return rgb2hex([f(0), f(8), f(4)]);
+}
+// Une valeur de couleur CSS ou JSON vers #RRGGBB (l’alpha est ignoré), ou null.
+function parseColor(v) {
+  if (v && typeof v === "object") { // DTCG 2025 : { colorSpace, components, hex }
+    if (typeof v.hex === "string") return parseColor(v.hex);
+    if (v.colorSpace === "srgb" && Array.isArray(v.components)) return rgb2hex(v.components.map(Number));
+    return null;
+  }
+  if (typeof v !== "string") return null;
+  const s = v.trim().toLowerCase();
+  let m = s.match(/^#([0-9a-f]{3,8})$/);
+  if (m) { const h = m[1]; return h.length === 3 || h.length === 6 ? normHex(h) : h.length === 4 ? normHex(h.slice(0, 3)) : h.length === 8 ? normHex(h.slice(0, 6)) : null; }
+  m = s.match(/^rgba?\(\s*([^)]*)\)$/);
+  if (m) { const p = m[1].split(/[\s,\/]+/).filter(Boolean); if (p.length < 3) return null; return rgb2hex(p.slice(0, 3).map(x => x.endsWith("%") ? impNum(x) : impNum(x) / 255)); }
+  m = s.match(/^hsla?\(\s*([^)]*)\)$/);
+  if (m) { const p = m[1].split(/[\s,\/]+/).filter(Boolean); if (p.length < 3) return null; return impHsl(parseFloat(p[0]), impNum(p[1].endsWith("%") ? p[1] : p[1] + "%"), impNum(p[2].endsWith("%") ? p[2] : p[2] + "%")); }
+  m = s.match(/^oklch\(\s*([^)]*)\)$/);
+  if (m) { const p = m[1].split(/[\s,\/]+/).filter(Boolean); if (p.length < 3) return null; const L = impNum(p[0]), C = parseFloat(p[1]), h = parseFloat(p[2]) * Math.PI / 180; return linToHex(oklchToLin(L, C, h).map(clamp01)); }
+  return null;
+}
+
+const IMP_STEP = /^(\d{2,3})$/;
+// Chemin de jeton vers nom lisible et famille : ["color","brand","500"] → famille « brand », nuance 500.
+function impShape(path) {
+  const parts = path.map(String).flatMap(p => p.split(/[-_.\/]/)).filter(Boolean).filter(p => !/^(colou?rs?|palette|primitives?|base|global|default|value|\$value)$/i.test(p));
+  if (!parts.length) return { name: path.join("-") || "Couleur", family: null, step: null };
+  const last = parts[parts.length - 1];
+  if (IMP_STEP.test(last) && parts.length > 1) { const fam = parts.slice(0, -1).join("-"); return { name: fam + " " + last, family: fam, step: +last }; }
+  return { name: parts.join("-"), family: null, step: null };
+}
+const impCap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+// Jetons JSON : DTCG ($value), Tokens Studio (value), ou objet simple { nom: "#hex" }.
+function impJson(obj) {
+  const flat = new Map(); // "a.b.c" → valeur brute
+  const walk = (o, path) => {
+    if (o === null || typeof o !== "object" || Array.isArray(o)) { if (path.length) flat.set(path.join("."), o); return; }
+    if ("$value" in o || ("value" in o && (typeof o.value !== "object" || o.value === null || "hex" in o.value))) { flat.set(path.join("."), "$value" in o ? o.$value : o.value); return; }
+    for (const k of Object.keys(o)) if (!k.startsWith("$")) walk(o[k], [...path, k]);
+  };
+  walk(obj, []);
+  const resolve = (v, seen = 0) => { const m = typeof v === "string" && v.match(/^\{([^}]+)\}$/); if (!m || seen > 8) return v; return flat.has(m[1]) ? resolve(flat.get(m[1]), seen + 1) : null; };
+  const out = []; let alias = 0, bad = 0;
+  for (const [k, v] of flat) {
+    if (typeof v === "string" && /^\{[^}]+\}$/.test(v)) { alias++; continue; } // un alias pointe vers une couleur déjà comptée
+    const hex = parseColor(resolve(v)); if (hex) out.push({ path: k.split("."), hex }); else if (typeof v === "string" && /^(#|rgb|hsl|oklch)/i.test(v.trim())) bad++;
+  }
+  return { entries: out, alias, bad };
+}
+// Variables CSS, y compris le bloc @theme de Tailwind 4.
+function impCss(text) {
+  const vars = new Map(); const re = /--([\w-]+)\s*:\s*([^;}]+)[;}]/g; let m;
+  while ((m = re.exec(text))) if (!vars.has(m[1])) vars.set(m[1], m[2].trim());
+  const out = []; let alias = 0, bad = 0;
+  for (const [k, v] of vars) {
+    if (/^var\(/.test(v)) { alias++; continue; }
+    const hex = parseColor(v); if (hex) out.push({ path: k.replace(/^colou?r-/, "").split("-"), hex }); else if (/^(#|rgb|hsl|oklch)/i.test(v)) bad++;
+  }
+  return { entries: out, alias, bad };
+}
+// Configuration Tailwind 3 (JS) : lecture tolérante des clés et des chaînes, sans exécuter le code.
+function impTailwind(text) {
+  const body = text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:])\/\/.*$/gm, "$1");
+  const stack = [], out = []; let bad = 0;
+  const re = /(?:(["']?)([\w-]+)\1\s*:\s*(\{|["'`]([^"'`]*)["'`]))|(\{)|(\})/g; let m;
+  while ((m = re.exec(body))) {
+    if (m[6]) { stack.pop(); continue; }
+    if (m[5]) { stack.push(null); continue; }
+    if (m[3] === "{") { stack.push(m[2]); continue; }
+    const path = [...stack.filter(Boolean), m[2]]; const hex = parseColor(m[4]);
+    if (hex) out.push({ path: m[2] === "DEFAULT" ? path.slice(0, -1) : path, hex }); else if (/^(#|rgb|hsl|oklch)/i.test(m[4].trim())) bad++;
+  }
+  // Seulement ce qui vit sous « colors » quand la clé existe (évite les couleurs d’ombres ou de plugins).
+  const inColors = out.filter(e => e.path.includes("colors"));
+  return { entries: (inColors.length ? inColors : out).map(e => ({ ...e, path: e.path.slice(e.path.lastIndexOf("colors") + 1) })), alias: 0, bad };
+}
+function impList(text) {
+  const out = [];
+  text.split(/\n|;/).forEach(line => {
+    const m = line.match(/#?\b([0-9a-f]{6}|[0-9a-f]{3})\b/i); if (!m) return;
+    const hex = normHex(m[1]); if (!hex) return;
+    const name = line.replace(m[0], "").replace(/[:=,–-]+\s*$/, "").trim();
+    out.push({ path: name ? [name] : [], hex, plain: true });
+  });
+  return { entries: out, alias: 0, bad: 0 };
+}
+
+function detectFormat(text) {
+  const t = String(text).trim();
+  if (/^[\[{]/.test(t)) { try { JSON.parse(t); return "json"; } catch { /* pas du JSON */ } }
+  if (/(module\.exports|export\s+default|theme\s*:|colors\s*:)/.test(t) && !/--[\w-]+\s*:/.test(t)) return "tailwind";
+  if (/--[\w-]+\s*:/.test(t)) return "css";
+  return "liste";
+}
+const FORMAT_LABEL = { json: "jetons JSON", tailwind: "configuration Tailwind", css: "variables CSS", liste: "liste de couleurs" };
+
+// Analyse complète : ce que Lisio a trouvé, ce qu’il garde et pourquoi.
+function analyzeImport(text) {
+  const format = detectFormat(text);
+  const raw = format === "json" ? impJson(JSON.parse(String(text).trim())) : format === "css" ? impCss(text) : format === "tailwind" ? impTailwind(text) : impList(text);
+  const found = raw.entries.map((e, i) => { const s = e.plain ? { name: e.path[0] || "", family: null, step: null } : impShape(e.path); return { ...s, hex: e.hex, i }; });
+  // Doublons exacts : on garde la première occurrence.
+  const seen = new Set(), uniq = []; let dup = 0;
+  for (const f of found) { if (seen.has(f.hex)) { dup++; continue; } seen.add(f.hex); uniq.push(f); }
+  // Une couleur par famille : la nuance la plus proche de 500.
+  const fams = new Map();
+  for (const f of uniq) if (f.family) (fams.get(f.family) || fams.set(f.family, []).get(f.family)).push(f);
+  const keep = [], dropped = [];
+  const famKept = new Set();
+  for (const f of uniq) {
+    if (!f.family || fams.get(f.family).length < 3) { keep.push(f); continue; }
+    if (famKept.has(f.family)) continue;
+    famKept.add(f.family);
+    const list = fams.get(f.family), best = list.reduce((a, b) => Math.abs(b.step - 500) < Math.abs(a.step - 500) ? b : a);
+    keep.push({ ...best, name: best.family, fromFamily: list.length });
+    list.forEach(x => { if (x !== best) dropped.push({ ...x, why: "nuance" }); });
+  }
+  const over = keep.slice(IMP_MAX); over.forEach(x => dropped.push({ ...x, why: "max" }));
+  const used = new Set();
+  const colors = keep.slice(0, IMP_MAX).map((f, k) => {
+    let name = impCap((f.name || "Couleur " + (k + 1)).replace(/-/g, " ")).slice(0, 30), base = name, n = 2;
+    while (used.has(name)) name = base + " " + n++;
+    used.add(name); return { name, hex: f.hex, ...(f.fromFamily ? { family: f.fromFamily } : {}) };
+  });
+  // Couleurs presque identiques (écart OKLCH < 0,02) : à fusionner, une seule suffit souvent.
+  const close = [];
+  for (let a = 0; a < colors.length; a++) for (let b = a + 1; b < colors.length; b++) {
+    const A = hexToOklch(colors[a].hex), B = hexToOklch(colors[b].hex);
+    const d = Math.hypot(A.L - B.L, A.C * Math.cos(A.h) - B.C * Math.cos(B.h), A.C * Math.sin(A.h) - B.C * Math.sin(B.h));
+    if (d < 0.02) close.push([colors[a].name, colors[b].name]);
+  }
+  return { format, found: found.length, duplicates: dup, aliases: raw.alias, unreadable: raw.bad, families: famKept.size, colors, dropped, close };
 }
 // Lisio, cœur WCAG : seuils, grand texte, arrondi d'affichage, verdicts.
 // Fonctions pures, sans DOM ni état. Testées par tests/wcag.test.mjs.
@@ -3770,17 +3924,40 @@ function renderDetail() {
 $("pairDetail").addEventListener("click", e => { const b = e.target.closest("[data-dact]"); if (b && dActs[+b.dataset.dact]) dActs[+b.dataset.dact](); });
 // Coller une liste
 $("pasteToggle").addEventListener("click", e => { const box = $("pasteBox"); box.hidden = !box.hidden; e.currentTarget.setAttribute("aria-expanded", !box.hidden); });
+let dsLast = null;
+function dsAnalyze() {
+  const t = $("pasteText").value, box = $("dsReport"), btn = $("pasteApply");
+  if (!t.trim()) { dsLast = null; box.hidden = true; btn.textContent = "Remplacer mes couleurs"; return; }
+  let r; try { r = analyzeImport(t); } catch { r = null; }
+  dsLast = r;
+  if (!r || !r.colors.length) { box.hidden = false; box.innerHTML = `<p class="small"><b>Aucune couleur reconnue.</b> Lisio lit les codes #hex, rgb(), hsl() et oklch().</p>`; btn.textContent = "Remplacer mes couleurs"; return; }
+  const notes = [];
+  if (r.families) notes.push(`${r.families} famille${r.families > 1 ? "s" : ""} de nuances : Lisio garde la nuance la plus proche du 500 et recalcule les autres à l’étape Nuances`);
+  if (r.aliases) notes.push(`${r.aliases} alias (var() ou {…}) ignorés : ils pointent vers une couleur déjà lue`);
+  if (r.duplicates) notes.push(`${r.duplicates} doublon${r.duplicates > 1 ? "s" : ""} exact${r.duplicates > 1 ? "s" : ""} retiré${r.duplicates > 1 ? "s" : ""}`);
+  if (r.dropped.some(d => d.why === "max")) notes.push(`${r.dropped.filter(d => d.why === "max").length} couleur(s) au‑delà de 12 laissées de côté`);
+  if (r.unreadable) notes.push(`${r.unreadable} valeur(s) illisibles`);
+  r.close.forEach(([a, b]) => notes.push(`${esc(a)} et ${esc(b)} sont presque identiques : une seule suffit peut‑être`));
+  box.hidden = false;
+  box.innerHTML = `<p class="small"><b>Reconnu : ${FORMAT_LABEL[r.format]}.</b> ${r.found} couleur${r.found > 1 ? "s" : ""} trouvée${r.found > 1 ? "s" : ""}, ${r.colors.length} gardée${r.colors.length > 1 ? "s" : ""}.</p>`
+    + `<ul class="ds-sw">${r.colors.map((c, k) => `<li style="--d:${k * 40}ms"><span class="sw" style="background:${c.hex}"></span><b>${esc(c.name)}</b> <span class="mono">${c.hex}</span>${c.family ? ` <span class="muted">· 1 sur ${c.family}</span>` : ""}</li>`).join("")}</ul>`
+    + (notes.length ? `<ul class="small muted ds-notes">${notes.map(n => `<li>${n}</li>`).join("")}</ul>` : "");
+  btn.textContent = r.colors.length >= 2 ? `Remplacer mes couleurs par ces ${r.colors.length}` : "Remplacer mes couleurs";
+}
+let dsTimer = 0;
+$("pasteText").addEventListener("input", () => { clearTimeout(dsTimer); dsTimer = setTimeout(dsAnalyze, 160); });
+$("dsFile").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  if (f.size > 2e6) { toast("Fichier trop lourd (2 Mo maximum)"); e.target.value = ""; return; }
+  f.text().then(t => { $("pasteText").value = t; dsAnalyze(); toast(`${f.name} lu`); e.target.value = ""; });
+});
 $("pasteApply").addEventListener("click", () => {
-  const list = [];
-  $("pasteText").value.split(/\n|;/).forEach((line, k) => {
-    const m = line.match(/#?\b([0-9a-f]{6}|[0-9a-f]{3})\b/i); if (!m) return;
-    const hex = normHex(m[1]); if (!hex) return;
-    const name = line.replace(m[0], "").replace(/[:=,–-]+\s*$/, "").trim() || "Couleur " + (list.length + 1);
-    list.push({ name: name.slice(0, 30), hex });
-  });
+  dsAnalyze();
+  const list = dsLast ? dsLast.colors.map(({ name, hex }) => ({ name, hex })) : [];
   if (list.length < 2) { toast("Il faut au moins deux couleurs, ex. « Marque #2447D1 »"); return; }
+  const fmt = dsLast.format;
   palette = list.slice(0, 12); sel = null; changed(); renderEditor(); $("pasteBox").hidden = true; $("pasteToggle").setAttribute("aria-expanded", "false");
-  toast(`${palette.length} couleurs chargées`);
+  toast(fmt === "liste" ? `${palette.length} couleurs chargées` : `${palette.length} couleurs importées depuis vos ${FORMAT_LABEL[fmt]} : l’audit est à jour dans Contrastes`);
 });
 
 // ---------- Noms automatiques ----------
@@ -5682,7 +5859,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "d00ab54";
+const LISIO_BUILD = "1de2119";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
