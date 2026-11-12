@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Lisio : contraste WCAG 2.0 à 2.2 de toutes vos paires de couleurs, essai typographique et lisibilité.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%279%27 fill=%27%230B3C3D%27/%3E%3Ccircle cx=%2716%27 cy=%279.6%27 r=%274.4%27 fill=%27none%27 stroke=%27white%27 stroke-width=%271.8%27/%3E%3Cpath d=%27M16 5.2a4.4 4.4 0 0 1 0 8.8z%27 fill=%27%23FF6A13%27/%3E%3Crect x=%2713.2%27 y=%2716.2%27 width=%275.6%27 height=%2710.6%27 rx=%272.8%27 fill=%27white%27/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2032%2032%27%3E%3Crect%20width=%2732%27%20height=%2732%27%20fill=%27%23050505%27/%3E%3Ccircle%20cx=%2716%27%20cy=%279.6%27%20r=%274.4%27%20fill=%27none%27%20stroke=%27white%27%20stroke-width=%271.8%27/%3E%3Cpath%20d=%27M16%205.2a4.4%204.4%200%200%201%200%208.8z%27%20fill=%27white%27/%3E%3Crect%20x=%2713.2%27%20y=%2716.2%27%20width=%275.6%27%20height=%2710.6%27%20rx=%272.8%27%20fill=%27white%27/%3E%3C/svg%3E">
 <title>Lisio</title>
 <script>try{var t=localStorage.getItem("lisio-theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 
@@ -1554,9 +1554,9 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 .logo#homeB{border:0;background:none;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer}
 .home{position:fixed;inset:0;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--bg);color:var(--ink);overflow:auto}
 .home::backdrop{background:var(--bg)}
-.hm-in{max-width:1280px;margin:0 auto;padding:20px var(--gut) 40px;display:flex;flex-direction:column;gap:clamp(28px,5vh,56px);min-height:100%;box-sizing:border-box}
-.hm-top{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.hm-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:22px;letter-spacing:-.04em}.hm-brand svg{width:36px;height:36px}
+.hm-in{max-width:none;margin:0;padding:0 max(var(--gut),env(safe-area-inset-right,0px)) 40px max(var(--gut),env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:clamp(28px,5vh,56px);min-height:100%;box-sizing:border-box}
+.hm-top{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:60px}
+.hm-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:22px;letter-spacing:-.04em}.hm-brand svg{width:44px;height:44px;flex:none}
 .hm-skip{font:inherit;font-size:15px;font-weight:600;min-height:44px;padding:0 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
 .hm-skip:hover{background:var(--hover)}
 .hm-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center}
@@ -1588,6 +1588,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 .hm-steps b{font-size:15px;line-height:1.2}.hm-steps small{font-size:13px;color:var(--muted);line-height:1.3}
 .hm-sw{grid-template-columns:repeat(3,10px);gap:3px}.hm-sw b{display:block;width:10px;height:22px}
 .hm-rp{background:linear-gradient(90deg,#EEF2FF,#B9C6F5,#6E86E6,#2447D1,#16297D,#0A1240) content-box,var(--surface);padding:15px 9px}
+.hm-steps a:hover .hm-rp,.hm-steps a:focus-visible .hm-rp{background:linear-gradient(90deg,#EEF2FF,#B9C6F5,#6E86E6,#2447D1,#16297D,#0A1240) content-box,var(--ink)}
 .hm-aa{font-size:21px;font-weight:700;letter-spacing:-.02em}
 .hm-ty{grid-template-columns:30px;grid-template-rows:repeat(3,auto);gap:4px;justify-items:start}.hm-ty b{display:block;height:5px;background:currentColor}.hm-ty b:nth-child(1){width:30px;height:8px}.hm-ty b:nth-child(2){width:22px}.hm-ty b:nth-child(3){width:26px}
 .hm-ds{grid-template-columns:repeat(2,13px);gap:4px}.hm-ds b{display:block;width:13px;height:13px;border:2px solid currentColor}.hm-ds b:nth-child(1){background:currentColor}
@@ -1604,7 +1605,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 @keyframes hmPop{0%{transform:scale(.97)}100%{transform:none}}
 @media (max-width:900px){.hm-hero{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:760px){
-  .hm-in{padding:14px 16px 28px;gap:26px}
+  .hm-in{padding:0 16px 28px;gap:26px}.hm-top{min-height:52px}.hm-brand svg{width:36px;height:36px}
   .hm-steps{grid-template-columns:minmax(0,1fr);gap:0}
   .hm-steps::before{left:25px;right:auto;top:0;bottom:0;width:2px;height:auto}
   .hm-steps::after{display:none}
@@ -2193,7 +2194,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 <button type="button" class="to-top" id="toTop" aria-label="Retour en haut de la page" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg><span class="tt-l">Haut</span></button>
 <dialog class="home" id="home" aria-labelledby="homeH" aria-describedby="homeLead">
   <div class="hm-in">
-    <header class="hm-top"><span class="hm-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="var(--ink)"/><circle cx="16" cy="9.6" r="4.4" fill="var(--bg)"/><rect x="11.6" y="16" width="8.8" height="11" fill="var(--bg)"/></svg>Lisio</span><button type="button" class="hm-skip" data-home="skip">Aller à l’outil<span aria-hidden="true"> →</span></button></header>
+    <header class="hm-top"><span class="hm-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="var(--primary)"/><circle cx="16" cy="9.6" r="4.4" fill="none" stroke="var(--primary-ink)" stroke-width="1.8"/><path d="M16 5.2a4.4 4.4 0 0 1 0 8.8z" fill="var(--primary-ink)"/><rect x="13.2" y="16.2" width="5.6" height="10.6" rx="2.8" fill="var(--primary-ink)"/></svg>Lisio</span><button type="button" class="hm-skip" data-home="skip">Aller à l’outil<span aria-hidden="true"> →</span></button></header>
     <div class="hm-hero">
       <div class="hm-txt">
         <p class="hm-eye">Couleurs, typographie, design system</p>
@@ -5633,7 +5634,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "d0132cc";
+const LISIO_BUILD = "8d9f7a5";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

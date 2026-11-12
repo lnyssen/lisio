@@ -28,6 +28,11 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   check(await page.evaluate(() => document.getElementById("home").open), "accueil ouvert au lancement");
   check(await h.locator("[data-home=new]").count() === 1 && await h.locator("[data-home=demo]").count() === 1 && await h.locator("[data-home=skip]").count() === 1, "choix : créer mon projet, la démo, aller à l’outil");
   check(await h.locator(".hm-steps a").count() === 7, "schéma : les 7 étapes, chacune un lien");
+  // 12 novembre 2026 (retours de Laurent) : le dégradé de Nuances reste au survol ; même logo et mêmes marges que l’outil.
+  await h.locator(".hm-steps a").nth(1).hover(); await page.waitForTimeout(400);
+  check(await page.evaluate(() => /gradient/.test(getComputedStyle(document.querySelector(".hm-rp")).backgroundImage)), "survol : l’icône Nuances garde son dégradé");
+  check(await page.evaluate(() => { const a = document.querySelector(".hm-brand svg"), b = document.querySelector("#homeB svg"); const k = e => [...e.children].map(x => x.tagName + (x.getAttribute("d") || x.getAttribute("r") || x.getAttribute("rx") || "")).join(); return k(a) === k(b); }), "accueil : même logo que l’outil");
+  check(await page.evaluate(() => { const r = document.querySelector(".hm-top").getBoundingClientRect(), m = document.querySelector("main").getBoundingClientRect(); return Math.abs(r.left - m.left) <= 1 && Math.abs(r.right - m.right) <= 1; }), "accueil : mêmes marges que l’outil, à gauche et à droite");
   check(await page.evaluate(() => document.activeElement && document.activeElement.closest("#home") !== null), "le focus est dans l’accueil");
   if (AXE) { await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
     const v = await page.evaluate(async () => (await axe.run(document.querySelector("#home"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id)); check(!v.length, "axe-core : accueil sans violation", v.join(", ")); }
