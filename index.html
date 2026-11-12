@@ -4775,10 +4775,13 @@ function dsAuto(m) {
   const as = stepsOf(V.act), sc0 = scaleOf(V.act), pass = h => !!h && ratio(h, V.on) >= need;
   let ai = as.indexOf(V.act); if (ai < 0) ai = sc0 && sc0.nearest != null ? sc0.nearest : 5;
   const dir = pass(as[ai + 1]) ? 1 : -1;
-  A["action/hover"] = pass(as[ai + dir]) ? as[ai + dir] : pass(as[ai - dir]) ? as[ai - dir] : V.act;
+  // Survol et appui : la nuance voisine qui reste lisible ET se voit (au moins 1,1:1 du repos). En sombre, 50 et 100 ne sont
+  // qu’à 1,08:1 l’un de l’autre : on saute alors une nuance de plus (constat du 6 novembre 2026).
+  const far = (from, d, avoid) => { for (let k = from + d; k >= 0 && k < as.length; k += d) { const h = as[k]; if (h !== avoid && h !== V.act && pass(h) && ratio(h, V.act) >= 1.1) return h; } return null; };
+  A["action/hover"] = far(ai, dir) || far(ai, -dir) || (pass(as[ai + dir]) ? as[ai + dir] : pass(as[ai - dir]) ? as[ai - dir] : V.act);
   V.hov = O("action/hover") || A["action/hover"];
   const hi = as.indexOf(V.hov), hd = hi >= 0 ? (hi > ai ? 1 : -1) : dir;
-  A["action/pressed"] = hi >= 0 && pass(as[hi + hd]) && as[hi + hd] !== V.act ? as[hi + hd] : pass(as[ai - hd]) && as[ai - hd] !== V.hov ? as[ai - hd] : V.hov;
+  A["action/pressed"] = (hi >= 0 && far(hi, hd, V.hov)) || far(ai, -hd, V.hov) || (hi >= 0 && pass(as[hi + hd]) && as[hi + hd] !== V.act ? as[hi + hd] : pass(as[ai - hd]) && as[ai - hd] !== V.hov ? as[ai - hd] : V.hov);
   A["background/subtle"] = steps.filter(h => h !== bg && ratio(fg, h) >= need).sort((a, b) => ratio(a, bg) - ratio(b, bg))[0] || bg;
   A["focus/ring"] = ratio(fg, bg) >= 3 ? fg : (O("border/default") || A["border/default"]);
   A["link/default"] = ratio(V.act, bg) >= need ? V.act : (weakest(need, bg, as) || fg);
@@ -6199,7 +6202,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "55b1f06";
+const LISIO_BUILD = "b3da8de";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

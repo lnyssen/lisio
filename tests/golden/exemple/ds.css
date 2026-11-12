@@ -184,8 +184,8 @@
     --background-default: var(--toile-950);
     --background-subtle: var(--nuit-950);
     --action-default: var(--nuit-50);
-    --action-hover: var(--nuit-100);
-    --action-pressed: var(--nuit-200);
+    --action-hover: var(--nuit-200);
+    --action-pressed: var(--nuit-300);
     --link-default: var(--nuit-50);
     --link-subtle: var(--nuit-400);
     --disabled-text: var(--nuit-600);
@@ -223,8 +223,8 @@
   --background-default: var(--toile-950);
   --background-subtle: var(--nuit-950);
   --action-default: var(--nuit-50);
-  --action-hover: var(--nuit-100);
-  --action-pressed: var(--nuit-200);
+  --action-hover: var(--nuit-200);
+  --action-pressed: var(--nuit-300);
   --link-default: var(--nuit-50);
   --link-subtle: var(--nuit-400);
   --disabled-text: var(--nuit-600);

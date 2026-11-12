@@ -1863,11 +1863,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/encre/900",
-     "Dark": "→ Colors/nuit/100"
+     "Dark": "→ Colors/nuit/200"
     }
    },
    {
@@ -1877,11 +1877,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 11.05:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/encre/800",
-     "Dark": "→ Colors/nuit/200"
+     "Dark": "→ Colors/nuit/300"
     }
    },
    {
@@ -7091,11 +7091,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/encre/900",
-     "Dark": "→ Colors/nuit/100"
+     "Dark": "→ Colors/nuit/200"
     }
    },
    {
@@ -7105,11 +7105,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 11.05:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/encre/800",
-     "Dark": "→ Colors/nuit/200"
+     "Dark": "→ Colors/nuit/300"
     }
    },
    {
@@ -12323,11 +12323,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, hover: 14.58:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, hover: 14.58:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/marine/900",
-     "Dark": "→ Colors/marine/100"
+     "Dark": "→ Colors/marine/200"
     }
    },
    {
@@ -12337,11 +12337,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, pressed: 11.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, pressed: 11.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 11.10:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/marine/800",
-     "Dark": "→ Colors/marine/200"
+     "Dark": "→ Colors/marine/300"
     }
    },
    {
@@ -17537,11 +17537,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, hover: 14.58:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, hover: 14.58:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/marine/900",
-     "Dark": "→ Colors/marine/100"
+     "Dark": "→ Colors/marine/200"
     }
    },
    {
@@ -17551,11 +17551,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, pressed: 11.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, pressed: 11.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 11.10:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/marine/800",
-     "Dark": "→ Colors/marine/200"
+     "Dark": "→ Colors/marine/300"
     }
    },
    {
@@ -22753,11 +22753,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
      "Light": "→ Colors/encre/900",
-     "Dark": "→ Colors/nuit/100"
+     "Dark": "→ Colors/nuit/200"
     }
    },
    {
@@ -22767,11 +22767,11 @@
      "FRAME_FILL",
      "SHAPE_FILL"
     ],
-    "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+    "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 11.05:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
      "Light": "→ Colors/encre/800",
-     "Dark": "→ Colors/nuit/200"
+     "Dark": "→ Colors/nuit/300"
     }
    },
    {

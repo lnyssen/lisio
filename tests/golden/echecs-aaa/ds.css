@@ -184,8 +184,8 @@
     --background-default: var(--gris-950);
     --background-subtle: var(--gris-900);
     --action-default: var(--gris-50);
-    --action-hover: var(--gris-100);
-    --action-pressed: var(--gris-200);
+    --action-hover: var(--gris-200);
+    --action-pressed: var(--gris-300);
     --link-default: var(--gris-50);
     --link-subtle: var(--gris-300);
     --disabled-text: var(--gris-600);
@@ -225,8 +225,8 @@
   --background-default: var(--gris-950);
   --background-subtle: var(--gris-900);
   --action-default: var(--gris-50);
-  --action-hover: var(--gris-100);
-  --action-pressed: var(--gris-200);
+  --action-hover: var(--gris-200);
+  --action-pressed: var(--gris-300);
   --link-default: var(--gris-50);
   --link-subtle: var(--gris-300);
   --disabled-text: var(--gris-600);

@@ -183,8 +183,8 @@
     --background-default: var(--marine-950);
     --background-subtle: var(--marine-900);
     --action-default: var(--marine-50);
-    --action-hover: var(--marine-100);
-    --action-pressed: var(--marine-200);
+    --action-hover: var(--marine-200);
+    --action-pressed: var(--marine-300);
     --link-default: var(--marine-50);
     --link-subtle: var(--marine-400);
     --disabled-text: var(--marine-600);
@@ -223,8 +223,8 @@
   --background-default: var(--marine-950);
   --background-subtle: var(--marine-900);
   --action-default: var(--marine-50);
-  --action-hover: var(--marine-100);
-  --action-pressed: var(--marine-200);
+  --action-hover: var(--marine-200);
+  --action-pressed: var(--marine-300);
   --link-default: var(--marine-50);
   --link-subtle: var(--marine-400);
   --disabled-text: var(--marine-600);

@@ -765,9 +765,9 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.marine.100}"
+              "dark": "{color.marine.200}"
             },
-            "darkDescription": "Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "darkDescription": "Primary button, hover: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
             "fr": "Bouton au survol : 14,58:1 avec texte sur bouton (critère 1.4.3, 4,5:1 minimum)"
           }
         }
@@ -783,9 +783,9 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.marine.200}"
+              "dark": "{color.marine.300}"
             },
-            "darkDescription": "Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "darkDescription": "Primary button, pressed: 11.10:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
             "fr": "Bouton appuyé : 11,00:1 avec texte sur bouton (critère 1.4.3, 4,5:1 minimum)"
           }
         }

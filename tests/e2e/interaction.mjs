@@ -33,6 +33,10 @@ async function open(state, w = 1440) {
   check(/pas une exigence WCAG/.test(await sec.locator("[data-kind=reco]").textContent()), "recommandations annoncées comme non normatives");
   check(/Lisio ne voit pas/.test(txt), "tests impossibles dans Lisio signalés");
   check(await sec.locator('details.ic-x').count() >= 3, "exceptions indiquées");
+  // Survol sombre (constat du 6 novembre 2026, 1,08:1) : survol et appui se voient dans les deux modes.
+  const st = (await reco.allTextContents()).find(t => /Survol et appui distincts/.test(t)) || "";
+  const ds = [...st.matchAll(/(\d+,\d+):1/g)].map(m => parseFloat(m[1].replace(",", ".")));
+  check(ds.length >= 4 && ds.every(v => v >= 1.1), "survol et appui à 1,1:1 au moins du repos, en clair et en sombre", st.slice(0, 220));
   // Cible à 44, 48, 56 : 2.5.5 et la recommandation passent ; texte qui suit le réglage.
   await page.click('#dsBtn button[data-v="56"]'); await page.waitForTimeout(300);
   check(/56 px de haut/.test(await sec.textContent()), "le réglage de hauteur est repris dans le contrôle");
