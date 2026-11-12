@@ -60,10 +60,13 @@ check(/crans d’écart|nuances/.test(await page.locator("#rules").textContent()
 await page.locator("#shSat").fill("1"); await page.waitForTimeout(400);
 
 // 4. Annuler revient à la méthode par contraste, à l'identique.
-await page.locator("#undoB").click(); await page.waitForTimeout(300);
-check(await pressed("contrast") === "true" && JSON.stringify(await sw()) === JSON.stringify(before), "Annuler : retour exact à la méthode par contraste");
-await page.locator("#redoB").click(); await page.waitForTimeout(300);
-check(await pressed("oklch") === "true", "Rétablir : OKLCH de nouveau");
+// Les modifications faites à moins de 500 ms d'écart sont regroupées dans l'historique : selon la vitesse de la machine,
+// méthode et saturation font une, deux ou trois étapes. On annule donc pas à pas (trois au plus), sans dépendre du chrono.
+let undos = 0;
+while (undos < 3 && await pressed("contrast") !== "true") { await page.locator("#undoB").click(); undos++; await page.waitForTimeout(250); }
+check(await pressed("contrast") === "true" && JSON.stringify(await sw()) === JSON.stringify(before), "Annuler : retour exact à la méthode par contraste", `${undos} annulation(s)`);
+for (let i = 0; i < undos; i++) { await page.locator("#redoB").click(); await page.waitForTimeout(250); }
+check(await pressed("oklch") === "true" && JSON.stringify(await sw()) === JSON.stringify(after), "Rétablir : OKLCH de nouveau, nuances identiques");
 
 // 5. Réglages communs : la nuance 50 la plus claire change la clarté du haut.
 await page.locator('#shLight button[data-v="1.03"]').click(); await page.waitForTimeout(250);
