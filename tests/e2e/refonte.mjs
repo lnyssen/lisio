@@ -138,7 +138,8 @@ for (const theme of ["light", "dark"]) for (const w of [1440, 1100, 1024, 800]) 
   const sq = B.filter(b => !b.lab && b.id !== "cmdk" && b.id !== "normChip");
   check(sq.length >= 3 && sq.every(b => b.w === 44 && b.bd), `${tag} : les boutons sans texte sont des carrés de 44 px cernés d’un filet`, JSON.stringify(sq.map(b => b.id + " " + b.w + (b.bd ? "" : " sans filet"))));
   check(sq.every(b => b.id === "logo" || b.id === "homeB" || b.icons.every(i => i.s === 20 && i.dx <= 0.6 && i.dy <= 0.6)) && B.filter(b => b.lab).every(b => b.icons.every(i => i.s === (i.cv ? 16 : 20) && i.dy <= 0.6)), `${tag} : icônes de 20 px, centrées dans leur bouton`, JSON.stringify(B.map(b => b.id + ":" + b.icons.map(i => i.s + "/" + i.dx.toFixed(1) + "/" + i.dy.toFixed(1)).join(","))));
-  const gaps = B.slice(1).map((b, k) => Math.round(b.l - B[k].r)), cut = B.findIndex(b => b.id === "cmdk");
+  // 12 novembre 2026 : la recherche devient une icône ; l’espace libre est avant elle (le résumé du projet est à gauche).
+  const gaps = B.slice(1).map((b, k) => Math.round(b.l - B[k].r)), cut = B.findIndex(b => b.id === "cmdk") >= 0 ? B.findIndex(b => b.id === "cmdk") : B.findIndex(b => b.id === "cmdMB") - 1;
   const fixed = gaps.filter((g, k) => k !== cut && !(B[k].id === "undoB" && B[k + 1].id === "redoB"));
   check(fixed.every(g => g === 8) && (B.findIndex(b => b.id === "redoB") < 0 || gaps[B.findIndex(b => b.id === "undoB")] === -1), `${tag} : 8 px entre deux commandes ; Annuler et Rétablir accolés, filet commun`, JSON.stringify(gaps));
   check(await over(p) <= 0, `${tag} : pas de défilement horizontal`);

@@ -1447,6 +1447,33 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 .j-line .sum-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .j-line .sum-body{position:absolute;z-index:16;left:-1px;right:-1px;top:100%;background:var(--surface);border:1px solid var(--line);padding:12px 14px}
 .j-acts{margin-left:0}
+/* 12 novembre 2026 (Laurent : « le carré de couleur doit être carré ») : 44 × 44, sans étirement, pastille pleine dedans. */
+:root:root input[type=color]{width:44px;height:44px;min-height:0;aspect-ratio:1;box-sizing:border-box;padding:4px;align-self:center;-webkit-appearance:none;appearance:none}
+:root:root input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+:root:root input[type=color]::-webkit-color-swatch{border:0;border-radius:0}
+:root:root input[type=color]::-moz-color-swatch{border:0;border-radius:0}
+/* 12 novembre 2026 (choix de Laurent « Tout redistribuer ») : la ligne ne garde que l’étape.
+   Essentiel | Avancé vit dans Outils, la position « Étape N sur 7 » reste pour les lecteurs d’écran. */
+.j-line .j-mode{display:none!important}
+.j-line .j-pos{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (min-width:761px){
+  :root:root .appbar>.cmdk{display:none!important}
+  :root:root.cmd-m .appbar>.cmdk{display:flex!important;position:fixed;z-index:50;top:8px;left:50%;transform:translateX(-50%);width:min(640px,calc(100vw - 32px));max-width:none;height:52px;box-shadow:var(--shadow)}
+  :root:root .appbar .cmd-mb{display:grid!important;width:var(--ctl,44px);height:var(--ctl,44px)}
+  :root:root .j-line .j-todo{border-left:0;padding-left:6px}
+}
+/* Nuances : le cadre de Main n’est plus coupé en haut par le défilement horizontal du tableau. */
+.scales{padding-top:5px;padding-left:5px}
+/* 761 à 980 px : le résumé du haut garde le compteur et les échecs, la liste complète reste au clic. */
+@media (min-width:761px) and (max-width:980px){.appbar>.sumbar .sum-c:not(:first-child):not(.st-fail){display:none}
+  .appbar>.sumbar{grid-column:3!important;grid-row:1;justify-self:start;align-self:center;position:relative;margin:0;border:0;background:none;min-width:0;max-width:100%}
+  .appbar>.sumbar>summary{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;height:var(--ctl,44px);min-height:0;padding:0 14px 0 4px;border:1px solid var(--line);background:var(--surface);box-sizing:border-box}
+  .appbar>.sumbar>summary::after{margin-left:8px}
+  .appbar>.sumbar .sum-line{flex-wrap:nowrap;overflow:hidden}.appbar>.sumbar .sum-c{white-space:nowrap}
+  .appbar>.sumbar .sum-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .appbar>.sumbar .sum-body{position:absolute;z-index:16;left:0;top:calc(100% + 6px);width:min(620px,calc(100vw - 32px));background:var(--surface);border:1px solid var(--line);padding:12px 14px;box-sizing:border-box}
+}
+@media (min-width:761px) and (max-width:1100px){.appbar>.sumbar .sum-c.st-untested{display:none}}
 :root:root .mhead{margin-top:32px}
 #tester .mhead{margin-bottom:24px!important}
 #tester .dock{position:static;margin:0 0 16px;justify-content:flex-start}
@@ -1480,7 +1507,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 @media (max-width:760px){.ex-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.ex-tabs [role=tab]{padding:8px 6px;font-size:14px;line-height:1.2}}
 /* Doublons retirés (audit UX, lot 2) : Essentiel / Avancé se règle dans la ligne de l’étape sur ordinateur, dans Outils sur mobile ;
    le thème se règle dans Outils, partout. */
-@media (min-width:761px){#helpPop .mode-row:has(#modeSeg){display:none!important}}
+@media (min-width:761px){#helpPop .mode-row:has(#modeSeg){}}
 :root:root .appbar .themebtn{display:none!important}
 .ex-tabs+.ex-panel,.ex-panel{margin-top:calc(24px - var(--sec-gap))}
 /* Design system sur mobile (audit UX, lot 2) : l’aperçu défile dans son cadre au lieu d’allonger la page de 14 000 px. */
@@ -4442,10 +4469,10 @@ function renderJourney(v) {
   // Une seule ligne d’aide repliable (choix de Laurent, 7 novembre 2026) : l’explication, les « ? » et l’invitation Essentiel sont dedans.
   const hOpen = jHelpOpen(), adv = document.querySelector(`#${v} .adv-hint`), iss0 = v !== "exporter" && v !== "tester" ? jFacts(v, v, seen).issues : 0;
   NB.innerHTML = `
-  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b><span class="sr-only"> : ${J_STATE[jState(v, v, seen)]}</span></p><p class="j-todo"><span class="j-todo-l">Prochaine action</span><span class="sr-only"> : </span><span class="j-todo-t">${iss0 ? jWhy(v, iss0) + (v === "palette" ? "" : " Corrigez ici, ou avancez et revenez-y.") : J_TODO[v]}</span></p>${jValBtn(v, seen)}<div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
+  <div class="j-line"><p class="j-pos"><b>Étape ${i + 1} sur ${JOURNEY.length}</b><span class="sr-only"> : ${J_STATE[jState(v, v, seen)]}</span></p><p class="j-todo"><span class="j-todo-l">Prochaine action</span><span class="sr-only"> : </span><span class="j-todo-t">${iss0 ? jWhy(v, iss0) + "" : J_TODO[v]}</span></p>${jValBtn(v, seen)}<div class="j-acts"><div class="seg mode-seg j-mode" role="group" aria-label="Affichage"><button type="button" data-mode="ess" aria-pressed="${uiMode === "ess"}">Essentiel</button><button type="button" data-mode="adv" aria-pressed="${uiMode === "adv"}">Avancé</button></div><button type="button" class="j-help-b" aria-expanded="${hOpen}" aria-controls="jHelp"><span class="j-help-q" aria-hidden="true">?</span>Aide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div></div>
   <div class="j-help" id="jHelp"${hOpen ? "" : " hidden"}><p class="j-say">${say}</p><p class="qline">${qs.map(q => `<button type="button" class="qchip" data-q="${q}" aria-expanded="false" aria-controls="qPop">${QHELP[q][0]}</button>`).join("")}</p><p class="j-legend"><span><i class="lg lg-done" aria-hidden="true">✓</i>Validée</span><span><i class="lg lg-seen" aria-hidden="true">3</i>Vue</span><span><i class="lg lg-now" aria-hidden="true">4</i>En cours</span><span><i class="lg lg-warn" aria-hidden="true">!</i>Attention requise</span><span><i class="lg lg-todo" aria-hidden="true">5</i>À commencer</span><span class="j-lg-note">« Validée » : vous l’avez validée et Lisio n’y détecte rien. Ce n’est pas un audit de conformité.</span></p>${adv ? adv.outerHTML : ""}</div>${hello}`;
   // Audit UX du 11 novembre 2026 : le résumé rejoint la ligne de l’étape, une bande de moins avant le titre.
-  { const L = NB.querySelector(".j-line"); if (L) L.insertBefore(SB, L.querySelector(".j-acts")); }
+  sumPlace();
   stepNavRender(i);
   const nx = JOURNEY[i + 1], pv = JOURNEY[i - 1], iss = v === "palette" ? 0 : jFacts(v, v, seen).issues;
   const AI = allIssues(), fx = AI.find(x => x.k === "text/default" && x.m === "light") || AI.find(x => roleFix(x.k, null, x.m)), fk = fx && fx.k, fm = fx && fx.m, fv = fx && roleFix(fk, null, fm);
@@ -4453,6 +4480,11 @@ function renderJourney(v) {
   X.innerHTML = `<div class="jn-in">${iss && v !== "exporter" && v !== "tester" ? `<div class="jn-warn"><p>${why} Vous pouvez corriger maintenant, ou avancer et y revenir.</p>${fv ? `<button type="button" class="ds-fixb" data-xfix="${fk}" data-m="${fm}" data-v="${fv}"><span class="sw" style="background:${fv}"></span>${ROLE_FR[fk][0]}${fm === "dark" ? " (sombre)" : ""} : utiliser ${esc(hexName(fv))}</button>` : ""}</div>` : ""}<div class="jn-row">${pv ? `<a class="btn jn-back" href="#${pv[0]}"><span aria-hidden="true">←</span><span>Étape précédente<span class="jn-pn"> : ${pv[1]}</span></span></a>` : "<span></span>"}${nx ? `<a class="btn primary jn-go" href="#${nx[0]}">Étape suivante : ${nx[1]} →</a>` : `<a class="btn" href="#sources">Lire le guide</a>`}</div></div>`;
 }
 // ---------- Aide « ? » ----------
+// Le résumé du projet : dans la barre du haut sur ordinateur (à la place du champ de recherche), dans la ligne de l’étape sur mobile.
+function sumPlace() { const SB = $("sumBar"), L = $("jNowBox") && $("jNowBox").querySelector(".j-line"); if (!SB) return;
+  if (!matchMedia("(max-width:760px)").matches) { const bar = document.querySelector(".appbar"), at = $("cmdk"); if (SB.parentNode !== bar) bar.insertBefore(SB, at); }
+  else if (L && SB.parentNode !== L) L.insertBefore(SB, L.querySelector(".j-acts")); }
+matchMedia("(max-width:760px)").addEventListener("change", () => sumPlace());
 // ---------- Résumé permanent du projet (F02, P0-5) ----------
 // Chiffres pris là où Lisio les calcule déjà (export JSON, rôles, styles, cases manuelles) ; mis à jour à chaque changement.
 let sumRaf = 0;

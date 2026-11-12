@@ -37,11 +37,13 @@ const axeOn = async (page, sel, lab) => { if (!AXE) return; if (!(await page.eva
   // 2. Essentiel par défaut, et la bascule Essentiel | Avancé en tête de chaque étape.
   const { ctx, page, errors } = await open("#styles", { "lisio-mode": "" });
   check(await page.evaluate(() => document.documentElement.classList.contains("mode-ess")), "sans choix enregistré : affichage Essentiel");
-  const seg = page.locator("#jNowBox .mode-seg");
-  check(await seg.count() === 1 && await seg.isVisible() && await seg.getAttribute("role") === "group" && /Affichage/.test(await page.evaluate(() => { const g = document.querySelector("#jNowBox .mode-seg"), l = g && document.getElementById(g.getAttribute("aria-labelledby")); return (l && l.textContent) || (g && g.getAttribute("aria-label")) || ""; })), "bascule « Essentiel | Avancé » en tête de l’étape, groupe nommé");
-  check(await page.getAttribute('#jNowBox .j-mode [data-mode="ess"]', "aria-pressed") === "true", "Essentiel est l’état pressé");
-  await page.click('#jNowBox .j-mode [data-mode="adv"]'); await page.waitForTimeout(300);
-  check(await page.evaluate(() => !document.documentElement.classList.contains("mode-ess") && localStorage.getItem("lisio-mode") === "adv") && await page.getAttribute('#jNowBox .j-mode [data-mode="adv"]', "aria-pressed") === "true", "« Avancé » : tout s’affiche, choix retenu, état annoncé");
+  // 12 novembre 2026 : la bascule vit dans Outils › Réglages (choix de Laurent « Tout redistribuer »).
+  await page.click("#helpB"); await page.waitForTimeout(200);
+  const seg = page.locator("#modeSeg");
+  check(await seg.count() === 1 && await seg.isVisible() && await seg.getAttribute("role") === "group" && /Affichage/.test(await page.evaluate(() => { const g = document.querySelector("#modeSeg"), l = g && document.getElementById(g.getAttribute("aria-labelledby")); return (l && l.textContent) || (g && g.getAttribute("aria-label")) || ""; })), "bascule « Essentiel | Avancé » dans Outils, groupe nommé");
+  check(await page.getAttribute('#modeSeg [data-mode="ess"]', "aria-pressed") === "true", "Essentiel est l’état pressé");
+  await page.click('#modeSeg [data-mode="adv"]'); await page.waitForTimeout(300);
+  check(await page.evaluate(() => !document.documentElement.classList.contains("mode-ess") && localStorage.getItem("lisio-mode") === "adv") && await page.getAttribute('#modeSeg [data-mode="adv"]', "aria-pressed") === "true", "« Avancé » : tout s’affiche, choix retenu, état annoncé");
   check(await page.evaluate(() => document.activeElement && document.activeElement.dataset.mode === "adv"), "le focus reste sur le bouton après le changement");
   const ok = await page.evaluate(() => { const r = document.querySelector("#jNowBox .j-line").getBoundingClientRect(); return r.height <= 60; });
   check(ok, "la ligne « Étape N sur 7 » reste sur une ligne à 1440 px");

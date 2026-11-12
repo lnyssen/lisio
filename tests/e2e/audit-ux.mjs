@@ -25,7 +25,7 @@ const h1Top = p => p.evaluate(() => { const h = [...document.querySelectorAll("#
 { const p = await open({ viewport: { width: 1440, height: 900 } });
   for (const v of ["couleurs", "tester", "matrice", "exporter"]) { await go(p, v); await p.evaluate(() => scrollTo(0, 0)); const t = await h1Top(p);
     check(t > 0 && t <= 260, `ordinateur, ${v} : le titre visible commence avant 260 px (371 avant l’audit)`, String(t)); }
-  check(await p.evaluate(() => !!document.querySelector("#jNowBox .j-line #sumBar")), "le résumé du projet est dans la ligne de l’étape");
+  check(await p.evaluate(() => !!document.querySelector(".appbar > #sumBar") && !document.querySelector(".appbar .cmdk").offsetWidth && !!document.getElementById("cmdMB").offsetWidth), "le résumé du projet est dans la barre du haut, la recherche est une icône");
   await go(p, "tester");
   const d = await p.evaluate(() => { const s = document.querySelector("#tester .stage").getBoundingClientRect(), k = document.getElementById("dockIn").getBoundingClientRect(); return { kb: Math.round(k.bottom), st: Math.round(s.top) }; });
   check(d.kb <= d.st, "Polices : la barre de réglages est au-dessus de l’aperçu, sans le recouvrir", JSON.stringify(d));
@@ -42,7 +42,7 @@ const h1Top = p => p.evaluate(() => { const h = [...document.querySelectorAll("#
   await p.focus("#exTabDeliver"); await p.keyboard.press("ArrowRight"); await p.keyboard.press("ArrowRight"); await p.waitForTimeout(150);
   check(await p.evaluate(() => document.activeElement.id) === "exTabHist" && await p.locator("#verCard").isVisible(), "flèches du clavier : on passe d’un onglet à l’autre ; Historique montre les versions");
   await p.click("#helpB"); await p.waitForTimeout(200);
-  check(!(await p.locator("#modeSeg").isVisible()), "Outils ne répète pas Essentiel / Avancé sur ordinateur");
+  check(await p.locator("#modeSeg").isVisible() && !(await p.locator("#jNowBox .j-mode").isVisible()), "Essentiel / Avancé à un seul endroit sur ordinateur : Outils");
   check(!(await p.evaluate(() => [...document.querySelectorAll("#helpPop a")].some(a => /\/slides$/.test(a.href)))), "Outils : plus de lien Slides en double du guide");
   await p.ctx.close(); }
 
@@ -69,7 +69,7 @@ const h1Top = p => p.evaluate(() => { const h = [...document.querySelectorAll("#
 
 // ---------- Lot 4 : recherche par teinte, correction qui respecte la couleur ----------
 { const p = await open({ viewport: { width: 1440, height: 900 } }, "couleurs", { "lisio:colors": JSON.stringify([{ name: "Marine", hex: "#0E1B4D" }, { name: "Roi", hex: "#2447D1" }, { name: "Blanc", hex: "#FFFFFF" }]) });
-  await p.click(".cmdk"); await p.keyboard.type("bleu"); await p.waitForTimeout(300);
+  await p.click("#cmdMB"); await p.keyboard.type("bleu"); await p.waitForTimeout(300);
   const found = await p.evaluate(() => document.querySelector("#cmdk") ? document.querySelector("#cmdk").textContent : document.body.textContent);
   check(/Marine/.test(found) && /Roi/.test(found), "recherche : « bleu » trouve les deux bleus de la palette");
   await p.keyboard.press("Escape"); await go(p, "matrice");
@@ -84,7 +84,7 @@ const h1Top = p => p.evaluate(() => { const h = [...document.querySelectorAll("#
   check(w.s <= w.sum + 4 && w.s < w.row / 2, "« Par contraste / Perceptuelle » : le sélecteur a la largeur de ses boutons", JSON.stringify(w));
   await p.click('#shMeth [data-v="oklch"]'); await p.waitForTimeout(450);
   const ind = await p.evaluate(() => { const s = document.getElementById("shMeth"), i = s.querySelector(".seg-ind"), on = s.querySelector('[aria-pressed="true"]'); return i ? { t: i.style.transform, l: on.offsetLeft, w: parseFloat(i.style.width), bw: on.offsetWidth, tr: getComputedStyle(i).transitionDuration } : null; });
-  check(!!ind && ind.t.includes(`${ind.l}px`) && Math.abs(ind.w - ind.bw) < 1, "l’option choisie : la pastille noire a glissé sous le bouton pressé", JSON.stringify(ind));
+  check(!!ind && Math.abs(parseFloat(ind.t.slice(10)) - ind.l) < 1 && Math.abs(ind.w - ind.bw) < 1, "l’option choisie : la pastille noire a glissé sous le bouton pressé", JSON.stringify(ind));
   check(!!ind && parseFloat(ind.tr) > 0, "elle glisse (transition)", ind && ind.tr);
   check(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | "));
   await p.ctx.close(); }

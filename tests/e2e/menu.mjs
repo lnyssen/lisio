@@ -53,10 +53,11 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   // sur ordinateur, la ligne de l’étape ; Outils › Réglages ne le répète plus (il y reste sur mobile).
   check(!(await p.evaluate(() => !!document.querySelector(".appbar [data-mode]"))), "Essentiel / Avancé n’est plus dans la barre du haut");
   await p.click("#helpB"); await p.waitForTimeout(200);
-  check(!(await vis(p, "#modeSeg")), "Outils › Réglages ne répète pas Essentiel / Avancé sur ordinateur");
+  // 12 novembre 2026 (Laurent, « Tout redistribuer ») : Essentiel / Avancé quitte la ligne de l’étape et vit dans Outils › Réglages.
+  check(await vis(p, "#modeSeg") && !(await vis(p, "#jNowBox .j-mode")), "Essentiel / Avancé : dans Outils › Réglages, plus dans la ligne de l’étape");
+  await p.click('#modeSeg [data-mode="adv"]'); await p.waitForTimeout(200);
+  check(await p.evaluate(() => localStorage.getItem("lisio-mode") === "adv") && await p.getAttribute('#modeSeg [data-mode="adv"]', "aria-pressed") === "true", "Outils : « Avancé » change l’affichage, état annoncé");
   await p.keyboard.press("Escape"); await p.waitForTimeout(150);
-  await p.click('#jNowBox .j-mode [data-mode="adv"]'); await p.waitForTimeout(200);
-  check(await p.evaluate(() => localStorage.getItem("lisio-mode") === "adv") && await p.getAttribute('#jNowBox .j-mode [data-mode="adv"]', "aria-pressed") === "true", "ligne de l’étape : « Avancé » change l’affichage, état annoncé");
   await p.click("#helpB"); await p.waitForTimeout(200);
   await p.keyboard.press("Escape"); await p.waitForTimeout(150);
   // Outils
@@ -68,7 +69,7 @@ const bottom = async p => { await p.evaluate(() => scrollTo(0, document.document
   check(await p.evaluate(() => [...document.querySelectorAll("#helpPop .hp-h")].map(h => h.textContent).join("|")) === "Espace de travail|Apprendre et aide|Réglages", "Outils en trois groupes : Espace de travail, Apprendre et aide, Réglages");
   // Audit UX du 11 novembre 2026 : sur ordinateur, Réglages ne garde que le thème ; Essentiel / Avancé est dans la ligne de l’étape.
   const segs = await p.evaluate(() => [...document.querySelectorAll("#helpPop .mode-row .seg")].filter(g => g.getClientRects().length).map(g => { const r = g.getBoundingClientRect(); return Math.round(r.width) + "x" + Math.round(r.height); }));
-  check(segs.length === 1 && /x44$/.test(segs[0]), "Réglages : le thème seul, 44 px de haut", segs.join(", "));
+  check(segs.length === 2 && segs.every(x => /x44$/.test(x)), "Réglages : thème et affichage, 44 px de haut", segs.join(", "));
   await p.click('#helpPop [data-theme-set="dark"]'); await p.waitForTimeout(150);
   check(await p.evaluate(() => document.documentElement.getAttribute("data-theme") === "dark" && document.querySelector('#helpPop [data-theme-set="dark"]').getAttribute("aria-pressed") === "true"), "thème sombre depuis Réglages, état annoncé");
   await p.click('#helpPop [data-theme-set="light"]'); await p.waitForTimeout(150);

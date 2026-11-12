@@ -31,6 +31,7 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   // 12 novembre 2026 (retours de Laurent) : le dégradé de Nuances reste au survol ; même logo et mêmes marges que l’outil.
   await h.locator(".hm-steps a").nth(1).hover(); await page.waitForTimeout(400);
   check(await page.evaluate(() => /gradient/.test(getComputedStyle(document.querySelector(".hm-rp")).backgroundImage)), "survol : l’icône Nuances garde son dégradé");
+  await page.mouse.move(2, 2); await page.waitForTimeout(500);
   check(await page.evaluate(() => { const a = document.querySelector(".hm-brand svg"), b = document.querySelector("#homeB svg"); const k = e => [...e.children].map(x => x.tagName + (x.getAttribute("d") || x.getAttribute("r") || x.getAttribute("rx") || "")).join(); return k(a) === k(b); }), "accueil : même logo que l’outil");
   check(await page.evaluate(() => { const r = document.querySelector(".hm-top").getBoundingClientRect(), m = document.querySelector("main").getBoundingClientRect(); return Math.abs(r.left - m.left) <= 1 && Math.abs(r.right - m.right) <= 1; }), "accueil : mêmes marges que l’outil, à gauche et à droite");
   check(await page.evaluate(() => document.activeElement && document.activeElement.closest("#home") !== null), "le focus est dans l’accueil");
@@ -72,8 +73,9 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   check(await page.locator("#shSet").isVisible() && await ls(page, "lisio-mode") === "adv", "« Afficher les réglages avancés » : tout réapparaît");
   check(await page.locator("nav.tabs a, nav.tabs button").count() === navEss, "même menu dans les deux modes");
   // 4. Bascule dans la ligne de l’étape (audit UX du 11 novembre 2026 : un seul endroit sur ordinateur).
-  const ess = page.locator('#jNowBox .j-mode button[data-mode="ess"]');
-  check(await ess.isVisible() && (await page.locator('#jNowBox .j-mode button[data-mode="adv"]').getAttribute("aria-pressed")) === "true", "ligne de l’étape : choix de l’affichage, état annoncé");
+  await page.click("#helpB"); await page.waitForTimeout(200);
+  const ess = page.locator('#modeSeg button[data-mode="ess"]');
+  check(await ess.isVisible() && (await page.locator('#modeSeg button[data-mode="adv"]').getAttribute("aria-pressed")) === "true", "Outils › Réglages : choix de l’affichage, état annoncé");
   await ess.click(); await page.waitForTimeout(200);
   check(await ls(page, "lisio-mode") === "ess" && (await ess.getAttribute("aria-pressed")) === "true", "retour en Essentiel depuis le menu");
   check(!page.errs.length, "aucune erreur JavaScript", page.errs.join(" | "));
