@@ -1442,7 +1442,7 @@ html:has(#tester:not([hidden])){scroll-padding-bottom:calc(var(--barh) + 150px)!
 .j-line{position:relative;gap:8px 16px;min-height:52px;padding:6px 8px 6px 14px}
 .j-todo{flex:1 1 300px;padding-left:16px}
 .j-line .sumbar{position:static;margin:0;border:0;background:none;flex:none}
-.j-line .sumbar>summary{min-height:40px;padding:0 6px 0 10px;border:1px solid var(--hair)}
+.j-line .sumbar>summary{min-height:40px;padding:0 14px 0 10px;border:1px solid var(--hair)}
 .j-line .sumbar[open]>summary{border-color:var(--line)}
 .j-line .sum-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .j-line .sum-body{position:absolute;z-index:16;left:-1px;right:-1px;top:100%;background:var(--surface);border:1px solid var(--line);padding:12px 14px}
@@ -4497,7 +4497,10 @@ document.addEventListener("keydown", e => { const t = e.target.closest && e.targ
 { const sync = seg => { const on = seg.querySelector(':scope>button[aria-pressed="true"]'); let ind = seg.querySelector(":scope>.seg-ind");
     if (!on || !on.offsetWidth) { if (ind) ind.style.opacity = "0"; return; }
     if (!ind) { ind = document.createElement("span"); ind.className = "seg-ind"; ind.setAttribute("aria-hidden", "true"); seg.prepend(ind); seg.classList.add("has-ind"); ind.style.transition = "none"; requestAnimationFrame(() => requestAnimationFrame(() => { ind.style.transition = ""; })); }
-    ind.style.opacity = "1"; ind.style.width = on.offsetWidth + "px"; ind.style.height = on.offsetHeight + "px"; ind.style.transform = `translate(${on.offsetLeft}px,${on.offsetTop}px)`; };
+    ind.style.opacity = "1";
+    // Mesures au sous-pixel près : offsetWidth arrondit et laissait un filet blanc à droite du bouton actif.
+    const r = on.getBoundingClientRect(), s = seg.getBoundingClientRect(), k = seg.offsetWidth ? s.width / seg.offsetWidth : 1;
+    ind.style.width = r.width / k + "px"; ind.style.height = r.height / k + "px"; ind.style.transform = `translate(${(r.left - s.left) / k - seg.clientLeft}px,${(r.top - s.top) / k - seg.clientTop}px)`; };
   let raf = 0; const all = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => document.querySelectorAll(".seg").forEach(sync)); };
   new MutationObserver(all).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["aria-pressed"] });
   addEventListener("resize", all); addEventListener("hashchange", all); document.addEventListener("toggle", all, true); document.addEventListener("click", all); if (document.fonts) document.fonts.ready.then(all); all(); }
