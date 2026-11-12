@@ -1559,6 +1559,18 @@ input[type=checkbox]{width:24px!important;height:24px!important}
   @keyframes lisioSide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
   @keyframes lisioDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
   #main>section:not([hidden]){animation:lisioIn .32s var(--ease)}
+  /* Étape suivante : la page arrive de la droite ; étape précédente : de la gauche. */
+  @keyframes lisioFwd{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+  @keyframes lisioBack{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+  #main[data-dir="fwd"]>section:not([hidden]){animation:lisioFwd .36s var(--ease)}
+  #main[data-dir="back"]>section:not([hidden]){animation:lisioBack .36s var(--ease)}
+  /* Couleur corrigée : l’ancienne teinte se retire, la nouvelle s’installe. */
+  .chipedit{position:relative;isolation:isolate}
+  .chipedit.fx-fix::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,var(--fx-to) 0 50%,var(--fx-from) 50% 100%);background-size:200% 100%;animation:fxSweep .85s var(--ease) forwards}
+  @keyframes fxSweep{0%{background-position:100% 0;opacity:.9}70%{background-position:0 0;opacity:.9}100%{background-position:0 0;opacity:0}}
+  .toast{transition:opacity .2s,transform .32s var(--ease)!important;transform:translate(-50%,12px)}
+  .toast.show{transform:translate(-50%,0)}
+  .fx-num{font-variant-numeric:tabular-nums}
   .ex-panel:not([hidden]){animation:lisioIn var(--dur) var(--ease)}
   .help-pop:not([hidden]),.j-line .sumbar[open] .sum-body,.cmdk-list,.j-help:not([hidden]){animation:lisioDrop var(--dur) var(--ease)}
   @media (min-width:761px){.qpop:not([hidden]){animation:lisioSide .28s var(--ease)}}
@@ -3628,7 +3640,28 @@ function saveFail(on) {
     const at = document.getElementById("prjIn"); if (at && at.parentNode) at.parentNode.insertBefore(el, at); else document.body.prepend(el); }
   el.hidden = false;
 }
-function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), Math.max(5000, msg.length * 80)); } // R1 : au moins 5 s pour lire
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.remove("show"); void t.offsetWidth; t.classList.add("show"); toastCount(t); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), Math.max(5000, msg.length * 80)); } // R1 : au moins 5 s pour lire
+// Mouvement : dans un message qui annonce un ratio (« … : 5,12:1 »), le nombre défile depuis l’ancien ratio.
+// Le texte complet est posé d’abord pour les lecteurs d’écran ; seul le chiffre visible bouge (aria-hidden).
+let fxFrom = null;
+function toastCount(t) {
+  const fx = fxFrom; fxFrom = null;
+  if (!fx || performance.now() - fx.t > 400 || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const msg = t.textContent, m = msg.match(/(\d+,\d{2}):1(?!.*\d+,\d{2}:1)/), from = fx.v;
+  if (!m) return; const to = parseFloat(m[1].replace(",", "."));
+  if (!(to > 0) || Math.abs(to - from) < 0.01) return;
+  t.innerHTML = `<span class="sr-only">${esc(msg)}</span><span aria-hidden="true">${esc(msg.slice(0, m.index))}<b class="fx-num">${m[1]}</b>${esc(msg.slice(m.index + m[1].length))}</span>`;
+  const b = t.querySelector(".fx-num"), t0 = performance.now(), D = 700;
+  const step = now => { const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3), v = from + (to - from) * e; b.textContent = (Math.floor(v * 100) / 100).toFixed(2).replace(".", ","); if (k < 1) requestAnimationFrame(step); else b.textContent = m[1]; };
+  requestAnimationFrame(step);
+}
+// Une couleur corrigée glisse de l’ancienne teinte vers la nouvelle dans la liste « Vos couleurs ».
+let fxHexes = [];
+function fxEditor() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { fxHexes = palette.map(c => c.hex); return; }
+  palette.forEach((c, i) => { const old = fxHexes[i]; if (old && old !== c.hex && fxHexes.length === palette.length) { const ch = $("pc" + i) && $("pc" + i).closest(".chipedit"); if (ch) { ch.style.setProperty("--fx-from", old); ch.style.setProperty("--fx-to", c.hex); ch.classList.remove("fx-fix"); void ch.offsetWidth; ch.classList.add("fx-fix"); setTimeout(() => ch.classList.remove("fx-fix"), 900); } } });
+  fxHexes = palette.map(c => c.hex);
+}
 // R1 · 3.3.1 : une saisie refusée est signalée sur le champ lui-même, avec le message écrit dessous.
 function fieldErr(f, msg) { const id = f.id + "Err"; let m = document.getElementById(id);
   if (!msg) { f.removeAttribute("aria-invalid"); f.removeAttribute("aria-describedby"); if (m) m.remove(); return; }
@@ -3985,6 +4018,7 @@ function renderEditor() {
     d.appendChild(nmNote);
     ed.appendChild(d);
   });
+  fxEditor();
 }
 let raf = 0;
 function changed() { isExample = false; store.set("colors", palette); snapPush(); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderAll); }
@@ -4162,8 +4196,8 @@ function renderDetail() {
   [[4.5, "AA"], [7, "AAA"]].forEach(([t, l]) => {
     if (r >= t) return;
     const a = suggestFix(fg.hex, bg.hex, t), b = suggestFix(bg.hex, fg.hex, t);
-    if (a) fixes.push(btn(`${fg.name} → ${a} (${l})`, () => { palette[i].hex = a; changed(); renderEditor(); toast(`${fg.name} remplacé par ${a} : ${f2(ratio(a, bg.hex))}:1`); }, a));
-    if (b) fixes.push(btn(`${bg.name} → ${b} (${l})`, () => { palette[j].hex = b; changed(); renderEditor(); toast(`${bg.name} remplacé par ${b} : ${f2(ratio(fg.hex, b))}:1`); }, b));
+    if (a) fixes.push(btn(`${fg.name} → ${a} (${l})`, () => { fxFrom = { v: ratio(fg.hex, bg.hex), t: performance.now() }; palette[i].hex = a; changed(); renderEditor(); toast(`${fg.name} remplacé par ${a} : ${f2(ratio(a, bg.hex))}:1`); }, a));
+    if (b) fixes.push(btn(`${bg.name} → ${b} (${l})`, () => { fxFrom = { v: ratio(fg.hex, bg.hex), t: performance.now() }; palette[j].hex = b; changed(); renderEditor(); toast(`${bg.name} remplacé par ${b} : ${f2(ratio(fg.hex, b))}:1`); }, b));
   });
   const ff = esc(fontCss(S.font));
   const lvA = S.level === "AAA", tN = lvA ? 7 : 4.5, crit = lvA ? "1.4.6" : "1.4.3";
@@ -5494,7 +5528,7 @@ function partnerFix(k, R, m) {
   const near = list => list.filter(x => ratio(x, h) >= req).sort((a, b) => Math.abs(lum(a) - L) - Math.abs(lum(b) - L))[0];
   return near([...(sc ? sc.sw : []), "#FFFFFF", "#000000"]) || near(allScales().flatMap(s => s.sw)) || null;
 }
-function roleApply(k, v, m) {
+function roleApply(k, v, m) { try { const R0 = dsRoles((m || dsMode) === "dark" ? "dark" : "light"), pr = ROLE_FR[k] && ROLE_FR[k][1]; if (pr && R0[k] && R0[pr]) fxFrom = { v: ratio(R0[k], R0[pr]), t: performance.now() }; } catch (e) { /* mouvement seulement */ }
   m = m || dsMode;
   if (m === "dark") { const d = S.ds.dark = S.ds.dark || {}; if (k === "text/default") { if (v) d.fg = v; else delete d.fg; } else if (k === "background/default") { if (v) d.bg = v; else delete d.bg; } else { d.roles = d.roles || {}; if (v) d.roles[k] = v; else delete d.roles[k]; } return; }
   if (k === "text/default") S.ts.fg = v; else if (k === "background/default") S.ts.bg = v;
@@ -5908,7 +5942,8 @@ function stepNavRender(i) {
 $("helpPop").addEventListener("click", e => { if (e.target.closest("[data-prj-open]")) { helpSet(false); setTimeout(() => $("prjB").click(), 0); } });
 // R2 · 2.4.2 : le titre de l'onglet du navigateur dit la page affichée.
 const VIEW_TITLE = { couleurs: "Couleurs", matrice: "Contrastes", palette: "Nuances", tester: "Polices", styles: "Styles de texte", systeme: "Design system", lisibilite: "Rédaction", sources: "Guide", exporter: "Exporter", formation: "S’entraîner" };
-function show(v) { if (v === "guide") v = "sources"; if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "couleurs"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); VIEWS.forEach(n => { $(n).hidden = n !== v; }); document.querySelectorAll("nav.tabs button[data-view]").forEach(t => t.dataset.view === v ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); jMark(v); renderJourney(v); demoRender(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
+let showPrev = null;
+function show(v) { if (v === "guide") v = "sources"; { const ORD = ["couleurs", "palette", "tester", "styles", "systeme", "matrice", "exporter"], a = ORD.indexOf(showPrev), b = ORD.indexOf(v); const mn = $("main"); if (mn) mn.dataset.dir = a < 0 || b < 0 || a === b ? "" : b > a ? "fwd" : "back"; showPrev = v; } if (!VIEWS.includes(v) && v !== "exporter" && v !== "formation") v = "couleurs"; closePops(); $("exporter").hidden = v !== "exporter"; $("formation").hidden = v !== "formation"; if (v === "formation" && !fmQ) fmStart(); $("expAll").setAttribute("aria-current", v === "exporter" ? "page" : "false"); if (v === "exporter") renderExport2(); VIEWS.forEach(n => { $(n).hidden = n !== v; }); document.querySelectorAll("nav.tabs button[data-view]").forEach(t => t.dataset.view === v ? t.setAttribute("aria-current", "page") : t.removeAttribute("aria-current")); if (v === "systeme") { if (sysDirty) renderSystem(); else sysScale(); } qClose(); jMark(v); renderJourney(v); demoRender(v); tabInk(); document.title = (VIEW_TITLE[v] || "Contrastes") + " · Lisio"; }
 // Mode clair par défaut, même si le système est en sombre ; le sombre vient seulement d’un choix enregistré
 const themeNow = () => document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
 function themeLabel() { const d = themeNow() === "dark"; document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.themeSet === "dark") === d))); $("themeB").setAttribute("aria-label", d ? "Passer en mode clair" : "Passer en mode sombre"); $("themeB").title = d ? "Mode clair" : "Mode sombre"; }
@@ -6164,7 +6199,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "e235ce3";
+const LISIO_BUILD = "55b1f06";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
