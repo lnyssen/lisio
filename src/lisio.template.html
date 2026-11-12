@@ -3,7 +3,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* Layout : l'écran entier est l'épreuve. Une grande toile peinte aux couleurs testées, une barre d'outils flottante en bas, le verdict épinglé en haut. Le reste vit sous la toile. */
 
@@ -1582,7 +1582,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 .ds-sw .sw{width:20px;height:20px;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
 .ds-notes{margin:0;padding-left:18px}
 .pc-steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px}
-.pc-steps li{line-height:1.5}
+.pc-steps li{line-height:1.5;overflow-wrap:anywhere}
 .pc-bm{display:inline-flex;margin-left:6px;cursor:grab;vertical-align:middle}
 .chip-note{flex-basis:100%;grid-column:1/-1;margin:2px 0 0;color:var(--warn,var(--ink));padding-left:10px;border-left:3px solid currentColor}
 @media (prefers-reduced-motion:no-preference){.chip-note:not([hidden]){animation:lisioDrop var(--dur) var(--ease)}}
@@ -3869,16 +3869,19 @@ function cssKeepRefs(c) {
   for (const v of miss) { const x = lit(v); if (x != null) c = c.split(`var(${v})`).join(`var(${v}, ${x})`); }
   return c;
 }
-function renderTsExport() { $("tsOut").textContent = $("tsFmt").value === "css" ? tsCss() : tsJson(); }
-$("tsFmt").addEventListener("change", renderTsExport);
-$("tsCopy").addEventListener("click", () => copy($("tsOut").textContent, "Export copié"));
+// Chargement plus léger : le code n’est calculé que s’il est affiché (le menu « Voir le code » ouvert) ou demandé.
+const tsOutText = () => $("tsFmt").value === "css" ? tsCss() : tsJson();
+function renderTsExport() { const o = $("tsOut"), d = o.closest("details"); if (d && !d.open) { o.textContent = ""; return; } o.textContent = tsOutText(); }
+$("tsOut").closest("details").addEventListener("toggle", e => { if (e.target.open) renderTsExport(); });
+$("tsFmt").addEventListener("change", () => { $("tsOut").textContent = tsOutText(); });
+$("tsCopy").addEventListener("click", () => copy(tsOutText(), "Export copié"));
 let dlNs = null; try { if (window.claude && typeof window.claude.use === "function") window.claude.use("downloads").then(n => { dlNs = n; }, () => {}); } catch (e) {}
 function saveFile(name, text, mime, okMsg) {
   if (dlNs) { if (!/\.json$/.test(name)) { copy(text, "Contenu copié : collez-le dans votre projet"); return; } dlNs.save({ filename: name, data: text }).then(() => toast(okMsg || name + " enregistré"), e => { if (!e || e.code !== "declined") copy(text, "Téléchargement indisponible : contenu copié"); }); return; }
   try { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], { type: mime })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast(okMsg || name + " téléchargé"); }
   catch (e) { copy(text, "Téléchargement bloqué : contenu copié"); }
 }
-$("tsDl").addEventListener("click", () => { const css = $("tsFmt").value === "css"; saveFile(css ? "lisio-styles.css" : "lisio-design-system.json", $("tsOut").textContent, css ? "text/css" : "application/json"); });
+$("tsDl").addEventListener("click", () => { const css = $("tsFmt").value === "css"; saveFile(css ? "lisio-styles.css" : "lisio-design-system.json", tsOutText(), css ? "text/css" : "application/json"); });
 $("expAll").addEventListener("click", () => { const same = location.hash.slice(1) === "exporter"; location.hash = "exporter"; show("exporter"); window.scrollTo(0, 0); });
 
 // ---------- Réglages des nuances ----------
