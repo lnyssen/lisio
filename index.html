@@ -2070,6 +2070,21 @@ input[type=checkbox]{width:24px!important;height:24px!important}
       <p class="note">Pour les équipes qui codent avec Tailwind : chaque gamme devient une couleur, avec ses 11 nuances. Par exemple <code>bg-nuit-500</code> pour un fond ou <code>text-nuit-700</code> pour un texte.</p>
       <details class="ts-code"><summary>Voir la configuration</summary><pre class="code" id="exTwOut" tabindex="0"></pre></details>
     </div>
+    <div class="card-surface" id="exGuard">
+      <div class="row between"><h2>Pour les développeurs : garde-fou</h2><div class="row"><button class="btn sm" type="button" id="exGuardDl">Télécharger lisio-check.mjs</button><button class="btn sm" type="button" id="exGuardWf">Télécharger le workflow GitHub</button></div></div>
+      <p class="note">Un script à poser à la racine du site, à côté de <code>lisio.css</code>. Il relit le code et refuse une couleur hors du design system ou une paire texte et fond sous le seuil (niveau <span id="exGuardLvl">AA</span>). Une couleur du design system écrite en dur est signalée, avec la variable à utiliser. Node 18 ou plus, sans dépendance.</p>
+      <ol class="pc-steps">
+        <li>Mettez <code>lisio-check.mjs</code> et <code>lisio.css</code> dans le dépôt, puis lancez <code>node lisio-check.mjs</code>.</li>
+        <li>Pour un contrôle à chaque modification : placez le workflow dans <code>.github/workflows/lisio.yml</code>. Les erreurs s’affichent sur les lignes concernées de la pull request.</li>
+      </ol>
+      <details class="ts-code"><summary>Exemple de sortie</summary><pre class="code" tabindex="0">✕ src/carte.css:12  #9A9A9A ne vient pas du design system, la plus proche : var(--nuit-400)
+✕ src/carte.css:14  var(--nuit-400) sur var(--nuit-100) : 2,71:1, il faut 4,5:1 (WCAG 1.4.3)
+! src/bouton.css:3  #0E1B4D est dans le design system : écrivez var(--nuit)
+
+Lisio · 48 fichiers, 112 couleurs lues, 151 couleurs dans le design system, niveau AA.
+2 erreur(s), 1 avertissement(s).</pre></details>
+      <p class="small muted">Test automatique partiel : il lit le code, pas la page rendue. Ajoutez « lisio-ignore » sur une ligne pour l’exclure.</p>
+    </div>
     </div>
 
     <div class="ex-panel" role="tabpanel" id="exPanCheck" aria-labelledby="exTabCheck" hidden>
@@ -2703,6 +2718,123 @@ function pageCheckBookmarklet(cfg) {
   const conf = { level: cfg.level === "AAA" ? "AAA" : "AA", name: String(cfg.name || "").slice(0, 40), palette: [...new Set((cfg.palette || []).map(h => String(h).toUpperCase()))] };
   return "javascript:" + encodeURIComponent(`(${lisioPageCheck.toString()})(${JSON.stringify(conf)});void 0`);
 }
+// Lisio, garde-fou pour les développeurs : un script Node sans dépendance (lisio-check.mjs) qui relit le code d’un site
+// et refuse une couleur hors du design system ou une paire texte et fond sous le seuil WCAG.
+// lisioScan est sérialisée telle quelle (toString) dans le script : elle ne doit dépendre de rien d’extérieur.
+// Testée par tests/devcheck.test.mjs.
+
+// files : [{ path, text }] ; tokensCss : le lisio.css exporté par Lisio ; level : "AA" ou "AAA".
+// Renvoie { errors, warnings, files, colors } ; chaque constat porte file, line, rule et message (en français).
+function lisioScan(files, tokensCss, level) {
+  const need = level === "AAA" ? 7 : 4.5;
+  // Jetons du mode clair : le premier :root, avant le bloc sombre.
+  const light = String(tokensCss || "").split(/@media\s*\(prefers-color-scheme:\s*dark\)|:root\[data-theme="dark"\]/)[0];
+  const vars = new Map(); const reVar = /--([\w-]+)\s*:\s*([^;]+);/g; let m;
+  while ((m = reVar.exec(light))) vars.set(m[1], m[2].trim());
+  const toHex = v => {
+    v = String(v).trim().toLowerCase();
+    let x = v.match(/^#([0-9a-f]{3,8})$/);
+    if (x) { let h = x[1]; if (h.length === 3 || h.length === 4) h = h.slice(0, 3).split("").map(c => c + c).join(""); else h = h.slice(0, 6); return h.length === 6 ? "#" + h.toUpperCase() : null; }
+    x = v.match(/^rgba?\(\s*([\d.]+%?)[\s,]+([\d.]+%?)[\s,]+([\d.]+%?)/);
+    if (x) return "#" + [x[1], x[2], x[3]].map(c => Math.round(c.endsWith("%") ? parseFloat(c) * 2.55 : +c).toString(16).padStart(2, "0")).join("").toUpperCase();
+    return null;
+  };
+  const resolve = (v, d = 0) => { v = String(v).trim(); const r = v.match(/^var\(\s*--([\w-]+)\s*(?:,\s*([^)]+))?\)$/); if (r) { if (d > 10) return null; return vars.has(r[1]) ? resolve(vars.get(r[1]), d + 1) : r[2] ? resolve(r[2], d + 1) : null; } return toHex(v); };
+  const palette = new Map(); // hex → nom de variable le plus court (la nuance plutôt que l’alias)
+  for (const k of vars.keys()) { const h = resolve(`var(--${k})`); if (h && (!palette.has(h) || k.length < palette.get(h).length)) palette.set(h, k); }
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255);
+  const lin = c => c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  const lum = h => { const [r, g, b] = rgb(h).map(lin); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+  const ratio = (a, b) => { const A = lum(a), B = lum(b); return (Math.max(A, B) + 0.05) / (Math.min(A, B) + 0.05); };
+  const nearest = h => { let best = null, d = Infinity; const p = rgb(h); for (const [q, k] of palette) { const v = rgb(q), e = (p[0] - v[0]) ** 2 + (p[1] - v[1]) ** 2 + (p[2] - v[2]) ** 2; if (e < d) { d = e; best = k; } } return best; };
+  const f2 = r => (Math.floor(r * 100) / 100).toFixed(2).replace(".", ",");
+  const errors = [], warnings = []; let colors = 0;
+  const lineOf = (text, i) => text.slice(0, i).split("\n").length;
+  const STYLE = /\.(css|scss|sass|less|styl|vue|svelte|astro|html?)$/i;
+  for (const f of files) {
+    const text = f.text, ignored = new Set();
+    text.split("\n").forEach((l, i) => { if (/lisio-ignore/.test(l)) ignored.add(i + 1); });
+    // 1. Couleurs écrites en dur
+    const reCol = /#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g;
+    while ((m = reCol.exec(text))) {
+      const line = lineOf(text, m.index); if (ignored.has(line)) continue;
+      const before = text.slice(Math.max(0, m.index - 1), m.index); if (/[\w&]/.test(before)) continue; // ancre, entité HTML
+      const h = toHex(m[0]); if (!h) continue; colors++;
+      if (/^#([0-9a-fA-F]{4}|[0-9a-fA-F]{8})$/.test(m[0]) || /rgba\(|\/\s*0?\.\d/.test(m[0])) { if (!STYLE.test(f.path)) continue; }
+      if (palette.has(h)) warnings.push({ file: f.path, line, rule: "en-dur", message: `${m[0]} est dans le design system : écrivez var(--${palette.get(h)})` });
+      else (STYLE.test(f.path) ? errors : warnings).push({ file: f.path, line, rule: "hors-palette", message: `${m[0]} ne vient pas du design system${palette.size ? `, la plus proche : var(--${nearest(h)})` : ""}` });
+    }
+    // 2. Paires dans une même règle CSS : color et background(-color)
+    if (STYLE.test(f.path)) {
+      const reRule = /\{([^{}]*)\}/g;
+      while ((m = reRule.exec(text))) {
+        const body = m[1], c = body.match(/(?:^|[;\s])color\s*:\s*([^;!]+)/), b = body.match(/background(?:-color)?\s*:\s*([^;!]+)/);
+        if (!c || !b) continue;
+        const line = lineOf(text, m.index + 1 + body.indexOf(c[0].trim())); if (ignored.has(line)) continue;
+        const fg = resolve(c[1]), bg = resolve(b[1].trim().split(/\s+(?![^(]*\))/)[0]);
+        if (!fg || !bg) continue;
+        const r = ratio(fg, bg); if (r < need) errors.push({ file: f.path, line, rule: "contraste", message: `${c[1].trim()} sur ${b[1].trim()} : ${f2(r)}:1, il faut ${String(need).replace(".", ",")}:1 (WCAG 1.4.3${level === "AAA" ? ", 1.4.6" : ""})` });
+      }
+    }
+    // 3. Classes Tailwind text-… et bg-… sur un même élément
+    const reCls = /class(?:Name)?\s*=\s*["'`{]([^"'`}]*)["'`}]/g;
+    while ((m = reCls.exec(text))) {
+      const cls = m[1].split(/\s+/).filter(x => !x.includes(":")), t = cls.map(x => x.match(/^text-([\w-]+)$/)).find(x => x && vars.has(x[1])), b = cls.map(x => x.match(/^bg-([\w-]+)$/)).find(x => x && vars.has(x[1]));
+      if (!t || !b) continue;
+      const line = lineOf(text, m.index); if (ignored.has(line)) continue;
+      const r = ratio(resolve(`var(--${t[1]})`), resolve(`var(--${b[1]})`));
+      if (r < need) errors.push({ file: f.path, line, rule: "contraste", message: `${t[0]} sur ${b[0]} : ${f2(r)}:1, il faut ${String(need).replace(".", ",")}:1` });
+    }
+  }
+  return { errors, warnings, files: files.length, colors, tokens: palette.size };
+}
+
+// Le script complet à poser à la racine du dépôt : node lisio-check.mjs [dossier] [--tokens chemin/lisio.css] [--json] [--warn-only]
+function devCheckScript(level, build) {
+  return `#!/usr/bin/env node
+// lisio-check.mjs · garde-fou couleurs et contrastes, généré par Lisio${build ? " (" + build + ")" : ""}. Node 18 ou plus, sans dépendance.
+// Usage : node lisio-check.mjs [dossier] [--tokens lisio.css] [--level AA|AAA] [--json] [--warn-only]
+// Refuse (code 1) : une couleur hors du design system dans une feuille de style, une paire texte et fond sous le seuil.
+// Signale : une couleur du design system écrite en dur au lieu de var(--…). Ajoutez « lisio-ignore » sur une ligne pour l’exclure.
+// Test automatique partiel : il lit le code, pas la page rendue. Il ne remplace pas un audit.
+/* Node */ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs"; import { join, relative, basename } from "node:path";
+const args = process.argv.slice(2), opt = n => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : null; };
+const root = args.find((a, i) => !a.startsWith("--") && !["--tokens", "--level"].includes(args[i - 1])) || ".";
+const level = (opt("--level") || ${JSON.stringify(level === "AAA" ? "AAA" : "AA")}).toUpperCase();
+const SKIP = new Set(["node_modules", ".git", "dist", "build", ".next", ".nuxt", ".svelte-kit", "coverage", "vendor", ".vercel", ".output"]);
+const EXT = /\\.(css|scss|sass|less|styl|html?|vue|svelte|astro|jsx|tsx|js|ts|mjs)$/i;
+const all = []; (function walk(d) { for (const n of readdirSync(d)) { if (SKIP.has(n)) continue; const p = join(d, n), s = statSync(p); if (s.isDirectory()) walk(p); else if (EXT.test(n) && s.size < 1e6) all.push(p); } })(root);
+let tokPath = opt("--tokens"); if (!tokPath) tokPath = all.find(p => basename(p) === "lisio.css");
+if (!tokPath || !existsSync(tokPath)) { console.error("lisio-check : lisio.css introuvable. Exportez-le depuis Lisio (Exporter › Livrer) ou indiquez --tokens chemin/lisio.css"); process.exit(2); }
+const skipFile = p => p === tokPath || /(^|[\\\\/])(tailwind\\.config\\.[cm]?[jt]s|lisio-check\\.mjs|.*\\.min\\.(css|js))$/.test(p);
+const files = all.filter(p => !skipFile(p)).map(p => ({ path: relative(process.cwd(), p), text: readFileSync(p, "utf8") }));
+const scan = ${lisioScan.toString()};
+const r = scan(files, readFileSync(tokPath, "utf8"), level);
+if (args.includes("--json")) console.log(JSON.stringify(r, null, 2));
+else {
+  const gh = !!process.env.GITHUB_ACTIONS, out = (k, x) => gh ? console.log(\`::\${k} file=\${x.file},line=\${x.line},title=Lisio \${x.rule}::\${x.message}\`) : console.log(\`\${k === "error" ? "✕" : "!"} \${x.file}:\${x.line}  \${x.message}\`);
+  r.errors.forEach(x => out("error", x)); r.warnings.forEach(x => out("warning", x));
+  console.log(\`\\nLisio · \${r.files} fichiers, \${r.colors} couleurs lues, \${r.tokens} couleurs dans le design system, niveau \${level}.\`);
+  console.log(r.errors.length ? \`\${r.errors.length} erreur(s), \${r.warnings.length} avertissement(s).\` : \`Aucune erreur. \${r.warnings.length} avertissement(s).\`);
+}
+process.exit(r.errors.length && !args.includes("--warn-only") ? 1 : 0);
+`;
+}
+
+// Workflow GitHub Actions : lance le garde-fou à chaque push et pull request.
+const DEVCHECK_WORKFLOW = `# .github/workflows/lisio.yml · généré par Lisio
+name: Lisio
+on: [push, pull_request]
+jobs:
+  couleurs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node lisio-check.mjs
+`;
 // Lisio, cœur WCAG : seuils, grand texte, arrondi d'affichage, verdicts.
 // Fonctions pures, sans DOM ni état. Testées par tests/wcag.test.mjs.
 // Inliné tel quel dans la page par src/build.py (le mot export est retiré).
@@ -5477,7 +5609,7 @@ $("dsGrid").addEventListener("change", e => { const i = e.target; if (!i.dataset
 $("dsReset").addEventListener("click", () => { S.ds = JSON.parse(JSON.stringify(DS_BASE)); buildStatus(); dsChanged(); toast("Système de base rétabli"); });
 
 // ---------- Page Exporter ----------
-function renderExport2() { try { pcRefresh(); } catch (e) { /* favori : jamais bloquant */ }
+function renderExport2() { try { pcRefresh(); $("exGuardLvl").textContent = S.level === "AAA" ? "AAA" : "AA"; } catch (e) { /* favori : jamais bloquant */ }
   renderManual();
   const txt = tsJson(), o = JSON.parse(txt), n = obj => { let c = 0; (function w(x) { for (const k in x) { const v = x[k]; if (k[0] === "$" || !v || typeof v !== "object") continue; if ("$value" in v) c++; else w(v); } })(obj); return c; };
   const nCol = n(o.color), nSem = n(o.semantic), nTy = Object.keys(o.typography).length, nLay = n(o.layout) - 1, nDim = n({ s: o.spacing, r: o.radius, z: o.size, b: o["border-width"] }) + 1;
@@ -5543,6 +5675,8 @@ function pcRefresh() {
   $("pcLink").href = url; $("pcLink").dataset.len = url.length;
   $("pcNote").textContent = `Ce favori connaît ${c.palette.length} couleurs (vos gammes, leurs nuances et les rôles du design system) et le niveau ${c.level === "AAA" ? "AAA" : "AA"}. Si la palette change, glissez‑le à nouveau.`;
 }
+$("exGuardDl").addEventListener("click", () => saveFile("lisio-check.mjs", devCheckScript(S.level, LISIO_BUILD), "text/javascript", "lisio-check.mjs téléchargé"));
+$("exGuardWf").addEventListener("click", () => saveFile("lisio.yml", DEVCHECK_WORKFLOW, "text/yaml", "lisio.yml téléchargé : à placer dans .github/workflows/"));
 $("pcLink").addEventListener("click", e => { e.preventDefault(); toast("Glissez ce bouton dans la barre de favoris, puis cliquez dessus sur la page à vérifier"); });
 $("pcCopy").addEventListener("click", () => { pcRefresh(); copy($("pcLink").href, "Code du favori copié"); });
 $("pcTry").addEventListener("click", () => { const r = lisioPageCheck(pcConf()); if (r) toast(`${r.tested} textes mesurés sur cette page, ${r.fails.length} paire${r.fails.length > 1 ? "s" : ""} en échec`); });
@@ -6030,7 +6164,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "9894cc0";
+const LISIO_BUILD = "e235ce3";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";

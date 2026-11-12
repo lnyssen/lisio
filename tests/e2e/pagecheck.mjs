@@ -38,6 +38,16 @@ await page.click("#pcTry"); await page.waitForTimeout(300);
 check(await page.evaluate(() => !!document.getElementById("lisio-pagecheck") && window.__lisioPageCheck.tested > 20), "« Essayer sur Lisio » ouvre le panneau");
 await page.evaluate(() => document.getElementById("lisio-pagecheck").remove());
 check(!errors.length, "aucune erreur JS dans Lisio", errors.join(" | "));
+// Garde-fou pour les développeurs : le script téléchargé tourne avec Node
+await page.evaluate(() => { const t = document.getElementById("exTabShip") || [...document.querySelectorAll(".ex-tabs [role=tab]")].find(b => /Livrer/.test(b.textContent)); t && t.click(); }); await page.waitForTimeout(200);
+check(await page.locator("#exGuard").isVisible(), "carte « garde-fou » dans Exporter › Livrer");
+const [dl] = await Promise.all([page.waitForEvent("download"), page.click("#exGuardDl")]);
+const scriptPath = join(tmpdir(), "lisio-check-e2e.mjs"); await dl.saveAs(scriptPath);
+const { spawnSync } = await import("node:child_process");
+const run = spawnSync(process.execPath, [scriptPath, tmpdir() + "/lisio-nope-" + Date.now()], { encoding: "utf8" });
+check(/lisio\.css introuvable/.test(run.stderr) || /ENOENT/.test(run.stderr), "le script téléchargé se lance et demande lisio.css", (run.stderr || "").slice(0, 120));
+const [wf] = await Promise.all([page.waitForEvent("download"), page.click("#exGuardWf")]);
+check(wf.suggestedFilename() === "lisio.yml", "workflow GitHub téléchargé");
 // Le vrai favori, sur un autre site
 const site = await ctx.newPage(); const errs2 = []; site.on("pageerror", e => errs2.push(String(e)));
 await site.goto("file://" + SITE);
