@@ -17,7 +17,7 @@ const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + la
 const SEED = join(tmpdir(), "lisio-seed-voile.html"); writeFileSync(SEED, "<!doctype html><title>seed</title>");
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
-await page.goto("file://" + SEED); await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); });
+await page.goto("file://" + SEED); await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); });
 const css = async () => { await page.goto(PAGE + "#exporter"); await page.waitForTimeout(500); const t = await page.evaluate(() => document.getElementById("exCssOut").textContent); await page.goto(PAGE + "#systeme"); await page.waitForTimeout(500); return t; };
 const rule = (t, sel) => (t.match(new RegExp(`(^|\\n)${sel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\{[^}]*\\}`)) || [""])[0];
 const pick = async (id, v) => { await page.locator(`#${id} button[data-v="${v}"]`).click(); await page.waitForTimeout(250); };

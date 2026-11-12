@@ -18,7 +18,7 @@ const COLORS = [{ name: "Bleu", hex: "#2F6BFF" }, { name: "Vert vif", hex: "#00F
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto("file://" + SEED);
-await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(c)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Essai OKLCH" })); }, COLORS);
+await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(c)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Essai OKLCH" })); }, COLORS);
 await page.goto(PAGE + "#palette"); await page.waitForTimeout(600);
 const sw = () => page.evaluate(() => [...document.querySelectorAll("#scales .swt:not(.main)")].map(b => b.dataset.hex));
 const st = () => page.evaluate(() => JSON.parse(localStorage.getItem("lisio:state")));

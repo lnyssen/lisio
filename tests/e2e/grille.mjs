@@ -19,7 +19,7 @@ const TWELVE = ["#0E1B4D", "#2447D1", "#F5B800", "#0D1535", "#F1F4FB", "#FFFFFF"
 async function open(opts, colors) {
   const ctx = await browser.newContext(opts); await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage(); page.errors = []; page.on("pageerror", e => page.errors.push(String(e)));
-  await page.goto("file://" + SEED); await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "ess"); if (c) localStorage.setItem("lisio:colors", JSON.stringify(c)); }, colors || null);
+  await page.goto("file://" + SEED); await page.evaluate(c => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "ess"); if (c) localStorage.setItem("lisio:colors", JSON.stringify(c)); }, colors || null);
   await page.goto(PAGE + "#matrice"); await page.waitForTimeout(800); return { ctx, page };
 }
 const shape = page => page.evaluate(() => { const g = document.getElementById("mgrid"), w = g.parentElement;

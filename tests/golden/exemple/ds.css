@@ -6,70 +6,70 @@
 
 /* ===== 1. Primitives ===== */
 :root {
-  --deep: #0E1B4D;
-  --deep-50: #F6F8FF;
-  --deep-100: #E9EFFF;
-  --deep-200: #D0DAF3;
-  --deep-300: #AEBCDF;
-  --deep-400: #8092BE;
-  --deep-500: #6173A5;
-  --deep-600: #4E6194;
-  --deep-700: #3B4E82;
-  --deep-800: #283A6D;
-  --deep-900: #162558;
-  --deep-950: #091445;
+  --nuit: #0E1B4D;
+  --nuit-50: #F6F8FF;
+  --nuit-100: #E9EFFF;
+  --nuit-200: #D0DAF3;
+  --nuit-300: #AEBCDF;
+  --nuit-400: #8092BE;
+  --nuit-500: #6173A5;
+  --nuit-600: #4E6194;
+  --nuit-700: #3B4E82;
+  --nuit-800: #283A6D;
+  --nuit-900: #162558;
+  --nuit-950: #091445;
 
-  --brand: #2447D1;
-  --brand-50: #F5F8FF;
-  --brand-100: #E8EFFF;
-  --brand-200: #CADAFF;
-  --brand-300: #9FBBFF;
-  --brand-400: #628DFF;
-  --brand-500: #3F6AF0;
-  --brand-600: #2D54DE;
-  --brand-700: #1F3EC8;
-  --brand-800: #1225AE;
-  --brand-900: #0A0392;
-  --brand-950: #050065;
+  --marque: #2447D1;
+  --marque-50: #F5F8FF;
+  --marque-100: #E8EFFF;
+  --marque-200: #CADAFF;
+  --marque-300: #9FBBFF;
+  --marque-400: #628DFF;
+  --marque-500: #3F6AF0;
+  --marque-600: #2D54DE;
+  --marque-700: #1F3EC8;
+  --marque-800: #1225AE;
+  --marque-900: #0A0392;
+  --marque-950: #050065;
 
-  --node: #F5B800;
-  --node-50: #FFF8E9;
-  --node-100: #FFEDCA;
-  --node-200: #FFD47C;
-  --node-300: #EEB300;
-  --node-400: #BA8B00;
-  --node-500: #956E00;
-  --node-600: #7E5D00;
-  --node-700: #674B00;
-  --node-800: #4F3900;
-  --node-900: #362600;
-  --node-950: #231700;
+  --soleil: #F5B800;
+  --soleil-50: #FFF8E9;
+  --soleil-100: #FFEDCA;
+  --soleil-200: #FFD47C;
+  --soleil-300: #EEB300;
+  --soleil-400: #BA8B00;
+  --soleil-500: #956E00;
+  --soleil-600: #7E5D00;
+  --soleil-700: #674B00;
+  --soleil-800: #4F3900;
+  --soleil-900: #362600;
+  --soleil-950: #231700;
 
-  --ink: #0D1535;
-  --ink-50: #F6F8FF;
-  --ink-100: #EBEFFA;
-  --ink-200: #D4DAEB;
-  --ink-300: #B3BCD3;
-  --ink-400: #8792B0;
-  --ink-500: #687495;
-  --ink-600: #566183;
-  --ink-700: #434F71;
-  --ink-800: #303B5D;
-  --ink-900: #1D2749;
-  --ink-950: #0E1737;
+  --encre: #0D1535;
+  --encre-50: #F6F8FF;
+  --encre-100: #EBEFFA;
+  --encre-200: #D4DAEB;
+  --encre-300: #B3BCD3;
+  --encre-400: #8792B0;
+  --encre-500: #687495;
+  --encre-600: #566183;
+  --encre-700: #434F71;
+  --encre-800: #303B5D;
+  --encre-900: #1D2749;
+  --encre-950: #0E1737;
 
-  --canvas: #F1F4FB;
-  --canvas-50: #F5F8FF;
-  --canvas-100: #ECEFF6;
-  --canvas-200: #D7DAE1;
-  --canvas-300: #B9BCC3;
-  --canvas-400: #909298;
-  --canvas-500: #72747A;
-  --canvas-600: #606267;
-  --canvas-700: #4E5055;
-  --canvas-800: #3A3C41;
-  --canvas-900: #27292D;
-  --canvas-950: #17191C;
+  --toile: #F1F4FB;
+  --toile-50: #F5F8FF;
+  --toile-100: #ECEFF6;
+  --toile-200: #D7DAE1;
+  --toile-300: #B9BCC3;
+  --toile-400: #909298;
+  --toile-500: #72747A;
+  --toile-600: #606267;
+  --toile-700: #4E5055;
+  --toile-800: #3A3C41;
+  --toile-900: #27292D;
+  --toile-950: #17191C;
 
   --surface: #FFFFFF;
   --surface-50: #F8F8F8;
@@ -140,21 +140,21 @@
 /* ===== 2. Semantic roles (light mode) ===== */
 :root {
   color-scheme: light;
-  --text-default: var(--ink); /* Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1) */
-  --text-muted: var(--ink-600); /* Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --text-default: var(--encre); /* Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --text-muted: var(--encre-600); /* Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1) */
   --text-on-action: var(--surface); /* Text on primary button: 17.86:1 with primary button fill (SC 1.4.3, minimum 4.5:1) */
-  --background-default: var(--canvas); /* Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1) */
-  --background-subtle: var(--deep-50); /* Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1) */
-  --action-default: var(--ink); /* Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
-  --action-hover: var(--ink-900); /* Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
-  --action-pressed: var(--ink-800); /* Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
-  --link-default: var(--ink); /* Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1) */
-  --link-subtle: var(--ink-600); /* Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1) */
-  --disabled-text: var(--ink-400); /* Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill */
-  --disabled-surface: var(--deep-50); /* Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3) */
-  --border-default: var(--ink-500); /* Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1) */
-  --border-subtle: var(--ink-200); /* Decorative divider, carries no information: 1.26:1 on background */
-  --focus-ring: var(--ink); /* Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1) */
+  --background-default: var(--toile); /* Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --background-subtle: var(--nuit-50); /* Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1) */
+  --action-default: var(--encre); /* Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
+  --action-hover: var(--encre-900); /* Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
+  --action-pressed: var(--encre-800); /* Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1) */
+  --link-default: var(--encre); /* Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --link-subtle: var(--encre-600); /* Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1) */
+  --disabled-text: var(--encre-400); /* Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill */
+  --disabled-surface: var(--nuit-50); /* Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3) */
+  --border-default: var(--encre-500); /* Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1) */
+  --border-subtle: var(--encre-200); /* Decorative divider, carries no information: 1.26:1 on background */
+  --focus-ring: var(--encre); /* Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1) */
   --error-text: var(--error-600); /* Error message text: 5.32:1 with error message background (SC 1.4.3, minimum 4.5:1) */
   --error-surface: var(--error-100); /* Error message background: 15.56:1 with primary text (SC 1.4.3, minimum 4.5:1) */
   --error-border: var(--error-500); /* Error border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1) */
@@ -169,30 +169,30 @@
   --info-border: var(--info-500); /* Info border and icon: 4.23:1 with page background (SC 1.4.11, minimum 3:1) */
   --chart-1: var(--error-500); /* Chart series 1: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
   --chart-2: var(--info-500); /* Chart series 2: 4.23:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
-  --chart-3: var(--deep-800); /* Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+  --chart-3: var(--nuit-800); /* Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
   --chart-4: var(--warning-800); /* Chart series 4: 9.98:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
-  --chart-5: var(--ink-600); /* Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
+  --chart-5: var(--encre-600); /* Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies */
 }
 
 /* Dark mode: follows the system setting. Force a theme with data-theme="light" or "dark" on <html>. Every pair is checked again in dark mode. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --text-default: var(--deep-50);
-    --text-muted: var(--deep-400);
+    --text-default: var(--nuit-50);
+    --text-muted: var(--nuit-400);
     --text-on-action: #000000;
-    --background-default: var(--canvas-950);
-    --background-subtle: var(--deep-950);
-    --action-default: var(--deep-50);
-    --action-hover: var(--deep-100);
-    --action-pressed: var(--deep-200);
-    --link-default: var(--deep-50);
-    --link-subtle: var(--deep-400);
-    --disabled-text: var(--deep-600);
-    --disabled-surface: var(--deep-950);
-    --border-default: var(--deep-500);
-    --border-subtle: var(--deep-900);
-    --focus-ring: var(--deep-50);
+    --background-default: var(--toile-950);
+    --background-subtle: var(--nuit-950);
+    --action-default: var(--nuit-50);
+    --action-hover: var(--nuit-100);
+    --action-pressed: var(--nuit-200);
+    --link-default: var(--nuit-50);
+    --link-subtle: var(--nuit-400);
+    --disabled-text: var(--nuit-600);
+    --disabled-surface: var(--nuit-950);
+    --border-default: var(--nuit-500);
+    --border-subtle: var(--nuit-900);
+    --focus-ring: var(--nuit-50);
     --error-text: var(--error-400);
     --error-surface: var(--error-900);
     --error-border: var(--error-500);
@@ -208,7 +208,7 @@
     --chart-1: var(--error-500);
     --chart-2: var(--info-500);
     --chart-3: var(--error-300);
-    --chart-4: var(--brand-300);
+    --chart-4: var(--marque-300);
     --shadow-1: 0px 1px 2px 0px rgb(0 0 0 / 0.18), 0px 1px 3px 0px rgb(0 0 0 / 0.3);
     --shadow-2: 0px 2px 4px -1px rgb(0 0 0 / 0.18), 0px 4px 8px -2px rgb(0 0 0 / 0.3);
     --shadow-3: 0px 4px 6px -2px rgb(0 0 0 / 0.15), 0px 10px 20px -4px rgb(0 0 0 / 0.36);
@@ -217,21 +217,21 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --text-default: var(--deep-50);
-  --text-muted: var(--deep-400);
+  --text-default: var(--nuit-50);
+  --text-muted: var(--nuit-400);
   --text-on-action: #000000;
-  --background-default: var(--canvas-950);
-  --background-subtle: var(--deep-950);
-  --action-default: var(--deep-50);
-  --action-hover: var(--deep-100);
-  --action-pressed: var(--deep-200);
-  --link-default: var(--deep-50);
-  --link-subtle: var(--deep-400);
-  --disabled-text: var(--deep-600);
-  --disabled-surface: var(--deep-950);
-  --border-default: var(--deep-500);
-  --border-subtle: var(--deep-900);
-  --focus-ring: var(--deep-50);
+  --background-default: var(--toile-950);
+  --background-subtle: var(--nuit-950);
+  --action-default: var(--nuit-50);
+  --action-hover: var(--nuit-100);
+  --action-pressed: var(--nuit-200);
+  --link-default: var(--nuit-50);
+  --link-subtle: var(--nuit-400);
+  --disabled-text: var(--nuit-600);
+  --disabled-surface: var(--nuit-950);
+  --border-default: var(--nuit-500);
+  --border-subtle: var(--nuit-900);
+  --focus-ring: var(--nuit-50);
   --error-text: var(--error-400);
   --error-surface: var(--error-900);
   --error-border: var(--error-500);
@@ -247,7 +247,7 @@
   --chart-1: var(--error-500);
   --chart-2: var(--info-500);
   --chart-3: var(--error-300);
-  --chart-4: var(--brand-300);
+  --chart-4: var(--marque-300);
   --shadow-1: 0px 1px 2px 0px rgb(0 0 0 / 0.18), 0px 1px 3px 0px rgb(0 0 0 / 0.3);
   --shadow-2: 0px 2px 4px -1px rgb(0 0 0 / 0.18), 0px 4px 8px -2px rgb(0 0 0 / 0.3);
   --shadow-3: 0px 4px 6px -2px rgb(0 0 0 / 0.15), 0px 10px 20px -4px rgb(0 0 0 / 0.36);

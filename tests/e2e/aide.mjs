@@ -14,7 +14,7 @@ let fails = 0;
 const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + label); else { fails++; console.log("ÉCHEC " + label + (extra ? " : " + extra : "")); } };
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 await ctx.route(/^https?:/, r => r.abort());
-await ctx.addInitScript(() => { try { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:state", JSON.stringify({ level: "AAA", version: "2.2" })); } catch (e) {} });
+await ctx.addInitScript(() => { try { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:state", JSON.stringify({ level: "AAA", version: "2.2" })); } catch (e) {} });
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto(PAGE + "#tester"); await page.waitForTimeout(500);
 

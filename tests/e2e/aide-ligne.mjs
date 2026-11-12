@@ -16,7 +16,7 @@ let fails = 0;
 const check = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok ? "ok   " : "ÉCHEC"} ${label}${detail ? " : " + detail : ""}`); };
 async function open(opts, view = "palette", mode = "ess") {
   const ctx = await browser.newContext(opts); await ctx.route(/^https?:/, r => r.abort());
-  await ctx.addInitScript(m => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", m); } } catch (e) {} }, mode);
+  await ctx.addInitScript(m => { try { if (!sessionStorage.getItem("s")) { sessionStorage.setItem("s", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", m); } } catch (e) {} }, mode);
   const p = await ctx.newPage(); p.errs = []; p.on("pageerror", e => p.errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForTimeout(600); p.ctx = ctx; return p;
 }

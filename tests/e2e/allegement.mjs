@@ -17,7 +17,7 @@ async function open(hash, ls = {}, opts = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...opts }); await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + hash);
-  await page.evaluate(([cols, ls]) => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); for (const k in ls) localStorage.setItem(k, ls[k]); }, [MINE, ls]);
+  await page.evaluate(([cols, ls]) => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); for (const k in ls) localStorage.setItem(k, ls[k]); }, [MINE, ls]);
   await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(400); return { ctx, page, errors };
 }
 const axeOn = async (page, sel, lab) => { if (!AXE) return; if (!(await page.evaluate(() => typeof axe !== "undefined"))) await page.addScriptTag({ content: readFileSync(AXE, "utf8") });

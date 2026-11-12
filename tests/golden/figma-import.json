@@ -96,7 +96,7 @@
     }
    },
    {
-    "name": "Colors/deep/50",
+    "name": "Colors/nuit/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -104,13 +104,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.78:1 on black",
-    "web": "var(--color-deep-50)",
+    "web": "var(--color-nuit-50)",
     "values": {
      "Default": "#F6F8FF"
     }
    },
    {
-    "name": "Colors/deep/100",
+    "name": "Colors/nuit/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -118,13 +118,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.25:1 on black",
-    "web": "var(--color-deep-100)",
+    "web": "var(--color-nuit-100)",
     "values": {
      "Default": "#E9EFFF"
     }
    },
    {
-    "name": "Colors/deep/200",
+    "name": "Colors/nuit/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -132,13 +132,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.00:1 on black",
-    "web": "var(--color-deep-200)",
+    "web": "var(--color-nuit-200)",
     "values": {
      "Default": "#D0DAF3"
     }
    },
    {
-    "name": "Colors/deep/300",
+    "name": "Colors/nuit/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -146,13 +146,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.89:1 on white, 11.05:1 on black",
-    "web": "var(--color-deep-300)",
+    "web": "var(--color-nuit-300)",
     "values": {
      "Default": "#AEBCDF"
     }
    },
    {
-    "name": "Colors/deep/400",
+    "name": "Colors/nuit/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -160,13 +160,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.77:1 on black",
-    "web": "var(--color-deep-400)",
+    "web": "var(--color-nuit-400)",
     "values": {
      "Default": "#8092BE"
     }
    },
    {
-    "name": "Colors/deep/500",
+    "name": "Colors/nuit/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -174,13 +174,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.66:1 on white, 4.50:1 on black",
-    "web": "var(--color-deep-500)",
+    "web": "var(--color-nuit-500)",
     "values": {
      "Default": "#6173A5"
     }
    },
    {
-    "name": "Colors/deep/600",
+    "name": "Colors/nuit/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -188,13 +188,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.06:1 on white, 3.46:1 on black",
-    "web": "var(--color-deep-600)",
+    "web": "var(--color-nuit-600)",
     "values": {
      "Default": "#4E6194"
     }
    },
    {
-    "name": "Colors/deep/700",
+    "name": "Colors/nuit/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -202,13 +202,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.08:1 on white, 2.59:1 on black",
-    "web": "var(--color-deep-700)",
+    "web": "var(--color-nuit-700)",
     "values": {
      "Default": "#3B4E82"
     }
    },
    {
-    "name": "Colors/deep/800",
+    "name": "Colors/nuit/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -216,13 +216,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.95:1 on white, 1.91:1 on black",
-    "web": "var(--color-deep-800)",
+    "web": "var(--color-nuit-800)",
     "values": {
      "Default": "#283A6D"
     }
    },
    {
-    "name": "Colors/deep/900",
+    "name": "Colors/nuit/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -230,13 +230,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.58:1 on white, 1.43:1 on black",
-    "web": "var(--color-deep-900)",
+    "web": "var(--color-nuit-900)",
     "values": {
      "Default": "#162558"
     }
    },
    {
-    "name": "Colors/deep/950",
+    "name": "Colors/nuit/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -244,27 +244,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.53:1 on white, 1.19:1 on black",
-    "web": "var(--color-deep-950)",
+    "web": "var(--color-nuit-950)",
     "values": {
      "Default": "#091445"
     }
    },
    {
-    "name": "Colors/deep/main",
+    "name": "Colors/nuit/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Deep, main colour (as entered)",
-    "web": "var(--color-deep-main)",
+    "description": "Nuit, main colour (as entered)",
+    "web": "var(--color-nuit-main)",
     "values": {
      "Default": "#0E1B4D"
     }
    },
    {
-    "name": "Colors/brand/50",
+    "name": "Colors/marque/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -272,13 +272,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.75:1 on black",
-    "web": "var(--color-brand-50)",
+    "web": "var(--color-marque-50)",
     "values": {
      "Default": "#F5F8FF"
     }
    },
    {
-    "name": "Colors/brand/100",
+    "name": "Colors/marque/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -286,13 +286,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.22:1 on black",
-    "web": "var(--color-brand-100)",
+    "web": "var(--color-marque-100)",
     "values": {
      "Default": "#E8EFFF"
     }
    },
    {
-    "name": "Colors/brand/200",
+    "name": "Colors/marque/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -300,13 +300,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.40:1 on white, 14.98:1 on black",
-    "web": "var(--color-brand-200)",
+    "web": "var(--color-marque-200)",
     "values": {
      "Default": "#CADAFF"
     }
    },
    {
-    "name": "Colors/brand/300",
+    "name": "Colors/marque/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -314,13 +314,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.02:1 on black",
-    "web": "var(--color-brand-300)",
+    "web": "var(--color-marque-300)",
     "values": {
      "Default": "#9FBBFF"
     }
    },
    {
-    "name": "Colors/brand/400",
+    "name": "Colors/marque/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -328,13 +328,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.77:1 on black",
-    "web": "var(--color-brand-400)",
+    "web": "var(--color-marque-400)",
     "values": {
      "Default": "#628DFF"
     }
    },
    {
-    "name": "Colors/brand/500",
+    "name": "Colors/marque/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -342,13 +342,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.63:1 on white, 4.53:1 on black",
-    "web": "var(--color-brand-500)",
+    "web": "var(--color-marque-500)",
     "values": {
      "Default": "#3F6AF0"
     }
    },
    {
-    "name": "Colors/brand/600",
+    "name": "Colors/marque/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -356,13 +356,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.11:1 on white, 3.43:1 on black",
-    "web": "var(--color-brand-600)",
+    "web": "var(--color-marque-600)",
     "values": {
      "Default": "#2D54DE"
     }
    },
    {
-    "name": "Colors/brand/700",
+    "name": "Colors/marque/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -370,13 +370,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.13:1 on white, 2.58:1 on black",
-    "web": "var(--color-brand-700)",
+    "web": "var(--color-marque-700)",
     "values": {
      "Default": "#1F3EC8"
     }
    },
    {
-    "name": "Colors/brand/800",
+    "name": "Colors/marque/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -384,13 +384,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 11.04:1 on white, 1.90:1 on black",
-    "web": "var(--color-brand-800)",
+    "web": "var(--color-marque-800)",
     "values": {
      "Default": "#1225AE"
     }
    },
    {
-    "name": "Colors/brand/900",
+    "name": "Colors/marque/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -398,13 +398,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.57:1 on white, 1.44:1 on black",
-    "web": "var(--color-brand-900)",
+    "web": "var(--color-marque-900)",
     "values": {
      "Default": "#0A0392"
     }
    },
    {
-    "name": "Colors/brand/950",
+    "name": "Colors/marque/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -412,27 +412,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.58:1 on white, 1.19:1 on black",
-    "web": "var(--color-brand-950)",
+    "web": "var(--color-marque-950)",
     "values": {
      "Default": "#050065"
     }
    },
    {
-    "name": "Colors/brand/main",
+    "name": "Colors/marque/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Brand, main colour (as entered)",
-    "web": "var(--color-brand-main)",
+    "description": "Marque, main colour (as entered)",
+    "web": "var(--color-marque-main)",
     "values": {
      "Default": "#2447D1"
     }
    },
    {
-    "name": "Colors/node/50",
+    "name": "Colors/soleil/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -440,13 +440,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.05:1 on white, 19.85:1 on black",
-    "web": "var(--color-node-50)",
+    "web": "var(--color-soleil-50)",
     "values": {
      "Default": "#FFF8E9"
     }
    },
    {
-    "name": "Colors/node/100",
+    "name": "Colors/soleil/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -454,13 +454,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.21:1 on black",
-    "web": "var(--color-node-100)",
+    "web": "var(--color-soleil-100)",
     "values": {
      "Default": "#FFEDCA"
     }
    },
    {
-    "name": "Colors/node/200",
+    "name": "Colors/soleil/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -468,13 +468,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.40:1 on white, 14.96:1 on black",
-    "web": "var(--color-node-200)",
+    "web": "var(--color-soleil-200)",
     "values": {
      "Default": "#FFD47C"
     }
    },
    {
-    "name": "Colors/node/300",
+    "name": "Colors/soleil/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -482,13 +482,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.89:1 on white, 11.08:1 on black",
-    "web": "var(--color-node-300)",
+    "web": "var(--color-soleil-300)",
     "values": {
      "Default": "#EEB300"
     }
    },
    {
-    "name": "Colors/node/400",
+    "name": "Colors/soleil/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -496,13 +496,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.09:1 on white, 6.78:1 on black",
-    "web": "var(--color-node-400)",
+    "web": "var(--color-soleil-400)",
     "values": {
      "Default": "#BA8B00"
     }
    },
    {
-    "name": "Colors/node/500",
+    "name": "Colors/soleil/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -510,13 +510,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.65:1 on white, 4.50:1 on black",
-    "web": "var(--color-node-500)",
+    "web": "var(--color-soleil-500)",
     "values": {
      "Default": "#956E00"
     }
    },
    {
-    "name": "Colors/node/600",
+    "name": "Colors/soleil/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -524,13 +524,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.08:1 on white, 3.45:1 on black",
-    "web": "var(--color-node-600)",
+    "web": "var(--color-soleil-600)",
     "values": {
      "Default": "#7E5D00"
     }
    },
    {
-    "name": "Colors/node/700",
+    "name": "Colors/soleil/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -538,13 +538,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.12:1 on white, 2.58:1 on black",
-    "web": "var(--color-node-700)",
+    "web": "var(--color-soleil-700)",
     "values": {
      "Default": "#674B00"
     }
    },
    {
-    "name": "Colors/node/800",
+    "name": "Colors/soleil/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -552,13 +552,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.95:1 on white, 1.91:1 on black",
-    "web": "var(--color-node-800)",
+    "web": "var(--color-soleil-800)",
     "values": {
      "Default": "#4F3900"
     }
    },
    {
-    "name": "Colors/node/900",
+    "name": "Colors/soleil/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -566,13 +566,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.64:1 on white, 1.43:1 on black",
-    "web": "var(--color-node-900)",
+    "web": "var(--color-soleil-900)",
     "values": {
      "Default": "#362600"
     }
    },
    {
-    "name": "Colors/node/950",
+    "name": "Colors/soleil/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -580,27 +580,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.58:1 on white, 1.19:1 on black",
-    "web": "var(--color-node-950)",
+    "web": "var(--color-soleil-950)",
     "values": {
      "Default": "#231700"
     }
    },
    {
-    "name": "Colors/node/main",
+    "name": "Colors/soleil/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Node, main colour (as entered)",
-    "web": "var(--color-node-main)",
+    "description": "Soleil, main colour (as entered)",
+    "web": "var(--color-soleil-main)",
     "values": {
      "Default": "#F5B800"
     }
    },
    {
-    "name": "Colors/ink/50",
+    "name": "Colors/encre/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -608,13 +608,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.78:1 on black",
-    "web": "var(--color-ink-50)",
+    "web": "var(--color-encre-50)",
     "values": {
      "Default": "#F6F8FF"
     }
    },
    {
-    "name": "Colors/ink/100",
+    "name": "Colors/encre/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -622,13 +622,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.25:1 on black",
-    "web": "var(--color-ink-100)",
+    "web": "var(--color-encre-100)",
     "values": {
      "Default": "#EBEFFA"
     }
    },
    {
-    "name": "Colors/ink/200",
+    "name": "Colors/encre/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -636,13 +636,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.02:1 on black",
-    "web": "var(--color-ink-200)",
+    "web": "var(--color-encre-200)",
     "values": {
      "Default": "#D4DAEB"
     }
    },
    {
-    "name": "Colors/ink/300",
+    "name": "Colors/encre/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -650,13 +650,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.05:1 on black",
-    "web": "var(--color-ink-300)",
+    "web": "var(--color-encre-300)",
     "values": {
      "Default": "#B3BCD3"
     }
    },
    {
-    "name": "Colors/ink/400",
+    "name": "Colors/encre/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -664,13 +664,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.76:1 on black",
-    "web": "var(--color-ink-400)",
+    "web": "var(--color-encre-400)",
     "values": {
      "Default": "#8792B0"
     }
    },
    {
-    "name": "Colors/ink/500",
+    "name": "Colors/encre/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -678,13 +678,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.64:1 on white, 4.52:1 on black",
-    "web": "var(--color-ink-500)",
+    "web": "var(--color-encre-500)",
     "values": {
      "Default": "#687495"
     }
    },
    {
-    "name": "Colors/ink/600",
+    "name": "Colors/encre/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -692,13 +692,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.11:1 on white, 3.43:1 on black",
-    "web": "var(--color-ink-600)",
+    "web": "var(--color-encre-600)",
     "values": {
      "Default": "#566183"
     }
    },
    {
-    "name": "Colors/ink/700",
+    "name": "Colors/encre/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -706,13 +706,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.09:1 on white, 2.59:1 on black",
-    "web": "var(--color-ink-700)",
+    "web": "var(--color-encre-700)",
     "values": {
      "Default": "#434F71"
     }
    },
    {
-    "name": "Colors/ink/800",
+    "name": "Colors/encre/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -720,13 +720,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.99:1 on white, 1.90:1 on black",
-    "web": "var(--color-ink-800)",
+    "web": "var(--color-encre-800)",
     "values": {
      "Default": "#303B5D"
     }
    },
    {
-    "name": "Colors/ink/900",
+    "name": "Colors/encre/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -734,13 +734,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.59:1 on white, 1.43:1 on black",
-    "web": "var(--color-ink-900)",
+    "web": "var(--color-encre-900)",
     "values": {
      "Default": "#1D2749"
     }
    },
    {
-    "name": "Colors/ink/950",
+    "name": "Colors/encre/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -748,27 +748,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.55:1 on white, 1.19:1 on black",
-    "web": "var(--color-ink-950)",
+    "web": "var(--color-encre-950)",
     "values": {
      "Default": "#0E1737"
     }
    },
    {
-    "name": "Colors/ink/main",
+    "name": "Colors/encre/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Ink, main colour (as entered)",
-    "web": "var(--color-ink-main)",
+    "description": "Encre, main colour (as entered)",
+    "web": "var(--color-encre-main)",
     "values": {
      "Default": "#0D1535"
     }
    },
    {
-    "name": "Colors/canvas/50",
+    "name": "Colors/toile/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -776,13 +776,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.75:1 on black",
-    "web": "var(--color-canvas-50)",
+    "web": "var(--color-toile-50)",
     "values": {
      "Default": "#F5F8FF"
     }
    },
    {
-    "name": "Colors/canvas/100",
+    "name": "Colors/toile/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -790,13 +790,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.24:1 on black",
-    "web": "var(--color-canvas-100)",
+    "web": "var(--color-toile-100)",
     "values": {
      "Default": "#ECEFF6"
     }
    },
    {
-    "name": "Colors/canvas/200",
+    "name": "Colors/toile/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -804,13 +804,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.00:1 on black",
-    "web": "var(--color-canvas-200)",
+    "web": "var(--color-toile-200)",
     "values": {
      "Default": "#D7DAE1"
     }
    },
    {
-    "name": "Colors/canvas/300",
+    "name": "Colors/toile/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -818,13 +818,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.04:1 on black",
-    "web": "var(--color-canvas-300)",
+    "web": "var(--color-toile-300)",
     "values": {
      "Default": "#B9BCC3"
     }
    },
    {
-    "name": "Colors/canvas/400",
+    "name": "Colors/toile/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -832,13 +832,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.11:1 on white, 6.75:1 on black",
-    "web": "var(--color-canvas-400)",
+    "web": "var(--color-toile-400)",
     "values": {
      "Default": "#909298"
     }
    },
    {
-    "name": "Colors/canvas/500",
+    "name": "Colors/toile/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -846,13 +846,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.67:1 on white, 4.49:1 on black",
-    "web": "var(--color-canvas-500)",
+    "web": "var(--color-toile-500)",
     "values": {
      "Default": "#72747A"
     }
    },
    {
-    "name": "Colors/canvas/600",
+    "name": "Colors/toile/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -860,13 +860,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.10:1 on white, 3.44:1 on black",
-    "web": "var(--color-canvas-600)",
+    "web": "var(--color-toile-600)",
     "values": {
      "Default": "#606267"
     }
    },
    {
-    "name": "Colors/canvas/700",
+    "name": "Colors/toile/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -874,13 +874,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.06:1 on white, 2.60:1 on black",
-    "web": "var(--color-canvas-700)",
+    "web": "var(--color-toile-700)",
     "values": {
      "Default": "#4E5055"
     }
    },
    {
-    "name": "Colors/canvas/800",
+    "name": "Colors/toile/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -888,13 +888,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 11.03:1 on white, 1.90:1 on black",
-    "web": "var(--color-canvas-800)",
+    "web": "var(--color-toile-800)",
     "values": {
      "Default": "#3A3C41"
     }
    },
    {
-    "name": "Colors/canvas/900",
+    "name": "Colors/toile/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -902,13 +902,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.56:1 on white, 1.44:1 on black",
-    "web": "var(--color-canvas-900)",
+    "web": "var(--color-toile-900)",
     "values": {
      "Default": "#27292D"
     }
    },
    {
-    "name": "Colors/canvas/950",
+    "name": "Colors/toile/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -916,21 +916,21 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.61:1 on white, 1.19:1 on black",
-    "web": "var(--color-canvas-950)",
+    "web": "var(--color-toile-950)",
     "values": {
      "Default": "#17191C"
     }
    },
    {
-    "name": "Colors/canvas/main",
+    "name": "Colors/toile/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Canvas, main colour (as entered)",
-    "web": "var(--color-canvas-main)",
+    "description": "Toile, main colour (as entered)",
+    "web": "var(--color-toile-main)",
     "values": {
      "Default": "#F1F4FB"
     }
@@ -1784,8 +1784,8 @@
     "description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--text-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -1797,8 +1797,8 @@
     "description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--text-muted)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/deep/400"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/nuit/400"
     }
    },
    {
@@ -1824,8 +1824,8 @@
     "description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--background-default)",
     "values": {
-     "Light": "→ Colors/canvas/main",
-     "Dark": "→ Colors/canvas/950"
+     "Light": "→ Colors/toile/main",
+     "Dark": "→ Colors/toile/950"
     }
    },
    {
@@ -1838,8 +1838,8 @@
     "description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--background-subtle)",
     "values": {
-     "Light": "→ Colors/deep/50",
-     "Dark": "→ Colors/deep/950"
+     "Light": "→ Colors/nuit/50",
+     "Dark": "→ Colors/nuit/950"
     }
    },
    {
@@ -1852,8 +1852,8 @@
     "description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -1866,8 +1866,8 @@
     "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
-     "Light": "→ Colors/ink/900",
-     "Dark": "→ Colors/deep/100"
+     "Light": "→ Colors/encre/900",
+     "Dark": "→ Colors/nuit/100"
     }
    },
    {
@@ -1880,8 +1880,8 @@
     "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
-     "Light": "→ Colors/ink/800",
-     "Dark": "→ Colors/deep/200"
+     "Light": "→ Colors/encre/800",
+     "Dark": "→ Colors/nuit/200"
     }
    },
    {
@@ -1893,8 +1893,8 @@
     "description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--link-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -1906,8 +1906,8 @@
     "description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--link-subtle)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/deep/400"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/nuit/400"
     }
    },
    {
@@ -1919,8 +1919,8 @@
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill",
     "web": "var(--disabled-text)",
     "values": {
-     "Light": "→ Colors/ink/400",
-     "Dark": "→ Colors/deep/600"
+     "Light": "→ Colors/encre/400",
+     "Dark": "→ Colors/nuit/600"
     }
    },
    {
@@ -1933,8 +1933,8 @@
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
     "web": "var(--disabled-surface)",
     "values": {
-     "Light": "→ Colors/deep/50",
-     "Dark": "→ Colors/deep/950"
+     "Light": "→ Colors/nuit/50",
+     "Dark": "→ Colors/nuit/950"
     }
    },
    {
@@ -1946,8 +1946,8 @@
     "description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
     "web": "var(--border-default)",
     "values": {
-     "Light": "→ Colors/ink/500",
-     "Dark": "→ Colors/deep/500"
+     "Light": "→ Colors/encre/500",
+     "Dark": "→ Colors/nuit/500"
     }
    },
    {
@@ -1959,8 +1959,8 @@
     "description": "Decorative divider, carries no information: 1.26:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
     "web": "var(--border-subtle)",
     "values": {
-     "Light": "→ Colors/ink/200",
-     "Dark": "→ Colors/deep/900"
+     "Light": "→ Colors/encre/200",
+     "Dark": "→ Colors/nuit/900"
     }
    },
    {
@@ -1972,8 +1972,8 @@
     "description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
     "web": "var(--focus-ring)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -2174,7 +2174,7 @@
     "description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
     "web": "var(--chart-3)",
     "values": {
-     "Light": "→ Colors/deep/800",
+     "Light": "→ Colors/nuit/800",
      "Dark": "→ Colors/error/300"
     }
    },
@@ -2189,7 +2189,7 @@
     "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/warning/800",
-     "Dark": "→ Colors/brand/300"
+     "Dark": "→ Colors/marque/300"
     }
    },
    {
@@ -2202,8 +2202,8 @@
     "description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
     "web": "var(--chart-5)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/ink/600"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/encre/600"
     }
    },
    {
@@ -5324,7 +5324,7 @@
     }
    },
    {
-    "name": "Colors/deep/50",
+    "name": "Colors/nuit/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5332,13 +5332,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.78:1 on black",
-    "web": "var(--color-deep-50)",
+    "web": "var(--color-nuit-50)",
     "values": {
      "Default": "#F6F8FF"
     }
    },
    {
-    "name": "Colors/deep/100",
+    "name": "Colors/nuit/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5346,13 +5346,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.25:1 on black",
-    "web": "var(--color-deep-100)",
+    "web": "var(--color-nuit-100)",
     "values": {
      "Default": "#E9EFFF"
     }
    },
    {
-    "name": "Colors/deep/200",
+    "name": "Colors/nuit/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5360,13 +5360,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.00:1 on black",
-    "web": "var(--color-deep-200)",
+    "web": "var(--color-nuit-200)",
     "values": {
      "Default": "#D0DAF3"
     }
    },
    {
-    "name": "Colors/deep/300",
+    "name": "Colors/nuit/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5374,13 +5374,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.89:1 on white, 11.05:1 on black",
-    "web": "var(--color-deep-300)",
+    "web": "var(--color-nuit-300)",
     "values": {
      "Default": "#AEBCDF"
     }
    },
    {
-    "name": "Colors/deep/400",
+    "name": "Colors/nuit/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5388,13 +5388,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.77:1 on black",
-    "web": "var(--color-deep-400)",
+    "web": "var(--color-nuit-400)",
     "values": {
      "Default": "#8092BE"
     }
    },
    {
-    "name": "Colors/deep/500",
+    "name": "Colors/nuit/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5402,13 +5402,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.66:1 on white, 4.50:1 on black",
-    "web": "var(--color-deep-500)",
+    "web": "var(--color-nuit-500)",
     "values": {
      "Default": "#6173A5"
     }
    },
    {
-    "name": "Colors/deep/600",
+    "name": "Colors/nuit/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5416,13 +5416,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.06:1 on white, 3.46:1 on black",
-    "web": "var(--color-deep-600)",
+    "web": "var(--color-nuit-600)",
     "values": {
      "Default": "#4E6194"
     }
    },
    {
-    "name": "Colors/deep/700",
+    "name": "Colors/nuit/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5430,13 +5430,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.08:1 on white, 2.59:1 on black",
-    "web": "var(--color-deep-700)",
+    "web": "var(--color-nuit-700)",
     "values": {
      "Default": "#3B4E82"
     }
    },
    {
-    "name": "Colors/deep/800",
+    "name": "Colors/nuit/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5444,13 +5444,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.95:1 on white, 1.91:1 on black",
-    "web": "var(--color-deep-800)",
+    "web": "var(--color-nuit-800)",
     "values": {
      "Default": "#283A6D"
     }
    },
    {
-    "name": "Colors/deep/900",
+    "name": "Colors/nuit/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5458,13 +5458,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.58:1 on white, 1.43:1 on black",
-    "web": "var(--color-deep-900)",
+    "web": "var(--color-nuit-900)",
     "values": {
      "Default": "#162558"
     }
    },
    {
-    "name": "Colors/deep/950",
+    "name": "Colors/nuit/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5472,27 +5472,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.53:1 on white, 1.19:1 on black",
-    "web": "var(--color-deep-950)",
+    "web": "var(--color-nuit-950)",
     "values": {
      "Default": "#091445"
     }
    },
    {
-    "name": "Colors/deep/main",
+    "name": "Colors/nuit/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Deep, main colour (as entered)",
-    "web": "var(--color-deep-main)",
+    "description": "Nuit, main colour (as entered)",
+    "web": "var(--color-nuit-main)",
     "values": {
      "Default": "#0E1B4D"
     }
    },
    {
-    "name": "Colors/brand/50",
+    "name": "Colors/marque/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5500,13 +5500,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.75:1 on black",
-    "web": "var(--color-brand-50)",
+    "web": "var(--color-marque-50)",
     "values": {
      "Default": "#F5F8FF"
     }
    },
    {
-    "name": "Colors/brand/100",
+    "name": "Colors/marque/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5514,13 +5514,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.22:1 on black",
-    "web": "var(--color-brand-100)",
+    "web": "var(--color-marque-100)",
     "values": {
      "Default": "#E8EFFF"
     }
    },
    {
-    "name": "Colors/brand/200",
+    "name": "Colors/marque/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5528,13 +5528,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.40:1 on white, 14.98:1 on black",
-    "web": "var(--color-brand-200)",
+    "web": "var(--color-marque-200)",
     "values": {
      "Default": "#CADAFF"
     }
    },
    {
-    "name": "Colors/brand/300",
+    "name": "Colors/marque/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5542,13 +5542,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.02:1 on black",
-    "web": "var(--color-brand-300)",
+    "web": "var(--color-marque-300)",
     "values": {
      "Default": "#9FBBFF"
     }
    },
    {
-    "name": "Colors/brand/400",
+    "name": "Colors/marque/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5556,13 +5556,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.77:1 on black",
-    "web": "var(--color-brand-400)",
+    "web": "var(--color-marque-400)",
     "values": {
      "Default": "#628DFF"
     }
    },
    {
-    "name": "Colors/brand/500",
+    "name": "Colors/marque/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5570,13 +5570,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.63:1 on white, 4.53:1 on black",
-    "web": "var(--color-brand-500)",
+    "web": "var(--color-marque-500)",
     "values": {
      "Default": "#3F6AF0"
     }
    },
    {
-    "name": "Colors/brand/600",
+    "name": "Colors/marque/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5584,13 +5584,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.11:1 on white, 3.43:1 on black",
-    "web": "var(--color-brand-600)",
+    "web": "var(--color-marque-600)",
     "values": {
      "Default": "#2D54DE"
     }
    },
    {
-    "name": "Colors/brand/700",
+    "name": "Colors/marque/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5598,13 +5598,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.13:1 on white, 2.58:1 on black",
-    "web": "var(--color-brand-700)",
+    "web": "var(--color-marque-700)",
     "values": {
      "Default": "#1F3EC8"
     }
    },
    {
-    "name": "Colors/brand/800",
+    "name": "Colors/marque/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5612,13 +5612,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 11.04:1 on white, 1.90:1 on black",
-    "web": "var(--color-brand-800)",
+    "web": "var(--color-marque-800)",
     "values": {
      "Default": "#1225AE"
     }
    },
    {
-    "name": "Colors/brand/900",
+    "name": "Colors/marque/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5626,13 +5626,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.57:1 on white, 1.44:1 on black",
-    "web": "var(--color-brand-900)",
+    "web": "var(--color-marque-900)",
     "values": {
      "Default": "#0A0392"
     }
    },
    {
-    "name": "Colors/brand/950",
+    "name": "Colors/marque/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5640,27 +5640,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.58:1 on white, 1.19:1 on black",
-    "web": "var(--color-brand-950)",
+    "web": "var(--color-marque-950)",
     "values": {
      "Default": "#050065"
     }
    },
    {
-    "name": "Colors/brand/main",
+    "name": "Colors/marque/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Brand, main colour (as entered)",
-    "web": "var(--color-brand-main)",
+    "description": "Marque, main colour (as entered)",
+    "web": "var(--color-marque-main)",
     "values": {
      "Default": "#2447D1"
     }
    },
    {
-    "name": "Colors/node/50",
+    "name": "Colors/soleil/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5668,13 +5668,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.05:1 on white, 19.85:1 on black",
-    "web": "var(--color-node-50)",
+    "web": "var(--color-soleil-50)",
     "values": {
      "Default": "#FFF8E9"
     }
    },
    {
-    "name": "Colors/node/100",
+    "name": "Colors/soleil/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5682,13 +5682,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.21:1 on black",
-    "web": "var(--color-node-100)",
+    "web": "var(--color-soleil-100)",
     "values": {
      "Default": "#FFEDCA"
     }
    },
    {
-    "name": "Colors/node/200",
+    "name": "Colors/soleil/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5696,13 +5696,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.40:1 on white, 14.96:1 on black",
-    "web": "var(--color-node-200)",
+    "web": "var(--color-soleil-200)",
     "values": {
      "Default": "#FFD47C"
     }
    },
    {
-    "name": "Colors/node/300",
+    "name": "Colors/soleil/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5710,13 +5710,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.89:1 on white, 11.08:1 on black",
-    "web": "var(--color-node-300)",
+    "web": "var(--color-soleil-300)",
     "values": {
      "Default": "#EEB300"
     }
    },
    {
-    "name": "Colors/node/400",
+    "name": "Colors/soleil/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5724,13 +5724,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.09:1 on white, 6.78:1 on black",
-    "web": "var(--color-node-400)",
+    "web": "var(--color-soleil-400)",
     "values": {
      "Default": "#BA8B00"
     }
    },
    {
-    "name": "Colors/node/500",
+    "name": "Colors/soleil/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5738,13 +5738,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.65:1 on white, 4.50:1 on black",
-    "web": "var(--color-node-500)",
+    "web": "var(--color-soleil-500)",
     "values": {
      "Default": "#956E00"
     }
    },
    {
-    "name": "Colors/node/600",
+    "name": "Colors/soleil/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5752,13 +5752,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.08:1 on white, 3.45:1 on black",
-    "web": "var(--color-node-600)",
+    "web": "var(--color-soleil-600)",
     "values": {
      "Default": "#7E5D00"
     }
    },
    {
-    "name": "Colors/node/700",
+    "name": "Colors/soleil/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5766,13 +5766,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.12:1 on white, 2.58:1 on black",
-    "web": "var(--color-node-700)",
+    "web": "var(--color-soleil-700)",
     "values": {
      "Default": "#674B00"
     }
    },
    {
-    "name": "Colors/node/800",
+    "name": "Colors/soleil/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5780,13 +5780,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.95:1 on white, 1.91:1 on black",
-    "web": "var(--color-node-800)",
+    "web": "var(--color-soleil-800)",
     "values": {
      "Default": "#4F3900"
     }
    },
    {
-    "name": "Colors/node/900",
+    "name": "Colors/soleil/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5794,13 +5794,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.64:1 on white, 1.43:1 on black",
-    "web": "var(--color-node-900)",
+    "web": "var(--color-soleil-900)",
     "values": {
      "Default": "#362600"
     }
    },
    {
-    "name": "Colors/node/950",
+    "name": "Colors/soleil/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5808,27 +5808,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.58:1 on white, 1.19:1 on black",
-    "web": "var(--color-node-950)",
+    "web": "var(--color-soleil-950)",
     "values": {
      "Default": "#231700"
     }
    },
    {
-    "name": "Colors/node/main",
+    "name": "Colors/soleil/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Node, main colour (as entered)",
-    "web": "var(--color-node-main)",
+    "description": "Soleil, main colour (as entered)",
+    "web": "var(--color-soleil-main)",
     "values": {
      "Default": "#F5B800"
     }
    },
    {
-    "name": "Colors/ink/50",
+    "name": "Colors/encre/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5836,13 +5836,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.78:1 on black",
-    "web": "var(--color-ink-50)",
+    "web": "var(--color-encre-50)",
     "values": {
      "Default": "#F6F8FF"
     }
    },
    {
-    "name": "Colors/ink/100",
+    "name": "Colors/encre/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5850,13 +5850,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.25:1 on black",
-    "web": "var(--color-ink-100)",
+    "web": "var(--color-encre-100)",
     "values": {
      "Default": "#EBEFFA"
     }
    },
    {
-    "name": "Colors/ink/200",
+    "name": "Colors/encre/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5864,13 +5864,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.02:1 on black",
-    "web": "var(--color-ink-200)",
+    "web": "var(--color-encre-200)",
     "values": {
      "Default": "#D4DAEB"
     }
    },
    {
-    "name": "Colors/ink/300",
+    "name": "Colors/encre/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5878,13 +5878,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.05:1 on black",
-    "web": "var(--color-ink-300)",
+    "web": "var(--color-encre-300)",
     "values": {
      "Default": "#B3BCD3"
     }
    },
    {
-    "name": "Colors/ink/400",
+    "name": "Colors/encre/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5892,13 +5892,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.76:1 on black",
-    "web": "var(--color-ink-400)",
+    "web": "var(--color-encre-400)",
     "values": {
      "Default": "#8792B0"
     }
    },
    {
-    "name": "Colors/ink/500",
+    "name": "Colors/encre/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5906,13 +5906,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.64:1 on white, 4.52:1 on black",
-    "web": "var(--color-ink-500)",
+    "web": "var(--color-encre-500)",
     "values": {
      "Default": "#687495"
     }
    },
    {
-    "name": "Colors/ink/600",
+    "name": "Colors/encre/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5920,13 +5920,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.11:1 on white, 3.43:1 on black",
-    "web": "var(--color-ink-600)",
+    "web": "var(--color-encre-600)",
     "values": {
      "Default": "#566183"
     }
    },
    {
-    "name": "Colors/ink/700",
+    "name": "Colors/encre/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5934,13 +5934,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.09:1 on white, 2.59:1 on black",
-    "web": "var(--color-ink-700)",
+    "web": "var(--color-encre-700)",
     "values": {
      "Default": "#434F71"
     }
    },
    {
-    "name": "Colors/ink/800",
+    "name": "Colors/encre/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5948,13 +5948,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.99:1 on white, 1.90:1 on black",
-    "web": "var(--color-ink-800)",
+    "web": "var(--color-encre-800)",
     "values": {
      "Default": "#303B5D"
     }
    },
    {
-    "name": "Colors/ink/900",
+    "name": "Colors/encre/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5962,13 +5962,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.59:1 on white, 1.43:1 on black",
-    "web": "var(--color-ink-900)",
+    "web": "var(--color-encre-900)",
     "values": {
      "Default": "#1D2749"
     }
    },
    {
-    "name": "Colors/ink/950",
+    "name": "Colors/encre/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -5976,27 +5976,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.55:1 on white, 1.19:1 on black",
-    "web": "var(--color-ink-950)",
+    "web": "var(--color-encre-950)",
     "values": {
      "Default": "#0E1737"
     }
    },
    {
-    "name": "Colors/ink/main",
+    "name": "Colors/encre/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Ink, main colour (as entered)",
-    "web": "var(--color-ink-main)",
+    "description": "Encre, main colour (as entered)",
+    "web": "var(--color-encre-main)",
     "values": {
      "Default": "#0D1535"
     }
    },
    {
-    "name": "Colors/canvas/50",
+    "name": "Colors/toile/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6004,13 +6004,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.75:1 on black",
-    "web": "var(--color-canvas-50)",
+    "web": "var(--color-toile-50)",
     "values": {
      "Default": "#F5F8FF"
     }
    },
    {
-    "name": "Colors/canvas/100",
+    "name": "Colors/toile/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6018,13 +6018,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.24:1 on black",
-    "web": "var(--color-canvas-100)",
+    "web": "var(--color-toile-100)",
     "values": {
      "Default": "#ECEFF6"
     }
    },
    {
-    "name": "Colors/canvas/200",
+    "name": "Colors/toile/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6032,13 +6032,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.00:1 on black",
-    "web": "var(--color-canvas-200)",
+    "web": "var(--color-toile-200)",
     "values": {
      "Default": "#D7DAE1"
     }
    },
    {
-    "name": "Colors/canvas/300",
+    "name": "Colors/toile/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6046,13 +6046,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.04:1 on black",
-    "web": "var(--color-canvas-300)",
+    "web": "var(--color-toile-300)",
     "values": {
      "Default": "#B9BCC3"
     }
    },
    {
-    "name": "Colors/canvas/400",
+    "name": "Colors/toile/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6060,13 +6060,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.11:1 on white, 6.75:1 on black",
-    "web": "var(--color-canvas-400)",
+    "web": "var(--color-toile-400)",
     "values": {
      "Default": "#909298"
     }
    },
    {
-    "name": "Colors/canvas/500",
+    "name": "Colors/toile/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6074,13 +6074,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.67:1 on white, 4.49:1 on black",
-    "web": "var(--color-canvas-500)",
+    "web": "var(--color-toile-500)",
     "values": {
      "Default": "#72747A"
     }
    },
    {
-    "name": "Colors/canvas/600",
+    "name": "Colors/toile/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6088,13 +6088,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.10:1 on white, 3.44:1 on black",
-    "web": "var(--color-canvas-600)",
+    "web": "var(--color-toile-600)",
     "values": {
      "Default": "#606267"
     }
    },
    {
-    "name": "Colors/canvas/700",
+    "name": "Colors/toile/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6102,13 +6102,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.06:1 on white, 2.60:1 on black",
-    "web": "var(--color-canvas-700)",
+    "web": "var(--color-toile-700)",
     "values": {
      "Default": "#4E5055"
     }
    },
    {
-    "name": "Colors/canvas/800",
+    "name": "Colors/toile/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6116,13 +6116,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 11.03:1 on white, 1.90:1 on black",
-    "web": "var(--color-canvas-800)",
+    "web": "var(--color-toile-800)",
     "values": {
      "Default": "#3A3C41"
     }
    },
    {
-    "name": "Colors/canvas/900",
+    "name": "Colors/toile/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6130,13 +6130,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.56:1 on white, 1.44:1 on black",
-    "web": "var(--color-canvas-900)",
+    "web": "var(--color-toile-900)",
     "values": {
      "Default": "#27292D"
     }
    },
    {
-    "name": "Colors/canvas/950",
+    "name": "Colors/toile/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -6144,21 +6144,21 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.61:1 on white, 1.19:1 on black",
-    "web": "var(--color-canvas-950)",
+    "web": "var(--color-toile-950)",
     "values": {
      "Default": "#17191C"
     }
    },
    {
-    "name": "Colors/canvas/main",
+    "name": "Colors/toile/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Canvas, main colour (as entered)",
-    "web": "var(--color-canvas-main)",
+    "description": "Toile, main colour (as entered)",
+    "web": "var(--color-toile-main)",
     "values": {
      "Default": "#F1F4FB"
     }
@@ -7012,8 +7012,8 @@
     "description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--text-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -7025,8 +7025,8 @@
     "description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--text-muted)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/deep/400"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/nuit/400"
     }
    },
    {
@@ -7052,8 +7052,8 @@
     "description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--background-default)",
     "values": {
-     "Light": "→ Colors/canvas/main",
-     "Dark": "→ Colors/canvas/950"
+     "Light": "→ Colors/toile/main",
+     "Dark": "→ Colors/toile/950"
     }
    },
    {
@@ -7066,8 +7066,8 @@
     "description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--background-subtle)",
     "values": {
-     "Light": "→ Colors/deep/50",
-     "Dark": "→ Colors/deep/950"
+     "Light": "→ Colors/nuit/50",
+     "Dark": "→ Colors/nuit/950"
     }
    },
    {
@@ -7080,8 +7080,8 @@
     "description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -7094,8 +7094,8 @@
     "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
-     "Light": "→ Colors/ink/900",
-     "Dark": "→ Colors/deep/100"
+     "Light": "→ Colors/encre/900",
+     "Dark": "→ Colors/nuit/100"
     }
    },
    {
@@ -7108,8 +7108,8 @@
     "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
-     "Light": "→ Colors/ink/800",
-     "Dark": "→ Colors/deep/200"
+     "Light": "→ Colors/encre/800",
+     "Dark": "→ Colors/nuit/200"
     }
    },
    {
@@ -7121,8 +7121,8 @@
     "description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--link-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -7134,8 +7134,8 @@
     "description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--link-subtle)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/deep/400"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/nuit/400"
     }
    },
    {
@@ -7147,8 +7147,8 @@
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill",
     "web": "var(--disabled-text)",
     "values": {
-     "Light": "→ Colors/ink/400",
-     "Dark": "→ Colors/deep/600"
+     "Light": "→ Colors/encre/400",
+     "Dark": "→ Colors/nuit/600"
     }
    },
    {
@@ -7161,8 +7161,8 @@
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
     "web": "var(--disabled-surface)",
     "values": {
-     "Light": "→ Colors/deep/50",
-     "Dark": "→ Colors/deep/950"
+     "Light": "→ Colors/nuit/50",
+     "Dark": "→ Colors/nuit/950"
     }
    },
    {
@@ -7174,8 +7174,8 @@
     "description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
     "web": "var(--border-default)",
     "values": {
-     "Light": "→ Colors/ink/500",
-     "Dark": "→ Colors/deep/500"
+     "Light": "→ Colors/encre/500",
+     "Dark": "→ Colors/nuit/500"
     }
    },
    {
@@ -7187,8 +7187,8 @@
     "description": "Decorative divider, carries no information: 1.26:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
     "web": "var(--border-subtle)",
     "values": {
-     "Light": "→ Colors/ink/200",
-     "Dark": "→ Colors/deep/900"
+     "Light": "→ Colors/encre/200",
+     "Dark": "→ Colors/nuit/900"
     }
    },
    {
@@ -7200,8 +7200,8 @@
     "description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
     "web": "var(--focus-ring)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -7402,7 +7402,7 @@
     "description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
     "web": "var(--chart-3)",
     "values": {
-     "Light": "→ Colors/deep/800",
+     "Light": "→ Colors/nuit/800",
      "Dark": "→ Colors/error/300"
     }
    },
@@ -7417,7 +7417,7 @@
     "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/warning/800",
-     "Dark": "→ Colors/brand/300"
+     "Dark": "→ Colors/marque/300"
     }
    },
    {
@@ -7430,8 +7430,8 @@
     "description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
     "web": "var(--chart-5)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/ink/600"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/encre/600"
     }
    },
    {
@@ -20986,7 +20986,7 @@
     }
    },
    {
-    "name": "Colors/deep/50",
+    "name": "Colors/nuit/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -20994,13 +20994,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.78:1 on black",
-    "web": "var(--color-deep-50)",
+    "web": "var(--color-nuit-50)",
     "values": {
      "Default": "#F6F8FF"
     }
    },
    {
-    "name": "Colors/deep/100",
+    "name": "Colors/nuit/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21008,13 +21008,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.25:1 on black",
-    "web": "var(--color-deep-100)",
+    "web": "var(--color-nuit-100)",
     "values": {
      "Default": "#E9EFFF"
     }
    },
    {
-    "name": "Colors/deep/200",
+    "name": "Colors/nuit/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21022,13 +21022,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.00:1 on black",
-    "web": "var(--color-deep-200)",
+    "web": "var(--color-nuit-200)",
     "values": {
      "Default": "#D0DAF3"
     }
    },
    {
-    "name": "Colors/deep/300",
+    "name": "Colors/nuit/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21036,13 +21036,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.89:1 on white, 11.05:1 on black",
-    "web": "var(--color-deep-300)",
+    "web": "var(--color-nuit-300)",
     "values": {
      "Default": "#AEBCDF"
     }
    },
    {
-    "name": "Colors/deep/400",
+    "name": "Colors/nuit/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21050,13 +21050,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.77:1 on black",
-    "web": "var(--color-deep-400)",
+    "web": "var(--color-nuit-400)",
     "values": {
      "Default": "#8092BE"
     }
    },
    {
-    "name": "Colors/deep/500",
+    "name": "Colors/nuit/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21064,13 +21064,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.66:1 on white, 4.50:1 on black",
-    "web": "var(--color-deep-500)",
+    "web": "var(--color-nuit-500)",
     "values": {
      "Default": "#6173A5"
     }
    },
    {
-    "name": "Colors/deep/600",
+    "name": "Colors/nuit/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21078,13 +21078,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.06:1 on white, 3.46:1 on black",
-    "web": "var(--color-deep-600)",
+    "web": "var(--color-nuit-600)",
     "values": {
      "Default": "#4E6194"
     }
    },
    {
-    "name": "Colors/deep/700",
+    "name": "Colors/nuit/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21092,13 +21092,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.08:1 on white, 2.59:1 on black",
-    "web": "var(--color-deep-700)",
+    "web": "var(--color-nuit-700)",
     "values": {
      "Default": "#3B4E82"
     }
    },
    {
-    "name": "Colors/deep/800",
+    "name": "Colors/nuit/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21106,13 +21106,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.95:1 on white, 1.91:1 on black",
-    "web": "var(--color-deep-800)",
+    "web": "var(--color-nuit-800)",
     "values": {
      "Default": "#283A6D"
     }
    },
    {
-    "name": "Colors/deep/900",
+    "name": "Colors/nuit/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21120,13 +21120,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.58:1 on white, 1.43:1 on black",
-    "web": "var(--color-deep-900)",
+    "web": "var(--color-nuit-900)",
     "values": {
      "Default": "#162558"
     }
    },
    {
-    "name": "Colors/deep/950",
+    "name": "Colors/nuit/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21134,27 +21134,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.53:1 on white, 1.19:1 on black",
-    "web": "var(--color-deep-950)",
+    "web": "var(--color-nuit-950)",
     "values": {
      "Default": "#091445"
     }
    },
    {
-    "name": "Colors/deep/main",
+    "name": "Colors/nuit/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Deep, main colour (as entered)",
-    "web": "var(--color-deep-main)",
+    "description": "Nuit, main colour (as entered)",
+    "web": "var(--color-nuit-main)",
     "values": {
      "Default": "#0E1B4D"
     }
    },
    {
-    "name": "Colors/brand/50",
+    "name": "Colors/marque/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21162,13 +21162,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.75:1 on black",
-    "web": "var(--color-brand-50)",
+    "web": "var(--color-marque-50)",
     "values": {
      "Default": "#F5F8FF"
     }
    },
    {
-    "name": "Colors/brand/100",
+    "name": "Colors/marque/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21176,13 +21176,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.22:1 on black",
-    "web": "var(--color-brand-100)",
+    "web": "var(--color-marque-100)",
     "values": {
      "Default": "#E8EFFF"
     }
    },
    {
-    "name": "Colors/brand/200",
+    "name": "Colors/marque/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21190,13 +21190,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.40:1 on white, 14.98:1 on black",
-    "web": "var(--color-brand-200)",
+    "web": "var(--color-marque-200)",
     "values": {
      "Default": "#CADAFF"
     }
    },
    {
-    "name": "Colors/brand/300",
+    "name": "Colors/marque/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21204,13 +21204,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.02:1 on black",
-    "web": "var(--color-brand-300)",
+    "web": "var(--color-marque-300)",
     "values": {
      "Default": "#9FBBFF"
     }
    },
    {
-    "name": "Colors/brand/400",
+    "name": "Colors/marque/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21218,13 +21218,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.77:1 on black",
-    "web": "var(--color-brand-400)",
+    "web": "var(--color-marque-400)",
     "values": {
      "Default": "#628DFF"
     }
    },
    {
-    "name": "Colors/brand/500",
+    "name": "Colors/marque/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21232,13 +21232,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.63:1 on white, 4.53:1 on black",
-    "web": "var(--color-brand-500)",
+    "web": "var(--color-marque-500)",
     "values": {
      "Default": "#3F6AF0"
     }
    },
    {
-    "name": "Colors/brand/600",
+    "name": "Colors/marque/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21246,13 +21246,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.11:1 on white, 3.43:1 on black",
-    "web": "var(--color-brand-600)",
+    "web": "var(--color-marque-600)",
     "values": {
      "Default": "#2D54DE"
     }
    },
    {
-    "name": "Colors/brand/700",
+    "name": "Colors/marque/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21260,13 +21260,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.13:1 on white, 2.58:1 on black",
-    "web": "var(--color-brand-700)",
+    "web": "var(--color-marque-700)",
     "values": {
      "Default": "#1F3EC8"
     }
    },
    {
-    "name": "Colors/brand/800",
+    "name": "Colors/marque/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21274,13 +21274,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 11.04:1 on white, 1.90:1 on black",
-    "web": "var(--color-brand-800)",
+    "web": "var(--color-marque-800)",
     "values": {
      "Default": "#1225AE"
     }
    },
    {
-    "name": "Colors/brand/900",
+    "name": "Colors/marque/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21288,13 +21288,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.57:1 on white, 1.44:1 on black",
-    "web": "var(--color-brand-900)",
+    "web": "var(--color-marque-900)",
     "values": {
      "Default": "#0A0392"
     }
    },
    {
-    "name": "Colors/brand/950",
+    "name": "Colors/marque/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21302,27 +21302,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.58:1 on white, 1.19:1 on black",
-    "web": "var(--color-brand-950)",
+    "web": "var(--color-marque-950)",
     "values": {
      "Default": "#050065"
     }
    },
    {
-    "name": "Colors/brand/main",
+    "name": "Colors/marque/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Brand, main colour (as entered)",
-    "web": "var(--color-brand-main)",
+    "description": "Marque, main colour (as entered)",
+    "web": "var(--color-marque-main)",
     "values": {
      "Default": "#2447D1"
     }
    },
    {
-    "name": "Colors/node/50",
+    "name": "Colors/soleil/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21330,13 +21330,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.05:1 on white, 19.85:1 on black",
-    "web": "var(--color-node-50)",
+    "web": "var(--color-soleil-50)",
     "values": {
      "Default": "#FFF8E9"
     }
    },
    {
-    "name": "Colors/node/100",
+    "name": "Colors/soleil/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21344,13 +21344,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.21:1 on black",
-    "web": "var(--color-node-100)",
+    "web": "var(--color-soleil-100)",
     "values": {
      "Default": "#FFEDCA"
     }
    },
    {
-    "name": "Colors/node/200",
+    "name": "Colors/soleil/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21358,13 +21358,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.40:1 on white, 14.96:1 on black",
-    "web": "var(--color-node-200)",
+    "web": "var(--color-soleil-200)",
     "values": {
      "Default": "#FFD47C"
     }
    },
    {
-    "name": "Colors/node/300",
+    "name": "Colors/soleil/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21372,13 +21372,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.89:1 on white, 11.08:1 on black",
-    "web": "var(--color-node-300)",
+    "web": "var(--color-soleil-300)",
     "values": {
      "Default": "#EEB300"
     }
    },
    {
-    "name": "Colors/node/400",
+    "name": "Colors/soleil/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21386,13 +21386,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.09:1 on white, 6.78:1 on black",
-    "web": "var(--color-node-400)",
+    "web": "var(--color-soleil-400)",
     "values": {
      "Default": "#BA8B00"
     }
    },
    {
-    "name": "Colors/node/500",
+    "name": "Colors/soleil/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21400,13 +21400,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.65:1 on white, 4.50:1 on black",
-    "web": "var(--color-node-500)",
+    "web": "var(--color-soleil-500)",
     "values": {
      "Default": "#956E00"
     }
    },
    {
-    "name": "Colors/node/600",
+    "name": "Colors/soleil/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21414,13 +21414,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.08:1 on white, 3.45:1 on black",
-    "web": "var(--color-node-600)",
+    "web": "var(--color-soleil-600)",
     "values": {
      "Default": "#7E5D00"
     }
    },
    {
-    "name": "Colors/node/700",
+    "name": "Colors/soleil/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21428,13 +21428,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.12:1 on white, 2.58:1 on black",
-    "web": "var(--color-node-700)",
+    "web": "var(--color-soleil-700)",
     "values": {
      "Default": "#674B00"
     }
    },
    {
-    "name": "Colors/node/800",
+    "name": "Colors/soleil/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21442,13 +21442,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.95:1 on white, 1.91:1 on black",
-    "web": "var(--color-node-800)",
+    "web": "var(--color-soleil-800)",
     "values": {
      "Default": "#4F3900"
     }
    },
    {
-    "name": "Colors/node/900",
+    "name": "Colors/soleil/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21456,13 +21456,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.64:1 on white, 1.43:1 on black",
-    "web": "var(--color-node-900)",
+    "web": "var(--color-soleil-900)",
     "values": {
      "Default": "#362600"
     }
    },
    {
-    "name": "Colors/node/950",
+    "name": "Colors/soleil/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21470,27 +21470,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.58:1 on white, 1.19:1 on black",
-    "web": "var(--color-node-950)",
+    "web": "var(--color-soleil-950)",
     "values": {
      "Default": "#231700"
     }
    },
    {
-    "name": "Colors/node/main",
+    "name": "Colors/soleil/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Node, main colour (as entered)",
-    "web": "var(--color-node-main)",
+    "description": "Soleil, main colour (as entered)",
+    "web": "var(--color-soleil-main)",
     "values": {
      "Default": "#F5B800"
     }
    },
    {
-    "name": "Colors/ink/50",
+    "name": "Colors/encre/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21498,13 +21498,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.78:1 on black",
-    "web": "var(--color-ink-50)",
+    "web": "var(--color-encre-50)",
     "values": {
      "Default": "#F6F8FF"
     }
    },
    {
-    "name": "Colors/ink/100",
+    "name": "Colors/encre/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21512,13 +21512,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.25:1 on black",
-    "web": "var(--color-ink-100)",
+    "web": "var(--color-encre-100)",
     "values": {
      "Default": "#EBEFFA"
     }
    },
    {
-    "name": "Colors/ink/200",
+    "name": "Colors/encre/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21526,13 +21526,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.02:1 on black",
-    "web": "var(--color-ink-200)",
+    "web": "var(--color-encre-200)",
     "values": {
      "Default": "#D4DAEB"
     }
    },
    {
-    "name": "Colors/ink/300",
+    "name": "Colors/encre/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21540,13 +21540,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.05:1 on black",
-    "web": "var(--color-ink-300)",
+    "web": "var(--color-encre-300)",
     "values": {
      "Default": "#B3BCD3"
     }
    },
    {
-    "name": "Colors/ink/400",
+    "name": "Colors/encre/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21554,13 +21554,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.10:1 on white, 6.76:1 on black",
-    "web": "var(--color-ink-400)",
+    "web": "var(--color-encre-400)",
     "values": {
      "Default": "#8792B0"
     }
    },
    {
-    "name": "Colors/ink/500",
+    "name": "Colors/encre/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21568,13 +21568,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.64:1 on white, 4.52:1 on black",
-    "web": "var(--color-ink-500)",
+    "web": "var(--color-encre-500)",
     "values": {
      "Default": "#687495"
     }
    },
    {
-    "name": "Colors/ink/600",
+    "name": "Colors/encre/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21582,13 +21582,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.11:1 on white, 3.43:1 on black",
-    "web": "var(--color-ink-600)",
+    "web": "var(--color-encre-600)",
     "values": {
      "Default": "#566183"
     }
    },
    {
-    "name": "Colors/ink/700",
+    "name": "Colors/encre/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21596,13 +21596,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.09:1 on white, 2.59:1 on black",
-    "web": "var(--color-ink-700)",
+    "web": "var(--color-encre-700)",
     "values": {
      "Default": "#434F71"
     }
    },
    {
-    "name": "Colors/ink/800",
+    "name": "Colors/encre/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21610,13 +21610,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 10.99:1 on white, 1.90:1 on black",
-    "web": "var(--color-ink-800)",
+    "web": "var(--color-encre-800)",
     "values": {
      "Default": "#303B5D"
     }
    },
    {
-    "name": "Colors/ink/900",
+    "name": "Colors/encre/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21624,13 +21624,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.59:1 on white, 1.43:1 on black",
-    "web": "var(--color-ink-900)",
+    "web": "var(--color-encre-900)",
     "values": {
      "Default": "#1D2749"
     }
    },
    {
-    "name": "Colors/ink/950",
+    "name": "Colors/encre/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21638,27 +21638,27 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.55:1 on white, 1.19:1 on black",
-    "web": "var(--color-ink-950)",
+    "web": "var(--color-encre-950)",
     "values": {
      "Default": "#0E1737"
     }
    },
    {
-    "name": "Colors/ink/main",
+    "name": "Colors/encre/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Ink, main colour (as entered)",
-    "web": "var(--color-ink-main)",
+    "description": "Encre, main colour (as entered)",
+    "web": "var(--color-encre-main)",
     "values": {
      "Default": "#0D1535"
     }
    },
    {
-    "name": "Colors/canvas/50",
+    "name": "Colors/toile/50",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21666,13 +21666,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.06:1 on white, 19.75:1 on black",
-    "web": "var(--color-canvas-50)",
+    "web": "var(--color-toile-50)",
     "values": {
      "Default": "#F5F8FF"
     }
    },
    {
-    "name": "Colors/canvas/100",
+    "name": "Colors/toile/100",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21680,13 +21680,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.15:1 on white, 18.24:1 on black",
-    "web": "var(--color-canvas-100)",
+    "web": "var(--color-toile-100)",
     "values": {
      "Default": "#ECEFF6"
     }
    },
    {
-    "name": "Colors/canvas/200",
+    "name": "Colors/toile/200",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21694,13 +21694,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.39:1 on white, 15.00:1 on black",
-    "web": "var(--color-canvas-200)",
+    "web": "var(--color-toile-200)",
     "values": {
      "Default": "#D7DAE1"
     }
    },
    {
-    "name": "Colors/canvas/300",
+    "name": "Colors/toile/300",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21708,13 +21708,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 1.90:1 on white, 11.04:1 on black",
-    "web": "var(--color-canvas-300)",
+    "web": "var(--color-toile-300)",
     "values": {
      "Default": "#B9BCC3"
     }
    },
    {
-    "name": "Colors/canvas/400",
+    "name": "Colors/toile/400",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21722,13 +21722,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 3.11:1 on white, 6.75:1 on black",
-    "web": "var(--color-canvas-400)",
+    "web": "var(--color-toile-400)",
     "values": {
      "Default": "#909298"
     }
    },
    {
-    "name": "Colors/canvas/500",
+    "name": "Colors/toile/500",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21736,13 +21736,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 4.67:1 on white, 4.49:1 on black",
-    "web": "var(--color-canvas-500)",
+    "web": "var(--color-toile-500)",
     "values": {
      "Default": "#72747A"
     }
    },
    {
-    "name": "Colors/canvas/600",
+    "name": "Colors/toile/600",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21750,13 +21750,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 6.10:1 on white, 3.44:1 on black",
-    "web": "var(--color-canvas-600)",
+    "web": "var(--color-toile-600)",
     "values": {
      "Default": "#606267"
     }
    },
    {
-    "name": "Colors/canvas/700",
+    "name": "Colors/toile/700",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21764,13 +21764,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 8.06:1 on white, 2.60:1 on black",
-    "web": "var(--color-canvas-700)",
+    "web": "var(--color-toile-700)",
     "values": {
      "Default": "#4E5055"
     }
    },
    {
-    "name": "Colors/canvas/800",
+    "name": "Colors/toile/800",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21778,13 +21778,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 11.03:1 on white, 1.90:1 on black",
-    "web": "var(--color-canvas-800)",
+    "web": "var(--color-toile-800)",
     "values": {
      "Default": "#3A3C41"
     }
    },
    {
-    "name": "Colors/canvas/900",
+    "name": "Colors/toile/900",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21792,13 +21792,13 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 14.56:1 on white, 1.44:1 on black",
-    "web": "var(--color-canvas-900)",
+    "web": "var(--color-toile-900)",
     "values": {
      "Default": "#27292D"
     }
    },
    {
-    "name": "Colors/canvas/950",
+    "name": "Colors/toile/950",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
@@ -21806,21 +21806,21 @@
      "EFFECT_COLOR"
     ],
     "description": "Contrast 17.61:1 on white, 1.19:1 on black",
-    "web": "var(--color-canvas-950)",
+    "web": "var(--color-toile-950)",
     "values": {
      "Default": "#17191C"
     }
    },
    {
-    "name": "Colors/canvas/main",
+    "name": "Colors/toile/main",
     "type": "COLOR",
     "scopes": [
      "ALL_FILLS",
      "STROKE_COLOR",
      "EFFECT_COLOR"
     ],
-    "description": "Canvas, main colour (as entered)",
-    "web": "var(--color-canvas-main)",
+    "description": "Toile, main colour (as entered)",
+    "web": "var(--color-toile-main)",
     "values": {
      "Default": "#F1F4FB"
     }
@@ -22674,8 +22674,8 @@
     "description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--text-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -22687,8 +22687,8 @@
     "description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--text-muted)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/deep/400"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/nuit/400"
     }
    },
    {
@@ -22714,8 +22714,8 @@
     "description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--background-default)",
     "values": {
-     "Light": "→ Colors/canvas/main",
-     "Dark": "→ Colors/canvas/950"
+     "Light": "→ Colors/toile/main",
+     "Dark": "→ Colors/toile/950"
     }
    },
    {
@@ -22728,8 +22728,8 @@
     "description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)\nDark: Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--background-subtle)",
     "values": {
-     "Light": "→ Colors/deep/50",
-     "Dark": "→ Colors/deep/950"
+     "Light": "→ Colors/nuit/50",
+     "Dark": "→ Colors/nuit/950"
     }
    },
    {
@@ -22742,8 +22742,8 @@
     "description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -22756,8 +22756,8 @@
     "description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-hover)",
     "values": {
-     "Light": "→ Colors/ink/900",
-     "Dark": "→ Colors/deep/100"
+     "Light": "→ Colors/encre/900",
+     "Dark": "→ Colors/nuit/100"
     }
    },
    {
@@ -22770,8 +22770,8 @@
     "description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)\nDark: Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--action-pressed)",
     "values": {
-     "Light": "→ Colors/ink/800",
-     "Dark": "→ Colors/deep/200"
+     "Light": "→ Colors/encre/800",
+     "Dark": "→ Colors/nuit/200"
     }
    },
    {
@@ -22783,8 +22783,8 @@
     "description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--link-default)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -22796,8 +22796,8 @@
     "description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)\nDark: Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
     "web": "var(--link-subtle)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/deep/400"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/nuit/400"
     }
    },
    {
@@ -22809,8 +22809,8 @@
     "description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill\nDark: Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill",
     "web": "var(--disabled-text)",
     "values": {
-     "Light": "→ Colors/ink/400",
-     "Dark": "→ Colors/deep/600"
+     "Light": "→ Colors/encre/400",
+     "Dark": "→ Colors/nuit/600"
     }
    },
    {
@@ -22823,8 +22823,8 @@
     "description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)\nDark: Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
     "web": "var(--disabled-surface)",
     "values": {
-     "Light": "→ Colors/deep/50",
-     "Dark": "→ Colors/deep/950"
+     "Light": "→ Colors/nuit/50",
+     "Dark": "→ Colors/nuit/950"
     }
    },
    {
@@ -22836,8 +22836,8 @@
     "description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)\nDark: Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
     "web": "var(--border-default)",
     "values": {
-     "Light": "→ Colors/ink/500",
-     "Dark": "→ Colors/deep/500"
+     "Light": "→ Colors/encre/500",
+     "Dark": "→ Colors/nuit/500"
     }
    },
    {
@@ -22849,8 +22849,8 @@
     "description": "Decorative divider, carries no information: 1.26:1 on background\nDark: Decorative divider, carries no information: 1.20:1 on background",
     "web": "var(--border-subtle)",
     "values": {
-     "Light": "→ Colors/ink/200",
-     "Dark": "→ Colors/deep/900"
+     "Light": "→ Colors/encre/200",
+     "Dark": "→ Colors/nuit/900"
     }
    },
    {
@@ -22862,8 +22862,8 @@
     "description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)\nDark: Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
     "web": "var(--focus-ring)",
     "values": {
-     "Light": "→ Colors/ink/main",
-     "Dark": "→ Colors/deep/50"
+     "Light": "→ Colors/encre/main",
+     "Dark": "→ Colors/nuit/50"
     }
    },
    {
@@ -23064,7 +23064,7 @@
     "description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies\nDark: Chart series 3: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
     "web": "var(--chart-3)",
     "values": {
-     "Light": "→ Colors/deep/800",
+     "Light": "→ Colors/nuit/800",
      "Dark": "→ Colors/error/300"
     }
    },
@@ -23079,7 +23079,7 @@
     "web": "var(--chart-4)",
     "values": {
      "Light": "→ Colors/warning/800",
-     "Dark": "→ Colors/brand/300"
+     "Dark": "→ Colors/marque/300"
     }
    },
    {
@@ -23092,8 +23092,8 @@
     "description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
     "web": "var(--chart-5)",
     "values": {
-     "Light": "→ Colors/ink/600",
-     "Dark": "→ Colors/ink/600"
+     "Light": "→ Colors/encre/600",
+     "Dark": "→ Colors/encre/600"
     }
    },
    {

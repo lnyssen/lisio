@@ -19,7 +19,7 @@ const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } })
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto("file://" + SEED);
 // Corail moyen (illisible en texte courant avec les autres) et deux bleus presque jumeaux.
-await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "ess");
+await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "ess");
   localStorage.setItem("lisio:colors", JSON.stringify([{ name: "Nuit", hex: "#0E1B4D" }, { name: "Encre", hex: "#0D1535" }, { name: "Corail", hex: "#C8553D" }, { name: "Blanc", hex: "#FFFFFF" }])); });
 await page.goto(PAGE + "#couleurs"); await page.waitForTimeout(700);
 const W = page.locator("#cWatch");

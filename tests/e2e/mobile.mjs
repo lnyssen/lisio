@@ -17,7 +17,7 @@ const SEED = join(tmpdir(), "lisio-seed-mobile.html"); writeFileSync(SEED, "<!do
 async function open(opts, mode = "adv", hash = "tester") {
   const ctx = await browser.newContext(opts); await ctx.route(/^https?:/, r => r.abort());
   const page = await ctx.newPage(); page.errors = []; page.on("pageerror", e => page.errors.push(String(e)));
-  await page.goto("file://" + SEED); await page.evaluate(m => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", m); }, mode);
+  await page.goto("file://" + SEED); await page.evaluate(m => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", m); }, mode);
   await page.goto(PAGE + "#" + hash); await page.waitForTimeout(700); return { ctx, page };
 }
 const swipe = async (page, sel, dist, steps = 10) => { const b = await page.locator(sel).boundingBox(); const x = b.x + b.width / 2, y = b.y + Math.min(20, b.height / 2);

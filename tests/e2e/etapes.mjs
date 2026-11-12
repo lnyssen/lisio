@@ -18,7 +18,7 @@ let fails = 0;
 const report = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok ? "ok   " : "ÉCHEC"} ${label}${detail ? " : " + detail : ""}`); };
 async function open(viewport, view = "matrice", init = {}) {
   const ctx = await browser.newContext({ viewport });
-  await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); } } catch (e) {} }, init);
+  await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); } } catch (e) {} }, init);
   await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); const errs = []; p.on("pageerror", e => errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForTimeout(600); p.errs = errs; p.ctx = ctx; return p;
@@ -117,10 +117,11 @@ const stOf = (S, id) => (S.find(x => x.id === id) || {}).state;
   for (const [v] of ORDER) { await go(p, v); const t = await p.evaluate(() => document.getElementById("journey").textContent + " " + document.getElementById("jNext").textContent); if (/conforme|conformité totale|certifi|100\s?%/i.test(t)) bad.push(v); }
   report(!bad.length, "aucun « conforme », « certifié » ni « 100 % » dans le parcours", bad.join(", ")); await p.ctx.close(); }
 
-// 7. Mobile : le bouton collé en haut montre le nom et l'état de l'étape actuelle ; les autres gardent l'état dans leur nom ; pas de débordement.
+// 7. Mobile : la bande d’étapes montre l’étape actuelle entière, avec son état ; les autres gardent l'état dans leur nom ; pas de débordement.
 for (const w of [320, 390]) { const p = await open({ width: w, height: 800 }, "styles");
   const S = await steps(p), c = S.find(s => s.cur === "step"), sw = await p.evaluate(() => document.documentElement.scrollWidth);
-  const vis = await p.evaluate(() => { const e = document.querySelector("#hsMob .hs-s"); return !!e && e.getBoundingClientRect().width > 1 && e.textContent; });
+  // 12 novembre 2026 : bande qui défile au doigt ; l’étape actuelle est centrée, son état écrit dans sa case.
+  const vis = await p.evaluate(() => { const a = document.querySelector('#jSteps a[aria-current="step"]'), e = a && a.querySelector(".j-s"), r = a && a.getBoundingClientRect(); return !!e && e.getBoundingClientRect().width > 1 && r.left >= -1 && r.right <= innerWidth + 1 && e.textContent; });
   report(c && vis && vis.includes(c.state) && S.every(s => s.name.includes(s.state)) && sw <= w, `mobile ${w} px : état de l'étape actuelle visible, aucun débordement`, `${c && c.state} ; largeur ${sw}`); await p.ctx.close(); }
 
 await browser.close();

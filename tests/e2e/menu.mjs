@@ -19,7 +19,7 @@ const check = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok 
 const STEPS = ["Couleurs", "Nuances", "Polices", "Styles de texte", "Design system", "Contrastes", "Exporter"];
 async function open(opts, view = "couleurs", mode = "ess") {
   const ctx = await browser.newContext(opts);
-  await ctx.addInitScript(m => { try { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", m); } catch (e) {} }, mode);
+  await ctx.addInitScript(m => { try { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", m); } catch (e) {} }, mode);
   await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); p.errs = []; p.on("pageerror", e => p.errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForTimeout(700); p.ctx = ctx; return p;

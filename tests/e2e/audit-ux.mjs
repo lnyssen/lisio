@@ -13,7 +13,7 @@ let fails = 0;
 const check = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok ? "ok   " : "ÉCHEC"} ${label}${detail ? " : " + detail : ""}`); };
 async function open(opts, view = "couleurs", init = {}) {
   const ctx = await browser.newContext(opts);
-  await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.setItem("lisio-welcome", "1"); for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); } } catch (e) {} }, init);
+  await ctx.addInitScript(o => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); for (const [k, v] of Object.entries(o)) localStorage.setItem(k, v); } } catch (e) {} }, init);
   await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); p.errs = []; p.on("pageerror", e => p.errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForFunction(() => window.__lisioReady === true); await p.waitForTimeout(400); p.ctx = ctx; return p;
@@ -58,8 +58,8 @@ const h1Top = p => p.evaluate(() => { const h = [...document.querySelectorAll("#
   await p.ctx.close(); }
 { const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); await p.goto(PAGE + "#couleurs"); await p.waitForFunction(() => window.__lisioReady === true); await p.waitForTimeout(300);
-  const b = await p.evaluate(() => [...document.querySelectorAll("#hello [data-hello]")].map(x => x.textContent.trim()));
-  check(b.join("|") === "Créer mon projet|Essayer avec un projet démo|Fermer", "accueil : deux choix et « Fermer »", b.join("|"));
+  const b = await p.evaluate(() => [...document.querySelectorAll("#home [data-home]")].map(x => x.textContent.trim()));
+  check(b.join("|") === "Aller à l’outil →|Créer mon projet|Essayer la démo", "accueil : créer, démo, et aller à l’outil", b.join("|"));
   await ctx.close(); }
 { const p = await open({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, "styles");
   const cut = await p.evaluate(() => [...document.querySelectorAll("#stepNav .sn-t")].filter(e => e.scrollHeight > e.clientHeight + 1 || e.scrollWidth > e.clientWidth + 1).map(e => e.textContent));
@@ -105,7 +105,7 @@ const stateOf = (p, id) => p.evaluate(id => { const a = document.querySelector(`
   await p.reload(); await p.waitForFunction(() => window.__lisioReady === true); await p.waitForTimeout(300);
   check(await stateOf(p, "tester") === "Validée", "la validation survit au rechargement");
   await p.click('[data-jval="tester"]'); await p.waitForTimeout(250);
-  check(await stateOf(p, "tester") === "Vue", "on peut retirer la validation");
+  check(await stateOf(p, "tester") === "En cours", "on peut retirer la validation (étape affichée : « En cours »)");
   await go(p, "exporter"); const ex = await p.evaluate(() => document.getElementById("exFix").textContent);
   check(!/Tout est prêt|sereinement/.test(ex) && /Export possible|À corriger|À vérifier/.test(ex), "Exporter ne dit plus « Tout est prêt »", ex.trim().slice(0, 120));
   check(!p.errs.length, "aucune erreur JavaScript", p.errs.join(" | "));

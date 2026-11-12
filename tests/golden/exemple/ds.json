@@ -11,7 +11,7 @@
         "$value": "#000000"
       }
     },
-    "deep": {
+    "nuit": {
       "50": {
         "$type": "color",
         "$value": "#F6F8FF",
@@ -67,14 +67,14 @@
         "$value": "#091445",
         "$description": "Contrast 17.53:1 on white, 1.19:1 on black"
       },
-      "$description": "Deep",
+      "$description": "Nuit",
       "main": {
         "$type": "color",
         "$value": "#0E1B4D",
-        "$description": "Deep, main colour (as entered)"
+        "$description": "Nuit, main colour (as entered)"
       }
     },
-    "brand": {
+    "marque": {
       "50": {
         "$type": "color",
         "$value": "#F5F8FF",
@@ -130,14 +130,14 @@
         "$value": "#050065",
         "$description": "Contrast 17.58:1 on white, 1.19:1 on black"
       },
-      "$description": "Brand",
+      "$description": "Marque",
       "main": {
         "$type": "color",
         "$value": "#2447D1",
-        "$description": "Brand, main colour (as entered)"
+        "$description": "Marque, main colour (as entered)"
       }
     },
-    "node": {
+    "soleil": {
       "50": {
         "$type": "color",
         "$value": "#FFF8E9",
@@ -193,14 +193,14 @@
         "$value": "#231700",
         "$description": "Contrast 17.58:1 on white, 1.19:1 on black"
       },
-      "$description": "Node",
+      "$description": "Soleil",
       "main": {
         "$type": "color",
         "$value": "#F5B800",
-        "$description": "Node, main colour (as entered)"
+        "$description": "Soleil, main colour (as entered)"
       }
     },
-    "ink": {
+    "encre": {
       "50": {
         "$type": "color",
         "$value": "#F6F8FF",
@@ -256,14 +256,14 @@
         "$value": "#0E1737",
         "$description": "Contrast 17.55:1 on white, 1.19:1 on black"
       },
-      "$description": "Ink",
+      "$description": "Encre",
       "main": {
         "$type": "color",
         "$value": "#0D1535",
-        "$description": "Ink, main colour (as entered)"
+        "$description": "Encre, main colour (as entered)"
       }
     },
-    "canvas": {
+    "toile": {
       "50": {
         "$type": "color",
         "$value": "#F5F8FF",
@@ -319,11 +319,11 @@
         "$value": "#17191C",
         "$description": "Contrast 17.61:1 on white, 1.19:1 on black"
       },
-      "$description": "Canvas",
+      "$description": "Toile",
       "main": {
         "$type": "color",
         "$value": "#F1F4FB",
-        "$description": "Canvas, main colour (as entered)"
+        "$description": "Toile, main colour (as entered)"
       }
     },
     "surface": {
@@ -647,7 +647,7 @@
     "text": {
       "default": {
         "$type": "color",
-        "$value": "{color.ink.main}",
+        "$value": "{color.encre.main}",
         "$description": "Primary text: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -655,7 +655,7 @@
               "TEXT_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.50}"
+              "dark": "{color.nuit.50}"
             },
             "darkDescription": "Primary text: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -663,7 +663,7 @@
       },
       "muted": {
         "$type": "color",
-        "$value": "{color.ink.600}",
+        "$value": "{color.encre.600}",
         "$description": "Secondary text: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -671,7 +671,7 @@
               "TEXT_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.400}"
+              "dark": "{color.nuit.400}"
             },
             "darkDescription": "Secondary text: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -697,7 +697,7 @@
     "background": {
       "default": {
         "$type": "color",
-        "$value": "{color.canvas.main}",
+        "$value": "{color.toile.main}",
         "$description": "Page background: 16.22:1 with primary text (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -706,7 +706,7 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.canvas.950}"
+              "dark": "{color.toile.950}"
             },
             "darkDescription": "Page background: 16.59:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -714,7 +714,7 @@
       },
       "subtle": {
         "$type": "color",
-        "$value": "{color.deep.50}",
+        "$value": "{color.nuit.50}",
         "$description": "Secondary surface (cards, panels): 16.83:1 with primary text (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -723,7 +723,7 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.950}"
+              "dark": "{color.nuit.950}"
             },
             "darkDescription": "Secondary surface (cards, panels): 16.52:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -733,7 +733,7 @@
     "action": {
       "default": {
         "$type": "color",
-        "$value": "{color.ink.main}",
+        "$value": "{color.encre.main}",
         "$description": "Primary button fill: 17.86:1 with text on primary button (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -742,7 +742,7 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.50}"
+              "dark": "{color.nuit.50}"
             },
             "darkDescription": "Primary button fill: 19.78:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -750,7 +750,7 @@
       },
       "hover": {
         "$type": "color",
-        "$value": "{color.ink.900}",
+        "$value": "{color.encre.900}",
         "$description": "Primary button, hover: 14.59:1 with text on primary button (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -759,7 +759,7 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.100}"
+              "dark": "{color.nuit.100}"
             },
             "darkDescription": "Primary button, hover: 18.25:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -767,7 +767,7 @@
       },
       "pressed": {
         "$type": "color",
-        "$value": "{color.ink.800}",
+        "$value": "{color.encre.800}",
         "$description": "Primary button, pressed: 10.99:1 with text on primary button (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -776,7 +776,7 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.200}"
+              "dark": "{color.nuit.200}"
             },
             "darkDescription": "Primary button, pressed: 15.00:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -786,7 +786,7 @@
     "link": {
       "default": {
         "$type": "color",
-        "$value": "{color.ink.main}",
+        "$value": "{color.encre.main}",
         "$description": "Link: 16.22:1 with page background (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -794,7 +794,7 @@
               "TEXT_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.50}"
+              "dark": "{color.nuit.50}"
             },
             "darkDescription": "Link: 16.59:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -802,7 +802,7 @@
       },
       "subtle": {
         "$type": "color",
-        "$value": "{color.ink.600}",
+        "$value": "{color.encre.600}",
         "$description": "Secondary link: 5.55:1 with page background (SC 1.4.3, minimum 4.5:1)",
         "$extensions": {
           "app.lisio": {
@@ -810,7 +810,7 @@
               "TEXT_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.400}"
+              "dark": "{color.nuit.400}"
             },
             "darkDescription": "Secondary link: 5.68:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
           }
@@ -820,7 +820,7 @@
     "disabled": {
       "text": {
         "$type": "color",
-        "$value": "{color.ink.400}",
+        "$value": "{color.encre.400}",
         "$description": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.92:1 on disabled fill",
         "$extensions": {
           "app.lisio": {
@@ -828,7 +828,7 @@
               "TEXT_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.600}"
+              "dark": "{color.nuit.600}"
             },
             "darkDescription": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.89:1 on disabled fill"
           }
@@ -836,7 +836,7 @@
       },
       "surface": {
         "$type": "color",
-        "$value": "{color.deep.50}",
+        "$value": "{color.nuit.50}",
         "$description": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
         "$extensions": {
           "app.lisio": {
@@ -845,7 +845,7 @@
               "SHAPE_FILL"
             ],
             "modes": {
-              "dark": "{color.deep.950}"
+              "dark": "{color.nuit.950}"
             },
             "darkDescription": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)"
           }
@@ -855,7 +855,7 @@
     "border": {
       "default": {
         "$type": "color",
-        "$value": "{color.ink.500}",
+        "$value": "{color.encre.500}",
         "$description": "Input and component border: 4.21:1 with page background (SC 1.4.11, minimum 3:1)",
         "$extensions": {
           "app.lisio": {
@@ -863,7 +863,7 @@
               "STROKE_COLOR"
             ],
             "modes": {
-              "dark": "{color.deep.500}"
+              "dark": "{color.nuit.500}"
             },
             "darkDescription": "Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode"
           }
@@ -871,7 +871,7 @@
       },
       "subtle": {
         "$type": "color",
-        "$value": "{color.ink.200}",
+        "$value": "{color.encre.200}",
         "$description": "Decorative divider, carries no information: 1.26:1 on background",
         "$extensions": {
           "app.lisio": {
@@ -879,7 +879,7 @@
               "STROKE_COLOR"
             ],
             "modes": {
-              "dark": "{color.deep.900}"
+              "dark": "{color.nuit.900}"
             },
             "darkDescription": "Decorative divider, carries no information: 1.20:1 on background"
           }
@@ -889,7 +889,7 @@
     "focus": {
       "ring": {
         "$type": "color",
-        "$value": "{color.ink.main}",
+        "$value": "{color.encre.main}",
         "$description": "Focus outline: 16.22:1 with page background (SC 2.4.13, minimum 3:1)",
         "$extensions": {
           "app.lisio": {
@@ -897,7 +897,7 @@
               "STROKE_COLOR"
             ],
             "modes": {
-              "dark": "{color.deep.50}"
+              "dark": "{color.nuit.50}"
             },
             "darkDescription": "Focus outline: 16.59:1 with page background (SC 2.4.13, minimum 3:1) in dark mode"
           }
@@ -1145,7 +1145,7 @@
       },
       "3": {
         "$type": "color",
-        "$value": "{color.deep.800}",
+        "$value": "{color.nuit.800}",
         "$description": "Chart series 3: 9.95:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
         "$extensions": {
           "app.lisio": {
@@ -1171,7 +1171,7 @@
               "STROKE_COLOR"
             ],
             "modes": {
-              "dark": "{color.brand.300}"
+              "dark": "{color.marque.300}"
             },
             "darkDescription": "Chart series 4: 9.24:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies"
           }
@@ -1179,7 +1179,7 @@
       },
       "5": {
         "$type": "color",
-        "$value": "{color.ink.600}",
+        "$value": "{color.encre.600}",
         "$description": "Chart series 5: 5.55:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
         "$extensions": {
           "app.lisio": {

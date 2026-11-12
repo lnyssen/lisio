@@ -21,7 +21,7 @@ let fails = 0;
 const report = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok ? "ok   " : "ÉCHEC"} ${label}${detail ? " : " + detail : ""}`); };
 async function open(view, viewport = DESK, opts = {}) {
   const ctx = await browser.newContext({ viewport, ...opts });
-  await ctx.addInitScript(dk => { try { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); if (dk) localStorage.setItem("lisio-theme", "dark"); } catch (e) {} }, opts.colorScheme === "dark");
+  await ctx.addInitScript(dk => { try { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); if (dk) localStorage.setItem("lisio-theme", "dark"); } catch (e) {} }, opts.colorScheme === "dark");
   await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); const errs = []; p.on("pageerror", e => errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForTimeout(600); p.errs = errs; p.ctx = ctx; return p;

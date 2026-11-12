@@ -21,22 +21,37 @@ async function open(init, view = "couleurs") {
 }
 const go = async (page, v) => { await page.goto(PAGE.split("#")[0] + "#" + v); await page.waitForTimeout(350); };
 const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
-// 1. Premier lancement : accueil avec trois choix, rien de bloquant.
+// 1. Écran d’accueil (12 novembre 2026) : à chaque ouverture, jeu « Lisible ou pas ? », schéma des 7 étapes, rien de bloquant.
 {
   const { ctx, page } = await open({});
-  const h = page.locator("#hello");
-  check(await h.isVisible(), "accueil affiché au premier lancement");
-  // Audit UX du 11 novembre 2026 : deux choix (créer, démo) et « Fermer » ; Essentiel / Avancé se règle dans la ligne de l’étape.
-  check(await h.locator("[data-hello=new]").count() === 1 && await h.locator("[data-hello=demo]").count() === 1 && await h.locator("[data-hello=ess]").count() === 1 && await h.locator("[data-hello=adv]").count() === 0, "choix : créer mon projet, la démo, fermer");
+  const h = page.locator("#home");
+  check(await page.evaluate(() => document.getElementById("home").open), "accueil ouvert au lancement");
+  check(await h.locator("[data-home=new]").count() === 1 && await h.locator("[data-home=demo]").count() === 1 && await h.locator("[data-home=skip]").count() === 1, "choix : créer mon projet, la démo, aller à l’outil");
+  check(await h.locator(".hm-steps a").count() === 7, "schéma : les 7 étapes, chacune un lien");
+  check(await page.evaluate(() => document.activeElement && document.activeElement.closest("#home") !== null), "le focus est dans l’accueil");
+  if (AXE) { await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
+    const v = await page.evaluate(async () => (await axe.run(document.querySelector("#home"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id)); check(!v.length, "axe-core : accueil sans violation", v.join(", ")); }
+  // Le jeu : on répond, Lisio donne le ratio et le score, puis une autre paire.
+  await h.locator('[data-guess="1"]').click(); await page.waitForTimeout(150);
+  const res = await page.textContent("#hmRes");
+  check(/(Bien vu|Raté)/.test(res) && /:1/.test(res) && /1 sur 1|0 sur 1/.test(await page.textContent("#hmScore")), "jeu : verdict, ratio et score", res.trim().slice(0, 80));
+  const p1 = await page.textContent("#hmPair"); await h.locator('[data-guess="next"]').click(); await page.waitForTimeout(150);
+  check(await h.locator('[data-guess="1"]').count() === 1 && await page.textContent("#hmPair") !== "" , "paire suivante", p1);
   check(await page.evaluate(() => document.documentElement.classList.contains("mode-ess")), "nouveau venu : Essentiel par défaut");
-  await go(page, "styles");
-  check(await page.locator("#tsList").isVisible(), "on navigue sans répondre à l’accueil");
-  if (AXE) { await go(page, "couleurs"); await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
-    const v = await page.evaluate(async () => (await axe.run(document.querySelector("#hello"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id)); check(!v.length, "axe-core : accueil sans violation", v.join(", ")); }
-  else await go(page, "couleurs");
-  await h.locator("[data-hello=ess]").click(); await page.waitForTimeout(200);
-  check(await h.count() === 0 && await ls(page, "lisio-welcome") === "1" && await ls(page, "lisio-mode") === "ess", "« Fermer » : accueil fermé, Essentiel retenu");
-  check(await page.evaluate(() => !!document.activeElement && document.activeElement !== document.body), "le focus reste dans la page");
+  // Une étape du schéma ouvre l’outil à cet endroit.
+  await h.locator('.hm-steps a[data-home-go="styles"]').click(); await page.waitForTimeout(350);
+  check(!(await page.evaluate(() => document.getElementById("home").open)) && await page.locator("#tsList").isVisible(), "une étape du schéma ferme l’accueil et ouvre l’étape");
+  // Le logo le rouvre ; Échap le ferme.
+  await page.click("#homeB"); await page.waitForTimeout(200);
+  check(await page.evaluate(() => document.getElementById("home").open), "le logo rouvre l’accueil");
+  await page.keyboard.press("Escape"); await page.waitForTimeout(150);
+  check(!(await page.evaluate(() => document.getElementById("home").open)) && await page.evaluate(() => !!document.activeElement && document.activeElement !== document.body), "Échap ferme l’accueil, le focus reste dans la page");
+  // À chaque ouverture, sauf si l’on coche « Ne plus afficher ».
+  await page.reload(); await page.waitForTimeout(500);
+  check(await page.evaluate(() => document.getElementById("home").open), "rechargé : l’accueil revient (à chaque ouverture)");
+  await page.check("#homeOff"); await h.locator("[data-home=skip]").click(); await page.reload(); await page.waitForTimeout(500);
+  check(!(await page.evaluate(() => document.getElementById("home").open)) && await ls(page, "lisio-home") === "off", "« Ne plus afficher au démarrage » est respecté");
+  await go(page, "couleurs");
   // 2. Essentiel : réglages fins masqués, une invitation à tout afficher sur chaque page concernée.
   const hidden = [["palette", "#shSet"], ["styles", "#tsFluCard"], ["systeme", 'section[aria-labelledby="dsElH"]'], ["exporter", "#exCssAdv"]];
   for (const [v, sel] of hidden) { await go(page, v);
@@ -73,7 +88,7 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
 // 6. « Créer mon projet » ouvre l’assistant ; « Ou partir d’un modèle » y mène aux modèles.
 {
   const { ctx, page } = await open({});
-  await page.locator("#hello [data-hello=new]").click(); await page.waitForTimeout(300);
+  await page.locator("#home [data-home=new]").click(); await page.waitForTimeout(300);
   check(await page.locator("#wizDlg").evaluate(d => d.open), "« Créer mon projet » : l’assistant s’ouvre");
   await page.click("#wizTpl"); await page.waitForTimeout(300);
   check(await page.locator("#prjDlg").evaluate(d => d.open) && await page.evaluate(() => document.activeElement && !!document.activeElement.dataset.tpl), "« Ou partir d’un modèle » : fenêtre Projets, focus sur le premier modèle");

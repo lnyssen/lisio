@@ -48,12 +48,12 @@ test("deuxième import identique : l'aperçu ne signale aucun changement", async
 test("une valeur changée dans Figma est listée dans les modifications, avec l'ancienne et la nouvelle", async () => {
   const { figma, plan, imp } = setup(), d = dsJson();
   await imp(d, { board: false });
-  const v = vr(figma, "Colors", "ink/main"), m = col(figma, "Colors").modes[0].modeId; v.setValueForMode(m, rgb("#FF0000"));
+  const v = vr(figma, "Colors", "encre/main"), m = col(figma, "Colors").modes[0].modeId; v.setValueForMode(m, rgb("#FF0000"));
   const s = figma.styles.text.find(x => x.name === "Body/Mobile"); s.fontSize = 99;
   const mine = figma.variables.createVariable("mon-rouge", col(figma, "Colors"), "COLOR"); mine.setValueForMode(m, rgb("#FF0000"));
   const pl = await plan(d, { board: false });
-  const u = pl.update.find(x => x.name === "Colors/ink/main");
-  assert.ok(u && /#FF0000/.test(u.from) && u.to === d.color.ink.main.$value, JSON.stringify(pl.update));
+  const u = pl.update.find(x => x.name === "Colors/encre/main");
+  assert.ok(u && /#FF0000/.test(u.from) && u.to === d.color.encre.main.$value, JSON.stringify(pl.update));
   assert.ok(names(pl.update).includes("Body/Mobile"), "style de texte modifié non listé");
   assert.ok(!names(pl.remove).some(n => /mon-rouge/.test(n)), "une variable de l'équipe est proposée à la suppression");
   await imp(d, { board: false });
@@ -63,26 +63,26 @@ test("une valeur changée dans Figma est listée dans les modifications, avec l'
 test("type différent : rien n'est supprimé sans accord, et c'est dit", async () => {
   for (const allowDelete of [false, true]) {
     const { figma, plan, imp } = setup(), d = dsJson();
-    const c = figma.variables.createVariableCollection("Colors"), v = figma.variables.createVariable("ink/main", c, "STRING");
+    const c = figma.variables.createVariableCollection("Colors"), v = figma.variables.createVariable("encre/main", c, "STRING");
     const pl = await plan(d, { board: false });
-    assert.ok(pl.remove.some(x => x.name === "Colors/ink/main"), "conflit de type absent de l'aperçu");
+    assert.ok(pl.remove.some(x => x.name === "Colors/encre/main"), "conflit de type absent de l'aperçu");
     const r = await imp(d, { board: false, allowDelete });
     if (!allowDelete) {
-      assert.ok(!v.removed && vr(figma, "Colors", "ink/main").resolvedType === "STRING", "variable supprimée sans accord");
-      assert.ok(r.warnings.some(w => /ink\/main/.test(w)), "aucun avertissement");
-    } else assert.ok(v.removed && vr(figma, "Colors", "ink/main").resolvedType === "COLOR", "accord donné : la variable devait être remplacée");
+      assert.ok(!v.removed && vr(figma, "Colors", "encre/main").resolvedType === "STRING", "variable supprimée sans accord");
+      assert.ok(r.warnings.some(w => /encre\/main/.test(w)), "aucun avertissement");
+    } else assert.ok(v.removed && vr(figma, "Colors", "encre/main").resolvedType === "COLOR", "accord donné : la variable devait être remplacée");
   }
 });
 
 test("base → main : rien n'est renommé sans accord", async () => {
   for (const allowRename of [false, true]) {
     const { figma, plan, imp } = setup(), d = dsJson();
-    const c = figma.variables.createVariableCollection("Colors"), v = figma.variables.createVariable("ink/base", c, "COLOR");
+    const c = figma.variables.createVariableCollection("Colors"), v = figma.variables.createVariable("encre/base", c, "COLOR");
     const pl = await plan(d, { board: false });
-    assert.ok(pl.rename.some(x => x.from === "Colors/ink/base" && x.to === "Colors/ink/main"), JSON.stringify(pl.rename));
+    assert.ok(pl.rename.some(x => x.from === "Colors/encre/base" && x.to === "Colors/encre/main"), JSON.stringify(pl.rename));
     await imp(d, { board: false, allowRename });
-    if (!allowRename) { assert.equal(v.name, "ink/base"); assert.ok(vr(figma, "Colors", "ink/main"), "ink/main doit être créée à côté"); }
-    else { assert.equal(v.name, "ink/main"); assert.equal(figma.variables.vars.filter(x => x.name === "ink/main").length, 1); }
+    if (!allowRename) { assert.equal(v.name, "encre/base"); assert.ok(vr(figma, "Colors", "encre/main"), "encre/main doit être créée à côté"); }
+    else { assert.equal(v.name, "encre/main"); assert.equal(figma.variables.vars.filter(x => x.name === "encre/main").length, 1); }
   }
 });
 

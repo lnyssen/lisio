@@ -1,7 +1,7 @@
 // tailwind.config.js
 module.exports = {
   theme: { extend: { colors: {
-    "deep": {
+    "nuit": {
       50: "#F6F8FF",
       100: "#E9EFFF",
       200: "#D0DAF3",
@@ -14,7 +14,7 @@ module.exports = {
       900: "#162558",
       950: "#091445",
     },
-    "brand": {
+    "marque": {
       50: "#F5F8FF",
       100: "#E8EFFF",
       200: "#CADAFF",
@@ -27,7 +27,7 @@ module.exports = {
       900: "#0A0392",
       950: "#050065",
     },
-    "node": {
+    "soleil": {
       50: "#FFF8E9",
       100: "#FFEDCA",
       200: "#FFD47C",
@@ -40,7 +40,7 @@ module.exports = {
       900: "#362600",
       950: "#231700",
     },
-    "ink": {
+    "encre": {
       50: "#F6F8FF",
       100: "#EBEFFA",
       200: "#D4DAEB",
@@ -53,7 +53,7 @@ module.exports = {
       900: "#1D2749",
       950: "#0E1737",
     },
-    "canvas": {
+    "toile": {
       50: "#F5F8FF",
       100: "#ECEFF6",
       200: "#D7DAE1",

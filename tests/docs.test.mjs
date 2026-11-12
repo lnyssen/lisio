@@ -16,7 +16,8 @@ test("guide : parcours en 7 étapes, dans l'ordre du menu", () => {
   assert.match(guide, /Le parcours en 7 étapes/);
   const sec = guide.slice(guide.indexOf("Le parcours en 7 étapes"));
   assert.equal(inOrder(sec, STEPS.map((s, i) => `${i + 1}. ${s}`)), null);
-  for (const w of ["À commencer", "En cours", "Complété", "Attention requise", "Non applicable"]) assert.ok(sec.includes(w), w);
+  for (const w of ["À commencer", "En cours", "Vue", "Validée", "Valider l’étape", "Attention requise", "Non applicable"]) assert.ok(sec.includes(w), w);
+  assert.doesNotMatch(sec, /Complété/);
 });
 
 test("slides : parcours en 7 étapes, dans l'ordre", () => {
@@ -35,7 +36,7 @@ test("guide et slides : aucune formulation interdite", () => {
 
 // P1 : les nouvelles fonctions figurent dans le guide et les slides, avec les mots de l'interface.
 test("guide : fonctions de la P1, avec les mots de l'interface", () => {
-  for (const w of ["Je débute, affichage Essentiel", "Je connais, tout afficher", "Créer mon projet", "Essayer avec un projet démo", "Quitter la démo", "Afficher les réglages avancés",
+  for (const w of ["Lisible ou pas ?", "Ne plus afficher au démarrage", "Essentiel", "Avancé", "Créer mon projet", "Essayer la démo", "Quitter la démo", "Afficher les réglages avancés",
     "Service public sobre", "Éditorial, longue lecture", "Lecture renforcée (AAA)", "Palette Média Animation",
     "Comment tester ?", "Focus, cibles et états", "Télécharger en Markdown (.md)", "Télécharger en JSON",
     "Copier les variables seules", "Télécharger lisio.css", "ne remplace pas une sauvegarde"])

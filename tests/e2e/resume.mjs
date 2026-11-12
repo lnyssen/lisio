@@ -16,7 +16,7 @@ const report = (ok, label, detail = "") => { if (!ok) fails++; console.log(`${ok
 const COLORS = [{ name: "Encre", hex: "#0E1B4D" }, { name: "Corail", hex: "#FF5A4E" }, { name: "Sable", hex: "#F1E9DA" }, { name: "Blanc", hex: "#FFFFFF" }];
 async function open(view, vp = { width: 1440, height: 900 }) {
   const ctx = await browser.newContext({ viewport: vp });
-  await ctx.addInitScript(c => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(c)); } } catch (e) {} }, COLORS);
+  await ctx.addInitScript(c => { try { if (!sessionStorage.getItem("t-init")) { sessionStorage.setItem("t-init", "1"); localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(c)); } } catch (e) {} }, COLORS);
   await ctx.route(/^https?:/, r => r.abort());
   const p = await ctx.newPage(); const errs = []; p.on("pageerror", e => errs.push(String(e)));
   await p.goto(PAGE + "#" + view); await p.waitForTimeout(600); p.errs = errs; p.ctx = ctx; return p;

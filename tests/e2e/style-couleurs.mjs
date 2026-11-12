@@ -17,7 +17,7 @@ const SEED = join(tmpdir(), "lisio-seed-stcol.html"); writeFileSync(SEED, "<!doc
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto("file://" + SEED);
-await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "ess"); localStorage.setItem("lisio:colors", JSON.stringify([{ name: "Bleu", hex: "#2F6BFF" }, { name: "Gris", hex: "#8A8F98" }, { name: "Blanc", hex: "#FFFFFF" }])); });
+await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "ess"); localStorage.setItem("lisio:colors", JSON.stringify([{ name: "Bleu", hex: "#2F6BFF" }, { name: "Gris", hex: "#8A8F98" }, { name: "Blanc", hex: "#FFFFFF" }])); });
 await page.goto(PAGE + "#styles"); await page.waitForTimeout(700);
 const row = id => page.locator(`#tsList .ts-row[data-id="${id}"]`);
 const ids = await page.evaluate(() => [...document.querySelectorAll("#tsList .ts-row")].map(r => r.dataset.id));

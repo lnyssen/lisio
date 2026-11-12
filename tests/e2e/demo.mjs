@@ -18,7 +18,7 @@ async function open(opts = {}, { welcomed = true, mine = true } = {}) {
   // Préparation : on écrit le stockage une seule fois, puis on recharge (un script d’initialisation relancé à chaque rechargement pouvait l’effacer sous charge).
   const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
   await page.goto(PAGE + "#couleurs");
-  await page.evaluate(([w, m, cols]) => { localStorage.clear(); if (w) { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); } if (m) { localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); } }, [welcomed, mine, MINE]);
+  await page.evaluate(([w, m, cols]) => { localStorage.clear(); if (w) { localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); } if (m) { localStorage.setItem("lisio:colors", JSON.stringify(cols)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site" })); } }, [welcomed, mine, MINE]);
   await page.reload(); await page.waitForFunction(() => window.__lisioReady === true); await page.waitForTimeout(500); return { ctx, page, errors };
 }
 const projects = p => p.evaluate(() => JSON.parse(localStorage.getItem("lisio:projects") || "null"));

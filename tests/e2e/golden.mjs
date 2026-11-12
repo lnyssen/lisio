@@ -44,7 +44,7 @@ async function capture(browser, proj) {
       localStorage.clear();
       if (p.colors) localStorage.setItem("lisio:colors", JSON.stringify(p.colors));
       localStorage.setItem("lisio:state", JSON.stringify(p.state));
-      localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv");
+      localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv");
     } catch (e) {}
   }, proj);
   // Les polices distantes n'influencent pas les exports : on coupe le réseau pour un test stable.

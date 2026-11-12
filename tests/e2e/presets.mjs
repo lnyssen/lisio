@@ -18,7 +18,7 @@ const MINE = [{ name: "Mon rouge", hex: "#B42318" }, { name: "Mon fond", hex: "#
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
 const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
 await page.goto("file://" + SEED);
-await page.evaluate(m => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(m)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site", level: "AAA" })); }, MINE);
+await page.evaluate(m => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "adv"); localStorage.setItem("lisio:colors", JSON.stringify(m)); localStorage.setItem("lisio:state", JSON.stringify({ projectName: "Mon site", level: "AAA" })); }, MINE);
 await page.goto(PAGE + "#couleurs"); await page.waitForTimeout(500);
 const ls = k => page.evaluate(k => JSON.parse(localStorage.getItem(k)), k);
 const openDlg = async () => { await page.evaluate(() => document.getElementById("prjB").click()); await page.waitForTimeout(250); };
