@@ -1569,6 +1569,8 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 .ds-sw li b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ds-sw .sw{width:20px;height:20px;flex:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
 .ds-notes{margin:0;padding-left:18px}
+.chip-note{flex-basis:100%;grid-column:1/-1;margin:2px 0 0;color:var(--warn,var(--ink));padding-left:10px;border-left:3px solid currentColor}
+@media (prefers-reduced-motion:no-preference){.chip-note:not([hidden]){animation:lisioDrop var(--dur) var(--ease)}}
 @media (prefers-reduced-motion:no-preference){.ds-sw li{animation:lisioIn .3s var(--ease) both;animation-delay:var(--d,0ms)}}
 /* Audit UX, lot 5 : finitions.
    « Haut » s’aligne sur le bord droit du contenu ; la barre du bas prend le fond de la page, un filet la sépare. */
@@ -2355,6 +2357,7 @@ const JOURNEY = [["couleurs", "Couleurs", "Saisissez votre palette. Une couleur 
 // ---------- Couleur ----------
 /*@core:color*/
 /*@core:importds*/
+/*@core:naming*/
 /*@core:wcag*/
 /*@core:project*/
 /*@core:status*/
@@ -2749,6 +2752,11 @@ function renderEditor() {
     hx.addEventListener("change", () => { const h = normHex(hx.value); fieldErr(hx, h ? "" : `Code hexadécimal invalide : 3 ou 6 chiffres de 0 à F, par exemple #3F4FB8. La couleur reste ${c.hex}.`); if (h) { c.hex = h; col.value = h; changed(); } });
     nm.addEventListener("change", () => { c.name = nm.value.trim() || "Couleur"; changed(); });
     rm.addEventListener("click", () => { palette.splice(i, 1); sel = null; changed(); renderEditor(); });
+    // Nom qui promet une teinte absente (ex. « Bleu » #EEF4FF, presque blanc) : dit avant que la planche Figma ne surprenne.
+    const nmNote = document.createElement("p"); nmNote.className = "chip-note small"; nmNote.id = `pnote${i}`;
+    const nmCheck = () => { const w = nameMismatch(c.name, c.hex); nmNote.hidden = !w; nmNote.textContent = w ? w.message : ""; if (w) nm.setAttribute("aria-describedby", nmNote.id); else nm.removeAttribute("aria-describedby"); };
+    [col, hx, nm].forEach(x => x.addEventListener("change", nmCheck)); col.addEventListener("input", nmCheck); nmCheck();
+    d.appendChild(nmNote);
     ed.appendChild(d);
   });
 }
@@ -3001,9 +3009,9 @@ $("pasteApply").addEventListener("click", () => {
   dsAnalyze();
   const list = dsLast ? dsLast.colors.map(({ name, hex }) => ({ name, hex })) : [];
   if (list.length < 2) { toast("Il faut au moins deux couleurs, ex. « Marque #2447D1 »"); return; }
-  const fmt = dsLast.format;
+  const dsFmt = dsLast.format;
   palette = list.slice(0, 12); sel = null; changed(); renderEditor(); $("pasteBox").hidden = true; $("pasteToggle").setAttribute("aria-expanded", "false");
-  toast(fmt === "liste" ? `${palette.length} couleurs chargées` : `${palette.length} couleurs importées depuis vos ${FORMAT_LABEL[fmt]} : l’audit est à jour dans Contrastes`);
+  toast(dsFmt === "liste" ? `${palette.length} couleurs chargées` : `${palette.length} couleurs importées depuis vos ${FORMAT_LABEL[dsFmt]} : l’audit est à jour dans Contrastes`);
 });
 
 // ---------- Noms automatiques ----------
@@ -3526,6 +3534,14 @@ function dsAuto(m) {
 }
 function dsRoles(m) { const A = dsAuto(m), B = modeBase(m), R = {}; for (const k of Object.keys(A)) R[k] = k === "text/default" || k === "background/default" ? A[k] : (B.roles[k] || A[k]); return R; }
 function roleScopes(k) { const kind = ROLE_FR[k][2]; return k.startsWith("text") || k.startsWith("link") || /\/text$/.test(k) ? ["TEXT_FILL"] : kind === "ui" || kind === "deco" ? ["STROKE_COLOR"] : ["FRAME_FILL", "SHAPE_FILL"]; }
+// Même description en français, pour la planche de présentation du plugin (les noms de variables restent en anglais).
+function roleDescFr(k, R, m) {
+  const [label, pair, kind] = ROLE_FR[k], f = v => fmt(floor2(v), 2);
+  if (kind === "deco") return `${label} : ${f(ratio(R[k], R["background/default"]))}:1 sur le fond, décoratif`;
+  if (kind === "off") return `${label} : sans minimum de contraste (composant inactif, critère 1.4.3)${pair ? `, ${f(ratio(R[k], R[pair]))}:1 sur le fond désactivé` : ""}`;
+  const sc = kind === "ui" ? (k === "focus/ring" ? "critère 2.4.13, 3:1 minimum" : "critère 1.4.11, 3:1 minimum") : `critère 1.4.3, ${fmt(needRatio(S.level), 1)}:1 minimum`;
+  return `${label} : ${f(ratio(R[k], R[pair]))}:1 avec ${ROLE_FR[pair][0].toLowerCase()} (${sc})${m === "dark" ? " en mode sombre" : ""}`;
+}
 function roleDesc(k, R, m) {
   const [, pair, kind] = ROLE_FR[k], en = ROLE_EN[k] || k;
   if (kind === "deco") return `${en}: ${enNum(floor2(ratio(R[k], R["background/default"])))}:1 on background`;
@@ -3535,8 +3551,8 @@ function roleDesc(k, R, m) {
 }
 function dsSemantic(m) {
   const R = dsRoles(m), o = {};
-  for (const k of Object.keys(ROLE_FR)) { const [g, n] = k.split("/"); (o[g] = o[g] || {})[n] = [R[k], roleDesc(k, R, m), roleScopes(k)]; }
-  const ch = chartPalette(m); o.chart = {}; ch.forEach((h, i) => { o.chart[i + 1] = [h, `Chart series ${i + 1}: ${enNum(floor2(ratio(h, R["background/default"])))}:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies`, ["ALL_FILLS", "STROKE_COLOR"]]; });
+  for (const k of Object.keys(ROLE_FR)) { const [g, n] = k.split("/"); (o[g] = o[g] || {})[n] = [R[k], roleDesc(k, R, m), roleScopes(k), roleDescFr(k, R, m)]; }
+  const ch = chartPalette(m); o.chart = {}; ch.forEach((h, i) => { o.chart[i + 1] = [h, `Chart series ${i + 1}: ${enNum(floor2(ratio(h, R["background/default"])))}:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies`, ["ALL_FILLS", "STROKE_COLOR"], `Série ${i + 1} : ${fmt(floor2(ratio(h, R["background/default"])), 2)}:1 sur le fond (critère 1.4.11), distincte avec les daltonismes`]; });
   return o;
 }
 // Palette de graphiques : séries lisibles sur le fond (3:1) et distinctes en vision typique, protanopie, deutéranopie et tritanopie
@@ -3569,7 +3585,7 @@ function tsJson() {
   allScales().forEach(s => { const g = o.color[s.slug] = { $description: s.name, main: { $type: "color", $value: s.hex, $description: s.status ? `${ST_DEF[s.slug][3]} status hue` : `${s.name}, main colour (as entered)` } }; s.sw.forEach((h, i) => { g[STEPS[i]] = { $type: "color", $value: h, $description: `Contrast ${enNum(floor2(ratio(h, "#FFFFFF")))}:1 on white, ${enNum(floor2(ratio(h, "#000000")))}:1 on black` }; }); });
   const semD = dsSemantic("dark");
   o.semantic = { $description: "Semantic roles. $value is the light mode; $extensions app.lisio.modes.dark holds the dark mode (a second mode in Figma, prefers-color-scheme and data-theme in CSS)" };
-  for (const [g, items] of Object.entries(dsSemantic("light"))) { o.semantic[g] = {}; for (const [k, [hex, d, scopes]] of Object.entries(items)) { const dk = semD[g] && semD[g][k]; o.semantic[g][k] = { $type: "color", $value: tsTokenRef(hex), $description: d, $extensions: { "app.lisio": { scopes, modes: dk ? { dark: tsTokenRef(dk[0]) } : {}, darkDescription: dk ? dk[1] : undefined } } }; } }
+  for (const [g, items] of Object.entries(dsSemantic("light"))) { o.semantic[g] = {}; for (const [k, [hex, d, scopes, fr]] of Object.entries(items)) { const dk = semD[g] && semD[g][k]; o.semantic[g][k] = { $type: "color", $value: tsTokenRef(hex), $description: d, $extensions: { "app.lisio": { scopes, modes: dk ? { dark: tsTokenRef(dk[0]) } : {}, darkDescription: dk ? dk[1] : undefined, ...(fr ? { fr } : {}) } } }; } }
   o.component = { $description: "Component tokens. Each one is an alias to a semantic role; components take their colours from here only" };
   for (const t of COMP_TOKENS) (o.component[t.comp] = o.component[t.comp] || {})[t.name] = { $type: "color", $value: `{semantic.${t.role.replace("/", ".")}}`, $description: t.en };
   for (const [g, def] of Object.entries(dsDim())) { o[g] = { $description: def.$d }; for (const [k, v] of Object.entries(def.v)) { const [n, d] = Array.isArray(v) ? v : [v, null]; o[g][k] = { $type: "dimension", $value: { value: n, unit: "px" } }; if (d) o[g][k].$description = d; } }

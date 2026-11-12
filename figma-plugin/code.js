@@ -386,8 +386,9 @@ async function lisioBoards(data, map, made, cTypo, modes, famName, allowDelete) 
     txt("Collection Semantic · chaque rôle pointe vers une nuance de la palette et donne son contraste WCAG", 14, false, sem, true);
     for (const [g, items] of Object.entries(data.semantic)) {
       if (g.startsWith("$") || !items || typeof items !== "object") continue;
-      const row = lisioAuto("HORIZONTAL", { name: g, itemSpacing: 16 }); txt(g.charAt(0).toUpperCase() + g.slice(1), 16, true, row, false, 112);
-      for (const [k, tok] of Object.entries(items)) { if (k.startsWith("$")) continue; const c = lisioAuto("VERTICAL", { name: k, itemSpacing: 6 }); const r = figma.createRectangle(); r.resize(180, 60); r.fills = [paint(`{semantic.${g}.${k}}`)]; r.strokes = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: .08 }]; c.appendChild(r); txt(k, 15, true, c, false, 180); txt(`${String(tok.$value).replace(/[{}]/g, "")}\n${tok.$description || ""}`, 11, false, c, true, 180); row.appendChild(c); }
+      const GFR = { text: "Texte", background: "Fonds", action: "Boutons", link: "Liens", disabled: "Désactivé", border: "Bordures", focus: "Focus", chart: "Graphiques", success: "Succès", warning: "Avertissement", error: "Erreur", danger: "Erreur", info: "Information" };
+      const row = lisioAuto("HORIZONTAL", { name: g, itemSpacing: 16 }); txt(GFR[g] || g.charAt(0).toUpperCase() + g.slice(1), 16, true, row, false, 112);
+      for (const [k, tok] of Object.entries(items)) { if (k.startsWith("$")) continue; const c = lisioAuto("VERTICAL", { name: k, itemSpacing: 6 }); const r = figma.createRectangle(); r.resize(180, 60); r.fills = [paint(`{semantic.${g}.${k}}`)]; r.strokes = [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: .08 }]; c.appendChild(r); txt(k, 15, true, c, false, 180); txt(`${String(tok.$value).replace(/[{}]/g, "")}\n${(tok.$extensions && tok.$extensions["app.lisio"] && tok.$extensions["app.lisio"].fr) || tok.$description || ""}`, 11, false, c, true, 180); row.appendChild(c); }
       sem.appendChild(row);
     }
     cy += sem.height + 120;

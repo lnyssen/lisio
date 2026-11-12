@@ -43,6 +43,21 @@ for (const vw of [1280, 390]) {
   check(!errors.length, `${vw} : aucune erreur JS`, errors.join(" | "));
   await ctx.close();
 }
+// Nom trompeur : « Bleu » #EEF4FF est presque blanc, ses nuances seront grises.
+{
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
+  const page = await ctx.newPage();
+  await page.goto("file://" + SEED);
+  await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio:colors", JSON.stringify([{ name: "Bleu", hex: "#EEF4FF" }, { name: "Nuit", hex: "#0E1B4D" }])); });
+  await page.goto(PAGE + "#couleurs"); await page.waitForTimeout(500);
+  const n0 = page.locator("#pnote0"), n1 = page.locator("#pnote1");
+  check(await n0.isVisible() && /grises, pas bleues/.test(await n0.textContent()), "« Bleu » presque blanc : signalé sous la couleur");
+  check(await page.getAttribute("#pn0", "aria-describedby") === "pnote0", "le message est relié au champ du nom");
+  check(await n1.isHidden(), "« Nuit » : rien à signaler");
+  await page.fill("#ph0", "#2447D1"); await page.press("#ph0", "Enter"); await page.waitForTimeout(200);
+  check(await page.locator("#pnote0").isHidden(), "message retiré quand la couleur devient bleue");
+  await ctx.close();
+}
 await browser.close();
 console.log(fails ? `${fails} échec(s)` : "Import de design system : tout passe.");
 process.exit(fails ? 1 : 0);

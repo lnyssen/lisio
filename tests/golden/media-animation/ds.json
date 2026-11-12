@@ -657,7 +657,8 @@
             "modes": {
               "dark": "{color.marine.50}"
             },
-            "darkDescription": "Primary text: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Primary text: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte principal : 14,91:1 avec fond de page (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -673,7 +674,8 @@
             "modes": {
               "dark": "{color.marine.400}"
             },
-            "darkDescription": "Secondary text: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Secondary text: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte secondaire : 5,53:1 avec fond de page (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -689,7 +691,8 @@
             "modes": {
               "dark": "{color.neutral.black}"
             },
-            "darkDescription": "Text on primary button: 19.75:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Text on primary button: 19.75:1 with primary button fill (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte sur bouton : 16,42:1 avec bouton principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       }
@@ -708,7 +711,8 @@
             "modes": {
               "dark": "{color.marine.950}"
             },
-            "darkDescription": "Page background: 16.58:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Page background: 16.58:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Fond de page : 14,91:1 avec texte principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -725,7 +729,8 @@
             "modes": {
               "dark": "{color.marine.900}"
             },
-            "darkDescription": "Secondary surface (cards, panels): 13.71:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Secondary surface (cards, panels): 13.71:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Surface secondaire, cartes : 15,44:1 avec texte principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       }
@@ -744,7 +749,8 @@
             "modes": {
               "dark": "{color.marine.50}"
             },
-            "darkDescription": "Primary button fill: 19.75:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Primary button fill: 19.75:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Bouton principal : 16,42:1 avec texte sur bouton (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -761,7 +767,8 @@
             "modes": {
               "dark": "{color.marine.100}"
             },
-            "darkDescription": "Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Primary button, hover: 18.22:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Bouton au survol : 14,58:1 avec texte sur bouton (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -778,7 +785,8 @@
             "modes": {
               "dark": "{color.marine.200}"
             },
-            "darkDescription": "Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Primary button, pressed: 14.95:1 with text on primary button (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Bouton appuyé : 11,00:1 avec texte sur bouton (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       }
@@ -796,7 +804,8 @@
             "modes": {
               "dark": "{color.marine.50}"
             },
-            "darkDescription": "Link: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Link: 16.58:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Lien : 14,91:1 avec fond de page (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -812,7 +821,8 @@
             "modes": {
               "dark": "{color.marine.400}"
             },
-            "darkDescription": "Secondary link: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Secondary link: 5.70:1 with page background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Lien secondaire : 5,53:1 avec fond de page (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       }
@@ -830,7 +840,8 @@
             "modes": {
               "dark": "{color.marine.600}"
             },
-            "darkDescription": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.39:1 on disabled fill"
+            "darkDescription": "Disabled text: exempt from contrast minimums (inactive component, SC 1.4.3), 2.39:1 on disabled fill",
+            "fr": "Texte désactivé : sans minimum de contraste (composant inactif, critère 1.4.3), 2,90:1 sur le fond désactivé"
           }
         }
       },
@@ -847,7 +858,8 @@
             "modes": {
               "dark": "{color.marine.900}"
             },
-            "darkDescription": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)"
+            "darkDescription": "Disabled control fill: exempt from contrast minimums (inactive component, SC 1.4.3)",
+            "fr": "Fond désactivé : sans minimum de contraste (composant inactif, critère 1.4.3)"
           }
         }
       }
@@ -865,7 +877,8 @@
             "modes": {
               "dark": "{color.marine.500}"
             },
-            "darkDescription": "Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode"
+            "darkDescription": "Input and component border: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
+            "fr": "Bordure des champs : 4,24:1 avec fond de page (critère 1.4.11, 3:1 minimum)"
           }
         }
       },
@@ -881,7 +894,8 @@
             "modes": {
               "dark": "{color.marine.900}"
             },
-            "darkDescription": "Decorative divider, carries no information: 1.20:1 on background"
+            "darkDescription": "Decorative divider, carries no information: 1.20:1 on background",
+            "fr": "Filet décoratif : 1,27:1 sur le fond, décoratif"
           }
         }
       }
@@ -899,7 +913,8 @@
             "modes": {
               "dark": "{color.marine.50}"
             },
-            "darkDescription": "Focus outline: 16.58:1 with page background (SC 2.4.13, minimum 3:1) in dark mode"
+            "darkDescription": "Focus outline: 16.58:1 with page background (SC 2.4.13, minimum 3:1) in dark mode",
+            "fr": "Contour de focus : 14,91:1 avec fond de page (critère 2.4.13, 3:1 minimum)"
           }
         }
       }
@@ -917,7 +932,8 @@
             "modes": {
               "dark": "{color.error.400}"
             },
-            "darkDescription": "Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Error message text: 4.72:1 with error message background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte d’erreur : 5,32:1 avec fond d’erreur (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -934,7 +950,8 @@
             "modes": {
               "dark": "{color.error.900}"
             },
-            "darkDescription": "Error message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Error message background: 13.75:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Fond d’erreur : 14,31:1 avec texte principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -950,7 +967,8 @@
             "modes": {
               "dark": "{color.error.500}"
             },
-            "darkDescription": "Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode"
+            "darkDescription": "Error border and icon: 3.77:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
+            "fr": "Bordure d’erreur : 4,23:1 avec fond de page (critère 1.4.11, 3:1 minimum)"
           }
         }
       }
@@ -968,7 +986,8 @@
             "modes": {
               "dark": "{color.success.400}"
             },
-            "darkDescription": "Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Success message text: 4.73:1 with success message background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte de succès : 5,30:1 avec fond de succès (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -985,7 +1004,8 @@
             "modes": {
               "dark": "{color.success.900}"
             },
-            "darkDescription": "Success message background: 13.81:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Success message background: 13.81:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Fond de succès : 14,30:1 avec texte principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -1001,7 +1021,8 @@
             "modes": {
               "dark": "{color.success.500}"
             },
-            "darkDescription": "Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode"
+            "darkDescription": "Success border and icon: 3.79:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
+            "fr": "Bordure de succès : 4,21:1 avec fond de page (critère 1.4.11, 3:1 minimum)"
           }
         }
       }
@@ -1019,7 +1040,8 @@
             "modes": {
               "dark": "{color.warning.400}"
             },
-            "darkDescription": "Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Warning message text: 4.69:1 with warning message background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte d’alerte : 5,31:1 avec fond d’alerte (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -1036,7 +1058,8 @@
             "modes": {
               "dark": "{color.warning.900}"
             },
-            "darkDescription": "Warning message background: 13.73:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Warning message background: 13.73:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Fond d’alerte : 14,31:1 avec texte principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -1052,7 +1075,8 @@
             "modes": {
               "dark": "{color.warning.500}"
             },
-            "darkDescription": "Warning border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode"
+            "darkDescription": "Warning border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
+            "fr": "Bordure d’alerte : 4,23:1 avec fond de page (critère 1.4.11, 3:1 minimum)"
           }
         }
       }
@@ -1070,7 +1094,8 @@
             "modes": {
               "dark": "{color.info.400}"
             },
-            "darkDescription": "Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Info message text: 4.73:1 with info message background (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Texte d’info : 5,30:1 avec fond d’info (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -1087,7 +1112,8 @@
             "modes": {
               "dark": "{color.info.900}"
             },
-            "darkDescription": "Info message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode"
+            "darkDescription": "Info message background: 13.77:1 with primary text (SC 1.4.3, minimum 4.5:1) in dark mode",
+            "fr": "Fond d’info : 14,31:1 avec texte principal (critère 1.4.3, 4,5:1 minimum)"
           }
         }
       },
@@ -1103,7 +1129,8 @@
             "modes": {
               "dark": "{color.info.500}"
             },
-            "darkDescription": "Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode"
+            "darkDescription": "Info border and icon: 3.78:1 with page background (SC 1.4.11, minimum 3:1) in dark mode",
+            "fr": "Bordure d’info : 4,23:1 avec fond de page (critère 1.4.11, 3:1 minimum)"
           }
         }
       }
@@ -1122,7 +1149,8 @@
             "modes": {
               "dark": "{color.bleu.500}"
             },
-            "darkDescription": "Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies"
+            "darkDescription": "Chart series 1: 3.77:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
+            "fr": "Série 1 : 4,24:1 sur le fond (critère 1.4.11), distincte avec les daltonismes"
           }
         }
       },
@@ -1139,7 +1167,8 @@
             "modes": {
               "dark": "{color.orange.400}"
             },
-            "darkDescription": "Chart series 2: 5.69:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies"
+            "darkDescription": "Chart series 2: 5.69:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
+            "fr": "Série 2 : 5,54:1 sur le fond (critère 1.4.11), distincte avec les daltonismes"
           }
         }
       },
@@ -1156,7 +1185,8 @@
             "modes": {
               "dark": "{color.info.300}"
             },
-            "darkDescription": "Chart series 3: 9.31:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies"
+            "darkDescription": "Chart series 3: 9.31:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
+            "fr": "Série 3 : 9,96:1 sur le fond (critère 1.4.11), distincte avec les daltonismes"
           }
         }
       },
@@ -1173,7 +1203,8 @@
             "modes": {
               "dark": "{color.corail.300}"
             },
-            "darkDescription": "Chart series 4: 9.25:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies"
+            "darkDescription": "Chart series 4: 9.25:1 on background (SC 1.4.11), distinguishable with colour vision deficiencies",
+            "fr": "Série 4 : 5,53:1 sur le fond (critère 1.4.11), distincte avec les daltonismes"
           }
         }
       }
