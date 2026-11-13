@@ -1906,13 +1906,13 @@ input[type=checkbox]{width:24px!important;height:24px!important}
       </div>
       <div class="ts-list" id="tsList"></div>
     </div>
-    <p class="adv-hint"><span>Mode Essentiel : les valeurs par écran, les formules clamp() et l’ajustement style par style sont masqués.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
+    <p class="adv-hint"><span>Mode Essentiel : les valeurs par écran, les formules clamp(), l’ajustement style par style et l’export de cette page sont masqués. Vos styles partent avec tout le reste à l’étape <a href="#exporter">Exporter</a>.</span><button type="button" class="btn sm" data-mode="adv">Afficher les réglages avancés</button></p>
     <div class="card-surface adv" id="tsFluCard">
       <h2>Valeurs fluides · 390 → 1440 px</h2>
       <p class="note">Pour chaque écran : taille / interligne en px, comme dans les styles Figma. Puis la formule clamp() à copier dans le CSS.</p>
       <table class="flu" id="tsTable"></table>
     </div>
-    <div class="card-surface">
+    <div class="card-surface adv" id="tsExpCard">
       <div class="row between"><h2>Exporter pour Figma ou le code</h2><div class="row"><label for="tsFmt" class="sr">Format</label><select id="tsFmt"><option value="json">JSON pour Figma (W3C)</option><option value="css">CSS</option></select><button class="btn" id="tsCopy" type="button">Copier</button><button class="btn primary" id="tsDl" type="button">Télécharger</button></div></div>
       <p class="note">Le même fichier que le bouton Exporter. <button type="button" class="qchip" data-more="tsTokNote" aria-expanded="false" aria-controls="qPop">Le fichier de jetons</button></p><p class="note" id="tsTokNote" hidden>Le même fichier que le bouton Exporter, au format W3C Design Tokens et en anglais : couleurs, rôles, typo fluide et dimensions. Ouvrez-le dans le <a href="#guide-export" onclick="location.hash='sources';setTimeout(()=>document.getElementById('guide-export').scrollIntoView(),50);return false">plugin Lisio pour Figma</a>. Le CSS contient les mêmes valeurs, avec les clamp().</p>
       <details class="ts-code"><summary>Voir le code</summary><pre class="code" id="tsOut" tabindex="0"></pre></details>
@@ -6263,7 +6263,7 @@ function reportCrit() {
   crit.splice(crit.length - 2, 0, ...ix.req.filter(c => !["1.4.11", "1.4.1"].includes(c.id)).map(c => [[c.id, c.level], (criterion(c.id) || { url: "" }).url.split("/").pop().replace(".html", ""), c.title + " : " + c.text, c.status, ""]));
   return { crit, tc, stOk, Mn, mnAll, mnDone };
 }
-const LISIO_BUILD = "78a975e";
+const LISIO_BUILD = "0dc01c0";
 const prjPrint = () => fingerprint(JSON.stringify({ colors: palette.map(c => [c.name, c.hex]), level: S.level, version: S.version, ts: S.ts, ds: S.ds, mn: mnState() }));
 function reportModel() {
   const { crit, stOk, Mn, mnAll, mnDone } = reportCrit(), lvl = S.level, need = needRatio(lvl), needL = needRatio(lvl, true), C = palette, rt = r => f2(r) + ":1", nd = n => fmt(n, n % 1 ? 1 : 0) + ":1";
