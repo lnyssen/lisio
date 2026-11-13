@@ -607,7 +607,7 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .l-fail{background:transparent;color:var(--muted);opacity:.7}
 @media (hover:hover){.ts-font:hover{background:var(--hover)}}
 .ts-list{display:flex;flex-direction:column;gap:10px}
-.ts-ctl{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,2.3fr) minmax(0,3.2fr);gap:16px 24px}
+.ts-ctl{display:grid;grid-template-columns:minmax(0,2.7fr) minmax(0,2.3fr) minmax(0,3.2fr);gap:16px 24px}.ts-ctl .ts-grp:nth-child(1) .ts-gr{grid-template-columns:repeat(3,minmax(0,1fr))}
 .ts-ctl .ts-grp:nth-child(2) .ts-gr{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
 .ts-ctl .ts-grp:nth-child(3) .ts-gr{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}
 .ts-grp{display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:12px;border-top:2px solid var(--ink)}
@@ -634,7 +634,7 @@ table.matrix td{text-align:center;padding:6px 4px;border-radius:6px;min-width:50
 .ts-list{gap:0!important;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--hair)}
 .ts-row{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--hair)}
 .ts-row:first-child{border-top:0}
-.ts-side{display:flex;flex-direction:row;gap:12px;align-items:center;padding:10px 16px;background:var(--surface);min-width:0}.ts-side .ts-meta{flex:1;min-width:0}.ts-col{flex:0 0 210px;display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--muted);min-width:0}.ts-col .cp-btn{font-size:13px;min-height:40px}.ts-ok{font-size:13px;font-weight:700;color:var(--ok)}
+.ts-side{display:flex;flex-direction:row;gap:12px;align-items:center;padding:10px 16px;background:var(--surface);min-width:0}.ts-side .ts-meta{flex:1;min-width:0}.ts-col{flex:0 0 210px;display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--muted);min-width:0}.ts-col .cp-btn{font-size:13px;min-height:40px}.ts-fcol{flex-basis:190px}.ts-fcol select{height:40px;width:100%;font-size:13px;font-weight:600;min-width:0}.ts-labx{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.ts-off{font:inherit;font-size:12px;font-weight:600;color:var(--muted);background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:2px;cursor:pointer;min-height:24px}@media (hover:hover){.ts-off:hover{color:var(--ink)}}.ts-ok{font-size:13px;font-weight:700;color:var(--ok)}
 .ts-spec{padding:20px 24px;min-width:0;overflow-wrap:break-word;hyphens:auto;display:flex;align-items:center;transition:font-size .25s ease}
 @media (prefers-reduced-motion:reduce){.ts-spec{transition:none}}
 .ts-meta{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
@@ -663,7 +663,7 @@ table.flu td.mono{font-family:var(--code);font-size:12.5px;word-break:break-word
 .ts-in input,.ts-in select{width:100%;padding:6px 8px}
 #tsFmt{max-width:100%}
 .ts-warn{font-size:13px;color:var(--muted)}
-@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-side{flex-direction:row;flex-wrap:wrap;align-items:flex-start;padding:12px}.ts-col{flex:1 1 100%;order:3}.ts-col .cp-btn{min-height:44px}.ts-side .ts-meta{flex:1;min-width:0}.ts-adj{flex:none}.ts-px{width:auto;font-size:18px}.ts-adj{margin:0}.ts-slide{top:60px}.ts-in{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:760px){.ts-f select,.ts-f input,.ts-in input,.ts-in select{font-size:16px}.ts-row{grid-template-columns:minmax(0,1fr)}.ts-side{flex-direction:row;flex-wrap:wrap;align-items:flex-start;padding:12px}.ts-col{flex:1 1 100%;order:3}.ts-fcol select{font-size:16px;min-height:44px}.ts-col .cp-btn{min-height:44px}.ts-side .ts-meta{flex:1;min-width:0}.ts-adj{flex:none}.ts-px{width:auto;font-size:18px}.ts-adj{margin:0}.ts-slide{top:60px}.ts-in{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .guide p,.guide li{max-width:78ch;line-height:1.55}
 .guide ul,.guide ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 .guide h2{margin-top:6px}
@@ -1796,7 +1796,7 @@ input[type=checkbox]{width:24px!important;height:24px!important}
 
   <!-- TESTER -->
   <section id="tester" aria-labelledby="tab-tester" hidden>
-    <header class="mhead phead"><div><h1>Polices</h1><p class="lead">Essayez votre police sur vos couleurs, à la taille réelle. Chaque réglage de la barre met à jour le verdict de contraste.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Typography</p></div></header>
+    <header class="mhead phead"><div><h1>Polices</h1><p class="lead">Essayez votre police sur vos couleurs, à la taille réelle. Chaque réglage de la barre met à jour le verdict de contraste. Une police différente pour les titres, le texte ou un style précis se choisit à l’étape <a href="#styles">Styles de texte</a>.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : collection Typography</p></div></header>
     <div class="dock">
       <div class="dock-in" id="dockIn">
         <button class="dk" id="dFont" type="button" data-pop="popFont" aria-expanded="false" aria-controls="popFont"><span style="font-size:22px;font-weight:700" id="dFontAa">Aa</span><span class="k"><small>Police</small><span id="dFontName">–</span></span></button>
@@ -1849,11 +1849,12 @@ input[type=checkbox]{width:24px!important;height:24px!important}
   <section id="styles" aria-labelledby="tab-styles" hidden style="display:flex;flex-direction:column;gap:var(--sec-gap)">
     <header class="mhead phead"><div><h1>Styles de texte</h1><p class="lead">Vos styles web, de H1 à la légende, vérifiés sur vos couleurs. Exportez-les avec la palette pour Figma ou le CSS.</p><p class="figline"><span class="figmark" aria-hidden="true"></span>Dans Figma : Text styles et collection Typography</p></div></header>
     <div class="card-surface">
-      <h2>Réglages</h2><p class="note" style="margin-top:-6px">Deux polices, une taille de texte et une échelle pour le desktop. Lisio fait le reste.</p>
+      <h2>Réglages</h2><p class="note" style="margin-top:-6px">Une police pour les titres, une pour le texte, une troisième en accent si besoin, puis une taille et une échelle pour le desktop. Lisio fait le reste. Chaque style peut ensuite changer de police, colonne Police.</p>
       <div class="ts-ctl">
         <div class="ts-grp"><span class="ts-gh">Polices</span><div class="ts-gr">
           <div class="ts-f"><span class="ts-lab" id="tsHeadL">Titres</span><button class="ts-font" type="button" data-pop="popFont" data-target="head" aria-expanded="false" aria-controls="popFont" aria-labelledby="tsHeadL tsHeadName"><span id="tsHeadName">–</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button></div>
           <div class="ts-f"><span class="ts-lab" id="tsBodyL">Texte</span><button class="ts-font" type="button" data-pop="popFont" data-target="body" aria-expanded="false" aria-controls="popFont" aria-labelledby="tsBodyL tsBodyName"><span id="tsBodyName">–</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button></div>
+          <div class="ts-f"><span class="ts-lab ts-labx"><span id="tsAccL">Accent</span><button type="button" class="ts-off" id="tsAccOff" hidden>Retirer<span class="sr-only"> la police d’accent</span></button></span><button class="ts-font" type="button" id="tsAccBtn" data-pop="popFont" data-target="accent" aria-expanded="false" aria-controls="popFont" aria-labelledby="tsAccL tsAccName"><span id="tsAccName">Ajouter</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></button></div>
         </div></div>
         <div class="ts-grp"><span class="ts-gh">Taille, sur desktop</span><div class="ts-gr">
           <div class="ts-f"><label class="ts-lab" for="tsBaseD">Texte courant</label><div class="ts-step"><button type="button" data-d="-1" aria-label="Réduire d’un pixel">−</button><input type="number" id="tsBaseD" min="10" max="32" step="1" inputmode="numeric"><span aria-hidden="true">px</span><button type="button" data-d="1" aria-label="Augmenter d’un pixel">+</button></div></div>
@@ -2597,7 +2598,7 @@ function paintSrcTab() { document.querySelectorAll("[data-src]").forEach(b => b.
 document.querySelectorAll("[data-src]").forEach(b => b.addEventListener("click", () => { fontSrcTab = b.dataset.src; paintSrcTab(); }));
 function fontItem(f) {
   loadGoogle(f, false);
-  const cf = fontTarget === "test" ? S.font : S.ts.fonts[fontTarget], w = f.weights.includes(400) ? 400 : f.weights[0], sel = cf.src === "google" && cf.family === f.name;
+  const cf = (fontTarget === "test" ? S.font : S.ts.fonts[fontTarget]) || {}, w = f.weights.includes(400) ? 400 : f.weights[0], sel = cf.src === "google" && cf.family === f.name;
   return `<li><button type="button"${sel ? ' aria-current="true"' : ""} data-family="${esc(f.name)}" style="font-family:'${esc(f.name)}', ${FALLBACK[f.cat]};font-weight:${w}"><span>${esc(f.name)}</span><span class="cat">${CATS[f.cat]} · ${f.weights.length}</span></button></li>`;
 }
 function renderFontList() {
@@ -2616,7 +2617,7 @@ $("fontList").addEventListener("click", e => { const b = e.target.closest("butto
 $("fontSearch").addEventListener("input", renderFontList);
 $("fontCat").addEventListener("change", renderFontList);
 function setFont(font) {
-  if (fontTarget !== "test") { S.ts.fonts[fontTarget] = font; ensureFont(font); S.ts.styles.forEach(st => { st.weight = snapW(st.weight, tsFont(st)); }); save(); renderStyles(); document.fonts.load(`400 40px ${fontCss(font)}`).then(renderStyles, () => {}); return; }
+  if (fontTarget !== "test") { const first = !S.ts.fonts[fontTarget]; S.ts.fonts[fontTarget] = font; ensureFont(font); if (first && fontTarget === "accent") toast(`Police d’accent : ${font.family}. Attribuez-la aux styles voulus, colonne Police.`); S.ts.styles.forEach(st => { st.weight = snapW(st.weight, tsFont(st)); }); save(); renderStyles(); document.fonts.load(`400 40px ${fontCss(font)}`).then(renderStyles, () => {}); return; }
   S.font = font; ensureFont(font);
   const ws = fontWeights(font);
   if (!ws.includes(S.weight)) S.weight = ws.reduce((a, b) => Math.abs(b - S.weight) < Math.abs(a - S.weight) ? b : a, ws[0]);
@@ -3256,9 +3257,15 @@ function tsDefault(keep, dk) {
 if (!S.ts || S.ts.v !== 2 || !Array.isArray(S.ts.styles)) S.ts = tsDefault(S.ts && S.ts.fonts ? S.ts : null);
 // Projet créé depuis un modèle (F10) : l'échelle du modèle remplace celle par défaut, une seule fois.
 if (S.tsPreset) { const t = S.tsPreset; if (TS_RATIOS.includes(String(t.ratio)) && t.base >= 10 && t.base <= 32) S.ts = tsDefault(null, { base: +t.base, ratio: String(t.ratio) }); delete S.tsPreset; store.set("state", S); }
-["head", "body"].forEach(k => { const f = S.ts.fonts[k]; if (!f || f.src === "upload" || (f.src === "google" && !GFmap.has(f.family))) S.ts.fonts[k] = { ...DEF.font }; ensureFont(S.ts.fonts[k]); });
+["head", "body", "accent"].forEach(k => { const f = S.ts.fonts[k]; if (k === "accent" && !f) return; if (!f || f.src === "upload" || (f.src === "google" && !GFmap.has(f.family))) S.ts.fonts[k] = { ...DEF.font }; ensureFont(S.ts.fonts[k]); });
 const tsDef = id => TS_DEF.find(d => d.id === id);
-const tsFont = st => S.ts.fonts[tsDef(st.id).role];
+// Une police par style (13 novembre 2026) : chaque style prend la police des titres, du texte ou d’accent (st.font, absent = celle de son rôle).
+const TS_FONTS = [["head", "Titres", "heading"], ["body", "Texte", "body"], ["accent", "Accent", "accent"]];
+const tsFontVar = k => (TS_FONTS.find(x => x[0] === k) || TS_FONTS[1])[2];
+const tsRole = st => st.font && S.ts.fonts[st.font] ? st.font : tsDef(st.id).role;
+const tsFont = st => S.ts.fonts[tsRole(st)];
+const tsFontsUsed = () => TS_FONTS.map(x => x[0]).filter(k => S.ts.fonts[k]);
+const tsFamilies = () => [...new Set(tsFontsUsed().map(k => S.ts.fonts[k].family))];
 const r3 = n => Math.round(n * 1000) / 1000, r4 = n => Math.round(n * 10000) / 10000, r1 = n => Math.round(n * 10) / 10;
 const sizeAt = (st, w) => st.min === st.max ? st.min : Math.min(Math.max(st.min, st.min + (st.max - st.min) * (w - VMIN) / (VMAX - VMIN)), Math.max(st.min, st.max));
 const bpSize = (st, w) => Math.round(sizeAt(st, w)), bpLh = (st, w) => Math.round(bpSize(st, w) * st.lh);
@@ -3399,7 +3406,8 @@ const tsVw = () => { if (!tsVwTouched && matchMedia("(max-width:760px)").matches
 const bpName = w => { const b = BP.find(x => x.w === w); return b ? b.label : w < 768 ? "entre Mobile et Tablet" : w < 1024 ? "entre Tablet et Desktop" : "entre Desktop et XL"; };
 function tsSpecimen(st) {
   const d = tsDef(st.id), f = tsFont(st), w = tsVw();
-  return `font-family:${esc(fontCss(f))};font-size:${r1(sizeAt(st, w))}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;${d.italic ? "font-style:italic;" : ""}${d.upper ? "text-transform:uppercase;" : ""}color:${tsInk(st)};background:${S.ts.bg}`;
+  // Guillemets simples : ce style passe aussi par setAttribute, où &quot; ne serait pas décodé.
+  return `font-family:${fontCss(f).replace(/"/g, "'").replace(/[<>&]/g, "")};font-size:${r1(sizeAt(st, w))}px;font-weight:${st.weight};line-height:${st.lh};letter-spacing:${st.ls / 100}em;${d.italic ? "font-style:italic;" : ""}${d.upper ? "text-transform:uppercase;" : ""}color:${tsInk(st)};background:${S.ts.bg}`;
 }
 const TS_SAMPLE = { head: "Une palette que tout le monde peut lire", body: "Chaque paire texte-fond est testée avant de partir dans Figma.", button: "Exporter les variables", label: "Design system" };
 const tsSample = d => d.id === "button" ? TS_SAMPLE.button : d.id === "label" ? TS_SAMPLE.label : TS_SAMPLE[d.role];
@@ -3426,6 +3434,7 @@ function renderStyles() {
   const T = S.ts;
   $("tsHeadName").textContent = T.fonts.head.family; $("tsHeadName").style.fontFamily = fontCss(T.fonts.head);
   $("tsBodyName").textContent = T.fonts.body.family; $("tsBodyName").style.fontFamily = fontCss(T.fonts.body);
+  $("tsAccName").textContent = T.fonts.accent ? T.fonts.accent.family : "Ajouter"; $("tsAccName").style.fontFamily = T.fonts.accent ? fontCss(T.fonts.accent) : ""; $("tsAccOff").hidden = !T.fonts.accent;
   $("tsDerived").innerHTML = tsDerivedHtml(); $("tsBaseD").value = T.d.base; $("tsRatioD").value = T.d.ratio;
   $("tsFg").innerHTML = tsColorOptions(T.fg); $("tsFg").value = T.fg;
   $("tsBg").innerHTML = tsColorOptions(T.bg); $("tsBg").value = T.bg;
@@ -3439,27 +3448,38 @@ function renderStyles() {
   tsVwPaint();
   $("tsSummary").textContent = `Texte sur fond : ${fmt(floor2(ratio(T.fg, T.bg)))}:1, WCAG ${S.version} ${S.level}. Verdict calculé sur la taille mobile.`;
   $("tsList").innerHTML = T.styles.map(st => {
-    const d = tsDef(st.id), ws = fontWeights(tsFont(st));
-    return `<div class="ts-row" data-id="${st.id}"><div class="ts-side"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><label class="ts-col"><span>Couleur</span><select data-k="color" aria-label="Couleur du style ${esc(d.name)}">${tsColorOptions(tsInk(st))}</select></label><button type="button" class="ts-adj adv" aria-expanded="false" aria-controls="tsi-${st.id}">Ajuster</button></div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${tsSample(d)}</div>
-      <div class="ts-in" id="tsi-${st.id}" hidden><label>Desktop<input type="number" data-k="max" min="8" max="200" step="1" value="${st.max}"></label><label>Mobile<input type="number" data-k="min" min="8" max="200" step="1" value="${st.min}"></label><label>Graisse<select data-k="weight">${ws.map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join("")}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
+    const d = tsDef(st.id);
+    return `<div class="ts-row" data-id="${st.id}"><div class="ts-side"><div class="ts-meta" id="tsm-${st.id}">${tsMetaHtml(st)}</div><label class="ts-col ts-fcol"><span>Police</span><select data-k="font" aria-label="Police du style ${esc(d.name)}">${tsFontOptions(st)}</select></label><label class="ts-col"><span>Couleur</span><select data-k="color" aria-label="Couleur du style ${esc(d.name)}">${tsColorOptions(tsInk(st))}</select></label><button type="button" class="ts-adj adv" aria-expanded="false" aria-controls="tsi-${st.id}">Ajuster</button></div><div class="ts-spec" id="tss-${st.id}" style="${tsSpecimen(st)}">${tsSample(d)}</div>
+      <div class="ts-in" id="tsi-${st.id}" hidden><label>Desktop<input type="number" data-k="max" min="8" max="200" step="1" value="${st.max}"></label><label>Mobile<input type="number" data-k="min" min="8" max="200" step="1" value="${st.min}"></label><label>Graisse<select data-k="weight">${tsWeightOptions(st)}</select></label><label>Interligne<input type="number" data-k="lh" min="0.8" max="3" step="0.05" value="${st.lh}"></label><label>Approche<input type="number" data-k="ls" min="-10" max="20" step="0.5" value="${st.ls}"></label></div></div>`;
   }).join("");
   T.styles.forEach(st => tsColEnhance(st));
   renderFluidTable(); renderTsExport(); sysTouch();
   renderJourney(curView());
 }
+function tsFontOptions(st) { const r = tsRole(st); return TS_FONTS.filter(x => T_has(x[0])).map(([k, lab]) => `<option value="${k}"${k === r ? " selected" : ""}>${lab} · ${esc(S.ts.fonts[k].family)}</option>`).join("") + (S.ts.fonts.accent ? "" : `<option value="" disabled>Accent : ajoutez-la dans Réglages</option>`); }
+const T_has = k => !!S.ts.fonts[k];
+function tsWeightOptions(st) { return fontWeights(tsFont(st)).map(w => `<option value="${w}"${w === st.weight ? " selected" : ""}>${w}</option>`).join(""); }
 function tsColEnhance(st) {
   const sel = document.querySelector(`#tsList .ts-row[data-id="${st.id}"] select[data-k=color]`); if (!sel) return;
   sel.value = tsInk(st); Object.assign(sel.dataset, { pair: S.ts.bg, pairname: "le fond (" + hexName(S.ts.bg) + ")", need: tsVerdict(st).need });
   cpEnhance(sel, "tsc-" + st.id);
 }
 $("tsList").addEventListener("change", e => {
+  if (e.target.dataset.k === "font") {
+    const row = e.target.closest(".ts-row"), st = row && S.ts.styles.find(s => s.id === row.dataset.id), k = e.target.value; if (!st || !S.ts.fonts[k]) return;
+    if (k === tsDef(st.id).role) delete st.font; else st.font = k;
+    st.weight = snapW(st.weight, tsFont(st)); save();
+    const wsel = row.querySelector("select[data-k=weight]"); if (wsel) wsel.innerHTML = tsWeightOptions(st);
+    $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); renderTsExport(); sysDirty = true;
+    toast(`${tsDef(st.id).name} : ${tsFont(st).family}, police ${{ head: "des titres", body: "du texte", accent: "d’accent" }[k]}`); return;
+  }
   if (e.target.dataset.k !== "color") return;
   const row = e.target.closest(".ts-row"), st = row && S.ts.styles.find(s => s.id === row.dataset.id), v = normHex(e.target.value); if (!st || !v) return;
   if (v === normHex(S.ts.fg)) delete st.color; else st.color = v;
   save(); $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); tsColEnhance(st); renderTsExport(); sysDirty = true;
 });
 $("tsList").addEventListener("input", e => {
-  const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || k === "color" || !row) return;
+  const k = e.target.dataset.k, row = e.target.closest(".ts-row"); if (!k || k === "color" || k === "font" || !row) return;
   const st = S.ts.styles.find(s => s.id === row.dataset.id), v = parseFloat(String(e.target.value).replace(",", ".")); if (!st || !isFinite(v)) return;
   st[k] = k === "min" || k === "max" ? Math.max(1, Math.round(v)) : v; save();
   $("tsm-" + st.id).innerHTML = tsMetaHtml(st); $("tss-" + st.id).setAttribute("style", tsSpecimen(st)); renderFluidTable(); renderTsExport(); sysDirty = true;
@@ -3483,6 +3503,7 @@ document.querySelectorAll(".ts-step button").forEach(b => b.addEventListener("cl
 [["tsBaseD", "d"]].forEach(([id, k]) => $(id).addEventListener("change", e => { const v = parseInt(e.target.value, 10); if (v >= 10 && v <= 32) { S.ts[k].base = v; tsRegen(); } else e.target.value = S.ts[k].base; }));
 [["tsRatioD", "d"]].forEach(([id, k]) => $(id).addEventListener("change", e => { S.ts[k].ratio = e.target.value; tsRegen(); }));
 $("tsApply").addEventListener("click", () => { tsRegen(); toast("Tailles recalculées"); });
+$("tsAccOff").addEventListener("click", () => { delete S.ts.fonts.accent; S.ts.styles.forEach(st => { if (st.font === "accent") { delete st.font; st.weight = snapW(st.weight, tsFont(st)); } }); save(); renderStyles(); $("tsAccBtn").focus(); toast("Police d’accent retirée : ses styles reprennent leur police d’origine"); });
 $("tsReset").addEventListener("click", () => { S.ts = tsDefault(); save(); renderStyles(); toast("Styles réinitialisés"); });
 $("tsFg").addEventListener("change", e => { S.ts.fg = e.target.value; save(); renderStyles(); });
 $("tsBg").addEventListener("change", e => { S.ts.bg = e.target.value; save(); renderStyles(); });
@@ -3675,11 +3696,11 @@ function tsJson() {
   o.blur = { glass: { $type: "dimension", $value: { value: blurGlass(), unit: "px" }, $description: "Background blur behind translucent surfaces. In Figma: effect style Blur/Glass" } };
   o.ratio = { $description: "Image aspect ratios. Always set width and height on <img> so the space is reserved" };
   ratiosOn().forEach(([k, w, h, , en]) => { o.ratio[k] = { $type: "number", $value: +(w / h).toFixed(4), $description: `${w}:${h}, ${en}`, $extensions: { "app.lisio": { css: `${w} / ${h}`, scopes: [] } } }; });
-  o.font = { family: { heading: { $type: "fontFamily", $value: famList(S.ts.fonts.head) }, body: { $type: "fontFamily", $value: famList(S.ts.fonts.body) } } };
+  o.font = { family: { heading: { $type: "fontFamily", $value: famList(S.ts.fonts.head) }, body: { $type: "fontFamily", $value: famList(S.ts.fonts.body) }, ...(S.ts.fonts.accent ? { accent: { $type: "fontFamily", $value: famList(S.ts.fonts.accent), $description: "Accent font, for the text styles that use it" } } : {}) } };
   o.typography = {};
   S.ts.styles.forEach(st => { const d = tsDef(st.id), v = tsVerdict(st);
     o.typography[st.id] = { $type: "typography", $description: `${d.en} (${d.tag}), fluid ${st.min} → ${st.max} px between ${VMIN} and ${VMAX} px. ${v.ok ? "Passes" : "Fails"} ${S.level} with primary text on background (${enNum(floor2(v.r))}:1).`,
-      $value: { fontFamily: d.role === "head" ? "{font.family.heading}" : "{font.family.body}", fontSize: { value: st.max, unit: "px" }, fontWeight: st.weight, lineHeight: st.lh, letterSpacing: { value: r4(st.max * st.ls / 100), unit: "px" } },
+      $value: { fontFamily: `{font.family.${tsFontVar(tsRole(st))}}`, fontSize: { value: st.max, unit: "px" }, fontWeight: st.weight, lineHeight: st.lh, letterSpacing: { value: r4(st.max * st.ls / 100), unit: "px" } },
       $extensions: { "app.lisio": { name: d.en, tag: d.tag, letterSpacingPercent: st.ls, italic: !!d.italic, textCase: d.upper ? "upper" : "none", fluid: { min: st.min, max: st.max, viewportMin: VMIN, viewportMax: VMAX, clamp: tsClamp(st), breakpoints: BP.map(b => ({ id: b.id, name: b.label, width: b.w, fontSize: bpSize(st, b.w), lineHeight: bpLh(st, b.w) })) } } } }; });
   dsTrim(o);
   o.$extensions = { "app.lisio": { generator: "Lisio", ...(DS_GROUPS.some(g => !dsOn(g[0])) ? { excluded: DS_GROUPS.filter(g => !dsOn(g[0])).map(g => g[0]) } : {}), url: "https://lisio-psi.vercel.app", wcag: S.version, level: S.level, scale: { mobile: { base: S.ts.m.base, ratio: +S.ts.m.ratio }, desktop: { base: S.ts.d.base, ratio: +S.ts.d.ratio } } } };
@@ -3722,12 +3743,12 @@ function tsCss(full) {
   const lay = L => `--layout-margin: ${L.margin}px; --layout-gutter: ${L.gutter}px; --layout-columns: ${L.columns}; --layout-section: ${L.section}px;`;
   c += (on("layout") ? `  /* ${BP[0].label} first (${BP[0].w} px) */\n  ${lay(dsLay()[BP[0].id])}\n  --layout-content-max: ${LAYOUT_MAX}px;\n` : "") + `  --layout-measure: 70ch; /* line length for running text, SC 1.4.8 asks for 80 or fewer */\n` + (on("motion") ? `\n  /* Motion: everything drops to 0 with prefers-reduced-motion (SC 2.3.3) */\n  --duration-fast: 120ms;\n  --duration-base: 200ms;\n  --duration-slow: 320ms;\n  --easing-standard: cubic-bezier(0.2, 0, 0, 1);\n}\n@media (prefers-reduced-motion: reduce) {\n  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; }\n  *, *::before, *::after { scroll-behavior: auto !important; }\n}\n` : "}\n");
   if (on("layout")) BP.slice(1).forEach(b => { c += `@media (min-width: ${b.w}px) { :root { ${lay(dsLay()[b.id])} } } /* ${b.label} */\n`; });
-  c += `.measure, .prose > * { max-inline-size: var(--layout-measure); }\n` + (on("layout") ? `.grid {\n  display: grid;\n  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));\n  column-gap: var(--layout-gutter);\n}\n.container {\n  padding-inline: var(--layout-margin);\n  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));\n  margin-inline: auto;\n}\n` : "") + `\n/* ===== Effects: elevation, opacity, blur, image ratios ===== */\n${dsFx(on)}\n/* ===== 4. Typography ===== */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n\n`;
+  c += `.measure, .prose > * { max-inline-size: var(--layout-measure); }\n` + (on("layout") ? `.grid {\n  display: grid;\n  grid-template-columns: repeat(var(--layout-columns), minmax(0, 1fr));\n  column-gap: var(--layout-gutter);\n}\n.container {\n  padding-inline: var(--layout-margin);\n  max-width: calc(var(--layout-content-max) + 2 * var(--layout-margin));\n  margin-inline: auto;\n}\n` : "") + `\n/* ===== Effects: elevation, opacity, blur, image ratios ===== */\n${dsFx(on)}\n/* ===== 4. Typography ===== */\n:root {\n  --font-heading: ${fam(S.ts.fonts.head)};\n  --font-body: ${fam(S.ts.fonts.body)};\n${S.ts.fonts.accent ? `  --font-accent: ${fam(S.ts.fonts.accent)};\n` : ""}\n`;
   for (const st of S.ts.styles) c += `  --font-size-${st.id}: ${tsClamp(st)}; /* ${st.min} → ${st.max} px */\n  --line-height-${st.id}: ${st.lh};\n`;
   c += "}\n";
   const SEL = { display: ".display", body: "body, p, .body", "body-strong": "strong, .body-strong", "body-italic": "em, .body-italic", small: "small, .small", caption: "figcaption, .caption", label: ".label", button: "button, .button" };
   S.ts.styles.forEach(st => { const d = tsDef(st.id), sel = `${SEL[d.id] || `${d.id}, .${d.id}`}, .t-${st.id}`;
-    c += `\n${sel} {\n  font-family: var(--font-${d.role === "head" ? "heading" : "body"});\n  font-size: var(--font-size-${st.id});\n  font-weight: ${st.weight};\n  line-height: var(--line-height-${st.id});\n${st.color ? `  color: ${cssRef(normHex(st.color))};\n` : ""}  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n${d.italic ? "  font-style: italic;\n" : ""}${d.upper ? "  text-transform: uppercase;\n" : ""}${d.id === "label" || d.id === "button" ? "  text-box: trim-both cap alphabetic; /* vertical trim, progressive enhancement */\n" : ""}}\n`; });
+    c += `\n${sel} {\n  font-family: var(--font-${tsFontVar(tsRole(st))});\n  font-size: var(--font-size-${st.id});\n  font-weight: ${st.weight};\n  line-height: var(--line-height-${st.id});\n${st.color ? `  color: ${cssRef(normHex(st.color))};\n` : ""}  letter-spacing: ${st.ls ? r4(st.ls / 100) + "em" : "normal"};\n${d.italic ? "  font-style: italic;\n" : ""}${d.upper ? "  text-transform: uppercase;\n" : ""}${d.id === "label" || d.id === "button" ? "  text-box: trim-both cap alphabetic; /* vertical trim, progressive enhancement */\n" : ""}}\n`; });
   c += `
 /* ===== 5. Accessibility rules ===== */
 body {
@@ -4165,7 +4186,7 @@ ${all.map(({ c, st, sd }) => `<section class="cmp" data-cmp="${c.id}" aria-label
 function sysPage() {
   const theme = S.sysTheme === "dark" ? "dark" : "light", R = dsRoles(theme), need = needRatio(S.level), fr = n => fmt(floor2(n));
   const bp = sysBp();
-  const fonts = [S.ts.fonts.head, S.ts.fonts.body].filter(f => f.src === "google" && GFmap.get(f.family)).map(f => `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${gfQuery(GFmap.get(f.family), GFmap.get(f.family).weights)}&display=swap">`).join("");
+  const fonts = tsFontsUsed().map(k => S.ts.fonts[k]).filter((f, i, a) => a.findIndex(g => g.family === f.family) === i).filter(f => f.src === "google" && GFmap.get(f.family)).map(f => `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${gfQuery(GFmap.get(f.family), GFmap.get(f.family).weights)}&display=swap">`).join("");
   const mkBadge = R => k => { const [, pair, kind] = ROLE_FR[k]; if (kind === "deco") return `<span class="bdg">Décoratif, sans exigence</span>`; if (kind === "off") return `<span class="bdg">Exempté : composant inactif${pair ? `, ${fr(ratio(R[k], R[pair]))}:1` : ""}</span>`; const r = ratio(R[k], R[pair]), req = roleNeed(k), ok = r >= req; return `<span class="bdg${ok ? "" : " bad"}">${ok ? "✓" : "✕"} ${fr(r)}:1 ${ok ? (kind === "ui" ? "(3:1 requis)" : S.level) : `(${fmt(req, 1)}:1 requis)`}</span>`; };
   const badge = mkBadge(R);
   const prim = allScales().map(s => `<div class="scale"><p class="t-body-strong">${esc(s.name)}${s.slug !== s.name.toLowerCase() ? ` <code>${s.slug}</code>` : ""}</p><div class="sw"><div class="sw-base" style="background:${s.hex};color:${inkOn(s.hex)}"><b>Base</b><span>${s.hex}</span></div>${s.sw.map((h, i) => `<div style="background:${h};color:${inkOn(h)}"><b>${STEPS[i]}</b><span>${h}</span></div>`).join("")}</div></div>`).join("");
@@ -4470,7 +4491,7 @@ function renderExport2() { try { pcRefresh(); $("exGuardLvl").textContent = S.le
     ["Couleurs", `${scales.length} couleurs × 11 nuances, plus blanc et noir`, `Chaque nuance indique son contraste sur blanc et sur noir.`, ["Collection Colors", "brand/500", "var(--brand-500)"], sw, nCol],
     ["Rôles", `${nSem} rôles : textes, fonds, bouton et ses états, liens, désactivé, erreur, succès, alerte, info, focus, graphiques`, `Chaque rôle pointe vers une nuance (alias) et décrit son contraste. Deux modes dans Figma : Light et Dark.`, ["Collection Semantic", "text/default", "var(--text-default)"], roles, nSem],
     ["Styles de texte", `${nTy} styles fluides, ${BP.length} écrans`, `Taille et interligne en px pour Mobile, Tablet, Desktop et Desktop XL, plus la formule clamp().`, ["Text styles H1/Mobile…", "Collection Typography, 4 modes", ".t-h1"], ty, nTy * BP.length],
-    ["Polices", `${esc(S.ts.fonts.head.family)} pour les titres, ${esc(S.ts.fonts.body.family)} pour le texte`, `Les styles de texte sont reliés à ces deux variables : changer de police se fait en un clic.`, ["Collection Typography", "font-family/heading", "var(--font-heading)"], `<span class="ty" style="font-family:${esc(fontCss(S.ts.fonts.head))};font-size:22px">Ag</span> <span class="ty" style="font-family:${esc(fontCss(S.ts.fonts.body))};font-size:22px;font-weight:400">Ag</span>`, 2],
+    ["Polices", `${esc(S.ts.fonts.head.family)} pour les titres, ${esc(S.ts.fonts.body.family)} pour le texte${S.ts.fonts.accent ? `, ${esc(S.ts.fonts.accent.family)} en accent` : ""}`, `Les styles de texte sont reliés à ces ${S.ts.fonts.accent ? "trois" : "deux"} variables : changer de police se fait en un clic.`, ["Collection Typography", "font-family/heading", "var(--font-heading)"], `<span class="ty" style="font-family:${esc(fontCss(S.ts.fonts.head))};font-size:22px">Ag</span> <span class="ty" style="font-family:${esc(fontCss(S.ts.fonts.body))};font-size:22px;font-weight:400">Ag</span>`, 2],
     ["Grille", `${L.mobile.columns} à ${L.xl.columns} colonnes, marges ${L.mobile.margin} à ${L.xl.margin} px`, `Marge, gouttière, colonnes et espace entre sections, une valeur par écran.`, ["Collection Layout, 4 modes", "margin", "var(--layout-margin)"], grid, nLay],
     ["Dimensions", `Espacements par ${dsCfg("space")} px, arrondis « ${DS_SHAPES[dsCfg("shape")].label.toLowerCase()} », cibles ${dsCfg("btn")} px`, `Espacements, arrondis, épaisseur du focus (2 px) et tailles de cible (24 px minimum).`, ["Collection Dimensions", "spacing/4", "var(--spacing-4)"], sp, nDim]
   ];
@@ -4557,7 +4578,7 @@ function jDigest(id) {
   const n = palette.length;
   if (id === "couleurs") return jCount(n, "couleur");
   if (id === "palette") return jCount(n, "gamme");
-  if (id === "tester") { const f = S.ts && S.ts.fonts ? [S.ts.fonts.head && S.ts.fonts.head.family, S.ts.fonts.body && S.ts.fonts.body.family] : [S.font.family]; return [...new Set(f.filter(Boolean))].join(" + ") || S.font.family; }
+  if (id === "tester") { const f = S.ts && S.ts.fonts ? [S.ts.fonts.head && S.ts.fonts.head.family, S.ts.fonts.body && S.ts.fonts.body.family, S.ts.fonts.accent && S.ts.fonts.accent.family] : [S.font.family]; return [...new Set(f.filter(Boolean))].join(" + ") || S.font.family; }
   if (id === "styles") return jCount(S.ts.styles.length, "style");
   if (id === "systeme") { const on = DS_GROUPS.filter(g => dsOn(g[0])).length; return `${on} bloc${on > 1 ? "s" : ""} sur ${DS_GROUPS.length}`; }
   if (id === "matrice") return n < 2 ? "Aucune paire" : jCount(n * (n - 1) / 2, "paire");
@@ -4646,7 +4667,7 @@ function sumData() {
   let tokens = 0; try { const o = JSON.parse(tsJson()), w = x => { for (const k in x) { const v = x[k]; if (!v || typeof v !== "object") continue; if (v.$type === "color") tokens++; else w(v); } }; w(o.color || {}); w(o.semantic || {}); } catch (e) {}
   const roleKeys = Object.keys(ROLE_FR).filter(k => ROLE_FR[k][1] && roleNeed(k)), M = mnState(), seen = jSeen();
   const twins = cwTwins().length;
-  const fonts = S.ts && S.ts.fonts ? [S.ts.fonts.head && S.ts.fonts.head.family, S.ts.fonts.body && S.ts.fonts.body.family] : [S.font.family];
+  const fonts = S.ts && S.ts.fonts ? [S.ts.fonts.head && S.ts.fonts.head.family, S.ts.fonts.body && S.ts.fonts.body.family, S.ts.fonts.accent && S.ts.fonts.accent.family] : [S.font.family];
   return { level: S.level, colors: palette.length, colorTokens: tokens, loneColors: cwIssues().length, twins,
     rolesChecked: roleKeys.length * 2, roleFails: allIssues().length, fonts, styles: S.ts.styles.length,
     styleFails: S.ts.styles.filter(st => !tsVerdict(st).ok).length, styleWarns: S.ts.styles.reduce((n, st) => n + tsVerdict(st).warn.length, 0),

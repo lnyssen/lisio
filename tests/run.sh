@@ -30,6 +30,7 @@ step "Export CSS et copie par ligne (P1, F12)" node tests/e2e/export.mjs
 step "Accueil et affichage Essentiel / Avancé (P1)" node tests/e2e/modes.mjs
 step "Mobile : volets, menu, barre de la page Polices" node tests/e2e/mobile.mjs
 step "Une couleur par style de texte" node tests/e2e/style-couleurs.mjs
+step "Une police par style de texte" node tests/e2e/style-polices.mjs
 step "Couleurs laissées telles quelles, pour le décor" node tests/e2e/decor.mjs
 step "Contrastes : toujours une grille texte sur fond" node tests/e2e/grille.mjs
 step "Images et voile sur photo : options" node tests/e2e/voile.mjs
