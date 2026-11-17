@@ -34,6 +34,7 @@ step "Une police par style de texte" node tests/e2e/style-polices.mjs
 step "Couleurs laissées telles quelles, pour le décor" node tests/e2e/decor.mjs
 step "Contrastes : toujours une grille texte sur fond" node tests/e2e/grille.mjs
 step "Images et voile sur photo : options" node tests/e2e/voile.mjs
+step "Design system : graphiques, alertes, voile, icônes des boutons" node tests/e2e/ds-couleurs.mjs
 step "Rampes OKLCH (P2, F09)" node tests/e2e/oklch.mjs
 step "Composants état par état (P2, F13)" node tests/e2e/composants.mjs
 step "Projet démo et visite guidée (P2, F06)" node tests/e2e/demo.mjs

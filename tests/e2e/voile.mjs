@@ -22,7 +22,7 @@ const css = async () => { await page.goto(PAGE + "#exporter"); await page.waitFo
 const rule = (t, sel) => (t.match(new RegExp(`(^|\\n)${sel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\{[^}]*\\}`)) || [""])[0];
 const pick = async (id, v) => { await page.locator(`#${id} button[data-v="${v}"]`).click(); await page.waitForTimeout(250); };
 await page.goto(PAGE + "#systeme"); await page.waitForTimeout(800);
-const segs = { dsScrimTone: ["ink", "black", "brand", "light"], dsScrimShape: ["solid", "bottom", "top"], dsScrimBlur: ["0", "4", "8", "16"], dsScrim: ["0", "0.1", "0.2", "0.3"], dsImgR: ["none", "sm", "md", "lg", "full"], dsImgPos: ["center", "top", "bottom"], dsImgBorder: ["0", "1"] };
+const segs = { dsScrimTone: ["ink", "black", "brand", "light"], dsScrimForm: ["none", "solid", "grad"], dsScrimShape: ["bottom", "top", "left", "right"], dsScrimStop: ["0.35", "0.55", "0.75"], dsScrimBlur: ["0", "4", "8", "16"], dsScrim: ["0", "0.1", "0.2", "0.3"], dsImgR: ["none", "sm", "md", "lg", "full"], dsImgPos: ["center", "top", "bottom"], dsImgBorder: ["0", "1"] };
 for (const [id, vs] of Object.entries(segs)) { const got = await page.locator(`#${id} button[data-v]`).evaluateAll(b => b.map(x => x.dataset.v)).catch(() => []);
   check(vs.every(v => got.includes(v)), `réglage ${id} : ${vs.join(", ")}`, got.join(", ")); }
 check(await page.locator("#dsScrimPrev").count() === 1, "un aperçu du voile sur une photo, dans le panneau");
@@ -31,22 +31,22 @@ check(!/backdrop-filter/.test(rule(c0, ".scrim")) && !/gradient/.test(rule(c0, "
 const op0 = +((c0.match(/--opacity-scrim: ([\d.]+)/) || [0, 0])[1]);
 // Voile clair, texte foncé : vérifié sur la zone la plus foncée de l'image.
 await pick("dsScrimTone", "light");
-const chk = await page.locator("#dsElevChk").textContent();
+const chk = await page.locator("#dsScrimChk").textContent();
 check(/Voile clair/.test(chk) && /texte foncé/.test(chk) && /plus foncée/.test(chk), "voile clair : le contrôle parle de texte foncé, sur la zone la plus foncée", chk.slice(0, 300));
 const c1 = await css();
 check(/--scrim-color: rgb\(255 255 255 \//.test(c1) && /color: var\(--text-default\)/.test(rule(c1, ".scrim")), "voile clair : couleur blanche et texte foncé dans le CSS", rule(c1, ".scrim"));
-const okLight = await page.evaluate(() => { const li = [...document.querySelectorAll("#dsElevChk li")].find(l => /Voile/.test(l.textContent)); return li ? li.className + " " + li.textContent : ""; });
+const okLight = await page.evaluate(() => { const li = [...document.querySelectorAll("#dsScrimChk li")].find(l => /Voile/.test(l.textContent)); return li ? li.className + " " + li.textContent : ""; });
 check(!/\bno\b|✕/.test(okLight), "voile clair : le seuil est tenu (opacité calculée pour)", okLight);
 await pick("dsScrimTone", "black");
 check(/--scrim-color: rgb\(0 0 0 \//.test(await css()), "voile noir : couleur noire dans le CSS");
 // Forme, flou, opacité.
-await pick("dsScrimShape", "bottom"); await pick("dsScrimBlur", "8"); await pick("dsScrim", "0.3");
+await pick("dsScrimForm", "grad"); await pick("dsScrimShape", "bottom"); await pick("dsScrimBlur", "8"); await pick("dsScrim", "0.3");
 const c2 = await css(), r2 = rule(c2, ".scrim");
 check(/linear-gradient\(to top/.test(r2), "dégradé, texte en bas : dégradé vers le haut dans le CSS", r2);
 check(/backdrop-filter: blur\(8px\)/.test(r2), "flou de 8 px sous le voile", r2);
 const op2 = +((c2.match(/--opacity-scrim: ([\d.]+)/) || [0, 0])[1]);
 check(op2 > op0, "+ 30 % : voile plus opaque", op0 + " → " + op2);
-check(/Dégradé/.test(await page.locator("#dsElevChk").textContent()), "dégradé : le contrôle rappelle où garder le texte");
+check(/Dégradé/.test(await page.locator("#dsScrimChk").textContent()), "dégradé : le contrôle rappelle où garder le texte");
 // Images.
 await pick("dsImgR", "full"); await pick("dsImgPos", "top"); await pick("dsImgBorder", "1");
 const c3 = await css();
