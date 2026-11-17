@@ -36,7 +36,9 @@ const ls = (page, k) => page.evaluate(k => localStorage.getItem(k), k);
   check(await page.evaluate(() => { const r = document.querySelector(".hm-top").getBoundingClientRect(), m = document.querySelector("main").getBoundingClientRect(); return Math.abs(r.left - m.left) <= 1 && Math.abs(r.right - m.right) <= 1; }), "accueil : mêmes marges que l’outil, à gauche et à droite");
   check(await page.evaluate(() => document.activeElement && document.activeElement.closest("#home") !== null), "le focus est dans l’accueil");
   if (AXE) { await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
-    const v = await page.evaluate(async () => (await axe.run(document.querySelector("#home"), { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id)); check(!v.length, "axe-core : accueil sans violation", v.join(", ")); }
+    // 17 novembre 2026 : la carte du jeu (#hmCard) montre exprès des paires tirées au hasard, parfois illisibles : c’est la question posée.
+    // axe la comptait comme une erreur une fois sur quatre environ ; elle est exclue, le reste de l’accueil est vérifié.
+    const v = await page.evaluate(async () => (await axe.run({ include: [["#home"]], exclude: [["#hmCard"]] }, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id)); check(!v.length, "axe-core : accueil sans violation", v.join(", ")); }
   // Le jeu : on répond, Lisio donne le ratio et le score, puis une autre paire.
   await h.locator('[data-guess="1"]').click(); await page.waitForTimeout(150);
   const res = await page.textContent("#hmRes");

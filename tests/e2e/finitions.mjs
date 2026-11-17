@@ -1,0 +1,66 @@
+// Design system, finitions du 17 novembre 2026 : badges, anneau de focus, sélection et curseur, voile des fenêtres,
+// tableaux, dégradé de marque. Chaque choix mesuré ; rien d’exporté tant qu’on ne choisit pas.   node tests/e2e/finitions.mjs
+import { createRequire } from "node:module";
+import { readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const PAGE = "file://" + (process.env.LISIO_PAGE || join(ROOT, "index.html"));
+let chromium;
+try { ({ chromium } = createRequire(import.meta.url)("playwright")); } catch (e) { console.log("IGNORÉ : Playwright introuvable."); process.exit(process.env.CI ? 1 : 0); }
+const AXE = process.env.AXE_PATH;
+const browser = await chromium.launch();
+let fails = 0;
+const check = (cond, label, extra = "") => { if (cond) console.log("ok    " + label); else { fails++; console.log("ÉCHEC " + label + (extra ? " : " + extra : "")); } };
+const SEED = join(tmpdir(), "lisio-seed-fin.html"); writeFileSync(SEED, "<!doctype html><title>seed</title>");
+const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); await ctx.route(/^https?:/, r => r.abort());
+const page = await ctx.newPage(); const errors = []; page.on("pageerror", e => errors.push(String(e)));
+await page.goto("file://" + SEED); await page.evaluate(() => { localStorage.clear(); localStorage.setItem("lisio-welcome", "1"); localStorage.setItem("lisio-home", "off"); localStorage.setItem("lisio-mode", "ess"); });
+const grab = () => page.evaluate(() => { const $ = id => document.getElementById(id), run = v => { $("tsFmt").value = v; $("tsFmt").dispatchEvent(new Event("change")); return $("tsOut").textContent; }; return { json: run("json"), css: run("css") }; });
+const exportCss = async () => { await page.goto(PAGE + "#styles"); await page.waitForTimeout(500); const t = await grab(); await page.goto(PAGE + "#systeme"); await page.waitForTimeout(600); return { css: t.css, json: JSON.parse(t.json) }; };
+const st = () => page.evaluate(() => JSON.parse(localStorage.getItem("lisio:state")).ds);
+const raw = async () => { await page.goto(PAGE + "#styles"); await page.waitForTimeout(500); const t = await grab(); await page.goto(PAGE + "#systeme"); await page.waitForTimeout(600); return t; };
+await page.goto(PAGE + "#systeme"); await page.waitForTimeout(900);
+const base = await raw();
+check(await page.locator("section[aria-labelledby=dsFiH]").isVisible() && await page.locator("#dsFin details").count() === 6, "section Finitions : six blocs, visibles en Essentiel");
+check(!/Finishes chosen/.test(base.css) && !/finishes/.test(base.json), "par défaut : rien de nouveau dans les exports");
+const pick = async (id, v) => { await page.evaluate(([id, v]) => { const d = document.querySelector(`[data-fin="${id}"]`).closest("details"); d.open = true; }, [id, v]); await page.locator(`[data-fin="${id}"] [data-v="${v}"]`).click(); await page.waitForTimeout(250); };
+const blk = k => page.locator(`#dsFin details[data-k="${k}"]`).textContent();
+await pick("finBadge", "solid");
+check(/Texte des 5 badges : [\d,]+:1 au pire/.test(await blk("badge")), "badges : contraste au pire des 5 badges");
+await pick("finRing", "double"); await pick("finRingW", "3");
+check(/n’importe quel fond/.test(await blk("focus")) && /Anneau de 3 px/.test(await blk("focus")), "focus : double anneau mesuré sur tout fond, 3 px");
+await pick("finSel", "pale");
+check(/Texte sélectionné : [\d,]+:1/.test(await blk("sel")) && /Curseur de saisie/.test(await blk("sel")), "sélection et curseur mesurés");
+await pick("finBd", "black"); await pick("finBdA", "0.7"); await pick("finBdB", "4");
+check(/la fenêtre ressort à [\d,]+:1/.test(await blk("backdrop")), "voile des fenêtres : la fenêtre mesurée sur la page assombrie");
+await pick("finTbl", "stripes"); await pick("finTblH", "strong");
+check(/En-tête : [\d,]+:1/.test(await blk("table")) && /Lignes alternées/.test(await blk("table")), "tableaux : en-tête et lignes alternées mesurés");
+await pick("finGrad", "on");
+check(/au point le moins lisible/.test(await blk("grad")) && await page.locator('#dsFin details[data-k="grad"] li.ok').count() === 1, "dégradé proposé : lisible partout");
+// Un départ trop clair : le dégradé échoue, une correction est proposée et la fait passer.
+await page.evaluate(() => { const i = document.querySelector('#dsFin [data-grad="to"]'); i.value = "#f5f5f5"; i.dispatchEvent(new Event("input", { bubbles: true })); }); await page.waitForTimeout(500);
+check(await page.locator('#dsFin details[data-k="grad"] li.no').count() === 1, "arrivée trop claire : le dégradé échoue");
+await page.locator("#dsFin [data-gradfix]").click(); await page.waitForTimeout(400);
+check(await page.locator('#dsFin details[data-k="grad"] li.ok').count() === 1, "après correction : le dégradé passe");
+const ex = await raw(), css = ex.css, j = JSON.parse(ex.json).$extensions["app.lisio"].finishes;
+check(/\.badge-error \{/.test(css) && /\.badge-neutral \{/.test(css), "CSS : badges .badge-*");
+check(/box-shadow: 0 0 0 var\(--border-width-focus\) var\(--background-default\)/.test(css) && /"focus": \{[^}]*"value": 3/.test(ex.json), "CSS : double anneau ; épaisseur du focus à 3 px dans les jetons");
+check(/::selection \{/.test(css) && /caret-color/.test(css), "CSS : sélection et curseur");
+check(/dialog::backdrop \{ background: rgb\(0 0 0 \/ 0\.7\); -webkit-backdrop-filter: blur\(4px\)/.test(css), "CSS : voile des fenêtres");
+check(/\.table tbody tr:nth-child\(even\)/.test(css) && /\.table thead th \{ background: var\(--text-default\)/.test(css), "CSS : tableaux");
+check(/--gradient-brand: linear-gradient\(135deg/.test(css) && /\.section-brand \{/.test(css), "CSS : dégradé de marque");
+check(j && j.badge === "solid" && j.focusRing.style === "double" && j.selection && j.backdrop.opacity === 0.7 && j.table.rows === "stripes" && j.gradient, "JSON : finitions dans app.lisio", JSON.stringify(j));
+const frame = await page.evaluate(() => document.getElementById("sysFrame").srcdoc);
+check(/class="badge badge-error"/.test(frame) && /class="table/.test(frame) && /section-brand/.test(frame), "aperçu : badges, tableau et dégradé rendus avec le CSS exporté");
+if (AXE) { await page.addScriptTag({ content: readFileSync(AXE, "utf8") });
+  const v = await page.evaluate(async () => (await axe.run({ include: [["section[aria-labelledby=dsFiH]"]] }, { runOnly: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] })).violations.map(x => x.id + " " + x.nodes.length));
+  check(!v.length, "axe-core : aucune violation dans les finitions", v.join(", ")); }
+await page.locator("#dsReset").click(); await page.waitForTimeout(400);
+const back = await raw();
+check(back.css === base.css && back.json === base.json, "Revenir au système de base : exports identiques au départ");
+check(!errors.length, "aucune erreur JavaScript", errors.join(" | "));
+await browser.close();
+console.log(fails ? `\n${fails} échec(s)` : "\nTous les scénarios passent.");
+process.exit(fails ? 1 : 0);

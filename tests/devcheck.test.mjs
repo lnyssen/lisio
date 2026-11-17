@@ -45,7 +45,9 @@ test("le script généré tourne avec Node, sans dépendance, et rend le bon cod
   writeFileSync(join(d, "src", "ok.css"), ".x{color:var(--text-default);background:var(--background-default)}");
   assert.equal(spawnSync(process.execPath, ["lisio-check.mjs"], { cwd: d }).status, 0);
   writeFileSync(join(d, "src", "ko.css"), ".y{color:#999;background:#fff}");
-  const run = spawnSync(process.execPath, ["lisio-check.mjs"], { cwd: d, encoding: "utf8" });
+  // Sortie locale (hors GitHub) : la CI définit GITHUB_ACTIONS, on la retire pour tester le format lisible.
+  const local = { ...process.env }; delete local.GITHUB_ACTIONS;
+  const run = spawnSync(process.execPath, ["lisio-check.mjs"], { cwd: d, encoding: "utf8", env: local });
   assert.equal(run.status, 1); assert.match(run.stdout, /ko\.css:1/); assert.match(run.stdout, /erreur/);
   assert.equal(spawnSync(process.execPath, ["lisio-check.mjs", "--warn-only"], { cwd: d }).status, 0);
   const gh = spawnSync(process.execPath, ["lisio-check.mjs"], { cwd: d, encoding: "utf8", env: { ...process.env, GITHUB_ACTIONS: "true" } });
